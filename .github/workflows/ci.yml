@@ -81,6 +81,13 @@ jobs:
         with:
           name: backend-coverage-py${{ matrix.python-version }}
           path: backend/coverage.xml
+      
+      - name: Migration smoke test
+        run: |
+          export DATABASE_URL="sqlite+aiosqlite:///./test_migrations.db"
+          alembic upgrade head
+        env:
+          DATABASE_URL: "sqlite+aiosqlite:///./test_migrations.db"
 
   # Frontend job - runs if frontend or workflow changed
   frontend:
@@ -102,8 +109,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Run tests
-        run: npm run test
+      - name: Run tests with coverage
+        run: npm run test -- --coverage
+      
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage
+          path: frontend/coverage/
+          retention-days: 30
       
       - name: Build
         run: npm run build
@@ -128,6 +142,14 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -e ".[dev]"
       
+      - name: Cache security tools
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: security-tools-${{ runner.os }}-${{ hashFiles('backend/pyproject.toml') }}
+          restore-keys: |
+            security-tools-${{ runner.os }}-
+      
       - name: Run pip-audit
         run: |
           pip install pip-audit
@@ -143,10 +165,11 @@ jobs:
           path: backend/pip-audit-report.json
           retention-days: 30
       
+      - name: Install SBOM tool
+        run: pip install cyclonedx-bom
+      
       - name: Generate SBOM
-        run: |
-          pip install cyclonedx-bom
-          cyclonedx-py --format json --output sbom.json
+        run: cyclonedx-py --format json --output sbom.json
       
       - name: Upload SBOM
         uses: actions/upload-artifact@v4

@@ -1,0 +1,38 @@
+﻿2025-12-21T04:19:58.8159056Z ##[group]Run dorny/paths-filter@v2
+2025-12-21T04:19:58.8159614Z with:
+2025-12-21T04:19:58.8160045Z   base: 6e183af9da9b0cab21f355524a27b353e6cce2f3
+2025-12-21T04:19:58.8160639Z   ref: 465ffbfc42d55624426e0a9a27f939d32b6567ea
+2025-12-21T04:19:58.8161696Z   filters: backend:
+  - 'backend/**'
+frontend:
+  - 'frontend/**'
+e2e:
+  - 'e2e/**'
+workflow:
+  - '.github/workflows/**'
+
+2025-12-21T04:19:58.8162592Z   list-files: none
+2025-12-21T04:19:58.8163027Z   initial-fetch-depth: 100
+2025-12-21T04:19:58.8163481Z ##[endgroup]
+2025-12-21T04:19:58.9203111Z ##[warning]'ref' input parameter is ignored when 'base' is set to HEAD
+2025-12-21T04:19:58.9218380Z ##[warning]'base' input parameter is ignored when action is triggered by pull request event
+2025-12-21T04:19:58.9221690Z Github token is not available - changes will be detected from PRs merge commit
+2025-12-21T04:19:58.9223744Z ##[group]Change detection in last commit
+2025-12-21T04:19:58.9231791Z [command]/usr/bin/git log --format= --no-renames --name-status -z -n 1
+2025-12-21T04:19:58.9298690Z 
+2025-12-21T04:19:58.9301885Z ##[endgroup]
+2025-12-21T04:19:58.9304661Z Detected 0 changed files
+2025-12-21T04:19:58.9307576Z Results:
+2025-12-21T04:19:58.9310406Z ##[group]Filter backend = false
+2025-12-21T04:19:58.9313156Z Matching files: none
+2025-12-21T04:19:58.9315589Z ##[endgroup]
+2025-12-21T04:19:58.9318724Z ##[group]Filter frontend = false
+2025-12-21T04:19:58.9319639Z Matching files: none
+2025-12-21T04:19:58.9321171Z ##[endgroup]
+2025-12-21T04:19:58.9322455Z ##[group]Filter e2e = false
+2025-12-21T04:19:58.9323292Z Matching files: none
+2025-12-21T04:19:58.9324589Z ##[endgroup]
+2025-12-21T04:19:58.9326735Z ##[group]Filter workflow = false
+2025-12-21T04:19:58.9328887Z Matching files: none
+2025-12-21T04:19:58.9330012Z ##[endgroup]
+2025-12-21T04:19:58.9330659Z Changes output set to []

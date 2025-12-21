@@ -1,0 +1,13 @@
+﻿2025-12-21T04:15:28.6267588Z ##[group]Run gitleaks/gitleaks-action@v2
+2025-12-21T04:15:28.6268134Z ##[endgroup]
+2025-12-21T04:15:29.0429326Z [m-cahill] is an individual user. No license key is required.
+2025-12-21T04:15:29.0433966Z gitleaks version: 8.24.3
+2025-12-21T04:15:29.0434647Z Version to install: 8.24.3 (target directory: /tmp/gitleaks-8.24.3)
+2025-12-21T04:15:29.1898909Z Cache hit for: gitleaks-cache-8.24.3-linux-x64
+2025-12-21T04:15:29.7922055Z Received 5717452 of 5717452 (100.0%), 12.1 MBs/sec
+2025-12-21T04:15:29.7924889Z Cache Size: ~5 MB (5717452 B)
+2025-12-21T04:15:29.7953461Z [command]/usr/bin/tar -xf /home/runner/work/_temp/6228a081-6355-42a7-b0df-5267921b5588/cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --use-compress-program unzstd
+2025-12-21T04:15:29.8336378Z Cache restored successfully
+2025-12-21T04:15:29.8350981Z Gitleaks restored from cache
+2025-12-21T04:15:29.8354556Z event type: pull_request
+2025-12-21T04:15:29.8389252Z ##[error]🛑 GITHUB_TOKEN is now required to scan pull requests. You can use the automatically created token as shown in the [README](https://github.com/gitleaks/gitleaks-action#usage-example). For more info about the recent breaking update, see [here](https://github.com/gitleaks/gitleaks-action#-announcement).

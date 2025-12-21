@@ -1,0 +1,19 @@
+﻿2025-12-21T04:07:48.7094811Z ##[group]Run dorny/paths-filter@v2
+2025-12-21T04:07:48.7095261Z with:
+2025-12-21T04:07:48.7095798Z   filters: backend:
+  - 'backend/**'
+frontend:
+  - 'frontend/**'
+e2e:
+  - 'e2e/**'
+workflow:
+  - '.github/workflows/**'
+
+2025-12-21T04:07:48.7096562Z   token: ***
+2025-12-21T04:07:48.7096886Z   list-files: none
+2025-12-21T04:07:48.7097567Z   initial-fetch-depth: 100
+2025-12-21T04:07:48.7097960Z ##[endgroup]
+2025-12-21T04:07:48.8193572Z ##[group]Fetching list of changed files for PR#1 from Github API
+2025-12-21T04:07:48.8274761Z Invoking listFiles(pull_number: 1, per_page: 100)
+2025-12-21T04:07:49.0764066Z ##[endgroup]
+2025-12-21T04:07:49.0790908Z ##[error]Resource not accessible by integration

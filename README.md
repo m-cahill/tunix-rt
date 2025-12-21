@@ -95,7 +95,15 @@ Create a `.env` file in the project root (see configuration below):
 ```bash
 # Backend
 BACKEND_PORT=8000
+
+# Database
 DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/postgres
+DB_POOL_SIZE=5
+DB_MAX_OVERFLOW=10
+DB_POOL_TIMEOUT=30
+
+# Trace Configuration
+TRACE_MAX_BYTES=1048576  # 1MB default
 
 # Frontend (dev)
 FRONTEND_PORT=5173
@@ -103,7 +111,7 @@ FRONTEND_PORT=5173
 # RediAI Integration
 REDIAI_MODE=mock  # or "real" (validated: must be "mock" or "real")
 REDIAI_BASE_URL=http://localhost:8080  # (validated: must be valid HTTP/HTTPS URL)
-REDIAI_HEALTH_PATH=/health
+REDIAI_HEALTH_PATH=/health  # (validated: must start with /)
 REDIAI_HEALTH_CACHE_TTL_SECONDS=30  # Cache TTL for health checks (0-300, default: 30)
 ```
 
@@ -142,6 +150,32 @@ extra_hosts:
   - "host.docker.internal:host-gateway"
 ```
 
+## Database Migrations
+
+**M2+** tunix-rt uses Alembic for database migrations.
+
+### Running Migrations
+
+```bash
+# Using Makefile
+make db-upgrade      # Apply all pending migrations
+
+# Manual
+cd backend
+alembic upgrade head
+
+# Create new migration (after model changes)
+make db-revision msg="description"
+```
+
+### Migration Commands
+
+- `make db-upgrade` - Apply all pending migrations
+- `make db-downgrade` - Rollback last migration
+- `make db-current` - Show current database version
+- `make db-history` - Show migration history
+- `make db-revision msg="..."` - Create new migration
+
 ## API Endpoints
 
 ### Health Endpoints
@@ -153,6 +187,22 @@ extra_hosts:
   - Mock mode: `{"status": "healthy"}`
   - Real mode (healthy): `{"status": "healthy"}`
   - Real mode (down): `{"status": "down", "error": "..."}`
+
+### Trace Endpoints (M2+)
+
+- `POST /api/traces` - Create a new reasoning trace
+  - Request body: ReasoningTrace JSON
+  - Response: `{"id": "uuid", "created_at": "...", "trace_version": "..."}`
+  - Status: 201 Created, 413 Payload Too Large, 422 Validation Error
+  
+- `GET /api/traces/{id}` - Get a trace by ID
+  - Response: Full trace with payload
+  - Status: 200 OK, 404 Not Found
+  
+- `GET /api/traces?limit=20&offset=0` - List traces (paginated)
+  - Response: `{"data": [...], "pagination": {...}}`
+  - Params: `limit` (1-100, default 20), `offset` (default 0)
+  - Status: 200 OK, 422 Invalid Parameters
 
 ## Project Structure
 

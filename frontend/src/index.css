@@ -55,3 +55,101 @@ h1 {
   background-color: rgba(100, 108, 255, 0.1);
 }
 
+.trace-section {
+  margin-top: 3em;
+  padding: 2em;
+  border: 2px solid #646cff;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.trace-input {
+  margin: 1em 0;
+}
+
+.trace-input label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+.trace-input textarea {
+  width: 100%;
+  min-height: 200px;
+  padding: 0.75em;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  border: 1px solid #646cff;
+  border-radius: 4px;
+  background-color: #1a1a1a;
+  color: rgba(255, 255, 255, 0.87);
+  resize: vertical;
+}
+
+.trace-actions {
+  display: flex;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.trace-actions button {
+  padding: 0.75em 1.5em;
+  border: 1px solid #646cff;
+  border-radius: 4px;
+  background-color: #1a1a1a;
+  color: #646cff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.trace-actions button:hover:not(:disabled) {
+  background-color: #646cff;
+  color: white;
+}
+
+.trace-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.trace-error {
+  margin: 1em 0;
+  padding: 1em;
+  border: 2px solid #f44336;
+  border-radius: 4px;
+  background-color: rgba(244, 67, 54, 0.1);
+  color: #f44336;
+}
+
+.trace-success {
+  margin: 1em 0;
+  padding: 1em;
+  border: 2px solid #4caf50;
+  border-radius: 4px;
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+}
+
+.trace-result {
+  margin: 1em 0;
+  padding: 1em;
+  border: 2px solid #646cff;
+  border-radius: 4px;
+  background-color: rgba(100, 108, 255, 0.05);
+}
+
+.trace-result h3 {
+  margin-top: 0;
+}
+
+.trace-result pre {
+  background-color: #1a1a1a;
+  padding: 1em;
+  border-radius: 4px;
+  overflow-x: auto;
+  text-align: left;
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+

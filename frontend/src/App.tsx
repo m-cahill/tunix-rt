@@ -1,10 +1,27 @@
 import { useEffect, useState } from 'react'
-import { getApiHealth, getRediHealth, type HealthResponse, type RediHealthResponse } from './api/client'
+import { 
+  getApiHealth, 
+  getRediHealth, 
+  createTrace,
+  getTrace,
+  type HealthResponse, 
+  type RediHealthResponse,
+  type TraceDetail,
+  ApiError,
+} from './api/client'
+import { EXAMPLE_TRACE } from './exampleTrace'
 
 function App() {
   const [apiHealth, setApiHealth] = useState<HealthResponse | null>(null)
   const [rediHealth, setRediHealth] = useState<RediHealthResponse | null>(null)
   const [loading, setLoading] = useState(true)
+  
+  // Trace state
+  const [traceInput, setTraceInput] = useState('')
+  const [uploadedTraceId, setUploadedTraceId] = useState<string | null>(null)
+  const [fetchedTrace, setFetchedTrace] = useState<TraceDetail | null>(null)
+  const [traceError, setTraceError] = useState<string | null>(null)
+  const [traceLoading, setTraceLoading] = useState(false)
 
   useEffect(() => {
     const fetchHealth = async () => {
@@ -46,6 +63,58 @@ function App() {
     return status === 'healthy' ? 'status-healthy' : 'status-down'
   }
 
+  const handleLoadExample = () => {
+    setTraceInput(JSON.stringify(EXAMPLE_TRACE, null, 2))
+    setTraceError(null)
+  }
+
+  const handleUpload = async () => {
+    setTraceError(null)
+    setTraceLoading(true)
+    
+    try {
+      const trace = JSON.parse(traceInput)
+      const response = await createTrace(trace)
+      setUploadedTraceId(response.id)
+      setTraceError(null)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setTraceError(`Upload failed: ${error.message} (${error.status})`)
+      } else if (error instanceof SyntaxError) {
+        setTraceError('Invalid JSON format')
+      } else {
+        setTraceError('Upload failed: Unknown error')
+      }
+    } finally {
+      setTraceLoading(false)
+    }
+  }
+
+  const handleFetch = async () => {
+    if (!uploadedTraceId) {
+      setTraceError('No trace ID to fetch')
+      return
+    }
+    
+    setTraceError(null)
+    setTraceLoading(true)
+    
+    try {
+      const trace = await getTrace(uploadedTraceId)
+      setFetchedTrace(trace)
+      setTraceError(null)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setTraceError(`Fetch failed: ${error.message} (${error.status})`)
+      } else {
+        setTraceError('Fetch failed: Unknown error')
+      }
+      setFetchedTrace(null)
+    } finally {
+      setTraceLoading(false)
+    }
+  }
+
   return (
     <div>
       <h1>Tunix RT</h1>
@@ -75,6 +144,52 @@ function App() {
             </p>
             {rediHealth?.error && <p>Error: {rediHealth.error}</p>}
           </>
+        )}
+      </div>
+
+      <div className="trace-section">
+        <h2>Reasoning Traces</h2>
+        
+        <div className="trace-input">
+          <label htmlFor="trace-json">Trace JSON:</label>
+          <textarea
+            id="trace-json"
+            value={traceInput}
+            onChange={(e) => setTraceInput(e.target.value)}
+            placeholder="Enter trace JSON here or click 'Load Example'"
+            rows={10}
+          />
+          
+          <div className="trace-actions">
+            <button onClick={handleLoadExample} disabled={traceLoading}>
+              Load Example
+            </button>
+            <button onClick={handleUpload} disabled={traceLoading || !traceInput}>
+              Upload
+            </button>
+            <button onClick={handleFetch} disabled={traceLoading || !uploadedTraceId}>
+              Fetch
+            </button>
+          </div>
+        </div>
+
+        {traceError && (
+          <div className="trace-error">
+            <strong>Error:</strong> {traceError}
+          </div>
+        )}
+
+        {uploadedTraceId && !traceError && (
+          <div className="trace-success">
+            <strong>Success!</strong> Trace uploaded with ID: {uploadedTraceId}
+          </div>
+        )}
+
+        {fetchedTrace && (
+          <div className="trace-result">
+            <h3>Fetched Trace</h3>
+            <pre>{JSON.stringify(fetchedTrace, null, 2)}</pre>
+          </div>
         )}
       </div>
     </div>

@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M1 Complete** ✅  
-**Coverage:** 92% Line, 90% Branch | **Security:** Baseline Operational
+**Milestone M2 Complete** ✅  
+**Coverage:** 92% Line, 90% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic
 
 ## Overview
 
@@ -16,14 +16,19 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 1. **Backend (FastAPI)**
    - Health monitoring endpoints
    - RediAI integration with mock/real modes
+   - Trace storage & retrieval (M2)
+   - Async SQLAlchemy + PostgreSQL database (M2)
+   - Alembic migrations (M2)
    - Dependency injection for testability
-   - 70% test coverage minimum
+   - 80% line / 68% branch coverage gates
 
 2. **Frontend (Vite + React + TypeScript)**
    - Real-time health status display with 30s auto-refresh (M1)
    - RediAI integration monitoring
+   - Trace upload and retrieval UI (M2)
    - Typed API client for type-safe backend calls (M1)
    - Responsive UI with status indicators
+   - 60% line / 50% branch coverage gates (M2)
 
 3. **E2E Tests (Playwright)**
    - Smoke tests for critical paths
@@ -92,23 +97,150 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - `Timeout after 5s`: Request timeout
 - `Connection refused`: Cannot connect to RediAI instance
 
+---
+
+### Trace Endpoints (M2)
+
+#### `POST /api/traces`
+
+**Description:** Create a new reasoning trace
+
+**Request Body:**
+```json
+{
+  "trace_version": "1.0",
+  "prompt": "What is 27 × 19?",
+  "final_answer": "513",
+  "steps": [
+    {"i": 0, "type": "parse", "content": "Parse the multiplication task"},
+    {"i": 1, "type": "compute", "content": "Break down: 27 × 19 = 27 × (20 - 1)"},
+    {"i": 2, "type": "result", "content": "Final: 513"}
+  ],
+  "meta": {"source": "example"}
+}
+```
+
+**Response:**
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "created_at": "2025-12-20T10:30:00Z",
+  "trace_version": "1.0"
+}
+```
+
+**Status Codes:**
+- `201 Created`: Trace created successfully
+- `413 Payload Too Large`: Exceeds `TRACE_MAX_BYTES` (default 1MB)
+- `422 Unprocessable Entity`: Validation error (invalid schema, duplicate step indices, etc.)
+
+**Validation:**
+- `trace_version`: Required, max 64 chars
+- `prompt`: Required, 1-50000 chars
+- `final_answer`: Required, 1-50000 chars
+- `steps`: Required, 1-1000 items, unique indices
+- Each step: `i` (non-negative), `type` (1-64 chars), `content` (1-20000 chars)
+
+---
+
+#### `GET /api/traces/{id}`
+
+**Description:** Get a trace by ID
+
+**Response:**
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "created_at": "2025-12-20T10:30:00Z",
+  "trace_version": "1.0",
+  "payload": {
+    "trace_version": "1.0",
+    "prompt": "What is 27 × 19?",
+    "final_answer": "513",
+    "steps": [...],
+    "meta": {...}
+  }
+}
+```
+
+**Status Codes:**
+- `200 OK`: Trace found
+- `404 Not Found`: Trace with given ID doesn't exist
+
+---
+
+#### `GET /api/traces?limit=20&offset=0`
+
+**Description:** List traces with pagination
+
+**Query Parameters:**
+- `limit` (optional): Max items to return (1-100, default 20)
+- `offset` (optional): Pagination offset (default 0)
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "created_at": "2025-12-20T10:30:00Z",
+      "trace_version": "1.0"
+    }
+  ],
+  "pagination": {
+    "limit": 20,
+    "offset": 0,
+    "next_offset": 20
+  }
+}
+```
+
+**Status Codes:**
+- `200 OK`: Success
+- `422 Unprocessable Entity`: Invalid limit (>100) or offset (<0)
+
+**Note:** List endpoint returns trace metadata only (no full payload). Use `GET /api/traces/{id}` to retrieve full trace.
+
+---
+
 ## Database Schema
 
-### M0 Status
-No database tables in M0 - health endpoints only. Database integration planned for M1.
+### M2 Schema
+
+**Table: `traces`**
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| `id` | UUID | PRIMARY KEY | Trace unique identifier |
+| `created_at` | TIMESTAMPTZ | NOT NULL | Creation timestamp (UTC) |
+| `trace_version` | VARCHAR(64) | NOT NULL | Trace format version |
+| `payload` | JSON/JSONB | NOT NULL | Full trace data (ReasoningTrace) |
+
+**Indexes:**
+- Primary key on `id` (automatic)
+- Future: Index on `created_at` for list pagination (M3+)
+
+**Migrations:**
+- Managed by Alembic (async mode)
+- Migration files in `backend/alembic/versions/`
+- Run migrations: `make db-upgrade` or `alembic upgrade head`
 
 ## Configuration
 
 ### Environment Variables
 
-| Variable | Default | Description | Validation (M1) |
-|----------|---------|-------------|-----------------|
+| Variable | Default | Description | Validation |
+|----------|---------|-------------|------------|
 | `BACKEND_PORT` | `8000` | FastAPI server port | Must be 1-65535 |
 | `DATABASE_URL` | `postgresql+asyncpg://...` | PostgreSQL connection string | None |
+| `DB_POOL_SIZE` | `5` | DB connection pool size (M2) | Must be 1-50 |
+| `DB_MAX_OVERFLOW` | `10` | DB pool max overflow (M2) | Must be 0-50 |
+| `DB_POOL_TIMEOUT` | `30` | DB pool timeout seconds (M2) | Must be 1-300 |
+| `TRACE_MAX_BYTES` | `1048576` | Max trace payload size (1MB) (M2) | Must be 1024-10485760 |
 | `FRONTEND_PORT` | `5173` | Vite dev server port | None |
 | `REDIAI_MODE` | `mock` | RediAI integration mode | Must be "mock" or "real" |
 | `REDIAI_BASE_URL` | `http://localhost:8080` | RediAI instance URL (real mode) | Must be valid HTTP/HTTPS URL |
-| `REDIAI_HEALTH_PATH` | `/health` | RediAI health endpoint path | None |
+| `REDIAI_HEALTH_PATH` | `/health` | RediAI health endpoint path | Must start with "/" (M2) |
 | `REDIAI_HEALTH_CACHE_TTL_SECONDS` | `30` | Cache TTL for health checks (M1) | Must be 0-300 |
 
 **Configuration Validation (M1):**
@@ -136,14 +268,33 @@ No database tables in M0 - health endpoints only. Database integration planned f
 cd backend
 python -m pip install -e ".[dev]"
 
+# Run migrations
+make db-upgrade  # or: alembic upgrade head
+
 # Run linting and tests
 ruff check .
 ruff format --check .
 mypy tunix_rt_backend
-pytest --cov=tunix_rt_backend --cov-fail-under=70
+pytest --cov=tunix_rt_backend --cov-branch --cov-fail-under=70
 
 # Start server
 uvicorn tunix_rt_backend.app:app --reload --port 8000
+```
+
+### Database Migrations (M2)
+
+```bash
+# Apply migrations
+make db-upgrade
+
+# Create new migration after model changes
+make db-revision msg="description"
+
+# Rollback last migration
+make db-downgrade
+
+# View migration history
+make db-history
 ```
 
 ### Frontend Setup
@@ -392,15 +543,33 @@ docs: update README
 - **Coverage enforcement**: Automated dual-threshold gates
 - **Conditional execution**: Fast feedback with path filtering
 
-## Next Steps (M2+)
+## Completed Milestones
 
-M1 provides enterprise-grade hardening. Future milestones will add:
+### M1: Hardening & Guardrails ✅
+- Enterprise-grade testing (92% line, 90% branch coverage)
+- Security scanning (pip-audit, npm audit, gitleaks)
+- Configuration validation with Pydantic
+- TTL caching for RediAI health
+- Frontend polling and typed API client
+- Developer experience tools (Makefile, scripts, ADRs)
 
-1. **M2**: Database models and trace storage (Alembic migrations)
-2. **M3**: Trace upload and retrieval endpoints
-3. **M4**: RediAI workflow registry integration
-4. **M5**: Trace quality metrics and optimization
-5. **M6**: Deployment to Netlify (frontend) and Render (backend)
+### M2: Trace Storage & Retrieval ✅
+- Async SQLAlchemy + PostgreSQL database integration
+- Alembic migrations for schema management
+- Trace model with UUID, timestamps, JSON payload
+- Three trace endpoints: POST (create), GET by ID, GET list (paginated)
+- Payload size validation (1MB default limit)
+- Comprehensive backend tests (17 new tests)
+- Frontend trace UI with upload/fetch functionality
+- E2E test for complete trace flow
+- Frontend coverage measurement (60% lines, 50% branches)
+
+## Next Steps (M3+)
+
+1. **M3**: Trace analysis and quality scoring
+2. **M4**: RediAI workflow registry integration
+3. **M5**: Trace optimization and recommendations
+4. **M6**: Production deployment (Netlify + Render)
 
 ## Architecture Decisions
 

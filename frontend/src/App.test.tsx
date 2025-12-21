@@ -19,9 +19,11 @@ describe('App', () => {
     // Mock both fetch calls
     (global.fetch as any)
       .mockResolvedValueOnce({
+        ok: true,
         json: async () => ({ status: 'healthy' }),
       })
       .mockResolvedValueOnce({
+        ok: true,
         json: async () => ({ status: 'healthy' }),
       })
 
@@ -35,9 +37,11 @@ describe('App', () => {
   it('displays RediAI healthy status', async () => {
     (global.fetch as any)
       .mockResolvedValueOnce({
+        ok: true,
         json: async () => ({ status: 'healthy' }),
       })
       .mockResolvedValueOnce({
+        ok: true,
         json: async () => ({ status: 'healthy' }),
       })
 
@@ -51,9 +55,11 @@ describe('App', () => {
   it('displays RediAI down status with error', async () => {
     (global.fetch as any)
       .mockResolvedValueOnce({
+        ok: true,
         json: async () => ({ status: 'healthy' }),
       })
       .mockResolvedValueOnce({
+        ok: true,
         json: async () => ({ status: 'down', error: 'Connection refused' }),
       })
 

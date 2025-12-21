@@ -1,0 +1,70 @@
+﻿2025-12-21T04:07:49.2166703Z ##[group]Run gitleaks/gitleaks-action@v2
+2025-12-21T04:07:49.2167062Z env:
+2025-12-21T04:07:49.2167526Z   GITHUB_TOKEN: ***
+2025-12-21T04:07:49.2167757Z ##[endgroup]
+2025-12-21T04:07:49.7649960Z [m-cahill] is an individual user. No license key is required.
+2025-12-21T04:07:49.7658669Z gitleaks version: 8.24.3
+2025-12-21T04:07:49.7681091Z Version to install: 8.24.3 (target directory: /tmp/gitleaks-8.24.3)
+2025-12-21T04:07:50.0421413Z Downloading gitleaks from https://github.com/zricethezav/gitleaks/releases/download/v8.24.3/gitleaks_8.24.3_linux_x64.tar.gz
+2025-12-21T04:07:50.5054503Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /tmp/gitleaks-8.24.3 -f /tmp/gitleaks.tmp
+2025-12-21T04:07:50.6326877Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --files-from manifest.txt --use-compress-program zstdmt
+2025-12-21T04:07:51.9992568Z Sent 5717452 of 5717452 (100.0%), 5.8 MBs/sec
+2025-12-21T04:07:52.3042431Z event type: pull_request
+2025-12-21T04:07:52.5333293Z /home/runner/work/_actions/gitleaks/gitleaks-action/v2/dist/index.js:51503
+2025-12-21T04:07:52.5338162Z       const error = new requestError.RequestError(toErrorMessage(data), status, {
+2025-12-21T04:07:52.5338844Z                     ^
+2025-12-21T04:07:52.5339064Z 
+2025-12-21T04:07:52.5339388Z RequestError [HttpError]: Resource not accessible by integration
+2025-12-21T04:07:52.5340111Z     at /home/runner/work/_actions/gitleaks/gitleaks-action/v2/dist/index.js:51503:21
+2025-12-21T04:07:52.5340878Z     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-21T04:07:52.5341798Z     at async Object.ScanPullRequest (/home/runner/work/_actions/gitleaks/gitleaks-action/v2/dist/index.js:129568:17)
+2025-12-21T04:07:52.5342988Z     at async start (/home/runner/work/_actions/gitleaks/gitleaks-action/v2/dist/index.js:140770:16) {
+2025-12-21T04:07:52.5343640Z   status: 403,
+2025-12-21T04:07:52.5343994Z   response: {
+2025-12-21T04:07:52.5344425Z     url: 'https://api.github.com/repos/m-cahill/tunix-rt/pulls/1/commits',
+2025-12-21T04:07:52.5344933Z     status: 403,
+2025-12-21T04:07:52.5345213Z     headers: {
+2025-12-21T04:07:52.5345526Z       'access-control-allow-origin': '*',
+2025-12-21T04:07:52.5347286Z       'access-control-expose-headers': 'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset',
+2025-12-21T04:07:52.5349315Z       connection: 'close',
+2025-12-21T04:07:52.5349703Z       'content-encoding': 'gzip',
+2025-12-21T04:07:52.5350155Z       'content-security-policy': "default-src 'none'",
+2025-12-21T04:07:52.5350687Z       'content-type': 'application/json; charset=utf-8',
+2025-12-21T04:07:52.5351178Z       date: 'Sun, 21 Dec 2025 04:07:52 GMT',
+2025-12-21T04:07:52.5351807Z       'referrer-policy': 'origin-when-cross-origin, strict-origin-when-cross-origin',
+2025-12-21T04:07:52.5352466Z       server: 'github.com',
+2025-12-21T04:07:52.5353204Z       'strict-transport-security': 'max-age=31536000; includeSubdomains; preload',
+2025-12-21T04:07:52.5353861Z       'transfer-encoding': 'chunked',
+2025-12-21T04:07:52.5354348Z       vary: 'Accept-Encoding, Accept, X-Requested-With',
+2025-12-21T04:07:52.5355314Z       'x-accepted-github-permissions': 'pull_requests=read',
+2025-12-21T04:07:52.5355841Z       'x-content-type-options': 'nosniff',
+2025-12-21T04:07:52.5356276Z       'x-frame-options': 'deny',
+2025-12-21T04:07:52.5356708Z       'x-github-api-version-selected': '2022-11-28',
+2025-12-21T04:07:52.5357217Z       'x-github-media-type': 'github.v3; format=json',
+2025-12-21T04:07:52.5357772Z       'x-github-request-id': '081A:22ABB5:A68701:AC5696:69477298',
+2025-12-21T04:07:52.5358279Z       'x-ratelimit-limit': '5000',
+2025-12-21T04:07:52.5358671Z       'x-ratelimit-remaining': '4997',
+2025-12-21T04:07:52.5359100Z       'x-ratelimit-reset': '1766293669',
+2025-12-21T04:07:52.5359931Z       'x-ratelimit-resource': 'core',
+2025-12-21T04:07:52.5360332Z       'x-ratelimit-used': '3',
+2025-12-21T04:07:52.5360711Z       'x-xss-protection': '0'
+2025-12-21T04:07:52.5361060Z     },
+2025-12-21T04:07:52.5361313Z     data: {
+2025-12-21T04:07:52.5361662Z       message: 'Resource not accessible by integration',
+2025-12-21T04:07:52.5362460Z       documentation_url: 'https://docs.github.com/rest/pulls/pulls#list-commits-on-a-pull-request',
+2025-12-21T04:07:52.5363351Z       status: '403'
+2025-12-21T04:07:52.5363642Z     }
+2025-12-21T04:07:52.5363894Z   },
+2025-12-21T04:07:52.5364155Z   request: {
+2025-12-21T04:07:52.5364443Z     method: 'GET',
+2025-12-21T04:07:52.5364955Z     url: 'https://api.github.com/repos/m-cahill/tunix-rt/pulls/1/commits',
+2025-12-21T04:07:52.5365518Z     headers: {
+2025-12-21T04:07:52.5365853Z       accept: 'application/vnd.github.v3+json',
+2025-12-21T04:07:52.5366498Z       'user-agent': 'octokit-rest.js/18.12.0 octokit-core.js/3.6.0 Node.js/20.19.5 (linux; x64)',
+2025-12-21T04:07:52.5367144Z       authorization: 'token [REDACTED]'
+2025-12-21T04:07:52.5367520Z     },
+2025-12-21T04:07:52.5367857Z     request: { hook: [Function: bound bound register] }
+2025-12-21T04:07:52.5368291Z   }
+2025-12-21T04:07:52.5368530Z }
+2025-12-21T04:07:52.5368687Z 
+2025-12-21T04:07:52.5368806Z Node.js v20.19.5

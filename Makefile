@@ -44,6 +44,22 @@ format: format-backend  ## Format all code
 format-backend:  ## Format backend code
 	cd backend && ruff format .
 
+# Database migration targets
+db-upgrade:  ## Run database migrations (upgrade to head)
+	cd backend && alembic upgrade head
+
+db-downgrade:  ## Rollback last database migration
+	cd backend && alembic downgrade -1
+
+db-revision:  ## Create a new migration (usage: make db-revision msg="description")
+	cd backend && alembic revision --autogenerate -m "$(msg)"
+
+db-current:  ## Show current database revision
+	cd backend && alembic current
+
+db-history:  ## Show migration history
+	cd backend && alembic history
+
 # Docker targets
 docker-up:  ## Start Docker Compose services
 	docker compose up -d

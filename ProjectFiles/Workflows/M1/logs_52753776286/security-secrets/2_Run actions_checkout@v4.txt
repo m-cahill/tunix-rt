@@ -1,0 +1,90 @@
+﻿2025-12-21T04:15:27.4389758Z ##[group]Run actions/checkout@v4
+2025-12-21T04:15:27.4391647Z with:
+2025-12-21T04:15:27.4392766Z   fetch-depth: 0
+2025-12-21T04:15:27.4393549Z   repository: m-cahill/tunix-rt
+2025-12-21T04:15:27.4394777Z   token: ***
+2025-12-21T04:15:27.4395461Z   ssh-strict: true
+2025-12-21T04:15:27.4396226Z   ssh-user: git
+2025-12-21T04:15:27.4396970Z   persist-credentials: true
+2025-12-21T04:15:27.4397826Z   clean: true
+2025-12-21T04:15:27.4398575Z   sparse-checkout-cone-mode: true
+2025-12-21T04:15:27.4399521Z   fetch-tags: false
+2025-12-21T04:15:27.4400273Z   show-progress: true
+2025-12-21T04:15:27.4401180Z   lfs: false
+2025-12-21T04:15:27.4402536Z   submodules: false
+2025-12-21T04:15:27.4403811Z   set-safe-directory: true
+2025-12-21T04:15:27.4405508Z ##[endgroup]
+2025-12-21T04:15:27.5687643Z Syncing repository: m-cahill/tunix-rt
+2025-12-21T04:15:27.5690111Z ##[group]Getting Git version info
+2025-12-21T04:15:27.5691430Z Working directory is '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-21T04:15:27.5696314Z [command]/usr/bin/git version
+2025-12-21T04:15:28.0092923Z git version 2.52.0
+2025-12-21T04:15:28.0143192Z ##[endgroup]
+2025-12-21T04:15:28.0188022Z Temporarily overriding HOME='/home/runner/work/_temp/b616735b-8b6a-4cf0-b81c-12a4031915f8' before making global git config changes
+2025-12-21T04:15:28.0196348Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-21T04:15:28.0200417Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-21T04:15:28.0253653Z Deleting the contents of '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-21T04:15:28.0258113Z ##[group]Initializing the repository
+2025-12-21T04:15:28.0263575Z [command]/usr/bin/git init /home/runner/work/tunix-rt/tunix-rt
+2025-12-21T04:15:28.0422798Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-21T04:15:28.0424478Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-21T04:15:28.0425030Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-21T04:15:28.0425406Z hint: call:
+2025-12-21T04:15:28.0425587Z hint:
+2025-12-21T04:15:28.0426086Z hint: 	git config --global init.defaultBranch <name>
+2025-12-21T04:15:28.0426386Z hint:
+2025-12-21T04:15:28.0426672Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-21T04:15:28.0427135Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-21T04:15:28.0427481Z hint:
+2025-12-21T04:15:28.0427661Z hint: 	git branch -m <name>
+2025-12-21T04:15:28.0427881Z hint:
+2025-12-21T04:15:28.0428290Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-21T04:15:28.0433036Z Initialized empty Git repository in /home/runner/work/tunix-rt/tunix-rt/.git/
+2025-12-21T04:15:28.0446172Z [command]/usr/bin/git remote add origin https://github.com/m-cahill/tunix-rt
+2025-12-21T04:15:28.0488689Z ##[endgroup]
+2025-12-21T04:15:28.0489408Z ##[group]Disabling automatic garbage collection
+2025-12-21T04:15:28.0493502Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-21T04:15:28.0526205Z ##[endgroup]
+2025-12-21T04:15:28.0528341Z ##[group]Setting up auth
+2025-12-21T04:15:28.0533329Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-21T04:15:28.0565972Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-21T04:15:28.0979563Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-21T04:15:28.1011368Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-21T04:15:28.1238622Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-21T04:15:28.1276729Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-21T04:15:28.1508357Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-21T04:15:28.1543647Z ##[endgroup]
+2025-12-21T04:15:28.1545747Z ##[group]Fetching the repository
+2025-12-21T04:15:28.1554135Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +b04464c9b5ade5c971a04442fec0087b658d99d4:refs/remotes/pull/1/merge
+2025-12-21T04:15:28.5572404Z From https://github.com/m-cahill/tunix-rt
+2025-12-21T04:15:28.5584752Z  * [new branch]      feat/m1-hardening                        -> origin/feat/m1-hardening
+2025-12-21T04:15:28.5588373Z  * [new branch]      main                                     -> origin/main
+2025-12-21T04:15:28.5590189Z  * [new ref]         b04464c9b5ade5c971a04442fec0087b658d99d4 -> pull/1/merge
+2025-12-21T04:15:28.5592093Z ##[endgroup]
+2025-12-21T04:15:28.5592716Z ##[group]Determining the checkout info
+2025-12-21T04:15:28.5593385Z ##[endgroup]
+2025-12-21T04:15:28.5593800Z [command]/usr/bin/git sparse-checkout disable
+2025-12-21T04:15:28.5594899Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-21T04:15:28.5612951Z ##[group]Checking out the ref
+2025-12-21T04:15:28.5618087Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/1/merge
+2025-12-21T04:15:28.5903207Z Note: switching to 'refs/remotes/pull/1/merge'.
+2025-12-21T04:15:28.5903908Z 
+2025-12-21T04:15:28.5905243Z You are in 'detached HEAD' state. You can look around, make experimental
+2025-12-21T04:15:28.5906204Z changes and commit them, and you can discard any commits you make in this
+2025-12-21T04:15:28.5907144Z state without impacting any branches by switching back to a branch.
+2025-12-21T04:15:28.5907803Z 
+2025-12-21T04:15:28.5909104Z If you want to create a new branch to retain commits you create, you may
+2025-12-21T04:15:28.5911099Z do so (now or later) by using -c with the switch command. Example:
+2025-12-21T04:15:28.5922369Z 
+2025-12-21T04:15:28.5922602Z   git switch -c <new-branch-name>
+2025-12-21T04:15:28.5923187Z 
+2025-12-21T04:15:28.5923352Z Or undo this operation with:
+2025-12-21T04:15:28.5923899Z 
+2025-12-21T04:15:28.5924237Z   git switch -
+2025-12-21T04:15:28.5926409Z 
+2025-12-21T04:15:28.5926969Z Turn off this advice by setting config variable advice.detachedHead to false
+2025-12-21T04:15:28.5927487Z 
+2025-12-21T04:15:28.5928054Z HEAD is now at b04464c Merge bf927cbe53ca4e00c3e1d1c0c8082ee91a03af99 into 6e183af9da9b0cab21f355524a27b353e6cce2f3
+2025-12-21T04:15:28.5929622Z ##[endgroup]
+2025-12-21T04:15:28.5967553Z [command]/usr/bin/git log -1 --format=%H
+2025-12-21T04:15:28.6003374Z b04464c9b5ade5c971a04442fec0087b658d99d4
