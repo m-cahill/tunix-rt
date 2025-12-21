@@ -35,14 +35,25 @@ class RediClient:
         """Check RediAI health by calling its health endpoint.
 
         Returns:
-            {"status": "healthy"} if RediAI is reachable
-            {"status": "down", "error": "..."} if unreachable or error
+            {"status": "healthy"} if RediAI returns 2xx
+            {"status": "down", "error": "HTTP <code>"} if non-2xx status
+            {"status": "down", "error": "<exception details>"} on connection/timeout error
         """
         try:
             async with httpx.AsyncClient(timeout=5.0) as client:
                 response = await client.get(self.health_url)
-                response.raise_for_status()
-                return {"status": "healthy"}
+                
+                # Check for 2xx response
+                if 200 <= response.status_code < 300:
+                    return {"status": "healthy"}
+                
+                # Non-2xx response
+                return {"status": "down", "error": f"HTTP {response.status_code}"}
+        
+        except httpx.TimeoutException:
+            return {"status": "down", "error": "Timeout after 5s"}
+        except httpx.ConnectError as e:
+            return {"status": "down", "error": f"Connection refused: {e}"}
         except httpx.HTTPError as e:
             return {"status": "down", "error": f"HTTP error: {type(e).__name__}"}
         except Exception as e:
