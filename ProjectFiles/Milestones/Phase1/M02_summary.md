@@ -1,13 +1,13 @@
 # Milestone M2 Completion Summary
 
 **Status:** ✅ **COMPLETE**  
-**Completion Date:** 2025-12-20  
-**Duration:** 1 session (~3 hours)  
+**Completion Date:** 2025-12-21  
+**Duration:** 1 session (~4 hours)  
 **Repository:** https://github.com/m-cahill/tunix-rt  
 **Branch:** main  
 **Base Commit:** 2b0b245 (M1 Complete + Docs)  
-**Head Commit:** a336675 (M2 Complete)  
-**CI Status:** ✅ GREEN
+**Head Commit:** f025f80 (M2 Complete + CI Fixes)  
+**CI Status:** ✅ **GREEN** (All jobs passing)
 
 ---
 
@@ -458,6 +458,31 @@
 
 ---
 
+## 🛠️ Post-M2 Patches (CI Fixes)
+
+After initial M2 delivery, two critical CI fixes were applied:
+
+### Patch 1: Missing Parent Commit Handler
+**Commit:** 5df54e2  
+**Issue:** `paths-filter` used `HEAD~1` which fails on first commit  
+**Fix:** Changed to `github.event.before` as fallback  
+**Status:** Partial - revealed deeper issue
+
+### Patch 2: Event-Aware Diff Configuration ✅
+**Commit:** f025f80  
+**Issue:** `ref: HEAD` not resolvable on push events (detached checkout)  
+**Fix:** Event-aware logic for both `base` and `ref`:
+```yaml
+base: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+```
+**Result:** ✅ CI now green on both PR and push events
+
+**Total CI Fix Commits:** 2  
+**Final Status:** ✅ Stable and deterministic
+
+---
+
 ## 📝 Files Changed Summary
 
 ### Created (16 files)
@@ -643,9 +668,15 @@ CREATE TABLE traces (
 - All phases delivered (Quick wins, DB, API, Frontend, E2E, Docs)
 - All tests passing (34 backend + 5 frontend + 5 E2E)
 - Coverage gates passing (92.39% line / 90% branch)
-- CI green on main
-- Documentation comprehensive
+- CI green on main (verified after event-aware fix)
+- Documentation comprehensive and up-to-date
 - 4 low-severity issues identified for M3
+
+**CI Stability:**
+- 2 post-delivery fixes applied (HEAD~1 fallback, event-aware diff)
+- Changes job now handles both PR and push events correctly
+- No symbolic refs (deterministic SHA-based diffing)
+- Structurally stable for future milestones
 
 **Next Milestone:** M3 - Trace System Enhancements
 
