@@ -2,6 +2,8 @@
 
 **Tunix Reasoning-Trace Framework for AI-Native Development**
 
+**Status:** M1 Complete ✅ | Coverage: 92% Line, 90% Branch | Security: Baseline Operational
+
 A full-stack application for managing reasoning traces and integrating with the RediAI framework for the Tunix Hackathon.
 
 ## Quick Start
@@ -12,8 +14,27 @@ A full-stack application for managing reasoning traces and integrating with the 
 - Node.js 18+  
 - Docker & Docker Compose
 - RediAI running locally (for real mode integration)
+- Make (optional, for Makefile commands)
 
-### Backend Setup
+### Quick Commands (M1+)
+
+**Using Makefile (Mac/Linux/WSL):**
+```bash
+make install    # Install all dependencies
+make test       # Run all tests with coverage
+make lint       # Run linters and type checking
+make docker-up  # Start Docker services
+```
+
+**Using PowerShell (Windows):**
+```powershell
+.\scripts\dev.ps1 install
+.\scripts\dev.ps1 test
+.\scripts\dev.ps1 lint
+.\scripts\dev.ps1 docker-up
+```
+
+### Backend Setup (Manual)
 
 ```bash
 cd backend
@@ -23,7 +44,8 @@ python -m pip install -e ".[dev]"
 ruff check .
 ruff format --check .
 mypy tunix_rt_backend
-pytest -q
+pytest --cov=tunix_rt_backend --cov-branch
+python tools/coverage_gate.py  # Enforce line ≥80%, branch ≥68%
 
 # Start development server
 uvicorn tunix_rt_backend.app:app --reload --port 8000
@@ -79,10 +101,16 @@ DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/postgres
 FRONTEND_PORT=5173
 
 # RediAI Integration
-REDIAI_MODE=mock  # or "real"
-REDIAI_BASE_URL=http://localhost:8080
+REDIAI_MODE=mock  # or "real" (validated: must be "mock" or "real")
+REDIAI_BASE_URL=http://localhost:8080  # (validated: must be valid HTTP/HTTPS URL)
 REDIAI_HEALTH_PATH=/health
+REDIAI_HEALTH_CACHE_TTL_SECONDS=30  # Cache TTL for health checks (0-300, default: 30)
 ```
+
+**M1 Configuration Validation:**
+- All settings are validated on startup using Pydantic
+- Invalid configuration causes immediate failure with clear error messages
+- See `backend/tunix_rt_backend/settings.py` for validation logic
 
 ### RediAI Integration Modes
 
