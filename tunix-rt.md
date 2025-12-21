@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M2 Complete** ✅  
-**Coverage:** 92% Line, 90% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic
+**Milestone M3 Complete** ✅  
+**Coverage:** 92% Line, 90% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic + Optimized
 
 ## Overview
 
@@ -10,6 +10,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M1 Enhancements:** Enterprise-grade testing (90% branch coverage), security scanning (pip-audit, npm audit, gitleaks), configuration validation, TTL caching, and developer experience tools.
 
 **M2 Enhancements:** Database integration (async SQLAlchemy + PostgreSQL), Alembic migrations, trace CRUD API (create/retrieve/list), frontend trace UI, comprehensive validation, and payload size limits.
+
+**M3 Enhancements:** Trace system hardening - DB connection pool settings applied, created_at index for list performance, frontend trace UI unit tests (8 total), frontend coverage artifact generation confirmed, Alembic auto-ID migration policy documented, curl API examples, and DB troubleshooting guide.
 
 ## System Architecture
 
@@ -220,12 +222,18 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 
 **Indexes:**
 - Primary key on `id` (automatic)
-- Future: Index on `created_at` for list pagination (M3+)
+- Index `ix_traces_created_at` on `created_at` for list pagination performance (M3)
 
 **Migrations:**
 - Managed by Alembic (async mode)
 - Migration files in `backend/alembic/versions/`
 - Run migrations: `make db-upgrade` or `alembic upgrade head`
+
+**Migration Policy (M3):**
+- **DO NOT** manually set revision IDs; use Alembic-generated UUIDs
+- Create new migrations: `alembic revision -m "description"`
+- Alembic will auto-generate a unique revision ID (e.g., `f8f1393630e4`)
+- Existing migration `001` is grandfathered; all future migrations use auto-generated IDs
 
 ## Configuration
 
@@ -566,12 +574,23 @@ docs: update README
 - E2E test for complete trace flow
 - Frontend coverage measurement (60% lines, 50% branches)
 
-## Next Steps (M3+)
+### M3: Trace System Hardening ✅
+- DB connection pool settings (pool_size, max_overflow, pool_timeout) applied to create_async_engine
+- created_at index migration (f8f1393630e4) for improved list query performance
+- Index `ix_traces_created_at` tested on SQLite (CI parity) and verified via SQL
+- Frontend trace UI unit tests: 8 tests total (Load Example, Upload success, Fetch success)
+- Frontend coverage artifacts confirmed generating (coverage/coverage-final.json)
+- Alembic auto-generated UUID migration policy documented (no manual revision IDs)
+- Curl examples added to README for all trace endpoints
+- DB troubleshooting guide added to README (docker compose, psql, alembic commands)
+- All tests passing: Backend 92% line/90% branch, Frontend 8/8 tests
 
-1. **M3**: Trace analysis and quality scoring
-2. **M4**: RediAI workflow registry integration
-3. **M5**: Trace optimization and recommendations
-4. **M6**: Production deployment (Netlify + Render)
+## Next Steps (M4+)
+
+1. **M4**: Trace analysis and quality scoring
+2. **M5**: RediAI workflow registry integration
+3. **M6**: Trace optimization and recommendations
+4. **M7**: Production deployment (Netlify + Render)
 
 ## Architecture Decisions
 

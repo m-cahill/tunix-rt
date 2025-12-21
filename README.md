@@ -2,7 +2,7 @@
 
 **Tunix Reasoning-Trace Framework for AI-Native Development**
 
-**Status:** M2 Complete ✅ | Coverage: 92% Line, 90% Branch | Database: PostgreSQL + Alembic
+**Status:** M3 Complete ✅ | Coverage: 92% Line, 90% Branch | Database: PostgreSQL + Alembic + Optimized
 
 A full-stack application for managing reasoning traces and integrating with the RediAI framework for the Tunix Hackathon.
 
@@ -190,19 +190,44 @@ make db-revision msg="description"
 
 ### Trace Endpoints (M2+)
 
-- `POST /api/traces` - Create a new reasoning trace
-  - Request body: ReasoningTrace JSON
-  - Response: `{"id": "uuid", "created_at": "...", "trace_version": "..."}`
-  - Status: 201 Created, 413 Payload Too Large, 422 Validation Error
-  
-- `GET /api/traces/{id}` - Get a trace by ID
-  - Response: Full trace with payload
-  - Status: 200 OK, 404 Not Found
-  
-- `GET /api/traces?limit=20&offset=0` - List traces (paginated)
-  - Response: `{"data": [...], "pagination": {...}}`
-  - Params: `limit` (1-100, default 20), `offset` (default 0)
-  - Status: 200 OK, 422 Invalid Parameters
+**Create a new trace:**
+
+```bash
+curl -X POST http://localhost:8000/api/traces \
+  -H "Content-Type: application/json" \
+  -d '{
+    "trace_version": "1.0",
+    "prompt": "What is 27 × 19?",
+    "final_answer": "513",
+    "steps": [
+      {"i": 0, "type": "parse", "content": "Parse the multiplication task"},
+      {"i": 1, "type": "compute", "content": "27 × 19 = 513"}
+    ],
+    "meta": {"source": "example"}
+  }'
+```
+
+Response: `{"id": "550e8400-...", "created_at": "2025-12-21T...", "trace_version": "1.0"}`
+
+**Get a trace by ID:**
+
+```bash
+curl http://localhost:8000/api/traces/550e8400-e29b-41d4-a716-446655440000
+```
+
+Response: Full trace with payload
+
+**List traces (paginated):**
+
+```bash
+# Get first 20 traces
+curl http://localhost:8000/api/traces
+
+# Get next page with custom limit
+curl "http://localhost:8000/api/traces?limit=10&offset=20"
+```
+
+Response: `{"data": [...], "pagination": {"limit": 20, "offset": 0, "next_offset": 20}}`
 
 ## Project Structure
 
@@ -286,6 +311,95 @@ Uses `dorny/paths-filter` to avoid merge-blocking issues with required checks.
 - **Smoke test**: Load page, assert "API: healthy" visible
 - **Mock mode**: CI runs with `REDIAI_MODE=mock` (no RediAI required)
 - **Real mode**: Local testing with actual RediAI instance
+
+## Troubleshooting
+
+### Database Issues
+
+**Check PostgreSQL is running:**
+
+```bash
+docker compose ps
+```
+
+Expected output: `tunix-rt-postgres-1` should show status "Up"
+
+**Verify database connection:**
+
+```bash
+# From host machine
+psql postgresql://postgres:postgres@localhost:5432/postgres -c "SELECT 1;"
+
+# Or using Docker
+docker exec -it tunix-rt-postgres-1 psql -U postgres -c "SELECT 1;"
+```
+
+**Run migrations:**
+
+```bash
+cd backend
+alembic upgrade head
+```
+
+If migrations fail, check:
+- PostgreSQL is running (`docker compose ps`)
+- `DATABASE_URL` environment variable is correct
+- Database user has sufficient permissions
+
+**Check current migration version:**
+
+```bash
+cd backend
+alembic current
+```
+
+**View migration history:**
+
+```bash
+cd backend
+alembic history --verbose
+```
+
+### RediAI Connection Issues
+
+If `/api/redi/health` returns `{"status": "down"}`:
+
+1. Verify RediAI is running:
+   ```bash
+   curl http://localhost:8080/health
+   ```
+
+2. Check `REDIAI_BASE_URL` environment variable matches your RediAI instance
+
+3. For testing, switch to mock mode:
+   ```bash
+   export REDIAI_MODE=mock
+   ```
+
+### Docker Compose Issues
+
+**Backend can't reach RediAI on host:**
+
+Set `REDIAI_BASE_URL=http://host.docker.internal:8080` in your `.env` file.
+
+On Linux, add to `docker-compose.yml`:
+```yaml
+extra_hosts:
+  - "host.docker.internal:host-gateway"
+```
+
+**Port conflicts:**
+
+If port 5432 or 8000 is already in use:
+```bash
+# Check what's using the port
+netstat -ano | findstr :5432   # Windows
+lsof -i :5432                   # Mac/Linux
+
+# Stop conflicting containers
+docker ps
+docker stop <container_name>
+```
 
 ## License
 
