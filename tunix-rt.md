@@ -9,6 +9,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 
 **M1 Enhancements:** Enterprise-grade testing (90% branch coverage), security scanning (pip-audit, npm audit, gitleaks), configuration validation, TTL caching, and developer experience tools.
 
+**M2 Enhancements:** Database integration (async SQLAlchemy + PostgreSQL), Alembic migrations, trace CRUD API (create/retrieve/list), frontend trace UI, comprehensive validation, and payload size limits.
+
 ## System Architecture
 
 ### Components
