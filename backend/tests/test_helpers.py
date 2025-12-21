@@ -1,6 +1,7 @@
 """Tests for helper functions."""
 
 import uuid
+from typing import AsyncGenerator
 
 import pytest
 import pytest_asyncio
@@ -16,7 +17,7 @@ TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
 
 
 @pytest_asyncio.fixture
-async def test_db():
+async def test_db() -> AsyncGenerator[AsyncSession, None]:
     """Create a test database session.
 
     Yields:

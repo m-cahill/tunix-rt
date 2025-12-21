@@ -1,0 +1,25 @@
+# Auto detect text files and normalize to LF
+* text=auto eol=lf
+
+# Explicitly declare text files
+*.py text
+*.ts text
+*.tsx text
+*.md text
+*.json text
+*.yml text
+*.yaml text
+
+# Windows batch files
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+
