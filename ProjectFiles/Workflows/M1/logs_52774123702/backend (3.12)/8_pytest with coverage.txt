@@ -1,0 +1,44 @@
+﻿2025-12-21T17:14:56.4970982Z ##[group]Run pytest -q --cov=tunix_rt_backend --cov-branch --cov-report=term --cov-report=xml --cov-report=json:coverage.json
+2025-12-21T17:14:56.4971795Z [36;1mpytest -q --cov=tunix_rt_backend --cov-branch --cov-report=term --cov-report=xml --cov-report=json:coverage.json[0m
+2025-12-21T17:14:56.5005163Z shell: /usr/bin/bash -e {0}
+2025-12-21T17:14:56.5005393Z env:
+2025-12-21T17:14:56.5005633Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T17:14:56.5006040Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib/pkgconfig
+2025-12-21T17:14:56.5006434Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T17:14:56.5006789Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T17:14:56.5007131Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T17:14:56.5007478Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib
+2025-12-21T17:14:56.5007773Z ##[endgroup]
+2025-12-21T17:15:00.8095460Z ..................................                                       [100%]
+2025-12-21T17:15:00.8097981Z =============================== warnings summary ===============================
+2025-12-21T17:15:00.8100147Z tests/test_traces.py::test_create_trace_oversized_payload
+2025-12-21T17:15:00.8102848Z   /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/fastapi/dependencies/utils.py:676: DeprecationWarning: 'HTTP_413_REQUEST_ENTITY_TOO_LARGE' is deprecated. Use 'HTTP_413_CONTENT_TOO_LARGE' instead.
+2025-12-21T17:15:00.8104673Z     solved = await call(**solved_result.values)
+2025-12-21T17:15:00.8105132Z 
+2025-12-21T17:15:00.8110730Z tests/test_traces.py::test_list_traces_invalid_limit
+2025-12-21T17:15:00.8112950Z tests/test_traces.py::test_list_traces_negative_offset
+2025-12-21T17:15:00.8114483Z   /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/fastapi/routing.py:312: DeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
+2025-12-21T17:15:00.8115778Z     return await dependant.call(**values)
+2025-12-21T17:15:00.8116052Z 
+2025-12-21T17:15:00.8116347Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2025-12-21T17:15:00.8116952Z ================================ tests coverage ================================
+2025-12-21T17:15:00.8117521Z _______________ coverage: platform linux, python 3.12.12-final-0 _______________
+2025-12-21T17:15:00.8117929Z 
+2025-12-21T17:15:00.8118112Z Name                                     Stmts   Miss Branch BrPart  Cover
+2025-12-21T17:15:00.8118623Z --------------------------------------------------------------------------
+2025-12-21T17:15:00.8119203Z tunix_rt_backend/__init__.py                 1      0      0      0   100%
+2025-12-21T17:15:00.8119784Z tunix_rt_backend/app.py                     64     11     14      0    83%
+2025-12-21T17:15:00.8120345Z tunix_rt_backend/db/__init__.py              0      0      0      0   100%
+2025-12-21T17:15:00.8120945Z tunix_rt_backend/db/base.py                 10      2      0      0    80%
+2025-12-21T17:15:00.8121557Z tunix_rt_backend/db/models/__init__.py       2      0      0      0   100%
+2025-12-21T17:15:00.8122196Z tunix_rt_backend/db/models/trace.py         12      0      0      0   100%
+2025-12-21T17:15:00.8123190Z tunix_rt_backend/redi_client.py             32      6      4      1    81%
+2025-12-21T17:15:00.8123972Z tunix_rt_backend/schemas/__init__.py         2      0      0      0   100%
+2025-12-21T17:15:00.8124604Z tunix_rt_backend/schemas/trace.py           47      1      4      1    96%
+2025-12-21T17:15:00.8125261Z tunix_rt_backend/settings.py                33      1      2      1    94%
+2025-12-21T17:15:00.8125881Z --------------------------------------------------------------------------
+2025-12-21T17:15:00.8126438Z TOTAL                                      203     21     24      3    89%
+2025-12-21T17:15:00.8126933Z Coverage XML written to file coverage.xml
+2025-12-21T17:15:00.8127413Z Coverage JSON written to file coverage.json
+2025-12-21T17:15:00.8128384Z Required test coverage of 70.0% reached. Total coverage: 88.55%
+2025-12-21T17:15:00.8128983Z 34 passed, 3 warnings in 2.67s

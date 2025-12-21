@@ -1,0 +1,22 @@
+﻿2025-12-21T20:03:07.9156907Z ##[group]Run ruff check .
+2025-12-21T20:03:07.9157154Z [36;1mruff check .[0m
+2025-12-21T20:03:07.9178466Z shell: /usr/bin/bash -e {0}
+2025-12-21T20:03:07.9178712Z env:
+2025-12-21T20:03:07.9178960Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T20:03:07.9179361Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T20:03:07.9179747Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T20:03:07.9180081Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T20:03:07.9180415Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T20:03:07.9180747Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T20:03:07.9181017Z ##[endgroup]
+2025-12-21T20:03:07.9336511Z E501 Line too long (102 > 100)
+2025-12-21T20:03:07.9337699Z    --> tests/test_traces.py:340:101
+2025-12-21T20:03:07.9338099Z     |
+2025-12-21T20:03:07.9338390Z 339 | @pytest.mark.asyncio
+2025-12-21T20:03:07.9339095Z 340 | async def test_list_traces_valid_pagination_success(client: AsyncClient, example_trace: dict) -> None:
+2025-12-21T20:03:07.9339950Z     |                                                                                                     ^^
+2025-12-21T20:03:07.9340539Z 341 |     """Explicit test for list_traces validation success branches.
+2025-12-21T20:03:07.9341069Z     |
+2025-12-21T20:03:07.9341224Z 
+2025-12-21T20:03:07.9341357Z Found 1 error.
+2025-12-21T20:03:07.9357849Z ##[error]Process completed with exit code 1.

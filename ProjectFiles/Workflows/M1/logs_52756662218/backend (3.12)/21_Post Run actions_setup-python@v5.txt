@@ -1,0 +1,4 @@
+﻿2025-12-21T06:19:14.8120280Z Post job cleanup.
+2025-12-21T06:19:15.0137968Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --files-from manifest.txt --use-compress-program zstdmt
+2025-12-21T06:19:16.0200000Z Sent 54393993 of 54393993 (100.0%), 78.6 MBs/sec
+2025-12-21T06:19:16.1224244Z Cache saved with the key: setup-python-Linux-x64-24.04-Ubuntu-python-3.12.12-pip-03c7608b5f84f960b906408ec3b56871463b52d83fb30980bbf2ad28085364b0

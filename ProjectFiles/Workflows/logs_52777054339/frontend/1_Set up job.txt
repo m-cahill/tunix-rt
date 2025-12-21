@@ -1,0 +1,31 @@
+﻿2025-12-21T19:03:03.2611117Z Current runner version: '2.330.0'
+2025-12-21T19:03:03.2646167Z ##[group]Runner Image Provisioner
+2025-12-21T19:03:03.2647495Z Hosted Compute Agent
+2025-12-21T19:03:03.2648306Z Version: 20251211.462
+2025-12-21T19:03:03.2649111Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-21T19:03:03.2650403Z Build Date: 2025-12-11T16:28:49Z
+2025-12-21T19:03:03.2651432Z Worker ID: {41d62b5c-8707-43f5-8fa7-8b8f1a620cd3}
+2025-12-21T19:03:03.2652381Z ##[endgroup]
+2025-12-21T19:03:03.2653240Z ##[group]Operating System
+2025-12-21T19:03:03.2654028Z Ubuntu
+2025-12-21T19:03:03.2655382Z 24.04.3
+2025-12-21T19:03:03.2655999Z LTS
+2025-12-21T19:03:03.2656736Z ##[endgroup]
+2025-12-21T19:03:03.2657407Z ##[group]Runner Image
+2025-12-21T19:03:03.2658230Z Image: ubuntu-24.04
+2025-12-21T19:03:03.2659014Z Version: 20251215.174.1
+2025-12-21T19:03:03.2661574Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-21T19:03:03.2663806Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-21T19:03:03.2665642Z ##[endgroup]
+2025-12-21T19:03:03.2667252Z ##[group]GITHUB_TOKEN Permissions
+2025-12-21T19:03:03.2670362Z Contents: read
+2025-12-21T19:03:03.2671125Z Metadata: read
+2025-12-21T19:03:03.2671920Z ##[endgroup]
+2025-12-21T19:03:03.2674958Z Secret source: Actions
+2025-12-21T19:03:03.2675948Z Prepare workflow directory
+2025-12-21T19:03:03.3375418Z Prepare all required actions
+2025-12-21T19:03:03.3433408Z Getting action download info
+2025-12-21T19:03:03.8561121Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2025-12-21T19:03:04.6287568Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2025-12-21T19:03:04.7092093Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2025-12-21T19:03:04.9874932Z Complete job name: frontend

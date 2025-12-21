@@ -1,0 +1,14 @@
+﻿2025-12-21T16:01:58.1585347Z ##[group]Run ruff format --check .
+2025-12-21T16:01:58.1585627Z [36;1mruff format --check .[0m
+2025-12-21T16:01:58.1606236Z shell: /usr/bin/bash -e {0}
+2025-12-21T16:01:58.1606465Z env:
+2025-12-21T16:01:58.1606710Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T16:01:58.1607101Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib/pkgconfig
+2025-12-21T16:01:58.1607468Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T16:01:58.1607999Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T16:01:58.1608339Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T16:01:58.1608675Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib
+2025-12-21T16:01:58.1608944Z ##[endgroup]
+2025-12-21T16:01:58.1750877Z Would reformat: alembic/versions/f8f1393630e4_add_traces_created_at_index.py
+2025-12-21T16:01:58.1752666Z 1 file would be reformatted, 18 files already formatted
+2025-12-21T16:01:58.1771184Z ##[error]Process completed with exit code 1.

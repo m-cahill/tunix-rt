@@ -1,0 +1,21 @@
+﻿2025-12-21T19:27:46.7995303Z ##[group]Run python tools/coverage_gate.py
+2025-12-21T19:27:46.7996163Z [36;1mpython tools/coverage_gate.py[0m
+2025-12-21T19:27:46.8044345Z shell: /usr/bin/bash -e {0}
+2025-12-21T19:27:46.8044735Z env:
+2025-12-21T19:27:46.8045124Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T19:27:46.8046094Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib/pkgconfig
+2025-12-21T19:27:46.8046804Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T19:27:46.8047411Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T19:27:46.8048099Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T19:27:46.8048703Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib
+2025-12-21T19:27:46.8049203Z ##[endgroup]
+2025-12-21T19:27:46.8447174Z ============================================================
+2025-12-21T19:27:46.8448833Z Coverage Gate Report
+2025-12-21T19:27:46.8449184Z ============================================================
+2025-12-21T19:27:46.8449713Z Line Coverage:   82.66% (gate: >= 80.0%)
+2025-12-21T19:27:46.8450240Z Branch Coverage: 59.38% (gate: >= 68.0%)
+2025-12-21T19:27:46.8450669Z ============================================================
+2025-12-21T19:27:46.8451094Z [FAIL] Coverage gates FAILED:
+2025-12-21T19:27:46.8451507Z   - Branch coverage: 59.38% < 68.0%
+2025-12-21T19:27:46.8452009Z ============================================================
+2025-12-21T19:27:46.8492687Z ##[error]Process completed with exit code 1.

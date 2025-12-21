@@ -1,0 +1,19 @@
+﻿2025-12-21T06:18:55.9817328Z ##[group]Run actions/cache@v4
+2025-12-21T06:18:55.9817596Z with:
+2025-12-21T06:18:55.9817760Z   path: ~/.cache/pip
+2025-12-21T06:18:55.9818159Z   key: security-tools-Linux-03c7608b5f84f960b906408ec3b56871463b52d83fb30980bbf2ad28085364b0
+2025-12-21T06:18:55.9818596Z   restore-keys: security-tools-Linux-
+
+2025-12-21T06:18:55.9818857Z   enableCrossOsArchive: false
+2025-12-21T06:18:55.9819076Z   fail-on-cache-miss: false
+2025-12-21T06:18:55.9819301Z   lookup-only: false
+2025-12-21T06:18:55.9820180Z   save-always: false
+2025-12-21T06:18:55.9820482Z env:
+2025-12-21T06:18:55.9820726Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T06:18:55.9821122Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T06:18:55.9821510Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T06:18:55.9821851Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T06:18:55.9822194Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T06:18:55.9822576Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T06:18:55.9822860Z ##[endgroup]
+2025-12-21T06:18:56.1900990Z Cache not found for input keys: security-tools-Linux-03c7608b5f84f960b906408ec3b56871463b52d83fb30980bbf2ad28085364b0, security-tools-Linux-

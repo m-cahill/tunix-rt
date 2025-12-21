@@ -1,0 +1,17 @@
+﻿2025-12-21T17:14:52.8450736Z ##[group]Run export DATABASE_URL="sqlite+aiosqlite:///./test_migrations.db"
+2025-12-21T17:14:52.8451228Z [36;1mexport DATABASE_URL="sqlite+aiosqlite:///./test_migrations.db"[0m
+2025-12-21T17:14:52.8451564Z [36;1malembic upgrade head[0m
+2025-12-21T17:14:52.8470747Z shell: /usr/bin/bash -e {0}
+2025-12-21T17:14:52.8470988Z env:
+2025-12-21T17:14:52.8471238Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:14:52.8471626Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T17:14:52.8471995Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:14:52.8472324Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:14:52.8472663Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:14:52.8473019Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T17:14:52.8473363Z   DATABASE_URL: sqlite+aiosqlite:///./test_migrations.db
+2025-12-21T17:14:52.8473643Z ##[endgroup]
+2025-12-21T17:14:53.3351871Z INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+2025-12-21T17:14:53.3352616Z INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2025-12-21T17:14:53.3433760Z INFO  [alembic.runtime.migration] Running upgrade  -> 001, create_traces_table
+2025-12-21T17:14:53.3480155Z INFO  [alembic.runtime.migration] Running upgrade 001 -> f8f1393630e4, add traces created_at index

@@ -1,0 +1,13 @@
+﻿2025-12-21T20:02:44.5971358Z ##[group]Run BASE="4ee5331ee97d6af37fdf6362cbecbd6d11baad1b"
+2025-12-21T20:02:44.5973464Z [36;1mBASE="4ee5331ee97d6af37fdf6362cbecbd6d11baad1b"[0m
+2025-12-21T20:02:44.5975096Z [36;1mREF="3d12dcab5a759f5acd0f7fa4043080d3b8c7888b"[0m
+2025-12-21T20:02:44.5976505Z [36;1mecho "Base SHA: $BASE"[0m
+2025-12-21T20:02:44.5977616Z [36;1mecho "Ref SHA: $REF"[0m
+2025-12-21T20:02:44.5978776Z [36;1mif [ -z "$BASE" ] || [ -z "$REF" ]; then[0m
+2025-12-21T20:02:44.5980619Z [36;1m  echo "::error::paths-filter base or ref SHA is empty — workflow misconfigured"[0m
+2025-12-21T20:02:44.5982534Z [36;1m  exit 1[0m
+2025-12-21T20:02:44.5983381Z [36;1mfi[0m
+2025-12-21T20:02:44.6024025Z shell: /usr/bin/bash -e {0}
+2025-12-21T20:02:44.6025222Z ##[endgroup]
+2025-12-21T20:02:44.6126310Z Base SHA: 4ee5331ee97d6af37fdf6362cbecbd6d11baad1b
+2025-12-21T20:02:44.6129958Z Ref SHA: 3d12dcab5a759f5acd0f7fa4043080d3b8c7888b

@@ -1,0 +1,52 @@
+﻿2025-12-21T19:27:41.7821810Z ##[group]Run pytest -q --cov=tunix_rt_backend --cov-branch --cov-report=term --cov-report=xml --cov-report=json:coverage.json
+2025-12-21T19:27:41.7822644Z [36;1mpytest -q --cov=tunix_rt_backend --cov-branch --cov-report=term --cov-report=xml --cov-report=json:coverage.json[0m
+2025-12-21T19:27:41.7856872Z shell: /usr/bin/bash -e {0}
+2025-12-21T19:27:41.7857238Z env:
+2025-12-21T19:27:41.7857601Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T19:27:41.7858208Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib/pkgconfig
+2025-12-21T19:27:41.7858873Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T19:27:41.7859400Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T19:27:41.7859914Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T19:27:41.7860443Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib
+2025-12-21T19:27:41.7860923Z ##[endgroup]
+2025-12-21T19:27:46.5947279Z .................................................                        [100%]
+2025-12-21T19:27:46.5949519Z =============================== warnings summary ===============================
+2025-12-21T19:27:46.5957415Z tests/test_scoring.py::TestCompareEndpoint::test_compare_with_invalid_uuid_format
+2025-12-21T19:27:46.5958756Z   /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/asyncio/events.py:88: DeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
+2025-12-21T19:27:46.5959917Z     self._context.run(self._callback, *self._args)
+2025-12-21T19:27:46.5960205Z 
+2025-12-21T19:27:46.5960428Z tests/test_traces.py::test_create_trace_oversized_payload
+2025-12-21T19:27:46.5961710Z   /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/fastapi/dependencies/utils.py:676: DeprecationWarning: 'HTTP_413_REQUEST_ENTITY_TOO_LARGE' is deprecated. Use 'HTTP_413_CONTENT_TOO_LARGE' instead.
+2025-12-21T19:27:46.5962945Z     solved = await call(**solved_result.values)
+2025-12-21T19:27:46.5963489Z 
+2025-12-21T19:27:46.5963880Z tests/test_traces.py::test_list_traces_invalid_limit
+2025-12-21T19:27:46.5964570Z tests/test_traces.py::test_list_traces_negative_offset
+2025-12-21T19:27:46.5969329Z tests/test_traces.py::test_list_traces_with_zero_limit
+2025-12-21T19:27:46.5971057Z   /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/fastapi/routing.py:312: DeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
+2025-12-21T19:27:46.5973788Z     return await dependant.call(**values)
+2025-12-21T19:27:46.5974060Z 
+2025-12-21T19:27:46.5974350Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2025-12-21T19:27:46.5974966Z ================================ tests coverage ================================
+2025-12-21T19:27:46.5975522Z _______________ coverage: platform linux, python 3.12.12-final-0 _______________
+2025-12-21T19:27:46.5976124Z 
+2025-12-21T19:27:46.5976306Z Name                                     Stmts   Miss Branch BrPart  Cover
+2025-12-21T19:27:46.5976797Z --------------------------------------------------------------------------
+2025-12-21T19:27:46.5977366Z tunix_rt_backend/__init__.py                 1      0      0      0   100%
+2025-12-21T19:27:46.5977943Z tunix_rt_backend/app.py                     95     33     22      0    63%
+2025-12-21T19:27:46.5978901Z tunix_rt_backend/db/__init__.py              0      0      0      0   100%
+2025-12-21T19:27:46.5979478Z tunix_rt_backend/db/base.py                 10      2      0      0    80%
+2025-12-21T19:27:46.5980049Z tunix_rt_backend/db/models/__init__.py       3      0      0      0   100%
+2025-12-21T19:27:46.5980668Z tunix_rt_backend/db/models/score.py         15      0      0      0   100%
+2025-12-21T19:27:46.5981317Z tunix_rt_backend/db/models/trace.py         13      0      0      0   100%
+2025-12-21T19:27:46.5981924Z tunix_rt_backend/redi_client.py             32      6      4      1    81%
+2025-12-21T19:27:46.5982557Z tunix_rt_backend/schemas/__init__.py         3      0      0      0   100%
+2025-12-21T19:27:46.5983489Z tunix_rt_backend/schemas/score.py           28      0      0      0   100%
+2025-12-21T19:27:46.5984102Z tunix_rt_backend/schemas/trace.py           47      1      4      1    96%
+2025-12-21T19:27:46.5984681Z tunix_rt_backend/scoring.py                 11      0      0      0   100%
+2025-12-21T19:27:46.5985278Z tunix_rt_backend/settings.py                33      1      2      1    94%
+2025-12-21T19:27:46.5994385Z --------------------------------------------------------------------------
+2025-12-21T19:27:46.5994941Z TOTAL                                      291     43     32      3    83%
+2025-12-21T19:27:46.5995359Z Coverage XML written to file coverage.xml
+2025-12-21T19:27:46.5995991Z Coverage JSON written to file coverage.json
+2025-12-21T19:27:46.5996470Z Required test coverage of 70.0% reached. Total coverage: 82.66%
+2025-12-21T19:27:46.5996967Z 49 passed, 5 warnings in 3.12s

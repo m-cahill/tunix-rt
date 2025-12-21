@@ -1,0 +1,179 @@
+﻿2025-12-21T16:01:43.6328038Z Current runner version: '2.330.0'
+2025-12-21T16:01:43.6384514Z ##[group]Runner Image Provisioner
+2025-12-21T16:01:43.6386030Z Hosted Compute Agent
+2025-12-21T16:01:43.6386918Z Version: 20251211.462
+2025-12-21T16:01:43.6398637Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-21T16:01:43.6399920Z Build Date: 2025-12-11T16:28:49Z
+2025-12-21T16:01:43.6401043Z Worker ID: {f3d4e59e-0819-43f5-ad32-aaefb5ca1a97}
+2025-12-21T16:01:43.6402349Z ##[endgroup]
+2025-12-21T16:01:43.6403301Z ##[group]Operating System
+2025-12-21T16:01:43.6404313Z Ubuntu
+2025-12-21T16:01:43.6405139Z 24.04.3
+2025-12-21T16:01:43.6406103Z LTS
+2025-12-21T16:01:43.6406860Z ##[endgroup]
+2025-12-21T16:01:43.6407981Z ##[group]Runner Image
+2025-12-21T16:01:43.6409041Z Image: ubuntu-24.04
+2025-12-21T16:01:43.6409865Z Version: 20251215.174.1
+2025-12-21T16:01:43.6411705Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-21T16:01:43.6414661Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-21T16:01:43.6416900Z ##[endgroup]
+2025-12-21T16:01:43.6439236Z ##[group]GITHUB_TOKEN Permissions
+2025-12-21T16:01:43.6442541Z Contents: read
+2025-12-21T16:01:43.6443530Z Metadata: read
+2025-12-21T16:01:43.6444384Z ##[endgroup]
+2025-12-21T16:01:43.6448340Z Secret source: Actions
+2025-12-21T16:01:43.6449847Z Prepare workflow directory
+2025-12-21T16:01:43.7242343Z Prepare all required actions
+2025-12-21T16:01:43.7300295Z Getting action download info
+2025-12-21T16:01:44.0455412Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2025-12-21T16:01:44.1509582Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2025-12-21T16:01:44.3379437Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2025-12-21T16:01:44.6449559Z Complete job name: frontend
+2025-12-21T16:01:44.7238378Z ##[group]Run actions/checkout@v4
+2025-12-21T16:01:44.7239725Z with:
+2025-12-21T16:01:44.7240529Z   repository: m-cahill/tunix-rt
+2025-12-21T16:01:44.7241714Z   token: ***
+2025-12-21T16:01:44.7242498Z   ssh-strict: true
+2025-12-21T16:01:44.7243309Z   ssh-user: git
+2025-12-21T16:01:44.7244120Z   persist-credentials: true
+2025-12-21T16:01:44.7245028Z   clean: true
+2025-12-21T16:01:44.7245869Z   sparse-checkout-cone-mode: true
+2025-12-21T16:01:44.7246847Z   fetch-depth: 1
+2025-12-21T16:01:44.7247810Z   fetch-tags: false
+2025-12-21T16:01:44.7248653Z   show-progress: true
+2025-12-21T16:01:44.7249493Z   lfs: false
+2025-12-21T16:01:44.7250297Z   submodules: false
+2025-12-21T16:01:44.7251164Z   set-safe-directory: true
+2025-12-21T16:01:44.7252308Z ##[endgroup]
+2025-12-21T16:01:44.8410374Z Syncing repository: m-cahill/tunix-rt
+2025-12-21T16:01:44.8414693Z ##[group]Getting Git version info
+2025-12-21T16:01:44.8416826Z Working directory is '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-21T16:01:44.8420851Z [command]/usr/bin/git version
+2025-12-21T16:01:44.8479078Z git version 2.52.0
+2025-12-21T16:01:44.8510659Z ##[endgroup]
+2025-12-21T16:01:44.8525084Z Temporarily overriding HOME='/home/runner/work/_temp/92014ed6-05b4-4a40-80ce-34ce941d1120' before making global git config changes
+2025-12-21T16:01:44.8530711Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-21T16:01:44.8543965Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-21T16:01:44.8585299Z Deleting the contents of '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-21T16:01:44.8589239Z ##[group]Initializing the repository
+2025-12-21T16:01:44.8593695Z [command]/usr/bin/git init /home/runner/work/tunix-rt/tunix-rt
+2025-12-21T16:01:44.8694299Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-21T16:01:44.8697702Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-21T16:01:44.8701907Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-21T16:01:44.8705100Z hint: call:
+2025-12-21T16:01:44.8706535Z hint:
+2025-12-21T16:01:44.8708344Z hint: 	git config --global init.defaultBranch <name>
+2025-12-21T16:01:44.8710547Z hint:
+2025-12-21T16:01:44.8712423Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-21T16:01:44.8715276Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-21T16:01:44.8717648Z hint:
+2025-12-21T16:01:44.8718942Z hint: 	git branch -m <name>
+2025-12-21T16:01:44.8720371Z hint:
+2025-12-21T16:01:44.8722230Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-21T16:01:44.8725209Z Initialized empty Git repository in /home/runner/work/tunix-rt/tunix-rt/.git/
+2025-12-21T16:01:44.8731083Z [command]/usr/bin/git remote add origin https://github.com/m-cahill/tunix-rt
+2025-12-21T16:01:44.8757242Z ##[endgroup]
+2025-12-21T16:01:44.8760593Z ##[group]Disabling automatic garbage collection
+2025-12-21T16:01:44.8762946Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-21T16:01:44.8795781Z ##[endgroup]
+2025-12-21T16:01:44.8798524Z ##[group]Setting up auth
+2025-12-21T16:01:44.8802735Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-21T16:01:44.8837776Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-21T16:01:44.9177958Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-21T16:01:44.9212015Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-21T16:01:44.9444501Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-21T16:01:44.9478586Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-21T16:01:44.9722874Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-21T16:01:44.9759677Z ##[endgroup]
+2025-12-21T16:01:44.9763832Z ##[group]Fetching the repository
+2025-12-21T16:01:44.9771436Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c7c861aba359d55fc22ad483753fc6f173525424:refs/remotes/origin/main
+2025-12-21T16:01:45.2976535Z From https://github.com/m-cahill/tunix-rt
+2025-12-21T16:01:45.2985164Z  * [new ref]         c7c861aba359d55fc22ad483753fc6f173525424 -> origin/main
+2025-12-21T16:01:45.3011876Z ##[endgroup]
+2025-12-21T16:01:45.3014635Z ##[group]Determining the checkout info
+2025-12-21T16:01:45.3017911Z ##[endgroup]
+2025-12-21T16:01:45.3020064Z [command]/usr/bin/git sparse-checkout disable
+2025-12-21T16:01:45.3060916Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-21T16:01:45.3089680Z ##[group]Checking out the ref
+2025-12-21T16:01:45.3092893Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-21T16:01:45.3386360Z Switched to a new branch 'main'
+2025-12-21T16:01:45.3389297Z branch 'main' set up to track 'origin/main'.
+2025-12-21T16:01:45.3397898Z ##[endgroup]
+2025-12-21T16:01:45.3431701Z [command]/usr/bin/git log -1 --format=%H
+2025-12-21T16:01:45.3454189Z c7c861aba359d55fc22ad483753fc6f173525424
+2025-12-21T16:01:45.3682967Z ##[group]Run actions/setup-node@v4
+2025-12-21T16:01:45.3683297Z with:
+2025-12-21T16:01:45.3683528Z   node-version: 18
+2025-12-21T16:01:45.3683761Z   cache: npm
+2025-12-21T16:01:45.3684068Z   cache-dependency-path: frontend/package-lock.json
+2025-12-21T16:01:45.3684400Z   always-auth: false
+2025-12-21T16:01:45.3684638Z   check-latest: false
+2025-12-21T16:01:45.3685010Z   token: ***
+2025-12-21T16:01:45.3685235Z ##[endgroup]
+2025-12-21T16:01:45.5808888Z Attempting to download 18...
+2025-12-21T16:01:46.0860679Z Acquiring 18.20.8 - x64 from https://github.com/actions/node-versions/releases/download/18.20.8-14110393767/node-18.20.8-linux-x64.tar.gz
+2025-12-21T16:01:46.6186788Z Extracting ...
+2025-12-21T16:01:46.6293387Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/4d3d12fb-bcaf-4ca3-ba28-5e3dafc98bd3 -f /home/runner/work/_temp/c07c907b-36f3-4cfb-89f9-b55e21e7dbed
+2025-12-21T16:01:47.8763925Z Adding to the cache ...
+2025-12-21T16:01:52.4973629Z ##[group]Environment details
+2025-12-21T16:01:52.8510074Z node: v18.20.8
+2025-12-21T16:01:52.8512121Z npm: 10.8.2
+2025-12-21T16:01:52.8512867Z yarn: 1.22.22
+2025-12-21T16:01:52.8513559Z ##[endgroup]
+2025-12-21T16:01:52.8540647Z [command]/opt/hostedtoolcache/node/18.20.8/x64/bin/npm config get cache
+2025-12-21T16:01:52.9760500Z /home/runner/.npm
+2025-12-21T16:01:53.0983873Z Cache hit for: node-cache-Linux-x64-npm-aa6cea751bc6f26eccaab0d40d12ee76c82a5cf0a0214784714195c0c416e4f9
+2025-12-21T16:01:53.6525449Z Received 27036937 of 27036937 (100.0%), 55.8 MBs/sec
+2025-12-21T16:01:53.6527411Z Cache Size: ~26 MB (27036937 B)
+2025-12-21T16:01:53.6556376Z [command]/usr/bin/tar -xf /home/runner/work/_temp/049bd2d4-086f-4d09-8925-ae48239fa3bb/cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --use-compress-program unzstd
+2025-12-21T16:01:53.7985009Z Cache restored successfully
+2025-12-21T16:01:53.8040784Z Cache restored from key: node-cache-Linux-x64-npm-aa6cea751bc6f26eccaab0d40d12ee76c82a5cf0a0214784714195c0c416e4f9
+2025-12-21T16:01:53.8287862Z ##[group]Run npm ci
+2025-12-21T16:01:53.8288179Z [36;1mnpm ci[0m
+2025-12-21T16:01:53.8326080Z shell: /usr/bin/bash -e {0}
+2025-12-21T16:01:53.8326351Z ##[endgroup]
+2025-12-21T16:01:55.8215184Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-12-21T16:01:55.9456229Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+2025-12-21T16:01:55.9535556Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-12-21T16:01:56.0399036Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-12-21T16:01:56.0495414Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-12-21T16:01:57.4869654Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-12-21T16:01:57.7613735Z 
+2025-12-21T16:01:57.7614892Z added 392 packages, and audited 393 packages in 4s
+2025-12-21T16:01:57.7625172Z 
+2025-12-21T16:01:57.7626574Z 115 packages are looking for funding
+2025-12-21T16:01:57.7627369Z   run `npm fund` for details
+2025-12-21T16:01:57.7854225Z 
+2025-12-21T16:01:57.7854758Z 4 moderate severity vulnerabilities
+2025-12-21T16:01:57.7855363Z 
+2025-12-21T16:01:57.7855995Z To address all issues (including breaking changes), run:
+2025-12-21T16:01:57.7856841Z   npm audit fix --force
+2025-12-21T16:01:57.7857527Z 
+2025-12-21T16:01:57.7857940Z Run `npm audit` for details.
+2025-12-21T16:01:57.8136478Z ##[group]Run npm run test -- --coverage
+2025-12-21T16:01:57.8136819Z [36;1mnpm run test -- --coverage[0m
+2025-12-21T16:01:57.8170476Z shell: /usr/bin/bash -e {0}
+2025-12-21T16:01:57.8170722Z ##[endgroup]
+2025-12-21T16:01:57.9484834Z 
+2025-12-21T16:01:57.9485646Z > tunix-rt-frontend@0.1.0 test
+2025-12-21T16:01:57.9486203Z > vitest --run --coverage
+2025-12-21T16:01:57.9486468Z 
+2025-12-21T16:01:58.4149334Z [31m[7m[31m MISSING DEPENDENCY [31m[27m Cannot find dependency '@vitest/coverage-v8'
+2025-12-21T16:01:58.4149947Z 
+2025-12-21T16:01:58.4353440Z [39m
+2025-12-21T16:01:58.4368445Z ##[error]Process completed with exit code 1.
+2025-12-21T16:01:58.4475242Z Post job cleanup.
+2025-12-21T16:01:58.5424522Z [command]/usr/bin/git version
+2025-12-21T16:01:58.5465898Z git version 2.52.0
+2025-12-21T16:01:58.5512782Z Temporarily overriding HOME='/home/runner/work/_temp/0cc51895-22ca-4442-8e1b-f714c8cb2aaa' before making global git config changes
+2025-12-21T16:01:58.5514548Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-21T16:01:58.5520088Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-21T16:01:58.5564101Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-21T16:01:58.5600998Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-21T16:01:58.5843944Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-21T16:01:58.5877964Z http.https://github.com/.extraheader
+2025-12-21T16:01:58.5892915Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-12-21T16:01:58.5927691Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-21T16:01:58.6163066Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-21T16:01:58.6196708Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-21T16:01:58.6535588Z Cleaning up orphan processes

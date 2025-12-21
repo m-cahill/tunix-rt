@@ -1,0 +1,30 @@
+﻿2025-12-21T06:19:00.5666361Z ##[group]Run cd ../frontend && npm ci
+2025-12-21T06:19:00.5666664Z [36;1mcd ../frontend && npm ci[0m
+2025-12-21T06:19:00.5688056Z shell: /usr/bin/bash -e {0}
+2025-12-21T06:19:00.5688301Z env:
+2025-12-21T06:19:00.5688464Z   REDIAI_MODE: mock
+2025-12-21T06:19:00.5688708Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T06:19:00.5689089Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T06:19:00.5689450Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T06:19:00.5689787Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T06:19:00.5690101Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T06:19:00.5690429Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T06:19:00.5690700Z ##[endgroup]
+2025-12-21T06:19:02.6171946Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-12-21T06:19:03.1162593Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-12-21T06:19:03.1438556Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-12-21T06:19:03.7805743Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+2025-12-21T06:19:03.8063874Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-12-21T06:19:05.6094818Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-12-21T06:19:05.8965677Z 
+2025-12-21T06:19:05.8967864Z added 392 packages, and audited 393 packages in 5s
+2025-12-21T06:19:05.8969620Z 
+2025-12-21T06:19:05.8970937Z 115 packages are looking for funding
+2025-12-21T06:19:05.8972919Z   run `npm fund` for details
+2025-12-21T06:19:05.9125014Z 
+2025-12-21T06:19:05.9127153Z 4 moderate severity vulnerabilities
+2025-12-21T06:19:05.9127503Z 
+2025-12-21T06:19:05.9129339Z To address all issues (including breaking changes), run:
+2025-12-21T06:19:05.9131515Z   npm audit fix --force
+2025-12-21T06:19:05.9134453Z 
+2025-12-21T06:19:05.9134730Z Run `npm audit` for details.

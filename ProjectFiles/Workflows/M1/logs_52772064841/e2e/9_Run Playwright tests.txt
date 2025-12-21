@@ -1,0 +1,200 @@
+﻿2025-12-21T16:02:47.7996446Z ##[group]Run npx playwright test
+2025-12-21T16:02:47.7996967Z [36;1mnpx playwright test[0m
+2025-12-21T16:02:47.8041796Z shell: /usr/bin/bash -e {0}
+2025-12-21T16:02:47.8042040Z env:
+2025-12-21T16:02:47.8042216Z   REDIAI_MODE: mock
+2025-12-21T16:02:47.8042494Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T16:02:47.8042907Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T16:02:47.8043292Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T16:02:47.8043677Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T16:02:47.8044031Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T16:02:47.8044382Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T16:02:47.8044674Z ##[endgroup]
+2025-12-21T16:02:50.6332739Z [WebServer] INFO:     Started server process [2989]
+2025-12-21T16:02:50.6337345Z [WebServer] INFO:     Waiting for application startup.
+2025-12-21T16:02:50.6338429Z [WebServer] INFO:     Application startup complete.
+2025-12-21T16:02:50.6339443Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2025-12-21T16:02:51.5974924Z 
+2025-12-21T16:02:51.6001683Z Running 5 tests using 1 worker
+2025-12-21T16:02:53.0127475Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:02:53.0150866Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.0152251Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.0185840Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:02:53.0194612Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.0195537Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.0270774Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:02:53.0276320Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.0277237Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.0358427Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:02:53.0364760Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.0365734Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.2747990Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:02:53.2749188Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.2750271Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.2751664Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:02:53.2752737Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.2753773Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.2876018Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:02:53.2877335Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.2878412Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.2922413Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:02:53.2925521Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.2928529Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.5069323Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:02:53.5070734Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.5071988Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.5149612Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:02:53.5150551Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.5151489Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.5269562Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:02:53.5279173Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.5280432Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.5284151Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:02:53.5285627Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.5287763Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.7178754Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:02:53.7180628Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.7182281Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.7241204Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:02:53.7262113Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.7263750Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.7282894Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:02:53.7284143Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.7285378Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:53.7358890Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:02:53.7362726Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:53.7364411Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:54.9068938Z [WebServer] [2m4:02:54 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:02:54.9070211Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:54.9071402Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:54.9131636Z [WebServer] [2m4:02:54 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:02:54.9135490Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:54.9136876Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:54.9230366Z [WebServer] [2m4:02:54 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:02:54.9247933Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:54.9250765Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:54.9252553Z [WebServer] [2m4:02:54 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:02:54.9256810Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:54.9257928Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:02:55.0243158Z [WebServer] [2m4:02:55 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/traces[39m
+2025-12-21T16:02:55.0246324Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:02:55.0247267Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:03:01.2049539Z [WebServer] [2m4:03:01 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:03:01.2077957Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:03:01.2079407Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:03:01.2080906Z [WebServer] [2m4:03:01 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:03:01.2081961Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:03:01.2083022Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:03:01.2084462Z [WebServer] [2m4:03:01 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:03:01.2085519Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:03:01.2104972Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:03:01.2140459Z [WebServer] [2m4:03:01 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:03:01.2141401Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:03:01.2142319Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:03:01.3699202Z [WebServer] [2m4:03:01 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/traces[39m
+2025-12-21T16:03:01.3700334Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:03:01.3701353Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:03:07.6458792Z [WebServer] [2m4:03:07 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:03:07.6463530Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:03:07.6464432Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:03:07.6481069Z [WebServer] [2m4:03:07 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
+2025-12-21T16:03:07.6482275Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:03:07.6483526Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:03:07.6595312Z [WebServer] [2m4:03:07 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:03:07.6596830Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:03:07.6597990Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:03:07.6662635Z [WebServer] [2m4:03:07 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/redi/health[39m
+2025-12-21T16:03:07.6663933Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:03:07.6665108Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:03:07.7563412Z [WebServer] [2m4:03:07 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/traces[39m
+2025-12-21T16:03:07.7568498Z [WebServer] Error: connect ECONNREFUSED ::1:8000
+2025-12-21T16:03:07.7579923Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+2025-12-21T16:03:12.8715718Z ····××F
+2025-12-21T16:03:12.8724510Z 
+2025-12-21T16:03:12.8744074Z   1) [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace 
+2025-12-21T16:03:12.8751306Z 
+2025-12-21T16:03:12.8752018Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-21T16:03:12.8752534Z 
+2025-12-21T16:03:12.8752758Z     Locator: locator('.trace-success')
+2025-12-21T16:03:12.8753239Z     Expected: visible
+2025-12-21T16:03:12.8753615Z     Timeout: 5000ms
+2025-12-21T16:03:12.8754053Z     Error: element(s) not found
+2025-12-21T16:03:12.8754326Z 
+2025-12-21T16:03:12.8754465Z     Call log:
+2025-12-21T16:03:12.8755169Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-21T16:03:12.8755898Z     [2m  - waiting for locator('.trace-success')[22m
+2025-12-21T16:03:12.8756525Z 
+2025-12-21T16:03:12.8756540Z 
+2025-12-21T16:03:12.8756824Z       67 |     // Wait for success message with trace ID
+2025-12-21T16:03:12.8757512Z       68 |     const successMessage = page.locator('.trace-success');
+2025-12-21T16:03:12.8758300Z     > 69 |     await expect(successMessage).toBeVisible({ timeout: 5000 });
+2025-12-21T16:03:12.8759375Z          |                                  ^
+2025-12-21T16:03:12.8760106Z       70 |     await expect(successMessage).toContainText('Trace uploaded with ID:');
+2025-12-21T16:03:12.8760742Z       71 |     
+2025-12-21T16:03:12.8761137Z       72 |     // Click fetch button
+2025-12-21T16:03:12.8761844Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:69:34
+2025-12-21T16:03:12.8762355Z 
+2025-12-21T16:03:12.8763144Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium/error-context.md
+2025-12-21T16:03:12.8763997Z 
+2025-12-21T16:03:12.8764669Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-21T16:03:12.8765129Z 
+2025-12-21T16:03:12.8765775Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-21T16:03:12.8766563Z 
+2025-12-21T16:03:12.8766832Z     Locator: locator('.trace-success')
+2025-12-21T16:03:12.8767299Z     Expected: visible
+2025-12-21T16:03:12.8767656Z     Timeout: 5000ms
+2025-12-21T16:03:12.8768061Z     Error: element(s) not found
+2025-12-21T16:03:12.8768334Z 
+2025-12-21T16:03:12.8768470Z     Call log:
+2025-12-21T16:03:12.8769090Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-21T16:03:12.8769840Z     [2m  - waiting for locator('.trace-success')[22m
+2025-12-21T16:03:12.8770567Z 
+2025-12-21T16:03:12.8770582Z 
+2025-12-21T16:03:12.8770846Z       67 |     // Wait for success message with trace ID
+2025-12-21T16:03:12.8771522Z       68 |     const successMessage = page.locator('.trace-success');
+2025-12-21T16:03:12.8772319Z     > 69 |     await expect(successMessage).toBeVisible({ timeout: 5000 });
+2025-12-21T16:03:12.8772984Z          |                                  ^
+2025-12-21T16:03:12.8773706Z       70 |     await expect(successMessage).toContainText('Trace uploaded with ID:');
+2025-12-21T16:03:12.8774328Z       71 |     
+2025-12-21T16:03:12.8774736Z       72 |     // Click fetch button
+2025-12-21T16:03:12.8775431Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:69:34
+2025-12-21T16:03:12.8775928Z 
+2025-12-21T16:03:12.8777024Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/error-context.md
+2025-12-21T16:03:12.8777916Z 
+2025-12-21T16:03:12.8778682Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-21T16:03:12.8779953Z     test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
+2025-12-21T16:03:12.8780753Z     Usage:
+2025-12-21T16:03:12.8780899Z 
+2025-12-21T16:03:12.8781706Z         npx playwright show-trace test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
+2025-12-21T16:03:12.8782553Z 
+2025-12-21T16:03:12.8783099Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-21T16:03:12.8783495Z 
+2025-12-21T16:03:12.8784062Z     Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-21T16:03:12.8784457Z 
+2025-12-21T16:03:12.8784997Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-21T16:03:12.8785480Z 
+2025-12-21T16:03:12.8785682Z     Locator: locator('.trace-success')
+2025-12-21T16:03:12.8786309Z     Expected: visible
+2025-12-21T16:03:12.8786670Z     Timeout: 5000ms
+2025-12-21T16:03:12.8787072Z     Error: element(s) not found
+2025-12-21T16:03:12.8787337Z 
+2025-12-21T16:03:12.8787471Z     Call log:
+2025-12-21T16:03:12.8788092Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-21T16:03:12.8788882Z     [2m  - waiting for locator('.trace-success')[22m
+2025-12-21T16:03:12.8789274Z 
+2025-12-21T16:03:12.8789288Z 
+2025-12-21T16:03:12.8789581Z       67 |     // Wait for success message with trace ID
+2025-12-21T16:03:12.8790298Z       68 |     const successMessage = page.locator('.trace-success');
+2025-12-21T16:03:12.8791359Z     > 69 |     await expect(successMessage).toBeVisible({ timeout: 5000 });
+2025-12-21T16:03:12.8792000Z          |                                  ^
+2025-12-21T16:03:12.8792741Z       70 |     await expect(successMessage).toContainText('Trace uploaded with ID:');
+2025-12-21T16:03:12.8793378Z       71 |     
+2025-12-21T16:03:12.8793764Z       72 |     // Click fetch button
+2025-12-21T16:03:12.8794876Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:69:34
+2025-12-21T16:03:12.8795364Z 
+2025-12-21T16:03:12.8796557Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry2/error-context.md
+2025-12-21T16:03:12.8797462Z 
+2025-12-21T16:03:12.8797608Z   1 failed
+2025-12-21T16:03:12.8798645Z     [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace 
+2025-12-21T16:03:12.8799522Z   4 passed (23.7s)
+2025-12-21T16:03:12.9210741Z ##[error]Process completed with exit code 1.

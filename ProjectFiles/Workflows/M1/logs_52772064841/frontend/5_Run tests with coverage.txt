@@ -1,0 +1,12 @@
+﻿2025-12-21T16:01:57.8136469Z ##[group]Run npm run test -- --coverage
+2025-12-21T16:01:57.8136817Z [36;1mnpm run test -- --coverage[0m
+2025-12-21T16:01:57.8170468Z shell: /usr/bin/bash -e {0}
+2025-12-21T16:01:57.8170719Z ##[endgroup]
+2025-12-21T16:01:57.9484780Z 
+2025-12-21T16:01:57.9485634Z > tunix-rt-frontend@0.1.0 test
+2025-12-21T16:01:57.9486197Z > vitest --run --coverage
+2025-12-21T16:01:57.9486464Z 
+2025-12-21T16:01:58.4149282Z [31m[7m[31m MISSING DEPENDENCY [31m[27m Cannot find dependency '@vitest/coverage-v8'
+2025-12-21T16:01:58.4149933Z 
+2025-12-21T16:01:58.4353424Z [39m
+2025-12-21T16:01:58.4368429Z ##[error]Process completed with exit code 1.

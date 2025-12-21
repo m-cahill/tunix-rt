@@ -1,0 +1,4 @@
+﻿2025-12-21T06:18:56.3093967Z Post job cleanup.
+2025-12-21T06:18:56.5231667Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --files-from manifest.txt --use-compress-program zstdmt
+2025-12-21T06:18:57.4391459Z Sent 27036937 of 27036937 (100.0%), 40.4 MBs/sec
+2025-12-21T06:18:57.6150252Z Cache saved with the key: node-cache-Linux-x64-npm-aa6cea751bc6f26eccaab0d40d12ee76c82a5cf0a0214784714195c0c416e4f9

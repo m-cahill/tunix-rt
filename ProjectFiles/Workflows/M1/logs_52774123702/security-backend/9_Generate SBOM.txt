@@ -1,0 +1,14 @@
+﻿2025-12-21T17:14:56.3274265Z ##[group]Run cyclonedx-py --format json --output sbom.json
+2025-12-21T17:14:56.3274977Z [36;1mcyclonedx-py --format json --output sbom.json[0m
+2025-12-21T17:14:56.3322772Z shell: /usr/bin/bash -e {0}
+2025-12-21T17:14:56.3323178Z env:
+2025-12-21T17:14:56.3323610Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:14:56.3324323Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T17:14:56.3325059Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:14:56.3325667Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:14:56.3326293Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:14:56.3326974Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T17:14:56.3327501Z ##[endgroup]
+2025-12-21T17:14:56.5274358Z usage: cyclonedx-py [-h] [--version] <command> ...
+2025-12-21T17:14:56.5278918Z cyclonedx-py: error: argument <command>: invalid choice: 'json' (choose from 'environment', 'env', 'venv', 'requirements', 'pipenv', 'poetry')
+2025-12-21T17:14:56.5645621Z ##[error]Process completed with exit code 2.

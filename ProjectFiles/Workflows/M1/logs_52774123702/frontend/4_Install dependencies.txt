@@ -1,0 +1,42 @@
+﻿2025-12-21T17:14:33.2456532Z ##[group]Run npm ci
+2025-12-21T17:14:33.2456829Z [36;1mnpm ci[0m
+2025-12-21T17:14:33.2495565Z shell: /usr/bin/bash -e {0}
+2025-12-21T17:14:33.2560779Z ##[endgroup]
+2025-12-21T17:14:35.8366074Z npm error code EUSAGE
+2025-12-21T17:14:35.8366605Z npm error
+2025-12-21T17:14:35.8368250Z npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
+2025-12-21T17:14:35.8369508Z npm error
+2025-12-21T17:14:35.8370083Z npm error Missing: @vitest/coverage-v8@1.6.1 from lock file
+2025-12-21T17:14:35.8370910Z npm error Missing: @ampproject/remapping@2.3.0 from lock file
+2025-12-21T17:14:35.8392586Z npm error Missing: @bcoe/v8-coverage@0.2.3 from lock file
+2025-12-21T17:14:35.8393540Z npm error Missing: istanbul-lib-coverage@3.2.2 from lock file
+2025-12-21T17:14:35.8394362Z npm error Missing: istanbul-lib-report@3.0.1 from lock file
+2025-12-21T17:14:35.8395219Z npm error Missing: istanbul-lib-source-maps@5.0.6 from lock file
+2025-12-21T17:14:35.8396090Z npm error Missing: istanbul-reports@3.2.0 from lock file
+2025-12-21T17:14:35.8396815Z npm error Missing: magicast@0.3.5 from lock file
+2025-12-21T17:14:35.8397543Z npm error Missing: test-exclude@6.0.0 from lock file
+2025-12-21T17:14:35.8398212Z npm error Missing: make-dir@4.0.0 from lock file
+2025-12-21T17:14:35.8398869Z npm error Missing: html-escaper@2.0.2 from lock file
+2025-12-21T17:14:35.8399585Z npm error Missing: @istanbuljs/schema@0.1.3 from lock file
+2025-12-21T17:14:35.8400289Z npm error Missing: minimatch@3.1.2 from lock file
+2025-12-21T17:14:35.8400972Z npm error Missing: brace-expansion@1.1.12 from lock file
+2025-12-21T17:14:35.8401464Z npm error
+2025-12-21T17:14:35.8402087Z npm error Clean install a project
+2025-12-21T17:14:35.8402495Z npm error
+2025-12-21T17:14:35.8402790Z npm error Usage:
+2025-12-21T17:14:35.8403161Z npm error npm ci
+2025-12-21T17:14:35.8403496Z npm error
+2025-12-21T17:14:35.8403823Z npm error Options:
+2025-12-21T17:14:35.8404609Z npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+2025-12-21T17:14:35.8405739Z npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+2025-12-21T17:14:35.8406872Z npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2025-12-21T17:14:35.8407986Z npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2025-12-21T17:14:35.8409170Z npm error [--no-bin-links] [--no-fund] [--dry-run]
+2025-12-21T17:14:35.8410045Z npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2025-12-21T17:14:35.8411015Z npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2025-12-21T17:14:35.8429650Z npm error
+2025-12-21T17:14:35.8430402Z npm error aliases: clean-install, ic, install-clean, isntall-clean
+2025-12-21T17:14:35.8430986Z npm error
+2025-12-21T17:14:35.8431423Z npm error Run "npm help ci" for more info
+2025-12-21T17:14:35.8433168Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-12-21T17_14_33_334Z-debug-0.log
+2025-12-21T17:14:35.8579039Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,27 @@
+﻿2025-12-21T17:14:52.2044583Z ##[group]Run actions/upload-artifact@v4
+2025-12-21T17:14:52.2044850Z with:
+2025-12-21T17:14:52.2045033Z   name: backend-coverage-py3.11
+2025-12-21T17:14:52.2045249Z   path: backend/coverage.xml
+2025-12-21T17:14:52.2045459Z   if-no-files-found: warn
+2025-12-21T17:14:52.2045660Z   compression-level: 6
+2025-12-21T17:14:52.2045839Z   overwrite: false
+2025-12-21T17:14:52.2046027Z   include-hidden-files: false
+2025-12-21T17:14:52.2046230Z env:
+2025-12-21T17:14:52.2046444Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:14:52.2046815Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T17:14:52.2047178Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:14:52.2047500Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:14:52.2047834Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:14:52.2048161Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T17:14:52.2048430Z ##[endgroup]
+2025-12-21T17:14:52.4116917Z With the provided path, there will be 1 file uploaded
+2025-12-21T17:14:52.4130355Z Artifact name is valid!
+2025-12-21T17:14:52.4140859Z Root directory input is valid!
+2025-12-21T17:14:52.5847639Z Beginning upload of artifact content to blob storage
+2025-12-21T17:14:52.7145182Z Uploaded bytes 1341
+2025-12-21T17:14:52.7461529Z Finished uploading artifact content to blob storage!
+2025-12-21T17:14:52.7465163Z SHA256 digest of uploaded artifact zip is 3d6e738522403804e274e80c4be0c813345a86c112f97707c71c26cd9717cd4a
+2025-12-21T17:14:52.7467799Z Finalizing artifact upload
+2025-12-21T17:14:52.8365733Z Artifact backend-coverage-py3.11.zip successfully finalized. Artifact ID 4937460055
+2025-12-21T17:14:52.8367309Z Artifact backend-coverage-py3.11 has been successfully uploaded! Final size is 1341 bytes. Artifact ID is 4937460055
+2025-12-21T17:14:52.8375329Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20413173852/artifacts/4937460055

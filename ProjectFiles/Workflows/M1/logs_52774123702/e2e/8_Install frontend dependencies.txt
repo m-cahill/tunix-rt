@@ -1,0 +1,51 @@
+﻿2025-12-21T17:15:07.2528753Z ##[group]Run cd ../frontend && npm ci
+2025-12-21T17:15:07.2529077Z [36;1mcd ../frontend && npm ci[0m
+2025-12-21T17:15:07.2562228Z shell: /usr/bin/bash -e {0}
+2025-12-21T17:15:07.2562479Z env:
+2025-12-21T17:15:07.2562651Z   REDIAI_MODE: mock
+2025-12-21T17:15:07.2563307Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-21T17:15:07.2563674Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:15:07.2564092Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T17:15:07.2564508Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:15:07.2564878Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:15:07.2565240Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T17:15:07.2565600Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T17:15:07.2565922Z ##[endgroup]
+2025-12-21T17:15:09.7828900Z npm error code EUSAGE
+2025-12-21T17:15:09.7853367Z npm error
+2025-12-21T17:15:09.7855267Z npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
+2025-12-21T17:15:09.7856880Z npm error
+2025-12-21T17:15:09.7857717Z npm error Missing: @vitest/coverage-v8@1.6.1 from lock file
+2025-12-21T17:15:09.7858643Z npm error Missing: @ampproject/remapping@2.3.0 from lock file
+2025-12-21T17:15:09.7859642Z npm error Missing: @bcoe/v8-coverage@0.2.3 from lock file
+2025-12-21T17:15:09.7860559Z npm error Missing: istanbul-lib-coverage@3.2.2 from lock file
+2025-12-21T17:15:09.7861501Z npm error Missing: istanbul-lib-report@3.0.1 from lock file
+2025-12-21T17:15:09.7862312Z npm error Missing: istanbul-lib-source-maps@5.0.6 from lock file
+2025-12-21T17:15:09.7863053Z npm error Missing: istanbul-reports@3.2.0 from lock file
+2025-12-21T17:15:09.7863728Z npm error Missing: magicast@0.3.5 from lock file
+2025-12-21T17:15:09.7864359Z npm error Missing: test-exclude@6.0.0 from lock file
+2025-12-21T17:15:09.7864996Z npm error Missing: make-dir@4.0.0 from lock file
+2025-12-21T17:15:09.7865653Z npm error Missing: html-escaper@2.0.2 from lock file
+2025-12-21T17:15:09.7866381Z npm error Missing: @istanbuljs/schema@0.1.3 from lock file
+2025-12-21T17:15:09.7867090Z npm error Missing: minimatch@3.1.2 from lock file
+2025-12-21T17:15:09.7867812Z npm error Missing: brace-expansion@1.1.12 from lock file
+2025-12-21T17:15:09.7868325Z npm error
+2025-12-21T17:15:09.7868733Z npm error Clean install a project
+2025-12-21T17:15:09.7869151Z npm error
+2025-12-21T17:15:09.7869456Z npm error Usage:
+2025-12-21T17:15:09.7869780Z npm error npm ci
+2025-12-21T17:15:09.7870088Z npm error
+2025-12-21T17:15:09.7870402Z npm error Options:
+2025-12-21T17:15:09.7871154Z npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+2025-12-21T17:15:09.7872882Z npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+2025-12-21T17:15:09.7873976Z npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2025-12-21T17:15:09.7875117Z npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2025-12-21T17:15:09.7875970Z npm error [--no-bin-links] [--no-fund] [--dry-run]
+2025-12-21T17:15:09.7876822Z npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2025-12-21T17:15:09.7877775Z npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2025-12-21T17:15:09.7878371Z npm error
+2025-12-21T17:15:09.7878978Z npm error aliases: clean-install, ic, install-clean, isntall-clean
+2025-12-21T17:15:09.7879544Z npm error
+2025-12-21T17:15:09.7879966Z npm error Run "npm help ci" for more info
+2025-12-21T17:15:09.7880974Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-12-21T17_15_07_330Z-debug-0.log
+2025-12-21T17:15:09.8026239Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,31 @@
+﻿2025-12-21T20:02:50.7919658Z Current runner version: '2.330.0'
+2025-12-21T20:02:50.7999024Z ##[group]Runner Image Provisioner
+2025-12-21T20:02:50.8000205Z Hosted Compute Agent
+2025-12-21T20:02:50.8001127Z Version: 20251211.462
+2025-12-21T20:02:50.8012723Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-21T20:02:50.8013847Z Build Date: 2025-12-11T16:28:49Z
+2025-12-21T20:02:50.8014892Z Worker ID: {516313af-70dd-459d-9135-a6ad868596c1}
+2025-12-21T20:02:50.8015961Z ##[endgroup]
+2025-12-21T20:02:50.8016712Z ##[group]Operating System
+2025-12-21T20:02:50.8017609Z Ubuntu
+2025-12-21T20:02:50.8018300Z 24.04.3
+2025-12-21T20:02:50.8018907Z LTS
+2025-12-21T20:02:50.8019605Z ##[endgroup]
+2025-12-21T20:02:50.8020248Z ##[group]Runner Image
+2025-12-21T20:02:50.8021020Z Image: ubuntu-24.04
+2025-12-21T20:02:50.8021944Z Version: 20251215.174.1
+2025-12-21T20:02:50.8023483Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-21T20:02:50.8025633Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-21T20:02:50.8027548Z ##[endgroup]
+2025-12-21T20:02:50.8029161Z ##[group]GITHUB_TOKEN Permissions
+2025-12-21T20:02:50.8032190Z Contents: read
+2025-12-21T20:02:50.8032984Z Metadata: read
+2025-12-21T20:02:50.8033760Z ##[endgroup]
+2025-12-21T20:02:50.8036702Z Secret source: Actions
+2025-12-21T20:02:50.8038027Z Prepare workflow directory
+2025-12-21T20:02:50.8934203Z Prepare all required actions
+2025-12-21T20:02:50.9055914Z Getting action download info
+2025-12-21T20:02:51.3215453Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2025-12-21T20:02:51.3986524Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2025-12-21T20:02:51.4707529Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2025-12-21T20:02:51.6493851Z Complete job name: backend (3.11)

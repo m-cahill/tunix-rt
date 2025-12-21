@@ -184,9 +184,9 @@ test.describe('Trace Comparison and Evaluation', () => {
     const otherScore = parseFloat(scoreTexts[1].match(/[\d.]+/)?.[0] || '0');
     expect(otherScore).toBeGreaterThan(baseScore);
     
-    // Verify trace content is displayed
-    await expect(page.locator('text=What is 2 + 2?')).toBeVisible();
-    await expect(page.locator('text=Explain the process of photosynthesis in plants')).toBeVisible();
+    // Verify trace content is displayed (scope to comparison-result to avoid textarea collision)
+    await expect(page.locator('.comparison-result').getByText('What is 2 + 2?')).toBeVisible();
+    await expect(page.locator('.comparison-result').getByText('Explain the process of photosynthesis in plants')).toBeVisible();
     
     // Verify steps are listed
     await expect(page.locator('text=Add 2 and 2')).toBeVisible();

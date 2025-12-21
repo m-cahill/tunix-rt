@@ -1,0 +1,18 @@
+﻿2025-12-21T06:19:13.6289005Z ##[group]Run python tools/coverage_gate.py
+2025-12-21T06:19:13.6289602Z [36;1mpython tools/coverage_gate.py[0m
+2025-12-21T06:19:13.6339654Z shell: /usr/bin/bash -e {0}
+2025-12-21T06:19:13.6341106Z env:
+2025-12-21T06:19:13.6341491Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T06:19:13.6342154Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib/pkgconfig
+2025-12-21T06:19:13.6342901Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T06:19:13.6343756Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T06:19:13.6344372Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-21T06:19:13.6345086Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib
+2025-12-21T06:19:13.6345637Z ##[endgroup]
+2025-12-21T06:19:13.6800837Z ============================================================
+2025-12-21T06:19:13.6801325Z Coverage Gate Report
+2025-12-21T06:19:13.6801695Z ============================================================
+2025-12-21T06:19:13.6802207Z Line Coverage:   88.55% (gate: >= 80.0%)
+2025-12-21T06:19:13.6802650Z Branch Coverage: 79.17% (gate: >= 68.0%)
+2025-12-21T06:19:13.6803077Z ============================================================
+2025-12-21T06:19:13.6803542Z [PASS] All coverage gates PASSED

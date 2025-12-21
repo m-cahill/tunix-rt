@@ -1,0 +1,27 @@
+﻿2025-12-21T16:01:47.1947369Z ##[group]Run actions/setup-node@v4
+2025-12-21T16:01:47.1947730Z with:
+2025-12-21T16:01:47.1947948Z   node-version: 18
+2025-12-21T16:01:47.1948167Z   cache: npm
+2025-12-21T16:01:47.1948437Z   cache-dependency-path: frontend/package-lock.json
+2025-12-21T16:01:47.1948920Z   always-auth: false
+2025-12-21T16:01:47.1949165Z   check-latest: false
+2025-12-21T16:01:47.1949586Z   token: ***
+2025-12-21T16:01:47.1949799Z ##[endgroup]
+2025-12-21T16:01:47.4314725Z Attempting to download 18...
+2025-12-21T16:01:47.8924810Z Acquiring 18.20.8 - x64 from https://github.com/actions/node-versions/releases/download/18.20.8-14110393767/node-18.20.8-linux-x64.tar.gz
+2025-12-21T16:01:48.4420241Z Extracting ...
+2025-12-21T16:01:48.4525421Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/073834ad-b9d3-4cc0-b781-1dde9fac4fc7 -f /home/runner/work/_temp/cd6eb3be-89c8-4818-bee8-cb89d57cb7b9
+2025-12-21T16:01:49.5379905Z Adding to the cache ...
+2025-12-21T16:01:51.7302015Z ##[group]Environment details
+2025-12-21T16:01:52.0347388Z node: v18.20.8
+2025-12-21T16:01:52.0347898Z npm: 10.8.2
+2025-12-21T16:01:52.0348222Z yarn: 1.22.22
+2025-12-21T16:01:52.0365770Z ##[endgroup]
+2025-12-21T16:01:52.0366307Z [command]/opt/hostedtoolcache/node/18.20.8/x64/bin/npm config get cache
+2025-12-21T16:01:52.1598165Z /home/runner/.npm
+2025-12-21T16:01:52.2668334Z Cache hit for: node-cache-Linux-x64-npm-aa6cea751bc6f26eccaab0d40d12ee76c82a5cf0a0214784714195c0c416e4f9
+2025-12-21T16:01:52.8468405Z Received 27036937 of 27036937 (100.0%), 56.2 MBs/sec
+2025-12-21T16:01:52.8473710Z Cache Size: ~26 MB (27036937 B)
+2025-12-21T16:01:52.8502298Z [command]/usr/bin/tar -xf /home/runner/work/_temp/0169e1eb-a603-48fa-8005-de8263fb55b7/cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --use-compress-program unzstd
+2025-12-21T16:01:53.0123108Z Cache restored successfully
+2025-12-21T16:01:53.0200149Z Cache restored from key: node-cache-Linux-x64-npm-aa6cea751bc6f26eccaab0d40d12ee76c82a5cf0a0214784714195c0c416e4f9

@@ -1,0 +1,85 @@
+﻿2025-12-21T19:28:48.9937803Z ##[group]Run npx playwright test
+2025-12-21T19:28:48.9938293Z [36;1mnpx playwright test[0m
+2025-12-21T19:28:49.0005724Z shell: /usr/bin/bash -e {0}
+2025-12-21T19:28:49.0006116Z env:
+2025-12-21T19:28:49.0006659Z   REDIAI_MODE: mock
+2025-12-21T19:28:49.0012937Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-21T19:28:49.0013585Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T19:28:49.0014282Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T19:28:49.0014973Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T19:28:49.0015582Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T19:28:49.0016191Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T19:28:49.0016795Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T19:28:49.0017293Z ##[endgroup]
+2025-12-21T19:28:51.6082102Z [WebServer] INFO:     Started server process [3499]
+2025-12-21T19:28:51.6088230Z [WebServer] INFO:     Waiting for application startup.
+2025-12-21T19:28:51.6089388Z [WebServer] INFO:     Application startup complete.
+2025-12-21T19:28:51.6089985Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2025-12-21T19:28:53.2076957Z 
+2025-12-21T19:28:53.2077591Z Running 6 tests using 1 worker
+2025-12-21T19:29:01.5480343Z ·····×F
+2025-12-21T19:29:01.5481021Z 
+2025-12-21T19:29:01.5492557Z   1) [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them 
+2025-12-21T19:29:01.5498093Z 
+2025-12-21T19:29:01.5502098Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-21T19:29:01.5505854Z 
+2025-12-21T19:29:01.5506147Z     Locator: locator('text=Base Trace')
+2025-12-21T19:29:01.5506658Z     Expected: visible
+2025-12-21T19:29:01.5507316Z     Error: strict mode violation: locator('text=Base Trace') resolved to 2 elements:
+2025-12-21T19:29:01.5508365Z         1) <label for="base-trace-id">Base Trace ID:</label> aka getByText('Base Trace ID:')
+2025-12-21T19:29:01.5509584Z         2) <h3>Base Trace</h3> aka getByRole('heading', { name: 'Base Trace' })
+2025-12-21T19:29:01.5510079Z 
+2025-12-21T19:29:01.5510230Z     Call log:
+2025-12-21T19:29:01.5510887Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-21T19:29:01.5511654Z     [2m  - waiting for locator('text=Base Trace')[22m
+2025-12-21T19:29:01.5512043Z 
+2025-12-21T19:29:01.5512056Z 
+2025-12-21T19:29:01.5512190Z       171 |     
+2025-12-21T19:29:01.5512669Z       172 |     // Verify both traces are displayed
+2025-12-21T19:29:01.5513426Z     > 173 |     await expect(page.locator('text=Base Trace')).toBeVisible();
+2025-12-21T19:29:01.5514153Z           |                                                   ^
+2025-12-21T19:29:01.5514879Z       174 |     await expect(page.locator('text=Other Trace')).toBeVisible();
+2025-12-21T19:29:01.5515485Z       175 |     
+2025-12-21T19:29:01.5515927Z       176 |     // Verify scores are displayed
+2025-12-21T19:29:01.5516710Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:173:51
+2025-12-21T19:29:01.5517222Z 
+2025-12-21T19:29:01.5518046Z     Error Context: test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium/error-context.md
+2025-12-21T19:29:01.5519441Z 
+2025-12-21T19:29:01.5520181Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-21T19:29:01.5520653Z 
+2025-12-21T19:29:01.5521310Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-21T19:29:01.5521861Z 
+2025-12-21T19:29:01.5522089Z     Locator: locator('text=Base Trace')
+2025-12-21T19:29:01.5522560Z     Expected: visible
+2025-12-21T19:29:01.5523254Z     Error: strict mode violation: locator('text=Base Trace') resolved to 2 elements:
+2025-12-21T19:29:01.5524250Z         1) <label for="base-trace-id">Base Trace ID:</label> aka getByText('Base Trace ID:')
+2025-12-21T19:29:01.5525137Z         2) <h3>Base Trace</h3> aka getByRole('heading', { name: 'Base Trace' })
+2025-12-21T19:29:01.5526036Z 
+2025-12-21T19:29:01.5526173Z     Call log:
+2025-12-21T19:29:01.5526773Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-21T19:29:01.5527826Z     [2m  - waiting for locator('text=Base Trace')[22m
+2025-12-21T19:29:01.5528196Z 
+2025-12-21T19:29:01.5528220Z 
+2025-12-21T19:29:01.5528344Z       171 |     
+2025-12-21T19:29:01.5529551Z       172 |     // Verify both traces are displayed
+2025-12-21T19:29:01.5530305Z     > 173 |     await expect(page.locator('text=Base Trace')).toBeVisible();
+2025-12-21T19:29:01.5531016Z           |                                                   ^
+2025-12-21T19:29:01.5531778Z       174 |     await expect(page.locator('text=Other Trace')).toBeVisible();
+2025-12-21T19:29:01.5532388Z       175 |     
+2025-12-21T19:29:01.5532801Z       176 |     // Verify scores are displayed
+2025-12-21T19:29:01.5533523Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:173:51
+2025-12-21T19:29:01.5534043Z 
+2025-12-21T19:29:01.5534917Z     Error Context: test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/error-context.md
+2025-12-21T19:29:01.5535848Z 
+2025-12-21T19:29:01.5536619Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-21T19:29:01.5537985Z     test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/trace.zip
+2025-12-21T19:29:01.5539179Z     Usage:
+2025-12-21T19:29:01.5539363Z 
+2025-12-21T19:29:01.5540293Z         npx playwright show-trace test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/trace.zip
+2025-12-21T19:29:01.5541222Z 
+2025-12-21T19:29:01.5541868Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-21T19:29:01.5542294Z 
+2025-12-21T19:29:01.5542421Z   1 failed
+2025-12-21T19:29:01.5543429Z     [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them 
+2025-12-21T19:29:01.5544427Z   5 passed (10.9s)
+2025-12-21T19:29:01.6047662Z ##[error]Process completed with exit code 1.

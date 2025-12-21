@@ -1,0 +1,31 @@
+﻿2025-12-21T19:03:02.9392000Z Current runner version: '2.330.0'
+2025-12-21T19:03:02.9450857Z ##[group]Runner Image Provisioner
+2025-12-21T19:03:02.9472726Z Hosted Compute Agent
+2025-12-21T19:03:02.9473816Z Version: 20251211.462
+2025-12-21T19:03:02.9474878Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-21T19:03:02.9475945Z Build Date: 2025-12-11T16:28:49Z
+2025-12-21T19:03:02.9477012Z Worker ID: {7adb8651-41ec-49f4-9e17-e3533d0221ca}
+2025-12-21T19:03:02.9478028Z ##[endgroup]
+2025-12-21T19:03:02.9478870Z ##[group]Operating System
+2025-12-21T19:03:02.9479697Z Ubuntu
+2025-12-21T19:03:02.9480506Z 24.04.3
+2025-12-21T19:03:02.9481202Z LTS
+2025-12-21T19:03:02.9482101Z ##[endgroup]
+2025-12-21T19:03:02.9482905Z ##[group]Runner Image
+2025-12-21T19:03:02.9483779Z Image: ubuntu-24.04
+2025-12-21T19:03:02.9484532Z Version: 20251215.174.1
+2025-12-21T19:03:02.9486155Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-21T19:03:02.9488535Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-21T19:03:02.9490447Z ##[endgroup]
+2025-12-21T19:03:02.9512771Z ##[group]GITHUB_TOKEN Permissions
+2025-12-21T19:03:02.9516447Z Contents: read
+2025-12-21T19:03:02.9517266Z Metadata: read
+2025-12-21T19:03:02.9518086Z ##[endgroup]
+2025-12-21T19:03:02.9521361Z Secret source: Actions
+2025-12-21T19:03:02.9522888Z Prepare workflow directory
+2025-12-21T19:03:03.0407142Z Prepare all required actions
+2025-12-21T19:03:03.0467930Z Getting action download info
+2025-12-21T19:03:03.4291333Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2025-12-21T19:03:03.5403413Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2025-12-21T19:03:03.6190204Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2025-12-21T19:03:03.8026980Z Complete job name: security-frontend

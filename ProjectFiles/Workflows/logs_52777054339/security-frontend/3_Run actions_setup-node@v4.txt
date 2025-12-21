@@ -1,0 +1,27 @@
+﻿2025-12-21T19:03:04.5407713Z ##[group]Run actions/setup-node@v4
+2025-12-21T19:03:04.5408656Z with:
+2025-12-21T19:03:04.5409361Z   node-version: 18
+2025-12-21T19:03:04.5410080Z   cache: npm
+2025-12-21T19:03:04.5410878Z   cache-dependency-path: frontend/package-lock.json
+2025-12-21T19:03:04.5411918Z   always-auth: false
+2025-12-21T19:03:04.5412664Z   check-latest: false
+2025-12-21T19:03:04.5413590Z   token: ***
+2025-12-21T19:03:04.5414295Z ##[endgroup]
+2025-12-21T19:03:04.7463037Z Attempting to download 18...
+2025-12-21T19:03:05.1854975Z Acquiring 18.20.8 - x64 from https://github.com/actions/node-versions/releases/download/18.20.8-14110393767/node-18.20.8-linux-x64.tar.gz
+2025-12-21T19:03:05.6157726Z Extracting ...
+2025-12-21T19:03:05.6252676Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/e2e00b68-2ab2-4eb0-beec-59efcc2a148e -f /home/runner/work/_temp/ad22d62e-b9ba-45be-8279-ab85cf291191
+2025-12-21T19:03:06.6325361Z Adding to the cache ...
+2025-12-21T19:03:08.0531958Z ##[group]Environment details
+2025-12-21T19:03:08.3341953Z node: v18.20.8
+2025-12-21T19:03:08.3347906Z npm: 10.8.2
+2025-12-21T19:03:08.3348482Z yarn: 1.22.22
+2025-12-21T19:03:08.3349302Z ##[endgroup]
+2025-12-21T19:03:08.3363579Z [command]/opt/hostedtoolcache/node/18.20.8/x64/bin/npm config get cache
+2025-12-21T19:03:08.4518105Z /home/runner/.npm
+2025-12-21T19:03:08.5554335Z Cache hit for: node-cache-Linux-x64-npm-582e97bbf2f73a4c9de6a422350d7e5fa7ccd4c5a0bae6af7327cebe3d1d946a
+2025-12-21T19:03:09.1038563Z Received 27442605 of 27442605 (100.0%), 62.8 MBs/sec
+2025-12-21T19:03:09.1040408Z Cache Size: ~26 MB (27442605 B)
+2025-12-21T19:03:09.1065333Z [command]/usr/bin/tar -xf /home/runner/work/_temp/8d7fc23c-976d-41f7-8eff-a3b67d34a772/cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --use-compress-program unzstd
+2025-12-21T19:03:09.1864339Z Cache restored successfully
+2025-12-21T19:03:09.1923157Z Cache restored from key: node-cache-Linux-x64-npm-582e97bbf2f73a4c9de6a422350d7e5fa7ccd4c5a0bae6af7327cebe3d1d946a

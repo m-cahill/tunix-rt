@@ -1,0 +1,41 @@
+﻿2025-12-21T20:02:44.8353538Z ##[group]Run gitleaks/gitleaks-action@v2
+2025-12-21T20:02:44.8353839Z env:
+2025-12-21T20:02:44.8354236Z   GITHUB_TOKEN: ***
+2025-12-21T20:02:44.8354421Z ##[endgroup]
+2025-12-21T20:02:45.2606586Z [m-cahill] is an individual user. No license key is required.
+2025-12-21T20:02:45.2612616Z gitleaks version: 8.24.3
+2025-12-21T20:02:45.2613595Z Version to install: 8.24.3 (target directory: /tmp/gitleaks-8.24.3)
+2025-12-21T20:02:45.4347636Z Cache hit for: gitleaks-cache-8.24.3-linux-x64
+2025-12-21T20:02:45.8986828Z Received 5717456 of 5717456 (100.0%), 15.8 MBs/sec
+2025-12-21T20:02:45.8988209Z Cache Size: ~5 MB (5717456 B)
+2025-12-21T20:02:45.9016515Z [command]/usr/bin/tar -xf /home/runner/work/_temp/5cfa4f64-8347-4bc9-a876-33cc4e731bc8/cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --use-compress-program unzstd
+2025-12-21T20:02:45.9393235Z Cache restored successfully
+2025-12-21T20:02:45.9408323Z Gitleaks restored from cache
+2025-12-21T20:02:45.9411663Z event type: push
+2025-12-21T20:02:45.9414848Z gitleaks cmd: gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=-1
+2025-12-21T20:02:45.9433863Z [command]/tmp/gitleaks-8.24.3/gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=-1
+2025-12-21T20:02:46.2203918Z 
+2025-12-21T20:02:46.2204822Z     ○
+2025-12-21T20:02:46.2205975Z     │╲
+2025-12-21T20:02:46.2206986Z     │ ○
+2025-12-21T20:02:46.2208084Z     ○ ░
+2025-12-21T20:02:46.2209175Z     ░    gitleaks
+2025-12-21T20:02:46.2210429Z 
+2025-12-21T20:02:46.2211236Z [90m8:02PM[0m DBG using github.com/wasilibs/go-re2 regex engine
+2025-12-21T20:02:46.2213293Z [90m8:02PM[0m DBG no gitleaks config found in path .gitleaks.toml, using default gitleaks config
+2025-12-21T20:02:46.3713993Z [90m8:02PM[0m DBG executing: /usr/bin/git -C . log -p -U0 -1
+2025-12-21T20:02:46.3746994Z [90m8:02PM[0m DBG SCM platform parsed from host [36mhost=[0mgithub.com [36mplatform=[0mgithub
+2025-12-21T20:02:46.3883523Z [90m8:02PM[0m [32mINF[0m [1m1 commits scanned.[0m
+2025-12-21T20:02:46.3886858Z [90m8:02PM[0m DBG Note: this number might be smaller than expected due to commits with no additions
+2025-12-21T20:02:46.3889185Z [90m8:02PM[0m [32mINF[0m [1mscanned ~72354 bytes (72.35 KB) in 169ms[0m
+2025-12-21T20:02:46.3889881Z [90m8:02PM[0m [32mINF[0m [1mno leaks found[0m
+2025-12-21T20:02:46.3920867Z Artifact name is valid!
+2025-12-21T20:02:46.3924011Z Root directory input is valid!
+2025-12-21T20:02:46.4789065Z Beginning upload of artifact content to blob storage
+2025-12-21T20:02:46.5949952Z Uploaded bytes 6764
+2025-12-21T20:02:46.6271658Z Finished uploading artifact content to blob storage!
+2025-12-21T20:02:46.6276009Z SHA256 digest of uploaded artifact zip is 2a3011f78eb7aa1a64e0662fcd9daa630998831f484f7bd952d83837af844380
+2025-12-21T20:02:46.6278703Z Finalizing artifact upload
+2025-12-21T20:04:46.7209629Z Attempt 1 of 5 failed with error: Unexpected token '<', "<!DOCTYPE "... is not valid JSON. Retrying request in 3000 ms...
+2025-12-21T20:04:49.8619776Z Artifact gitleaks-results.sarif.zip successfully finalized. Artifact ID 4937950658
+2025-12-21T20:04:49.8637537Z ✅ No leaks detected

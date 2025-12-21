@@ -1,0 +1,28 @@
+﻿2025-12-21T16:01:57.2969135Z ##[group]Run npm audit --json > npm-audit-report.json || true
+2025-12-21T16:01:57.2969673Z [36;1mnpm audit --json > npm-audit-report.json || true[0m
+2025-12-21T16:01:57.2969988Z [36;1mnpm audit || true[0m
+2025-12-21T16:01:57.3003182Z shell: /usr/bin/bash -e {0}
+2025-12-21T16:01:57.3003448Z ##[endgroup]
+2025-12-21T16:01:59.2699475Z # npm audit report
+2025-12-21T16:01:59.2700369Z 
+2025-12-21T16:01:59.2700973Z esbuild  <=0.24.2
+2025-12-21T16:01:59.2701386Z Severity: moderate
+2025-12-21T16:01:59.2702477Z esbuild enables any website to send any requests to the development server and read the response - https://github.com/advisories/GHSA-67mh-4wv8-2f99
+2025-12-21T16:01:59.2703567Z fix available via `npm audit fix --force`
+2025-12-21T16:01:59.2704153Z Will install vite@6.4.1, which is a breaking change
+2025-12-21T16:01:59.2705230Z node_modules/esbuild
+2025-12-21T16:01:59.2705582Z   vite  0.11.0 - 6.1.6
+2025-12-21T16:01:59.2705989Z   Depends on vulnerable versions of esbuild
+2025-12-21T16:01:59.2706400Z   node_modules/vite
+2025-12-21T16:01:59.2706824Z     vite-node  <=2.2.0-beta.2
+2025-12-21T16:01:59.2707281Z     Depends on vulnerable versions of vite
+2025-12-21T16:01:59.2707770Z     node_modules/vite-node
+2025-12-21T16:01:59.2708372Z       vitest  0.0.1 - 0.0.12 || 0.0.29 - 0.0.122 || 0.3.3 - 2.2.0-beta.2
+2025-12-21T16:01:59.2709208Z       Depends on vulnerable versions of vite
+2025-12-21T16:01:59.2709777Z       Depends on vulnerable versions of vite-node
+2025-12-21T16:01:59.2710291Z       node_modules/vitest
+2025-12-21T16:01:59.2710546Z 
+2025-12-21T16:01:59.2710791Z 4 moderate severity vulnerabilities
+2025-12-21T16:01:59.2711093Z 
+2025-12-21T16:01:59.2711464Z To address all issues (including breaking changes), run:
+2025-12-21T16:01:59.2712048Z   npm audit fix --force
