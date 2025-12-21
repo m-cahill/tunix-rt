@@ -12,11 +12,18 @@ class Base(DeclarativeBase):
     pass
 
 
-# Create async engine
+# Create async engine with pool configuration
+# Pool settings are validated in settings.py:
+# - pool_size: 1-50 (default 5)
+# - max_overflow: 0-50 (default 10)
+# - pool_timeout: 1-300 seconds (default 30)
 engine = create_async_engine(
     settings.database_url,
     echo=False,
     pool_pre_ping=True,
+    pool_size=settings.db_pool_size,
+    max_overflow=settings.db_max_overflow,
+    pool_timeout=settings.db_pool_timeout,
 )
 
 # Create async session factory
