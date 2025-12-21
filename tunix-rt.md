@@ -258,6 +258,13 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - Invalid configuration causes immediate failure with descriptive error messages
 - See `backend/tunix_rt_backend/settings.py` for validation logic
 
+**Tuning DB Pool Settings (Production - M3):**
+Default settings (pool_size=5, max_overflow=10) support ~50 concurrent requests.
+- **Increase pool_size:** For CPU-bound workloads (set to # of cores)
+- **Increase max_overflow:** To handle request spikes (2x expected concurrent users)
+- **Decrease:** For memory-constrained or low-concurrency environments
+- **Monitor:** Watch for "QueuePool limit exceeded" errors in logs
+
 ### RediAI Integration Modes
 
 **Mock Mode:**

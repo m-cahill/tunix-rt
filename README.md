@@ -303,8 +303,9 @@ Uses `dorny/paths-filter` to avoid merge-blocking issues with required checks.
 ### Frontend Tests
 
 - **Unit tests**: Vitest + React Testing Library
+- **Coverage gates**: 60% line, 50% branch (enforced in CI)
 - **Mock fetch**: No external dependencies
-- **Component testing**: Verify UI updates based on health responses
+- **Component testing**: Trace UI (Load/Upload/Fetch) + Health monitoring
 
 ### E2E Tests
 
