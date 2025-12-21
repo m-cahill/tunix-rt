@@ -2,7 +2,7 @@
 
 **Tunix Reasoning-Trace Framework for AI-Native Development**
 
-**Status:** M3 Complete ✅ | Coverage: 92% Line, 90% Branch | Database: PostgreSQL + Alembic + Optimized
+**Status:** M4 Complete ✅ | Coverage: 89% Line, 79% Branch | E2E: Deterministic & Green | Database: PostgreSQL + Alembic
 
 A full-stack application for managing reasoning traces and integrating with the RediAI framework for the Tunix Hackathon.
 

@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
 **Milestone M4 Complete** ✅  
-**Coverage:** 92% Line, 90% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic + Optimized | **E2E:** Deterministic & Green
+**Coverage:** 89% Line, 79% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic + Optimized | **E2E:** Deterministic & Green
 
 ## Overview
 
