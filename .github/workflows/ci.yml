@@ -89,7 +89,7 @@ jobs:
         run: mypy tunix_rt_backend
       
       - name: pytest with coverage
-        run: pytest -q --cov=tunix_rt_backend --cov-branch --cov-report=term --cov-report=xml --cov-report=json:coverage.json
+        run: pytest -q --cov=tunix_rt_backend --cov-branch --cov-config=.coveragerc --cov-report=term --cov-report=xml --cov-report=json:coverage.json
       
       - name: Enforce coverage gates (line ≥80%, branch ≥68%)
         run: python tools/coverage_gate.py

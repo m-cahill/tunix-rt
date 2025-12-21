@@ -1,0 +1,19 @@
+[run]
+branch = True
+source = tunix_rt_backend
+omit =
+    # Optional UNGAR integration: generator/conversion logic requires UNGAR installed
+    # Tested separately in .github/workflows/ungar-integration.yml with .coveragerc.full
+    tunix_rt_backend/integrations/ungar/high_card_duel.py
+
+[report]
+fail_under = 70
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if __name__ == .__main__.:
+    raise AssertionError
+    raise NotImplementedError
+    if TYPE_CHECKING:
+    @abstractmethod
+

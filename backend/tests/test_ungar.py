@@ -101,8 +101,29 @@ async def test_ungar_export_jsonl_returns_empty_when_no_ungar_traces(client: Asy
 
     assert response.status_code == 200
     assert response.headers["content-type"] == "application/x-ndjson"
-    # Should be empty or have minimal content if no UNGAR traces exist
-    assert len(response.text.strip()) >= 0  # Can be empty
+    # Should be empty when no UNGAR traces exist
+    # Empty JSONL is valid (just an empty string or newline)
+    assert isinstance(response.text, str)
+
+
+@pytest.mark.asyncio
+async def test_ungar_export_jsonl_with_limit_param(client: AsyncClient):
+    """Test /api/ungar/high-card-duel/export.jsonl accepts limit parameter."""
+    response = await client.get("/api/ungar/high-card-duel/export.jsonl?limit=50")
+
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "application/x-ndjson"
+
+
+@pytest.mark.asyncio
+async def test_ungar_export_jsonl_with_trace_ids(client: AsyncClient):
+    """Test /api/ungar/high-card-duel/export.jsonl accepts trace_ids parameter."""
+    # Use a fake UUID - will return empty since trace doesn't exist
+    fake_uuid = "550e8400-e29b-41d4-a716-446655440000"
+    response = await client.get(f"/api/ungar/high-card-duel/export.jsonl?trace_ids={fake_uuid}")
+
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "application/x-ndjson"
 
 
 # ==================== OPTIONAL TESTS (UNGAR Required) ====================

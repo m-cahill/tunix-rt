@@ -1,0 +1,69 @@
+﻿2025-12-21T22:39:33.8465795Z ##[group]Run pytest -q --cov=tunix_rt_backend --cov-branch --cov-report=term --cov-report=xml --cov-report=json:coverage.json
+2025-12-21T22:39:33.8467116Z [36;1mpytest -q --cov=tunix_rt_backend --cov-branch --cov-report=term --cov-report=xml --cov-report=json:coverage.json[0m
+2025-12-21T22:39:33.8499807Z shell: /usr/bin/bash -e {0}
+2025-12-21T22:39:33.8500039Z env:
+2025-12-21T22:39:33.8500274Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:33.8500678Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T22:39:33.8501065Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:33.8501406Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:33.8501735Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:33.8502069Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T22:39:33.8502350Z ##[endgroup]
+2025-12-21T22:39:37.3516526Z ...........................................................ssssss
+2025-12-21T22:39:37.3517993Z ERROR: Coverage failure: total of 69 is less than fail-under=70
+2025-12-21T22:39:37.5775469Z                                                                          [100%]
+2025-12-21T22:39:37.5782554Z =============================== warnings summary ===============================
+2025-12-21T22:39:37.5783425Z tests/test_scoring.py::TestCompareEndpoint::test_compare_with_invalid_uuid_format
+2025-12-21T22:39:37.5784870Z   /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/asyncio/events.py:84: DeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
+2025-12-21T22:39:37.5786314Z     self._context.run(self._callback, *self._args)
+2025-12-21T22:39:37.5786631Z 
+2025-12-21T22:39:37.5786889Z tests/test_traces.py::test_create_trace_oversized_payload
+2025-12-21T22:39:37.5788298Z   /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/fastapi/dependencies/utils.py:676: DeprecationWarning: 'HTTP_413_REQUEST_ENTITY_TOO_LARGE' is deprecated. Use 'HTTP_413_CONTENT_TOO_LARGE' instead.
+2025-12-21T22:39:37.5789781Z     solved = await call(**solved_result.values)
+2025-12-21T22:39:37.5790102Z 
+2025-12-21T22:39:37.5790314Z tests/test_traces.py::test_list_traces_invalid_limit
+2025-12-21T22:39:37.5790848Z tests/test_traces.py::test_list_traces_negative_offset
+2025-12-21T22:39:37.5791386Z tests/test_traces.py::test_list_traces_with_zero_limit
+2025-12-21T22:39:37.5792726Z   /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/fastapi/routing.py:312: DeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
+2025-12-21T22:39:37.5794017Z     return await dependant.call(**values)
+2025-12-21T22:39:37.5794312Z 
+2025-12-21T22:39:37.5794621Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2025-12-21T22:39:37.5795264Z ================================ tests coverage ================================
+2025-12-21T22:39:37.5801507Z _______________ coverage: platform linux, python 3.11.14-final-0 _______________
+2025-12-21T22:39:37.5801970Z 
+2025-12-21T22:39:37.5802521Z Name                                                    Stmts   Miss Branch BrPart  Cover
+2025-12-21T22:39:37.5803106Z -----------------------------------------------------------------------------------------
+2025-12-21T22:39:37.5803757Z tunix_rt_backend/__init__.py                                1      0      0      0   100%
+2025-12-21T22:39:37.5804395Z tunix_rt_backend/app.py                                   123     42     22      2    66%
+2025-12-21T22:39:37.5805055Z tunix_rt_backend/db/__init__.py                             0      0      0      0   100%
+2025-12-21T22:39:37.5805738Z tunix_rt_backend/db/base.py                                10      2      0      0    80%
+2025-12-21T22:39:37.5806631Z tunix_rt_backend/db/models/__init__.py                      3      0      0      0   100%
+2025-12-21T22:39:37.5807363Z tunix_rt_backend/db/models/score.py                        15      0      0      0   100%
+2025-12-21T22:39:37.5808437Z tunix_rt_backend/db/models/trace.py                        13      0      0      0   100%
+2025-12-21T22:39:37.5809183Z tunix_rt_backend/helpers/__init__.py                        2      0      0      0   100%
+2025-12-21T22:39:37.5809925Z tunix_rt_backend/helpers/traces.py                         14      0      4      0   100%
+2025-12-21T22:39:37.5810671Z tunix_rt_backend/integrations/__init__.py                   0      0      0      0   100%
+2025-12-21T22:39:37.5811457Z tunix_rt_backend/integrations/ungar/__init__.py             0      0      0      0   100%
+2025-12-21T22:39:37.5812323Z tunix_rt_backend/integrations/ungar/availability.py        14      8      2      0    38%
+2025-12-21T22:39:37.5813192Z tunix_rt_backend/integrations/ungar/high_card_duel.py      60     60     12      0     0%
+2025-12-21T22:39:37.5813975Z tunix_rt_backend/redi_client.py                            32      6      4      1    81%
+2025-12-21T22:39:37.5814705Z tunix_rt_backend/schemas/__init__.py                        4      0      0      0   100%
+2025-12-21T22:39:37.5815420Z tunix_rt_backend/schemas/score.py                          28      0      0      0   100%
+2025-12-21T22:39:37.5816304Z tunix_rt_backend/schemas/trace.py                          47      1      4      1    96%
+2025-12-21T22:39:37.5817025Z tunix_rt_backend/schemas/ungar.py                          13      0      0      0   100%
+2025-12-21T22:39:37.5817731Z tunix_rt_backend/scoring.py                                11      0      0      0   100%
+2025-12-21T22:39:37.5818395Z tunix_rt_backend/settings.py                               33      1      2      1    94%
+2025-12-21T22:39:37.5819063Z -----------------------------------------------------------------------------------------
+2025-12-21T22:39:37.5819618Z TOTAL                                                     423    120     50      5    69%
+2025-12-21T22:39:37.5820102Z Coverage XML written to file coverage.xml
+2025-12-21T22:39:37.5820561Z Coverage JSON written to file coverage.json
+2025-12-21T22:39:37.5821137Z FAIL Required test coverage of 70.0% not reached. Total coverage: 69.34%
+2025-12-21T22:39:37.5821771Z =========================== short test summary info ============================
+2025-12-21T22:39:37.5822444Z SKIPPED [1] tests/test_ungar.py:116: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-21T22:39:37.5823227Z SKIPPED [1] tests/test_ungar.py:132: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-21T22:39:37.5824009Z SKIPPED [1] tests/test_ungar.py:165: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-21T22:39:37.5824805Z SKIPPED [1] tests/test_ungar.py:183: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-21T22:39:37.5825590Z SKIPPED [1] tests/test_ungar.py:205: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-21T22:39:37.5826506Z SKIPPED [1] tests/test_ungar.py:243: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-21T22:39:37.5827106Z 59 passed, 6 skipped, 5 warnings in 2.62s
+2025-12-21T22:39:37.7853607Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,160 @@
+﻿2025-12-21T22:39:36.8233777Z ##[group]Run cd ../backend && python -m pip install -e ".[dev]"
+2025-12-21T22:39:36.8234242Z [36;1mcd ../backend && python -m pip install -e ".[dev]"[0m
+2025-12-21T22:39:36.8259875Z shell: /usr/bin/bash -e {0}
+2025-12-21T22:39:36.8260132Z env:
+2025-12-21T22:39:36.8260297Z   REDIAI_MODE: mock
+2025-12-21T22:39:36.8260822Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-21T22:39:36.8261136Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:36.8261524Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T22:39:36.8261883Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:36.8262210Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:36.8262539Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:36.8262866Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T22:39:36.8263132Z ##[endgroup]
+2025-12-21T22:39:39.1044152Z Obtaining file:///home/runner/work/tunix-rt/tunix-rt/backend
+2025-12-21T22:39:39.1063618Z   Installing build dependencies: started
+2025-12-21T22:39:39.9047952Z   Installing build dependencies: finished with status 'done'
+2025-12-21T22:39:39.9068143Z   Checking if build backend supports build_editable: started
+2025-12-21T22:39:40.3448147Z   Checking if build backend supports build_editable: finished with status 'done'
+2025-12-21T22:39:40.3456389Z   Getting requirements to build editable: started
+2025-12-21T22:39:40.6750249Z   Getting requirements to build editable: finished with status 'done'
+2025-12-21T22:39:40.6759618Z   Preparing editable metadata (pyproject.toml): started
+2025-12-21T22:39:40.8378302Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+2025-12-21T22:39:40.9628091Z Collecting fastapi>=0.104.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:40.9649514Z   Using cached fastapi-0.127.0-py3-none-any.whl.metadata (30 kB)
+2025-12-21T22:39:41.0011818Z Collecting uvicorn>=0.24.0 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:41.0026964Z   Using cached uvicorn-0.40.0-py3-none-any.whl.metadata (6.7 kB)
+2025-12-21T22:39:41.0382268Z Collecting httpx>=0.25.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:41.0397587Z   Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+2025-12-21T22:39:41.1467077Z Collecting pydantic>=2.4.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:41.1484230Z   Using cached pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)
+2025-12-21T22:39:41.1724679Z Collecting pydantic-settings>=2.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:41.1740778Z   Using cached pydantic_settings-2.12.0-py3-none-any.whl.metadata (3.4 kB)
+2025-12-21T22:39:41.4014761Z Collecting sqlalchemy>=2.0.0 (from sqlalchemy[asyncio]>=2.0.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:41.4030675Z   Using cached sqlalchemy-2.0.45-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+2025-12-21T22:39:41.4363880Z Collecting alembic>=1.12.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:41.4378564Z   Using cached alembic-1.17.2-py3-none-any.whl.metadata (7.2 kB)
+2025-12-21T22:39:41.4996266Z Collecting asyncpg>=0.29.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:41.5012715Z   Using cached asyncpg-0.31.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.4 kB)
+2025-12-21T22:39:41.5379656Z Collecting pytest>=7.4.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:41.5394366Z   Using cached pytest-9.0.2-py3-none-any.whl.metadata (7.6 kB)
+2025-12-21T22:39:41.5610864Z Collecting pytest-cov>=4.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:41.5625141Z   Using cached pytest_cov-7.0.0-py3-none-any.whl.metadata (31 kB)
+2025-12-21T22:39:41.5885966Z Collecting pytest-asyncio>=0.21.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:41.5900721Z   Using cached pytest_asyncio-1.3.0-py3-none-any.whl.metadata (4.1 kB)
+2025-12-21T22:39:41.8810596Z Collecting ruff>=0.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:41.8826337Z   Using cached ruff-0.14.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (26 kB)
+2025-12-21T22:39:42.0025053Z Collecting mypy>=1.6.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.0041091Z   Using cached mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.2 kB)
+2025-12-21T22:39:42.0232146Z Collecting aiosqlite>=0.19.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.0246617Z   Using cached aiosqlite-0.22.0-py3-none-any.whl.metadata (4.3 kB)
+2025-12-21T22:39:42.0625576Z Collecting Mako (from alembic>=1.12.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.0639572Z   Using cached mako-1.3.10-py3-none-any.whl.metadata (2.9 kB)
+2025-12-21T22:39:42.0845380Z Collecting typing-extensions>=4.12 (from alembic>=1.12.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.0859524Z   Using cached typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+2025-12-21T22:39:42.1171472Z Collecting starlette<0.51.0,>=0.40.0 (from fastapi>=0.104.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.1186014Z   Using cached starlette-0.50.0-py3-none-any.whl.metadata (6.3 kB)
+2025-12-21T22:39:42.1480566Z Collecting annotated-doc>=0.0.2 (from fastapi>=0.104.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.1495163Z   Using cached annotated_doc-0.0.4-py3-none-any.whl.metadata (6.6 kB)
+2025-12-21T22:39:42.1741472Z Collecting anyio<5,>=3.6.2 (from starlette<0.51.0,>=0.40.0->fastapi>=0.104.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.1755582Z   Using cached anyio-4.12.0-py3-none-any.whl.metadata (4.3 kB)
+2025-12-21T22:39:42.1978580Z Collecting idna>=2.8 (from anyio<5,>=3.6.2->starlette<0.51.0,>=0.40.0->fastapi>=0.104.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.1993209Z   Using cached idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+2025-12-21T22:39:42.2275856Z Collecting certifi (from httpx>=0.25.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.2290654Z   Using cached certifi-2025.11.12-py3-none-any.whl.metadata (2.5 kB)
+2025-12-21T22:39:42.2520742Z Collecting httpcore==1.* (from httpx>=0.25.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.2535942Z   Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+2025-12-21T22:39:42.2712049Z Collecting h11>=0.16 (from httpcore==1.*->httpx>=0.25.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.2725574Z   Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+2025-12-21T22:39:42.2930635Z Collecting mypy_extensions>=1.0.0 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.2944151Z   Using cached mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
+2025-12-21T22:39:42.3113511Z Collecting pathspec>=0.9.0 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.3126247Z   Using cached pathspec-0.12.1-py3-none-any.whl.metadata (21 kB)
+2025-12-21T22:39:42.3835264Z Collecting librt>=0.6.2 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.3850902Z   Using cached librt-0.7.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (1.3 kB)
+2025-12-21T22:39:42.4022309Z Collecting annotated-types>=0.6.0 (from pydantic>=2.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:42.4037588Z   Using cached annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+2025-12-21T22:39:43.0108751Z Collecting pydantic-core==2.41.5 (from pydantic>=2.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.0124845Z   Using cached pydantic_core-2.41.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.3 kB)
+2025-12-21T22:39:43.0302807Z Collecting typing-inspection>=0.4.2 (from pydantic>=2.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.0317280Z   Using cached typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+2025-12-21T22:39:43.0535173Z Collecting python-dotenv>=0.21.0 (from pydantic-settings>=2.0.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.0549473Z   Using cached python_dotenv-1.2.1-py3-none-any.whl.metadata (25 kB)
+2025-12-21T22:39:43.0733310Z Collecting iniconfig>=1.0.1 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.0747890Z   Using cached iniconfig-2.3.0-py3-none-any.whl.metadata (2.5 kB)
+2025-12-21T22:39:43.0948578Z Collecting packaging>=22 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.0962203Z   Using cached packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+2025-12-21T22:39:43.1157628Z Collecting pluggy<2,>=1.5 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.1180110Z   Using cached pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+2025-12-21T22:39:43.1427135Z Collecting pygments>=2.7.2 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.1441845Z   Using cached pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+2025-12-21T22:39:43.4454833Z Collecting coverage>=7.10.6 (from coverage[toml]>=7.10.6->pytest-cov>=4.1.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.4470310Z   Using cached coverage-7.13.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.5 kB)
+2025-12-21T22:39:43.6329058Z Collecting greenlet>=1 (from sqlalchemy>=2.0.0->sqlalchemy[asyncio]>=2.0.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.6344557Z   Using cached greenlet-3.3.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (4.1 kB)
+2025-12-21T22:39:43.6632382Z Collecting click>=7.0 (from uvicorn>=0.24.0->uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.6648230Z   Using cached click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
+2025-12-21T22:39:43.7004535Z Collecting httptools>=0.6.3 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.7020084Z   Using cached httptools-0.7.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+2025-12-21T22:39:43.7433362Z Collecting pyyaml>=5.1 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.7448681Z   Using cached pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2025-12-21T22:39:43.7859674Z Collecting uvloop>=0.15.1 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.7875483Z   Using cached uvloop-0.22.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.9 kB)
+2025-12-21T22:39:43.8554888Z Collecting watchfiles>=0.13 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.8572556Z   Using cached watchfiles-1.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+2025-12-21T22:39:43.9353583Z Collecting websockets>=10.4 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:43.9369386Z   Using cached websockets-15.0.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+2025-12-21T22:39:43.9985345Z Collecting MarkupSafe>=0.9.2 (from Mako->alembic>=1.12.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:44.0000972Z   Using cached markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+2025-12-21T22:39:44.0046338Z Using cached aiosqlite-0.22.0-py3-none-any.whl (17 kB)
+2025-12-21T22:39:44.0060092Z Using cached alembic-1.17.2-py3-none-any.whl (248 kB)
+2025-12-21T22:39:44.0074320Z Using cached asyncpg-0.31.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.0 MB)
+2025-12-21T22:39:44.0102454Z Using cached fastapi-0.127.0-py3-none-any.whl (112 kB)
+2025-12-21T22:39:44.0114940Z Using cached starlette-0.50.0-py3-none-any.whl (74 kB)
+2025-12-21T22:39:44.0127934Z Using cached anyio-4.12.0-py3-none-any.whl (113 kB)
+2025-12-21T22:39:44.0141062Z Using cached annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
+2025-12-21T22:39:44.0153669Z Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+2025-12-21T22:39:44.0166024Z Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+2025-12-21T22:39:44.0179110Z Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+2025-12-21T22:39:44.0192344Z Using cached idna-3.11-py3-none-any.whl (71 kB)
+2025-12-21T22:39:44.0205803Z Using cached mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (13.4 MB)
+2025-12-21T22:39:44.0286551Z Using cached librt-0.7.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (184 kB)
+2025-12-21T22:39:44.0300684Z Using cached mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+2025-12-21T22:39:44.0313547Z Using cached pathspec-0.12.1-py3-none-any.whl (31 kB)
+2025-12-21T22:39:44.0326040Z Using cached pydantic-2.12.5-py3-none-any.whl (463 kB)
+2025-12-21T22:39:44.0342066Z Using cached pydantic_core-2.41.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+2025-12-21T22:39:44.0364876Z Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+2025-12-21T22:39:44.0377077Z Using cached pydantic_settings-2.12.0-py3-none-any.whl (51 kB)
+2025-12-21T22:39:44.0390251Z Using cached pytest-9.0.2-py3-none-any.whl (374 kB)
+2025-12-21T22:39:44.0404342Z Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+2025-12-21T22:39:44.0417258Z Using cached iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+2025-12-21T22:39:44.0429780Z Using cached packaging-25.0-py3-none-any.whl (66 kB)
+2025-12-21T22:39:44.0442012Z Using cached pygments-2.19.2-py3-none-any.whl (1.2 MB)
+2025-12-21T22:39:44.0461465Z Using cached pytest_asyncio-1.3.0-py3-none-any.whl (15 kB)
+2025-12-21T22:39:44.0474268Z Using cached pytest_cov-7.0.0-py3-none-any.whl (22 kB)
+2025-12-21T22:39:44.0487571Z Using cached coverage-7.13.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (250 kB)
+2025-12-21T22:39:44.0501420Z Using cached python_dotenv-1.2.1-py3-none-any.whl (21 kB)
+2025-12-21T22:39:44.0514288Z Using cached ruff-0.14.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (14.2 MB)
+2025-12-21T22:39:44.0600691Z Using cached sqlalchemy-2.0.45-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.3 MB)
+2025-12-21T22:39:44.0629808Z Using cached greenlet-3.3.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (590 kB)
+2025-12-21T22:39:44.0645386Z Using cached typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+2025-12-21T22:39:44.0658504Z Using cached typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+2025-12-21T22:39:44.0670807Z Using cached uvicorn-0.40.0-py3-none-any.whl (68 kB)
+2025-12-21T22:39:44.0683784Z Using cached click-8.3.1-py3-none-any.whl (108 kB)
+2025-12-21T22:39:44.0697331Z Using cached httptools-0.7.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (456 kB)
+2025-12-21T22:39:44.0712624Z Using cached pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (806 kB)
+2025-12-21T22:39:44.0729372Z Using cached uvloop-0.22.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.8 MB)
+2025-12-21T22:39:44.0760191Z Using cached watchfiles-1.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (456 kB)
+2025-12-21T22:39:44.0775589Z Using cached websockets-15.0.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (182 kB)
+2025-12-21T22:39:44.0789359Z Using cached certifi-2025.11.12-py3-none-any.whl (159 kB)
+2025-12-21T22:39:44.0802387Z Using cached mako-1.3.10-py3-none-any.whl (78 kB)
+2025-12-21T22:39:44.0815720Z Using cached markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+2025-12-21T22:39:44.1550589Z Building wheels for collected packages: tunix-rt-backend
+2025-12-21T22:39:44.1558186Z   Building editable for tunix-rt-backend (pyproject.toml): started
+2025-12-21T22:39:44.3338671Z   Building editable for tunix-rt-backend (pyproject.toml): finished with status 'done'
+2025-12-21T22:39:44.3344998Z   Created wheel for tunix-rt-backend: filename=tunix_rt_backend-0.1.0-0.editable-py3-none-any.whl size=3073 sha256=39961eda6b47212ff3ed612134bc2498a57a923129c04ced1bdc23865fb048b8
+2025-12-21T22:39:44.3347633Z   Stored in directory: /tmp/pip-ephem-wheel-cache-_azcoeqb/wheels/6c/ee/47/0b2814d300ad026845dfa3996505f4a0f855be918f2df7eb34
+2025-12-21T22:39:44.3360209Z Successfully built tunix-rt-backend
+2025-12-21T22:39:44.3975943Z Installing collected packages: websockets, uvloop, typing-extensions, ruff, pyyaml, python-dotenv, pygments, pluggy, pathspec, packaging, mypy_extensions, MarkupSafe, librt, iniconfig, idna, httptools, h11, greenlet, coverage, click, certifi, asyncpg, annotated-types, annotated-doc, aiosqlite, uvicorn, typing-inspection, sqlalchemy, pytest, pydantic-core, mypy, Mako, httpcore, anyio, watchfiles, starlette, pytest-cov, pytest-asyncio, pydantic, httpx, alembic, pydantic-settings, fastapi, tunix-rt-backend
+2025-12-21T22:39:49.0287632Z 
+2025-12-21T22:39:49.0313330Z Successfully installed Mako-1.3.10 MarkupSafe-3.0.3 aiosqlite-0.22.0 alembic-1.17.2 annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.0 asyncpg-0.31.0 certifi-2025.11.12 click-8.3.1 coverage-7.13.0 fastapi-0.127.0 greenlet-3.3.0 h11-0.16.0 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 idna-3.11 iniconfig-2.3.0 librt-0.7.4 mypy-1.19.1 mypy_extensions-1.1.0 packaging-25.0 pathspec-0.12.1 pluggy-1.6.0 pydantic-2.12.5 pydantic-core-2.41.5 pydantic-settings-2.12.0 pygments-2.19.2 pytest-9.0.2 pytest-asyncio-1.3.0 pytest-cov-7.0.0 python-dotenv-1.2.1 pyyaml-6.0.3 ruff-0.14.10 sqlalchemy-2.0.45 starlette-0.50.0 tunix-rt-backend-0.1.0 typing-extensions-4.15.0 typing-inspection-0.4.2 uvicorn-0.40.0 uvloop-0.22.1 watchfiles-1.1.1 websockets-15.0.1

@@ -65,7 +65,7 @@ async def validate_payload_size(request: Request) -> None:
     content_length = request.headers.get("content-length")
     if content_length and int(content_length) > settings.trace_max_bytes:
         raise HTTPException(
-            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            status_code=status.HTTP_413_CONTENT_TOO_LARGE,
             detail=f"Payload size exceeds maximum of {settings.trace_max_bytes} bytes",
         )
 
@@ -264,14 +264,14 @@ async def list_traces(
     # Validate pagination parameters
     if limit < 1 or limit > 100:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail="limit must be between 1 and 100",
         )
     # limit is valid - continue
 
     if offset < 0:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail="offset must be non-negative",
         )
     # offset is valid - continue

@@ -1,0 +1,17 @@
+﻿2025-12-21T22:39:23.0299214Z ##[group]Run npm run build
+2025-12-21T22:39:23.0299494Z [36;1mnpm run build[0m
+2025-12-21T22:39:23.0331491Z shell: /usr/bin/bash -e {0}
+2025-12-21T22:39:23.0331740Z ##[endgroup]
+2025-12-21T22:39:23.1633552Z 
+2025-12-21T22:39:23.1635900Z > tunix-rt-frontend@0.1.0 build
+2025-12-21T22:39:23.1640880Z > tsc && vite build
+2025-12-21T22:39:23.1641132Z 
+2025-12-21T22:39:25.4403177Z [36mvite v5.4.21 [32mbuilding for production...[36m[39m
+2025-12-21T22:39:25.4976534Z transforming...
+2025-12-21T22:39:26.4000930Z [32m✓[39m 33 modules transformed.
+2025-12-21T22:39:26.5408414Z rendering chunks...
+2025-12-21T22:39:26.5470671Z computing gzip size...
+2025-12-21T22:39:26.5537253Z [2mdist/[22m[32mindex.html                 [39m[1m[2m  0.48 kB[22m[1m[22m[2m │ gzip:  0.31 kB[22m
+2025-12-21T22:39:26.5543475Z [2mdist/[22m[2massets/[22m[35mindex-QBhrFh9-.css  [39m[1m[2m  3.87 kB[22m[1m[22m[2m │ gzip:  1.08 kB[22m
+2025-12-21T22:39:26.5544853Z [2mdist/[22m[2massets/[22m[36mindex-CkfmMqhz.js   [39m[1m[2m153.77 kB[22m[1m[22m[2m │ gzip: 48.70 kB[22m
+2025-12-21T22:39:26.5545748Z [32m✓ built in 1.09s[39m

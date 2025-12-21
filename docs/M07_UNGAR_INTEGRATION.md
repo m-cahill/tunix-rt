@@ -186,6 +186,28 @@ reveal
 }
 ```
 
+## Coverage Strategy
+
+### Core vs Optional Coverage
+
+M07 uses a **two-tier coverage strategy** to maintain high quality standards for core code while supporting optional integrations:
+
+**Default CI (Core Coverage):**
+- Measures coverage with `.coveragerc` configuration
+- Omits `integrations/ungar/high_card_duel.py` (requires UNGAR installed)
+- Tests all "UNGAR not installed" code paths (501 responses)
+- **Gate:** ≥70% coverage (currently ~84%)
+- **Purpose:** Ensure core runtime quality
+
+**Optional UNGAR Workflow (Full Coverage):**
+- Measures coverage with `.coveragerc.full` configuration
+- Includes all UNGAR code (generator, conversion logic)
+- Tests all UNGAR functionality end-to-end
+- **Report-only** (non-blocking)
+- **Purpose:** Validate optional integration quality
+
+**Rationale:** Optional integration code that requires external dependencies should not dilute core coverage metrics or block CI when dependencies are absent.
+
 ## Testing
 
 ### Default Tests (No UNGAR)

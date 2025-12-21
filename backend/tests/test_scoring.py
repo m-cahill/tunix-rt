@@ -446,7 +446,7 @@ class TestCompareEndpoint:
             "/api/traces/compare?base=not-a-uuid&other=also-not-a-uuid"
         )
         # FastAPI will return 422 for invalid UUID format
-        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
 
     @pytest.mark.asyncio
     async def test_compare_both_traces_exist_explicit(self, async_client: AsyncClient):

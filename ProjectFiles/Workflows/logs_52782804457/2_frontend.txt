@@ -1,0 +1,2398 @@
+﻿2025-12-21T22:39:07.1407803Z Current runner version: '2.330.0'
+2025-12-21T22:39:07.1483271Z ##[group]Runner Image Provisioner
+2025-12-21T22:39:07.1484473Z Hosted Compute Agent
+2025-12-21T22:39:07.1485345Z Version: 20251211.462
+2025-12-21T22:39:07.1486545Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-21T22:39:07.1487707Z Build Date: 2025-12-11T16:28:49Z
+2025-12-21T22:39:07.1489058Z Worker ID: {f637aa5a-1988-4ab6-8d42-c23fa403ed5c}
+2025-12-21T22:39:07.1490289Z ##[endgroup]
+2025-12-21T22:39:07.1491196Z ##[group]Operating System
+2025-12-21T22:39:07.1492053Z Ubuntu
+2025-12-21T22:39:07.1492886Z 24.04.3
+2025-12-21T22:39:07.1493574Z LTS
+2025-12-21T22:39:07.1494308Z ##[endgroup]
+2025-12-21T22:39:07.1495084Z ##[group]Runner Image
+2025-12-21T22:39:07.1496045Z Image: ubuntu-24.04
+2025-12-21T22:39:07.1496863Z Version: 20251215.174.1
+2025-12-21T22:39:07.1528966Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-21T22:39:07.1531846Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-21T22:39:07.1533587Z ##[endgroup]
+2025-12-21T22:39:07.1535394Z ##[group]GITHUB_TOKEN Permissions
+2025-12-21T22:39:07.1538436Z Contents: read
+2025-12-21T22:39:07.1539279Z Metadata: read
+2025-12-21T22:39:07.1540249Z ##[endgroup]
+2025-12-21T22:39:07.1543139Z Secret source: Actions
+2025-12-21T22:39:07.1544546Z Prepare workflow directory
+2025-12-21T22:39:07.2336059Z Prepare all required actions
+2025-12-21T22:39:07.2452273Z Getting action download info
+2025-12-21T22:39:07.5875821Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2025-12-21T22:39:07.7251918Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2025-12-21T22:39:07.8742570Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2025-12-21T22:39:08.0937383Z Complete job name: frontend
+2025-12-21T22:39:08.1609666Z ##[group]Run actions/checkout@v4
+2025-12-21T22:39:08.1610589Z with:
+2025-12-21T22:39:08.1611000Z   repository: m-cahill/tunix-rt
+2025-12-21T22:39:08.1611675Z   token: ***
+2025-12-21T22:39:08.1612055Z   ssh-strict: true
+2025-12-21T22:39:08.1612457Z   ssh-user: git
+2025-12-21T22:39:08.1612842Z   persist-credentials: true
+2025-12-21T22:39:08.1613277Z   clean: true
+2025-12-21T22:39:08.1613663Z   sparse-checkout-cone-mode: true
+2025-12-21T22:39:08.1614130Z   fetch-depth: 1
+2025-12-21T22:39:08.1614495Z   fetch-tags: false
+2025-12-21T22:39:08.1614939Z   show-progress: true
+2025-12-21T22:39:08.1615342Z   lfs: false
+2025-12-21T22:39:08.1615700Z   submodules: false
+2025-12-21T22:39:08.1616104Z   set-safe-directory: true
+2025-12-21T22:39:08.1616795Z ##[endgroup]
+2025-12-21T22:39:08.2753224Z Syncing repository: m-cahill/tunix-rt
+2025-12-21T22:39:08.2755201Z ##[group]Getting Git version info
+2025-12-21T22:39:08.2755899Z Working directory is '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-21T22:39:08.2756885Z [command]/usr/bin/git version
+2025-12-21T22:39:08.2851567Z git version 2.52.0
+2025-12-21T22:39:08.2880038Z ##[endgroup]
+2025-12-21T22:39:08.2896753Z Temporarily overriding HOME='/home/runner/work/_temp/fdf4d957-5352-4eaf-984d-34702278e46c' before making global git config changes
+2025-12-21T22:39:08.2901659Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-21T22:39:08.2918772Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-21T22:39:08.2959041Z Deleting the contents of '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-21T22:39:08.2964233Z ##[group]Initializing the repository
+2025-12-21T22:39:08.2969560Z [command]/usr/bin/git init /home/runner/work/tunix-rt/tunix-rt
+2025-12-21T22:39:08.3092671Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-21T22:39:08.3096797Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-21T22:39:08.3098577Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-21T22:39:08.3100527Z hint: call:
+2025-12-21T22:39:08.3101191Z hint:
+2025-12-21T22:39:08.3102003Z hint: 	git config --global init.defaultBranch <name>
+2025-12-21T22:39:08.3103020Z hint:
+2025-12-21T22:39:08.3103970Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-21T22:39:08.3105567Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-21T22:39:08.3106751Z hint:
+2025-12-21T22:39:08.3107371Z hint: 	git branch -m <name>
+2025-12-21T22:39:08.3108331Z hint:
+2025-12-21T22:39:08.3109363Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-21T22:39:08.3111202Z Initialized empty Git repository in /home/runner/work/tunix-rt/tunix-rt/.git/
+2025-12-21T22:39:08.3114587Z [command]/usr/bin/git remote add origin https://github.com/m-cahill/tunix-rt
+2025-12-21T22:39:08.3152753Z ##[endgroup]
+2025-12-21T22:39:08.3154036Z ##[group]Disabling automatic garbage collection
+2025-12-21T22:39:08.3157440Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-21T22:39:08.3191505Z ##[endgroup]
+2025-12-21T22:39:08.3192619Z ##[group]Setting up auth
+2025-12-21T22:39:08.3197639Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-21T22:39:08.3230338Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-21T22:39:08.3592959Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-21T22:39:08.3626125Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-21T22:39:08.3853683Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-21T22:39:08.3896332Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-21T22:39:08.4132294Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-21T22:39:08.4170523Z ##[endgroup]
+2025-12-21T22:39:08.4172884Z ##[group]Fetching the repository
+2025-12-21T22:39:08.4181051Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +4d53b164a0bfc0208889ed91784230a2960913d6:refs/remotes/origin/main
+2025-12-21T22:39:08.7001479Z From https://github.com/m-cahill/tunix-rt
+2025-12-21T22:39:08.7003238Z  * [new ref]         4d53b164a0bfc0208889ed91784230a2960913d6 -> origin/main
+2025-12-21T22:39:08.7076251Z ##[endgroup]
+2025-12-21T22:39:08.7077693Z ##[group]Determining the checkout info
+2025-12-21T22:39:08.7079518Z ##[endgroup]
+2025-12-21T22:39:08.7080729Z [command]/usr/bin/git sparse-checkout disable
+2025-12-21T22:39:08.7112811Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-21T22:39:08.7154817Z ##[group]Checking out the ref
+2025-12-21T22:39:08.7158317Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-21T22:39:08.7969537Z Switched to a new branch 'main'
+2025-12-21T22:39:08.7972803Z branch 'main' set up to track 'origin/main'.
+2025-12-21T22:39:08.7985200Z ##[endgroup]
+2025-12-21T22:39:08.8025549Z [command]/usr/bin/git log -1 --format=%H
+2025-12-21T22:39:08.8049230Z 4d53b164a0bfc0208889ed91784230a2960913d6
+2025-12-21T22:39:08.8372412Z ##[group]Run actions/setup-node@v4
+2025-12-21T22:39:08.8373680Z with:
+2025-12-21T22:39:08.8374482Z   node-version: 18
+2025-12-21T22:39:08.8375338Z   cache: npm
+2025-12-21T22:39:08.8376339Z   cache-dependency-path: frontend/package-lock.json
+2025-12-21T22:39:08.8377662Z   always-auth: false
+2025-12-21T22:39:08.8378706Z   check-latest: false
+2025-12-21T22:39:08.8379915Z   token: ***
+2025-12-21T22:39:08.8380725Z ##[endgroup]
+2025-12-21T22:39:09.0544798Z Attempting to download 18...
+2025-12-21T22:39:09.4986492Z Acquiring 18.20.8 - x64 from https://github.com/actions/node-versions/releases/download/18.20.8-14110393767/node-18.20.8-linux-x64.tar.gz
+2025-12-21T22:39:10.0212151Z Extracting ...
+2025-12-21T22:39:10.0378901Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/098eeffa-4fa3-4a36-8d7b-c3b073a39706 -f /home/runner/work/_temp/ad391f14-e260-4d1d-88b8-72cbd20c8bc7
+2025-12-21T22:39:11.1904123Z Adding to the cache ...
+2025-12-21T22:39:13.1857433Z ##[group]Environment details
+2025-12-21T22:39:13.5346623Z node: v18.20.8
+2025-12-21T22:39:13.5369130Z npm: 10.8.2
+2025-12-21T22:39:13.5369962Z yarn: 1.22.22
+2025-12-21T22:39:13.5370918Z ##[endgroup]
+2025-12-21T22:39:13.5376230Z [command]/opt/hostedtoolcache/node/18.20.8/x64/bin/npm config get cache
+2025-12-21T22:39:13.6548708Z /home/runner/.npm
+2025-12-21T22:39:13.7631111Z Cache hit for: node-cache-Linux-x64-npm-582e97bbf2f73a4c9de6a422350d7e5fa7ccd4c5a0bae6af7327cebe3d1d946a
+2025-12-21T22:39:14.0771121Z Received 27442605 of 27442605 (100.0%), 94.1 MBs/sec
+2025-12-21T22:39:14.0773087Z Cache Size: ~26 MB (27442605 B)
+2025-12-21T22:39:14.0801298Z [command]/usr/bin/tar -xf /home/runner/work/_temp/b7c1e0f9-13c0-49a4-840a-f96dafdf9db0/cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --use-compress-program unzstd
+2025-12-21T22:39:14.2166523Z Cache restored successfully
+2025-12-21T22:39:14.2240453Z Cache restored from key: node-cache-Linux-x64-npm-582e97bbf2f73a4c9de6a422350d7e5fa7ccd4c5a0bae6af7327cebe3d1d946a
+2025-12-21T22:39:14.2432425Z ##[group]Run npm ci
+2025-12-21T22:39:14.2432730Z [36;1mnpm ci[0m
+2025-12-21T22:39:14.2539705Z shell: /usr/bin/bash -e {0}
+2025-12-21T22:39:14.2540005Z ##[endgroup]
+2025-12-21T22:39:16.3117520Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-12-21T22:39:16.4333782Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+2025-12-21T22:39:16.4416788Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-12-21T22:39:16.5229541Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-12-21T22:39:16.5310272Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-12-21T22:39:17.9468526Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-12-21T22:39:18.2149400Z 
+2025-12-21T22:39:18.2151849Z added 406 packages, and audited 407 packages in 4s
+2025-12-21T22:39:18.2152686Z 
+2025-12-21T22:39:18.2153198Z 117 packages are looking for funding
+2025-12-21T22:39:18.2154021Z   run `npm fund` for details
+2025-12-21T22:39:18.2315840Z 
+2025-12-21T22:39:18.2316994Z 5 moderate severity vulnerabilities
+2025-12-21T22:39:18.2317808Z 
+2025-12-21T22:39:18.2318903Z To address all issues (including breaking changes), run:
+2025-12-21T22:39:18.2319728Z   npm audit fix --force
+2025-12-21T22:39:18.2321715Z 
+2025-12-21T22:39:18.2321998Z Run `npm audit` for details.
+2025-12-21T22:39:18.2601170Z ##[group]Run npm run test -- --coverage
+2025-12-21T22:39:18.2601531Z [36;1mnpm run test -- --coverage[0m
+2025-12-21T22:39:18.2635542Z shell: /usr/bin/bash -e {0}
+2025-12-21T22:39:18.2635996Z ##[endgroup]
+2025-12-21T22:39:18.3965006Z 
+2025-12-21T22:39:18.3967502Z > tunix-rt-frontend@0.1.0 test
+2025-12-21T22:39:18.3970405Z > vitest --run --coverage
+2025-12-21T22:39:18.3970752Z 
+2025-12-21T22:39:18.9224174Z 
+2025-12-21T22:39:18.9229365Z [7m[1m[36m RUN [39m[22m[27m [36mv1.6.1[39m [90m/home/runner/work/tunix-rt/tunix-rt/frontend[39m
+2025-12-21T22:39:18.9238899Z [2m      Coverage enabled with [22m[33mv8[39m
+2025-12-21T22:39:18.9240096Z 
+2025-12-21T22:39:20.2793179Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mrenders heading[22m[39m
+2025-12-21T22:39:20.2794252Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.2795413Z 
+2025-12-21T22:39:20.2796093Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.2796649Z 
+2025-12-21T22:39:20.2796837Z act(() => {
+2025-12-21T22:39:20.2797249Z   /* fire events that update state */
+2025-12-21T22:39:20.2797700Z });
+2025-12-21T22:39:20.2798272Z /* assert on the output */
+2025-12-21T22:39:20.2798535Z 
+2025-12-21T22:39:20.2799515Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.2800781Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.2801260Z 
+2025-12-21T22:39:20.5683427Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mpopulates textarea when Load Example is clicked[22m[39m
+2025-12-21T22:39:20.5684491Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.5684937Z 
+2025-12-21T22:39:20.5685479Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.5685995Z 
+2025-12-21T22:39:20.5686158Z act(() => {
+2025-12-21T22:39:20.5686516Z   /* fire events that update state */
+2025-12-21T22:39:20.5686898Z });
+2025-12-21T22:39:20.5687271Z /* assert on the output */
+2025-12-21T22:39:20.5687506Z 
+2025-12-21T22:39:20.5688594Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.5689761Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.5690616Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.5691036Z 
+2025-12-21T22:39:20.5691523Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.5692015Z 
+2025-12-21T22:39:20.5692153Z act(() => {
+2025-12-21T22:39:20.5692528Z   /* fire events that update state */
+2025-12-21T22:39:20.5692953Z });
+2025-12-21T22:39:20.5693256Z /* assert on the output */
+2025-12-21T22:39:20.5693498Z 
+2025-12-21T22:39:20.5694411Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.5695674Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.5696641Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.5697100Z 
+2025-12-21T22:39:20.5697663Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.5717561Z 
+2025-12-21T22:39:20.5717741Z act(() => {
+2025-12-21T22:39:20.5718369Z   /* fire events that update state */
+2025-12-21T22:39:20.5718820Z });
+2025-12-21T22:39:20.5719182Z /* assert on the output */
+2025-12-21T22:39:20.5719432Z 
+2025-12-21T22:39:20.5720392Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.5721669Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.5723074Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.5723537Z 
+2025-12-21T22:39:20.5724134Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.5724723Z 
+2025-12-21T22:39:20.5724868Z act(() => {
+2025-12-21T22:39:20.5725276Z   /* fire events that update state */
+2025-12-21T22:39:20.5725733Z });
+2025-12-21T22:39:20.5726085Z /* assert on the output */
+2025-12-21T22:39:20.5726340Z 
+2025-12-21T22:39:20.5727304Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.5728757Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.5729248Z 
+2025-12-21T22:39:20.5850550Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mpopulates textarea when Load Example is clicked[22m[39m
+2025-12-21T22:39:20.5852476Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.5853100Z 
+2025-12-21T22:39:20.5853774Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.5854446Z 
+2025-12-21T22:39:20.5854696Z act(() => {
+2025-12-21T22:39:20.5855188Z   /* fire events that update state */
+2025-12-21T22:39:20.5855729Z });
+2025-12-21T22:39:20.5856177Z /* assert on the output */
+2025-12-21T22:39:20.5856570Z 
+2025-12-21T22:39:20.5857638Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.5860023Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.5860955Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.5861399Z 
+2025-12-21T22:39:20.5861978Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.5862511Z 
+2025-12-21T22:39:20.5862652Z act(() => {
+2025-12-21T22:39:20.5863031Z   /* fire events that update state */
+2025-12-21T22:39:20.5863450Z });
+2025-12-21T22:39:20.5863790Z /* assert on the output */
+2025-12-21T22:39:20.5864028Z 
+2025-12-21T22:39:20.5864955Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.5866164Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.5866650Z 
+2025-12-21T22:39:20.6813825Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2muploads trace successfully and displays trace ID[22m[39m
+2025-12-21T22:39:20.6816314Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.6816780Z 
+2025-12-21T22:39:20.6817317Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.6818034Z 
+2025-12-21T22:39:20.6818171Z act(() => {
+2025-12-21T22:39:20.6818571Z   /* fire events that update state */
+2025-12-21T22:39:20.6819014Z });
+2025-12-21T22:39:20.6819342Z /* assert on the output */
+2025-12-21T22:39:20.6819598Z 
+2025-12-21T22:39:20.6820545Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.6821804Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.6822716Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.6823148Z 
+2025-12-21T22:39:20.6823684Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.6824206Z 
+2025-12-21T22:39:20.6824344Z act(() => {
+2025-12-21T22:39:20.6824968Z   /* fire events that update state */
+2025-12-21T22:39:20.6825402Z });
+2025-12-21T22:39:20.6825751Z /* assert on the output */
+2025-12-21T22:39:20.6826029Z 
+2025-12-21T22:39:20.6827493Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.6829129Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.6830062Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.6830517Z 
+2025-12-21T22:39:20.6831064Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.6831601Z 
+2025-12-21T22:39:20.6831731Z act(() => {
+2025-12-21T22:39:20.6832108Z   /* fire events that update state */
+2025-12-21T22:39:20.6832522Z });
+2025-12-21T22:39:20.6832845Z /* assert on the output */
+2025-12-21T22:39:20.6833104Z 
+2025-12-21T22:39:20.6833989Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.6835182Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.6836400Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.6836837Z 
+2025-12-21T22:39:20.6837414Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.6838144Z 
+2025-12-21T22:39:20.6838289Z act(() => {
+2025-12-21T22:39:20.6838695Z   /* fire events that update state */
+2025-12-21T22:39:20.6839111Z });
+2025-12-21T22:39:20.6839471Z /* assert on the output */
+2025-12-21T22:39:20.6839728Z 
+2025-12-21T22:39:20.6840657Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.6841918Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.6842403Z 
+2025-12-21T22:39:20.6883962Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2muploads trace successfully and displays trace ID[22m[39m
+2025-12-21T22:39:20.6886058Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.6886538Z 
+2025-12-21T22:39:20.6887117Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.6887663Z 
+2025-12-21T22:39:20.6887820Z act(() => {
+2025-12-21T22:39:20.6888425Z   /* fire events that update state */
+2025-12-21T22:39:20.6888865Z });
+2025-12-21T22:39:20.6889211Z /* assert on the output */
+2025-12-21T22:39:20.6889466Z 
+2025-12-21T22:39:20.6890341Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.6891065Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.6891962Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.6892416Z 
+2025-12-21T22:39:20.6892943Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.6893505Z 
+2025-12-21T22:39:20.6893647Z act(() => {
+2025-12-21T22:39:20.6894046Z   /* fire events that update state */
+2025-12-21T22:39:20.6894454Z });
+2025-12-21T22:39:20.6894788Z /* assert on the output */
+2025-12-21T22:39:20.6895043Z 
+2025-12-21T22:39:20.6895964Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.6897142Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.6897600Z 
+2025-12-21T22:39:20.7790762Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2muploads trace successfully and displays trace ID[22m[39m
+2025-12-21T22:39:20.7791913Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.7792336Z 
+2025-12-21T22:39:20.7792847Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.7793350Z 
+2025-12-21T22:39:20.7793476Z act(() => {
+2025-12-21T22:39:20.7793869Z   /* fire events that update state */
+2025-12-21T22:39:20.7794247Z });
+2025-12-21T22:39:20.7794557Z /* assert on the output */
+2025-12-21T22:39:20.7794793Z 
+2025-12-21T22:39:20.7796030Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.7796811Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.7797342Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.7797590Z 
+2025-12-21T22:39:20.7798160Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.7798687Z 
+2025-12-21T22:39:20.7798827Z act(() => {
+2025-12-21T22:39:20.7799200Z   /* fire events that update state */
+2025-12-21T22:39:20.7799606Z });
+2025-12-21T22:39:20.7799945Z /* assert on the output */
+2025-12-21T22:39:20.7800185Z 
+2025-12-21T22:39:20.7801081Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.7802539Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.7803444Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.7803893Z 
+2025-12-21T22:39:20.7804435Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.7804966Z 
+2025-12-21T22:39:20.7805100Z act(() => {
+2025-12-21T22:39:20.7805477Z   /* fire events that update state */
+2025-12-21T22:39:20.7805878Z });
+2025-12-21T22:39:20.7806198Z /* assert on the output */
+2025-12-21T22:39:20.7806440Z 
+2025-12-21T22:39:20.7807363Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.7808799Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.7809704Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.7810162Z 
+2025-12-21T22:39:20.7810705Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.7811216Z 
+2025-12-21T22:39:20.7811353Z act(() => {
+2025-12-21T22:39:20.7811733Z   /* fire events that update state */
+2025-12-21T22:39:20.7812151Z });
+2025-12-21T22:39:20.7812494Z /* assert on the output */
+2025-12-21T22:39:20.7812748Z 
+2025-12-21T22:39:20.7813680Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.7814896Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.7815803Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.7816253Z 
+2025-12-21T22:39:20.7816806Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.7817328Z 
+2025-12-21T22:39:20.7817454Z act(() => {
+2025-12-21T22:39:20.7818055Z   /* fire events that update state */
+2025-12-21T22:39:20.7818479Z });
+2025-12-21T22:39:20.7818810Z /* assert on the output */
+2025-12-21T22:39:20.7819063Z 
+2025-12-21T22:39:20.7819993Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.7821191Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.7821672Z 
+2025-12-21T22:39:20.8490275Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mfetches trace successfully and displays JSON[22m[39m
+2025-12-21T22:39:20.8491773Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.8492424Z 
+2025-12-21T22:39:20.8493378Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.8493890Z 
+2025-12-21T22:39:20.8494012Z act(() => {
+2025-12-21T22:39:20.8494384Z   /* fire events that update state */
+2025-12-21T22:39:20.8494808Z });
+2025-12-21T22:39:20.8495125Z /* assert on the output */
+2025-12-21T22:39:20.8495369Z 
+2025-12-21T22:39:20.8496694Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.8498055Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.8498945Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.8499369Z 
+2025-12-21T22:39:20.8499901Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.8500417Z 
+2025-12-21T22:39:20.8500545Z act(() => {
+2025-12-21T22:39:20.8500891Z   /* fire events that update state */
+2025-12-21T22:39:20.8501290Z });
+2025-12-21T22:39:20.8501609Z /* assert on the output */
+2025-12-21T22:39:20.8501845Z 
+2025-12-21T22:39:20.8502780Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.8504123Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.8505013Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.8505450Z 
+2025-12-21T22:39:20.8505977Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.8506494Z 
+2025-12-21T22:39:20.8506619Z act(() => {
+2025-12-21T22:39:20.8506976Z   /* fire events that update state */
+2025-12-21T22:39:20.8507367Z });
+2025-12-21T22:39:20.8507687Z /* assert on the output */
+2025-12-21T22:39:20.8508093Z 
+2025-12-21T22:39:20.8509018Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.8510189Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.8511049Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.8511478Z 
+2025-12-21T22:39:20.8512002Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.8512518Z 
+2025-12-21T22:39:20.8512644Z act(() => {
+2025-12-21T22:39:20.8513003Z   /* fire events that update state */
+2025-12-21T22:39:20.8513390Z });
+2025-12-21T22:39:20.8513699Z /* assert on the output */
+2025-12-21T22:39:20.8513933Z 
+2025-12-21T22:39:20.8514848Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.8516012Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.8516481Z 
+2025-12-21T22:39:20.8563238Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mfetches trace successfully and displays JSON[22m[39m
+2025-12-21T22:39:20.8564328Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.8564751Z 
+2025-12-21T22:39:20.8565278Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.8565792Z 
+2025-12-21T22:39:20.8565920Z act(() => {
+2025-12-21T22:39:20.8566279Z   /* fire events that update state */
+2025-12-21T22:39:20.8566671Z });
+2025-12-21T22:39:20.8566983Z /* assert on the output */
+2025-12-21T22:39:20.8567214Z 
+2025-12-21T22:39:20.8568293Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.8569549Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.8570417Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.8570857Z 
+2025-12-21T22:39:20.8571389Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.8571914Z 
+2025-12-21T22:39:20.8572036Z act(() => {
+2025-12-21T22:39:20.8572413Z   /* fire events that update state */
+2025-12-21T22:39:20.8572835Z });
+2025-12-21T22:39:20.8573171Z /* assert on the output */
+2025-12-21T22:39:20.8573426Z 
+2025-12-21T22:39:20.8574608Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.8575846Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.8576326Z 
+2025-12-21T22:39:20.9149834Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mfetches trace successfully and displays JSON[22m[39m
+2025-12-21T22:39:20.9150942Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.9151361Z 
+2025-12-21T22:39:20.9151882Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.9152388Z 
+2025-12-21T22:39:20.9152508Z act(() => {
+2025-12-21T22:39:20.9152869Z   /* fire events that update state */
+2025-12-21T22:39:20.9153253Z });
+2025-12-21T22:39:20.9153566Z /* assert on the output */
+2025-12-21T22:39:20.9153813Z 
+2025-12-21T22:39:20.9155234Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.9156443Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.9157326Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.9157768Z 
+2025-12-21T22:39:20.9158509Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.9159029Z 
+2025-12-21T22:39:20.9159159Z act(() => {
+2025-12-21T22:39:20.9159549Z   /* fire events that update state */
+2025-12-21T22:39:20.9159975Z });
+2025-12-21T22:39:20.9160295Z /* assert on the output */
+2025-12-21T22:39:20.9160547Z 
+2025-12-21T22:39:20.9161476Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.9162692Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.9163596Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.9164033Z 
+2025-12-21T22:39:20.9164589Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.9165112Z 
+2025-12-21T22:39:20.9165249Z act(() => {
+2025-12-21T22:39:20.9165622Z   /* fire events that update state */
+2025-12-21T22:39:20.9166029Z });
+2025-12-21T22:39:20.9166356Z /* assert on the output */
+2025-12-21T22:39:20.9166604Z 
+2025-12-21T22:39:20.9167530Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.9179243Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.9180231Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.9180678Z 
+2025-12-21T22:39:20.9181215Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.9181764Z 
+2025-12-21T22:39:20.9181892Z act(() => {
+2025-12-21T22:39:20.9182264Z   /* fire events that update state */
+2025-12-21T22:39:20.9182658Z });
+2025-12-21T22:39:20.9182985Z /* assert on the output */
+2025-12-21T22:39:20.9183233Z 
+2025-12-21T22:39:20.9184167Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.9185313Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.9186221Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:20.9186671Z 
+2025-12-21T22:39:20.9187216Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:20.9187763Z 
+2025-12-21T22:39:20.9188103Z act(() => {
+2025-12-21T22:39:20.9188509Z   /* fire events that update state */
+2025-12-21T22:39:20.9188927Z });
+2025-12-21T22:39:20.9189296Z /* assert on the output */
+2025-12-21T22:39:20.9189562Z 
+2025-12-21T22:39:20.9190500Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:20.9191964Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:20.9192489Z 
+2025-12-21T22:39:21.1018948Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mfetches trace successfully and displays JSON[22m[39m
+2025-12-21T22:39:21.1020069Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.1021730Z 
+2025-12-21T22:39:21.1023702Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.1024122Z 
+2025-12-21T22:39:21.1024225Z act(() => {
+2025-12-21T22:39:21.1024564Z   /* fire events that update state */
+2025-12-21T22:39:21.1024953Z });
+2025-12-21T22:39:21.1025262Z /* assert on the output */
+2025-12-21T22:39:21.1028223Z 
+2025-12-21T22:39:21.1029135Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.1030730Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.1031625Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.1032053Z 
+2025-12-21T22:39:21.1032588Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.1033098Z 
+2025-12-21T22:39:21.1033222Z act(() => {
+2025-12-21T22:39:21.1033580Z   /* fire events that update state */
+2025-12-21T22:39:21.1033970Z });
+2025-12-21T22:39:21.1034277Z /* assert on the output */
+2025-12-21T22:39:21.1034519Z 
+2025-12-21T22:39:21.1035408Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.1036478Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.1037254Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.1037657Z 
+2025-12-21T22:39:21.1038339Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.1038790Z 
+2025-12-21T22:39:21.1038898Z act(() => {
+2025-12-21T22:39:21.1039209Z   /* fire events that update state */
+2025-12-21T22:39:21.1039557Z });
+2025-12-21T22:39:21.1039827Z /* assert on the output */
+2025-12-21T22:39:21.1040032Z 
+2025-12-21T22:39:21.1040854Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.1041908Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.1042710Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.1043143Z 
+2025-12-21T22:39:21.1043677Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.1044153Z 
+2025-12-21T22:39:21.1044289Z act(() => {
+2025-12-21T22:39:21.1044639Z   /* fire events that update state */
+2025-12-21T22:39:21.1045025Z });
+2025-12-21T22:39:21.1045333Z /* assert on the output */
+2025-12-21T22:39:21.1045574Z 
+2025-12-21T22:39:21.1046450Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.1047621Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.1048809Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.1049251Z 
+2025-12-21T22:39:21.1049792Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.1050322Z 
+2025-12-21T22:39:21.1050450Z act(() => {
+2025-12-21T22:39:21.1050820Z   /* fire events that update state */
+2025-12-21T22:39:21.1051223Z });
+2025-12-21T22:39:21.1051535Z /* assert on the output */
+2025-12-21T22:39:21.1051780Z 
+2025-12-21T22:39:21.1052691Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.1054201Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.1054713Z 
+2025-12-21T22:39:21.1559730Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.1561840Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.1562217Z 
+2025-12-21T22:39:21.1562709Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.1563193Z 
+2025-12-21T22:39:21.1563314Z act(() => {
+2025-12-21T22:39:21.1563656Z   /* fire events that update state */
+2025-12-21T22:39:21.1564044Z });
+2025-12-21T22:39:21.1564365Z /* assert on the output */
+2025-12-21T22:39:21.1564596Z 
+2025-12-21T22:39:21.1565514Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.1567119Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.1568312Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.1568779Z 
+2025-12-21T22:39:21.1569330Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.1569863Z 
+2025-12-21T22:39:21.1569989Z act(() => {
+2025-12-21T22:39:21.1570356Z   /* fire events that update state */
+2025-12-21T22:39:21.1570768Z });
+2025-12-21T22:39:21.1571095Z /* assert on the output */
+2025-12-21T22:39:21.1571357Z 
+2025-12-21T22:39:21.1572287Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.1573513Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.1574350Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.1574742Z 
+2025-12-21T22:39:21.1575231Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.1575685Z 
+2025-12-21T22:39:21.1575793Z act(() => {
+2025-12-21T22:39:21.1576134Z   /* fire events that update state */
+2025-12-21T22:39:21.1576551Z });
+2025-12-21T22:39:21.1576886Z /* assert on the output */
+2025-12-21T22:39:21.1577136Z 
+2025-12-21T22:39:21.1578269Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.1579498Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.1580419Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.1580864Z 
+2025-12-21T22:39:21.1581426Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.1581959Z 
+2025-12-21T22:39:21.1582105Z act(() => {
+2025-12-21T22:39:21.1582504Z   /* fire events that update state */
+2025-12-21T22:39:21.1582921Z });
+2025-12-21T22:39:21.1583263Z /* assert on the output */
+2025-12-21T22:39:21.1583500Z 
+2025-12-21T22:39:21.1584430Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.1585637Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.1586197Z 
+2025-12-21T22:39:21.1936817Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.1939348Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.1939732Z 
+2025-12-21T22:39:21.1940255Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.1940770Z 
+2025-12-21T22:39:21.1940892Z act(() => {
+2025-12-21T22:39:21.1941257Z   /* fire events that update state */
+2025-12-21T22:39:21.1941680Z });
+2025-12-21T22:39:21.1941991Z /* assert on the output */
+2025-12-21T22:39:21.1942235Z 
+2025-12-21T22:39:21.1943596Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.1944766Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.1945223Z 
+2025-12-21T22:39:21.2079861Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2081177Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2081803Z 
+2025-12-21T22:39:21.2082479Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2083130Z 
+2025-12-21T22:39:21.2083365Z act(() => {
+2025-12-21T22:39:21.2083879Z   /* fire events that update state */
+2025-12-21T22:39:21.2084418Z });
+2025-12-21T22:39:21.2087289Z /* assert on the output */
+2025-12-21T22:39:21.2087560Z 
+2025-12-21T22:39:21.2088720Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2089952Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2091995Z 
+2025-12-21T22:39:21.2093019Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2093989Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2094339Z 
+2025-12-21T22:39:21.2094890Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2095194Z 
+2025-12-21T22:39:21.2095395Z act(() => {
+2025-12-21T22:39:21.2095804Z   /* fire events that update state */
+2025-12-21T22:39:21.2096214Z });
+2025-12-21T22:39:21.2096519Z /* assert on the output */
+2025-12-21T22:39:21.2096762Z 
+2025-12-21T22:39:21.2097451Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2098339Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2098611Z 
+2025-12-21T22:39:21.2159392Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2161146Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2162050Z 
+2025-12-21T22:39:21.2162396Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2162710Z 
+2025-12-21T22:39:21.2162793Z act(() => {
+2025-12-21T22:39:21.2163015Z   /* fire events that update state */
+2025-12-21T22:39:21.2163255Z });
+2025-12-21T22:39:21.2163443Z /* assert on the output */
+2025-12-21T22:39:21.2163581Z 
+2025-12-21T22:39:21.2164102Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2164807Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2165071Z 
+2025-12-21T22:39:21.2166071Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2166714Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2166969Z 
+2025-12-21T22:39:21.2167259Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2167553Z 
+2025-12-21T22:39:21.2167627Z act(() => {
+2025-12-21T22:39:21.2168045Z   /* fire events that update state */
+2025-12-21T22:39:21.2168315Z });
+2025-12-21T22:39:21.2168504Z /* assert on the output */
+2025-12-21T22:39:21.2168645Z 
+2025-12-21T22:39:21.2169145Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2169828Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2170559Z 
+2025-12-21T22:39:21.2199904Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2201935Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2202387Z 
+2025-12-21T22:39:21.2202931Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2203468Z 
+2025-12-21T22:39:21.2203597Z act(() => {
+2025-12-21T22:39:21.2203977Z   /* fire events that update state */
+2025-12-21T22:39:21.2204382Z });
+2025-12-21T22:39:21.2204703Z /* assert on the output */
+2025-12-21T22:39:21.2204943Z 
+2025-12-21T22:39:21.2205871Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2207018Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2207293Z 
+2025-12-21T22:39:21.2236450Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2238631Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2239081Z 
+2025-12-21T22:39:21.2239612Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2240114Z 
+2025-12-21T22:39:21.2240238Z act(() => {
+2025-12-21T22:39:21.2240585Z   /* fire events that update state */
+2025-12-21T22:39:21.2240966Z });
+2025-12-21T22:39:21.2241266Z /* assert on the output */
+2025-12-21T22:39:21.2241498Z 
+2025-12-21T22:39:21.2242418Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2243558Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2244020Z 
+2025-12-21T22:39:21.2279869Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2281975Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2282449Z 
+2025-12-21T22:39:21.2283014Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2283565Z 
+2025-12-21T22:39:21.2283701Z act(() => {
+2025-12-21T22:39:21.2284090Z   /* fire events that update state */
+2025-12-21T22:39:21.2284499Z });
+2025-12-21T22:39:21.2284829Z /* assert on the output */
+2025-12-21T22:39:21.2285091Z 
+2025-12-21T22:39:21.2286044Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2287300Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2287800Z 
+2025-12-21T22:39:21.2306463Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2307498Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2308019Z 
+2025-12-21T22:39:21.2308521Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2308837Z 
+2025-12-21T22:39:21.2308916Z act(() => {
+2025-12-21T22:39:21.2309310Z   /* fire events that update state */
+2025-12-21T22:39:21.2309624Z });
+2025-12-21T22:39:21.2309956Z /* assert on the output */
+2025-12-21T22:39:21.2310255Z 
+2025-12-21T22:39:21.2310913Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2311602Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2311867Z 
+2025-12-21T22:39:21.2340755Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2343031Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2343479Z 
+2025-12-21T22:39:21.2344017Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2344533Z 
+2025-12-21T22:39:21.2344657Z act(() => {
+2025-12-21T22:39:21.2345019Z   /* fire events that update state */
+2025-12-21T22:39:21.2345408Z });
+2025-12-21T22:39:21.2345720Z /* assert on the output */
+2025-12-21T22:39:21.2345969Z 
+2025-12-21T22:39:21.2346888Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2348208Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2348694Z 
+2025-12-21T22:39:21.2400663Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2413455Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2414092Z 
+2025-12-21T22:39:21.2414715Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2415347Z 
+2025-12-21T22:39:21.2415601Z act(() => {
+2025-12-21T22:39:21.2416810Z   /* fire events that update state */
+2025-12-21T22:39:21.2417224Z });
+2025-12-21T22:39:21.2417545Z /* assert on the output */
+2025-12-21T22:39:21.2417795Z 
+2025-12-21T22:39:21.2418878Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2420103Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2420593Z 
+2025-12-21T22:39:21.2443859Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2445224Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2445765Z 
+2025-12-21T22:39:21.2446395Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2447001Z 
+2025-12-21T22:39:21.2447212Z act(() => {
+2025-12-21T22:39:21.2447662Z   /* fire events that update state */
+2025-12-21T22:39:21.2448353Z });
+2025-12-21T22:39:21.2448764Z /* assert on the output */
+2025-12-21T22:39:21.2449093Z 
+2025-12-21T22:39:21.2450105Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2451477Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2452046Z 
+2025-12-21T22:39:21.2484889Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2486279Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2487500Z 
+2025-12-21T22:39:21.2488261Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2488806Z 
+2025-12-21T22:39:21.2488937Z act(() => {
+2025-12-21T22:39:21.2489315Z   /* fire events that update state */
+2025-12-21T22:39:21.2489721Z });
+2025-12-21T22:39:21.2490038Z /* assert on the output */
+2025-12-21T22:39:21.2490281Z 
+2025-12-21T22:39:21.2491192Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2492445Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2492907Z 
+2025-12-21T22:39:21.2540416Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2541839Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2542411Z 
+2025-12-21T22:39:21.2543043Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2543895Z 
+2025-12-21T22:39:21.2544138Z act(() => {
+2025-12-21T22:39:21.2544616Z   /* fire events that update state */
+2025-12-21T22:39:21.2545105Z });
+2025-12-21T22:39:21.2545516Z /* assert on the output */
+2025-12-21T22:39:21.2545841Z 
+2025-12-21T22:39:21.2546852Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2554546Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2563955Z 
+2025-12-21T22:39:21.2580114Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2582239Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2582707Z 
+2025-12-21T22:39:21.2583518Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2584054Z 
+2025-12-21T22:39:21.2584204Z act(() => {
+2025-12-21T22:39:21.2584662Z   /* fire events that update state */
+2025-12-21T22:39:21.2585078Z });
+2025-12-21T22:39:21.2585421Z /* assert on the output */
+2025-12-21T22:39:21.2585688Z 
+2025-12-21T22:39:21.2586639Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2588086Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2588584Z 
+2025-12-21T22:39:21.2603568Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2604281Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2604536Z 
+2025-12-21T22:39:21.2604838Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2605149Z 
+2025-12-21T22:39:21.2605225Z act(() => {
+2025-12-21T22:39:21.2605455Z   /* fire events that update state */
+2025-12-21T22:39:21.2605700Z });
+2025-12-21T22:39:21.2605886Z /* assert on the output */
+2025-12-21T22:39:21.2606034Z 
+2025-12-21T22:39:21.2606541Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2607206Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2607472Z 
+2025-12-21T22:39:21.2645107Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2647114Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2647557Z 
+2025-12-21T22:39:21.2648286Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2648818Z 
+2025-12-21T22:39:21.2648947Z act(() => {
+2025-12-21T22:39:21.2649303Z   /* fire events that update state */
+2025-12-21T22:39:21.2649690Z });
+2025-12-21T22:39:21.2650010Z /* assert on the output */
+2025-12-21T22:39:21.2650246Z 
+2025-12-21T22:39:21.2651176Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2652342Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2652807Z 
+2025-12-21T22:39:21.2695183Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2704049Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2704532Z 
+2025-12-21T22:39:21.2705089Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2705634Z 
+2025-12-21T22:39:21.2705801Z act(() => {
+2025-12-21T22:39:21.2706186Z   /* fire events that update state */
+2025-12-21T22:39:21.2706593Z });
+2025-12-21T22:39:21.2706948Z /* assert on the output */
+2025-12-21T22:39:21.2707491Z 
+2025-12-21T22:39:21.2708695Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2709966Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2710465Z 
+2025-12-21T22:39:21.2728306Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2728999Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2729252Z 
+2025-12-21T22:39:21.2729552Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2729852Z 
+2025-12-21T22:39:21.2729929Z act(() => {
+2025-12-21T22:39:21.2730152Z   /* fire events that update state */
+2025-12-21T22:39:21.2730592Z });
+2025-12-21T22:39:21.2730782Z /* assert on the output */
+2025-12-21T22:39:21.2730929Z 
+2025-12-21T22:39:21.2731448Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2732126Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2732403Z 
+2025-12-21T22:39:21.2759589Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2760654Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2761005Z 
+2025-12-21T22:39:21.2761689Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2761995Z 
+2025-12-21T22:39:21.2762077Z act(() => {
+2025-12-21T22:39:21.2762295Z   /* fire events that update state */
+2025-12-21T22:39:21.2762544Z });
+2025-12-21T22:39:21.2762738Z /* assert on the output */
+2025-12-21T22:39:21.2762878Z 
+2025-12-21T22:39:21.2763685Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2764367Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2764719Z 
+2025-12-21T22:39:21.2791476Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2792477Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2792838Z 
+2025-12-21T22:39:21.2793406Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2793715Z 
+2025-12-21T22:39:21.2793925Z act(() => {
+2025-12-21T22:39:21.2794264Z   /* fire events that update state */
+2025-12-21T22:39:21.2794643Z });
+2025-12-21T22:39:21.2794983Z /* assert on the output */
+2025-12-21T22:39:21.2795192Z 
+2025-12-21T22:39:21.2795718Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2796651Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2797001Z 
+2025-12-21T22:39:21.2821487Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2822605Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2822975Z 
+2025-12-21T22:39:21.2823521Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2823839Z 
+2025-12-21T22:39:21.2823922Z act(() => {
+2025-12-21T22:39:21.2824146Z   /* fire events that update state */
+2025-12-21T22:39:21.2824508Z });
+2025-12-21T22:39:21.2824821Z /* assert on the output */
+2025-12-21T22:39:21.2825171Z 
+2025-12-21T22:39:21.2825866Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2826757Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2827032Z 
+2025-12-21T22:39:21.2861446Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2863422Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2863879Z 
+2025-12-21T22:39:21.2864417Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2864945Z 
+2025-12-21T22:39:21.2865071Z act(() => {
+2025-12-21T22:39:21.2865438Z   /* fire events that update state */
+2025-12-21T22:39:21.2865836Z });
+2025-12-21T22:39:21.2866147Z /* assert on the output */
+2025-12-21T22:39:21.2866390Z 
+2025-12-21T22:39:21.2867312Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2868952Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2869440Z 
+2025-12-21T22:39:21.2896301Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2897325Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2897673Z 
+2025-12-21T22:39:21.2898400Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2898702Z 
+2025-12-21T22:39:21.2898787Z act(() => {
+2025-12-21T22:39:21.2899184Z   /* fire events that update state */
+2025-12-21T22:39:21.2899626Z });
+2025-12-21T22:39:21.2899980Z /* assert on the output */
+2025-12-21T22:39:21.2900251Z 
+2025-12-21T22:39:21.2900900Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2901633Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2929528Z 
+2025-12-21T22:39:21.2930693Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2932664Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2933103Z 
+2025-12-21T22:39:21.2933631Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2934129Z 
+2025-12-21T22:39:21.2934286Z act(() => {
+2025-12-21T22:39:21.2934662Z   /* fire events that update state */
+2025-12-21T22:39:21.2935061Z });
+2025-12-21T22:39:21.2935369Z /* assert on the output */
+2025-12-21T22:39:21.2935608Z 
+2025-12-21T22:39:21.2936498Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2937668Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2938369Z 
+2025-12-21T22:39:21.2964069Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.2964770Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.2965021Z 
+2025-12-21T22:39:21.2965657Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.2965974Z 
+2025-12-21T22:39:21.2966205Z act(() => {
+2025-12-21T22:39:21.2966630Z   /* fire events that update state */
+2025-12-21T22:39:21.2967054Z });
+2025-12-21T22:39:21.2967387Z /* assert on the output */
+2025-12-21T22:39:21.2967587Z 
+2025-12-21T22:39:21.2968532Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.2969455Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.2969808Z 
+2025-12-21T22:39:21.3044207Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.3045643Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.3046201Z 
+2025-12-21T22:39:21.3061681Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.3062244Z 
+2025-12-21T22:39:21.3088412Z act(() => {
+2025-12-21T22:39:21.3088943Z   /* fire events that update state */
+2025-12-21T22:39:21.3089451Z });
+2025-12-21T22:39:21.3089855Z /* assert on the output */
+2025-12-21T22:39:21.3090210Z 
+2025-12-21T22:39:21.3099299Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.3100392Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.3113286Z 
+2025-12-21T22:39:21.3114456Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.3115758Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.3116197Z 
+2025-12-21T22:39:21.3116828Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.3205670Z 
+2025-12-21T22:39:21.3207492Z act(() => {
+2025-12-21T22:39:21.3228520Z   /* fire events that update state */
+2025-12-21T22:39:21.3238538Z });
+2025-12-21T22:39:21.3238910Z /* assert on the output */
+2025-12-21T22:39:21.3239169Z 
+2025-12-21T22:39:21.3240108Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.3241295Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.3241765Z 
+2025-12-21T22:39:21.3243045Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.3244365Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.3244927Z 
+2025-12-21T22:39:21.3245499Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.3246025Z 
+2025-12-21T22:39:21.3246257Z act(() => {
+2025-12-21T22:39:21.3246623Z   /* fire events that update state */
+2025-12-21T22:39:21.3247144Z });
+2025-12-21T22:39:21.3247554Z /* assert on the output */
+2025-12-21T22:39:21.3248061Z 
+2025-12-21T22:39:21.3249036Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.3250232Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.3250701Z 
+2025-12-21T22:39:21.3251890Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.3253140Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.3253702Z 
+2025-12-21T22:39:21.3254277Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.3254792Z 
+2025-12-21T22:39:21.3254924Z act(() => {
+2025-12-21T22:39:21.3255412Z   /* fire events that update state */
+2025-12-21T22:39:21.3255818Z });
+2025-12-21T22:39:21.3256243Z /* assert on the output */
+2025-12-21T22:39:21.3256580Z 
+2025-12-21T22:39:21.3302841Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.3304249Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.3304862Z 
+2025-12-21T22:39:21.3360681Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.3362141Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.3362737Z 
+2025-12-21T22:39:21.3363779Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.3364352Z 
+2025-12-21T22:39:21.3364498Z act(() => {
+2025-12-21T22:39:21.3364889Z   /* fire events that update state */
+2025-12-21T22:39:21.3365311Z });
+2025-12-21T22:39:21.3365666Z /* assert on the output */
+2025-12-21T22:39:21.3365926Z 
+2025-12-21T22:39:21.3366898Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.3368346Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.3368855Z 
+2025-12-21T22:39:21.3423985Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.3425377Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.3426344Z 
+2025-12-21T22:39:21.3426981Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.3427526Z 
+2025-12-21T22:39:21.3427678Z act(() => {
+2025-12-21T22:39:21.3428414Z   /* fire events that update state */
+2025-12-21T22:39:21.3428834Z });
+2025-12-21T22:39:21.3429323Z /* assert on the output */
+2025-12-21T22:39:21.3429709Z 
+2025-12-21T22:39:21.3430682Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.3468297Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.3468860Z 
+2025-12-21T22:39:21.3519482Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.3520634Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.3521074Z 
+2025-12-21T22:39:21.3521615Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.3522142Z 
+2025-12-21T22:39:21.3522279Z act(() => {
+2025-12-21T22:39:21.3522643Z   /* fire events that update state */
+2025-12-21T22:39:21.3523039Z });
+2025-12-21T22:39:21.3523353Z /* assert on the output */
+2025-12-21T22:39:21.3523597Z 
+2025-12-21T22:39:21.3524513Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.3525711Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.3526174Z 
+2025-12-21T22:39:21.3558045Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.3558787Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.3559045Z 
+2025-12-21T22:39:21.3559362Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.3559660Z 
+2025-12-21T22:39:21.3559735Z act(() => {
+2025-12-21T22:39:21.3559965Z   /* fire events that update state */
+2025-12-21T22:39:21.3560204Z });
+2025-12-21T22:39:21.3560615Z /* assert on the output */
+2025-12-21T22:39:21.3560946Z 
+2025-12-21T22:39:21.3561664Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.3562368Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.3562641Z 
+2025-12-21T22:39:21.3586388Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.3587082Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.3587339Z 
+2025-12-21T22:39:21.3587636Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.3588168Z 
+2025-12-21T22:39:21.3588250Z act(() => {
+2025-12-21T22:39:21.3588480Z   /* fire events that update state */
+2025-12-21T22:39:21.3588989Z });
+2025-12-21T22:39:21.3589189Z /* assert on the output */
+2025-12-21T22:39:21.3589335Z 
+2025-12-21T22:39:21.3589846Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.3590519Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.3590781Z 
+2025-12-21T22:39:21.3617020Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.3617717Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.3618189Z 
+2025-12-21T22:39:21.3618500Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.3619017Z 
+2025-12-21T22:39:21.3619094Z act(() => {
+2025-12-21T22:39:21.3619321Z   /* fire events that update state */
+2025-12-21T22:39:21.3619564Z });
+2025-12-21T22:39:21.3619752Z /* assert on the output */
+2025-12-21T22:39:21.3619903Z 
+2025-12-21T22:39:21.3620413Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.3621098Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.3621377Z 
+2025-12-21T22:39:21.4387018Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4388400Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4389568Z 
+2025-12-21T22:39:21.4391350Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4391692Z 
+2025-12-21T22:39:21.4391783Z act(() => {
+2025-12-21T22:39:21.4392072Z   /* fire events that update state */
+2025-12-21T22:39:21.4392304Z });
+2025-12-21T22:39:21.4392495Z /* assert on the output */
+2025-12-21T22:39:21.4392651Z 
+2025-12-21T22:39:21.4393157Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4393825Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4394087Z 
+2025-12-21T22:39:21.4419582Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4421032Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4422797Z 
+2025-12-21T22:39:21.4423646Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4426072Z 
+2025-12-21T22:39:21.4426237Z act(() => {
+2025-12-21T22:39:21.4426610Z   /* fire events that update state */
+2025-12-21T22:39:21.4427022Z });
+2025-12-21T22:39:21.4429380Z /* assert on the output */
+2025-12-21T22:39:21.4429676Z 
+2025-12-21T22:39:21.4430659Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4431905Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4432392Z 
+2025-12-21T22:39:21.4449123Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4450262Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4450683Z 
+2025-12-21T22:39:21.4451194Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4451755Z 
+2025-12-21T22:39:21.4451880Z act(() => {
+2025-12-21T22:39:21.4452245Z   /* fire events that update state */
+2025-12-21T22:39:21.4452622Z });
+2025-12-21T22:39:21.4452955Z /* assert on the output */
+2025-12-21T22:39:21.4453119Z 
+2025-12-21T22:39:21.4453936Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4454641Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4454926Z 
+2025-12-21T22:39:21.4476912Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4478240Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4478668Z 
+2025-12-21T22:39:21.4479186Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4479690Z 
+2025-12-21T22:39:21.4479811Z act(() => {
+2025-12-21T22:39:21.4480179Z   /* fire events that update state */
+2025-12-21T22:39:21.4480568Z });
+2025-12-21T22:39:21.4480875Z /* assert on the output */
+2025-12-21T22:39:21.4481406Z 
+2025-12-21T22:39:21.4482301Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4483399Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4483691Z 
+2025-12-21T22:39:21.4538232Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4539803Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4541158Z 
+2025-12-21T22:39:21.4541727Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4542247Z 
+2025-12-21T22:39:21.4542384Z act(() => {
+2025-12-21T22:39:21.4542773Z   /* fire events that update state */
+2025-12-21T22:39:21.4543202Z });
+2025-12-21T22:39:21.4543535Z /* assert on the output */
+2025-12-21T22:39:21.4543788Z 
+2025-12-21T22:39:21.4544737Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4546005Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4546505Z 
+2025-12-21T22:39:21.4548913Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4550034Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4550301Z 
+2025-12-21T22:39:21.4550620Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4550913Z 
+2025-12-21T22:39:21.4550988Z act(() => {
+2025-12-21T22:39:21.4551210Z   /* fire events that update state */
+2025-12-21T22:39:21.4551445Z });
+2025-12-21T22:39:21.4551638Z /* assert on the output */
+2025-12-21T22:39:21.4551782Z 
+2025-12-21T22:39:21.4552297Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4552978Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4553246Z 
+2025-12-21T22:39:21.4598398Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4599728Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4600179Z 
+2025-12-21T22:39:21.4600697Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4601190Z 
+2025-12-21T22:39:21.4601317Z act(() => {
+2025-12-21T22:39:21.4601716Z   /* fire events that update state */
+2025-12-21T22:39:21.4602093Z });
+2025-12-21T22:39:21.4602409Z /* assert on the output */
+2025-12-21T22:39:21.4602653Z 
+2025-12-21T22:39:21.4603569Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4604757Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4605209Z 
+2025-12-21T22:39:21.4644261Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4645403Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4645946Z 
+2025-12-21T22:39:21.4646511Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4647027Z 
+2025-12-21T22:39:21.4647161Z act(() => {
+2025-12-21T22:39:21.4647526Z   /* fire events that update state */
+2025-12-21T22:39:21.4648107Z });
+2025-12-21T22:39:21.4648427Z /* assert on the output */
+2025-12-21T22:39:21.4648659Z 
+2025-12-21T22:39:21.4649542Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4650669Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4651331Z 
+2025-12-21T22:39:21.4764819Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4766149Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4766695Z 
+2025-12-21T22:39:21.4767383Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4768061Z 
+2025-12-21T22:39:21.4768200Z act(() => {
+2025-12-21T22:39:21.4768563Z   /* fire events that update state */
+2025-12-21T22:39:21.4768939Z });
+2025-12-21T22:39:21.4769252Z /* assert on the output */
+2025-12-21T22:39:21.4769481Z 
+2025-12-21T22:39:21.4770370Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4771488Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4771936Z 
+2025-12-21T22:39:21.4772951Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4774134Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4774567Z 
+2025-12-21T22:39:21.4775105Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4775603Z 
+2025-12-21T22:39:21.4775732Z act(() => {
+2025-12-21T22:39:21.4776079Z   /* fire events that update state */
+2025-12-21T22:39:21.4776460Z });
+2025-12-21T22:39:21.4776767Z /* assert on the output */
+2025-12-21T22:39:21.4776998Z 
+2025-12-21T22:39:21.4778042Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4779223Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4779684Z 
+2025-12-21T22:39:21.4860487Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4862056Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4862789Z 
+2025-12-21T22:39:21.4863645Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4864476Z 
+2025-12-21T22:39:21.4864821Z act(() => {
+2025-12-21T22:39:21.4865424Z   /* fire events that update state */
+2025-12-21T22:39:21.4866048Z });
+2025-12-21T22:39:21.4866595Z /* assert on the output */
+2025-12-21T22:39:21.4867066Z 
+2025-12-21T22:39:21.4868405Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4869943Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4870640Z 
+2025-12-21T22:39:21.4899061Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4902856Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4905929Z 
+2025-12-21T22:39:21.4906744Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4907800Z 
+2025-12-21T22:39:21.4908426Z act(() => {
+2025-12-21T22:39:21.4911371Z   /* fire events that update state */
+2025-12-21T22:39:21.4912058Z });
+2025-12-21T22:39:21.4923122Z /* assert on the output */
+2025-12-21T22:39:21.4923682Z 
+2025-12-21T22:39:21.4928671Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4929916Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4930396Z 
+2025-12-21T22:39:21.4931444Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4932813Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4933224Z 
+2025-12-21T22:39:21.4933741Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4934232Z 
+2025-12-21T22:39:21.4934362Z act(() => {
+2025-12-21T22:39:21.4934714Z   /* fire events that update state */
+2025-12-21T22:39:21.4935155Z });
+2025-12-21T22:39:21.4935511Z /* assert on the output */
+2025-12-21T22:39:21.4935761Z 
+2025-12-21T22:39:21.4936721Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4938144Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4938627Z 
+2025-12-21T22:39:21.4955126Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4956284Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4956705Z 
+2025-12-21T22:39:21.4957219Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4957711Z 
+2025-12-21T22:39:21.4958020Z act(() => {
+2025-12-21T22:39:21.4958274Z   /* fire events that update state */
+2025-12-21T22:39:21.4958518Z });
+2025-12-21T22:39:21.4958713Z /* assert on the output */
+2025-12-21T22:39:21.4958860Z 
+2025-12-21T22:39:21.4959379Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4960056Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4960319Z 
+2025-12-21T22:39:21.4982283Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.4983423Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.4983851Z 
+2025-12-21T22:39:21.4984370Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.4984856Z 
+2025-12-21T22:39:21.4984942Z act(() => {
+2025-12-21T22:39:21.4985174Z   /* fire events that update state */
+2025-12-21T22:39:21.4985415Z });
+2025-12-21T22:39:21.4985610Z /* assert on the output */
+2025-12-21T22:39:21.4985751Z 
+2025-12-21T22:39:21.4986259Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.4986945Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.4987215Z 
+2025-12-21T22:39:21.5016820Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5018717Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5019322Z 
+2025-12-21T22:39:21.5020018Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5020793Z 
+2025-12-21T22:39:21.5038487Z act(() => {
+2025-12-21T22:39:21.5039002Z   /* fire events that update state */
+2025-12-21T22:39:21.5039426Z });
+2025-12-21T22:39:21.5039778Z /* assert on the output */
+2025-12-21T22:39:21.5040036Z 
+2025-12-21T22:39:21.5041005Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5042260Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5042724Z 
+2025-12-21T22:39:21.5079016Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5081477Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5112798Z 
+2025-12-21T22:39:21.5113687Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5118031Z 
+2025-12-21T22:39:21.5118348Z act(() => {
+2025-12-21T22:39:21.5118997Z   /* fire events that update state */
+2025-12-21T22:39:21.5123114Z });
+2025-12-21T22:39:21.5123952Z /* assert on the output */
+2025-12-21T22:39:21.5124605Z 
+2025-12-21T22:39:21.5126753Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5129421Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5131708Z 
+2025-12-21T22:39:21.5148601Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5153464Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5179380Z 
+2025-12-21T22:39:21.5180265Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5181116Z 
+2025-12-21T22:39:21.5181545Z act(() => {
+2025-12-21T22:39:21.5182183Z   /* fire events that update state */
+2025-12-21T22:39:21.5182873Z });
+2025-12-21T22:39:21.5183438Z /* assert on the output */
+2025-12-21T22:39:21.5183954Z 
+2025-12-21T22:39:21.5185219Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5186670Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5187443Z 
+2025-12-21T22:39:21.5203038Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5207555Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5211514Z 
+2025-12-21T22:39:21.5232571Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5233363Z 
+2025-12-21T22:39:21.5233720Z act(() => {
+2025-12-21T22:39:21.5234340Z   /* fire events that update state */
+2025-12-21T22:39:21.5234928Z });
+2025-12-21T22:39:21.5235439Z /* assert on the output */
+2025-12-21T22:39:21.5235962Z 
+2025-12-21T22:39:21.5237075Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5238618Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5239287Z 
+2025-12-21T22:39:21.5256070Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5261234Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5288997Z 
+2025-12-21T22:39:21.5289876Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5290752Z 
+2025-12-21T22:39:21.5291077Z act(() => {
+2025-12-21T22:39:21.5291782Z   /* fire events that update state */
+2025-12-21T22:39:21.5292441Z });
+2025-12-21T22:39:21.5293069Z /* assert on the output */
+2025-12-21T22:39:21.5293512Z 
+2025-12-21T22:39:21.5294937Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5296510Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5297300Z 
+2025-12-21T22:39:21.5330538Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5332069Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5332755Z 
+2025-12-21T22:39:21.5333543Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5334286Z 
+2025-12-21T22:39:21.5334613Z act(() => {
+2025-12-21T22:39:21.5335282Z   /* fire events that update state */
+2025-12-21T22:39:21.5336209Z });
+2025-12-21T22:39:21.5336771Z /* assert on the output */
+2025-12-21T22:39:21.5337327Z 
+2025-12-21T22:39:21.5338715Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5340319Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5341098Z 
+2025-12-21T22:39:21.5369646Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5370509Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5370769Z 
+2025-12-21T22:39:21.5371081Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5371374Z 
+2025-12-21T22:39:21.5371459Z act(() => {
+2025-12-21T22:39:21.5371681Z   /* fire events that update state */
+2025-12-21T22:39:21.5371915Z });
+2025-12-21T22:39:21.5372111Z /* assert on the output */
+2025-12-21T22:39:21.5372259Z 
+2025-12-21T22:39:21.5372777Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5373446Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5373707Z 
+2025-12-21T22:39:21.5400411Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5401881Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5402629Z 
+2025-12-21T22:39:21.5406617Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5407165Z 
+2025-12-21T22:39:21.5407254Z act(() => {
+2025-12-21T22:39:21.5407487Z   /* fire events that update state */
+2025-12-21T22:39:21.5407734Z });
+2025-12-21T22:39:21.5408187Z /* assert on the output */
+2025-12-21T22:39:21.5408440Z 
+2025-12-21T22:39:21.5409388Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5410652Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5411141Z 
+2025-12-21T22:39:21.5430596Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5431907Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5432371Z 
+2025-12-21T22:39:21.5435945Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5439057Z 
+2025-12-21T22:39:21.5439216Z act(() => {
+2025-12-21T22:39:21.5439608Z   /* fire events that update state */
+2025-12-21T22:39:21.5440016Z });
+2025-12-21T22:39:21.5440343Z /* assert on the output */
+2025-12-21T22:39:21.5440585Z 
+2025-12-21T22:39:21.5441501Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5442909Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5443401Z 
+2025-12-21T22:39:21.5474298Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5475439Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5475873Z 
+2025-12-21T22:39:21.5476392Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5476889Z 
+2025-12-21T22:39:21.5477016Z act(() => {
+2025-12-21T22:39:21.5477376Z   /* fire events that update state */
+2025-12-21T22:39:21.5477756Z });
+2025-12-21T22:39:21.5478506Z /* assert on the output */
+2025-12-21T22:39:21.5478747Z 
+2025-12-21T22:39:21.5479367Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5480263Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5480535Z 
+2025-12-21T22:39:21.5500792Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5501946Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5502369Z 
+2025-12-21T22:39:21.5502885Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5503391Z 
+2025-12-21T22:39:21.5503513Z act(() => {
+2025-12-21T22:39:21.5503872Z   /* fire events that update state */
+2025-12-21T22:39:21.5504224Z });
+2025-12-21T22:39:21.5504427Z /* assert on the output */
+2025-12-21T22:39:21.5504583Z 
+2025-12-21T22:39:21.5505101Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5505787Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5506055Z 
+2025-12-21T22:39:21.5532185Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5533321Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5533741Z 
+2025-12-21T22:39:21.5534263Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5534662Z 
+2025-12-21T22:39:21.5534749Z act(() => {
+2025-12-21T22:39:21.5534966Z   /* fire events that update state */
+2025-12-21T22:39:21.5535203Z });
+2025-12-21T22:39:21.5535396Z /* assert on the output */
+2025-12-21T22:39:21.5535535Z 
+2025-12-21T22:39:21.5536061Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5536740Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5537015Z 
+2025-12-21T22:39:21.5570561Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5572129Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5572913Z 
+2025-12-21T22:39:21.5575608Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5576416Z 
+2025-12-21T22:39:21.5576674Z act(() => {
+2025-12-21T22:39:21.5577277Z   /* fire events that update state */
+2025-12-21T22:39:21.5578111Z });
+2025-12-21T22:39:21.5578743Z /* assert on the output */
+2025-12-21T22:39:21.5579198Z 
+2025-12-21T22:39:21.5581999Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5584679Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5585421Z 
+2025-12-21T22:39:21.5592501Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5593657Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5594082Z 
+2025-12-21T22:39:21.5594611Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5594926Z 
+2025-12-21T22:39:21.5595011Z act(() => {
+2025-12-21T22:39:21.5595234Z   /* fire events that update state */
+2025-12-21T22:39:21.5595469Z });
+2025-12-21T22:39:21.5595661Z /* assert on the output */
+2025-12-21T22:39:21.5595804Z 
+2025-12-21T22:39:21.5596324Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5596997Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5597264Z 
+2025-12-21T22:39:21.5623879Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5625338Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5628167Z 
+2025-12-21T22:39:21.5629025Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5629725Z 
+2025-12-21T22:39:21.5630056Z act(() => {
+2025-12-21T22:39:21.5630640Z   /* fire events that update state */
+2025-12-21T22:39:21.5631181Z });
+2025-12-21T22:39:21.5648449Z /* assert on the output */
+2025-12-21T22:39:21.5648971Z 
+2025-12-21T22:39:21.5649998Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5651344Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5652058Z 
+2025-12-21T22:39:21.5690362Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5708785Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5709480Z 
+2025-12-21T22:39:21.5710302Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5711007Z 
+2025-12-21T22:39:21.5711297Z act(() => {
+2025-12-21T22:39:21.5711846Z   /* fire events that update state */
+2025-12-21T22:39:21.5712429Z });
+2025-12-21T22:39:21.5712914Z /* assert on the output */
+2025-12-21T22:39:21.5713325Z 
+2025-12-21T22:39:21.5714409Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5716762Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5717238Z 
+2025-12-21T22:39:21.5730534Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5732117Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5733459Z 
+2025-12-21T22:39:21.5734024Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5734532Z 
+2025-12-21T22:39:21.5734654Z act(() => {
+2025-12-21T22:39:21.5735012Z   /* fire events that update state */
+2025-12-21T22:39:21.5735395Z });
+2025-12-21T22:39:21.5735703Z /* assert on the output */
+2025-12-21T22:39:21.5735935Z 
+2025-12-21T22:39:21.5736822Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5738108Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5738589Z 
+2025-12-21T22:39:21.5754493Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5757578Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5758140Z 
+2025-12-21T22:39:21.5758636Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5758957Z 
+2025-12-21T22:39:21.5759042Z act(() => {
+2025-12-21T22:39:21.5759263Z   /* fire events that update state */
+2025-12-21T22:39:21.5759498Z });
+2025-12-21T22:39:21.5759693Z /* assert on the output */
+2025-12-21T22:39:21.5759837Z 
+2025-12-21T22:39:21.5760351Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5761038Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5761316Z 
+2025-12-21T22:39:21.5780722Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5781874Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5782524Z 
+2025-12-21T22:39:21.5783049Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5783558Z 
+2025-12-21T22:39:21.5783680Z act(() => {
+2025-12-21T22:39:21.5784035Z   /* fire events that update state */
+2025-12-21T22:39:21.5784422Z });
+2025-12-21T22:39:21.5784726Z /* assert on the output */
+2025-12-21T22:39:21.5784967Z 
+2025-12-21T22:39:21.5785744Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5786440Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5786718Z 
+2025-12-21T22:39:21.5818432Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5819980Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5820706Z 
+2025-12-21T22:39:21.5821596Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5822448Z 
+2025-12-21T22:39:21.5822817Z act(() => {
+2025-12-21T22:39:21.5823478Z   /* fire events that update state */
+2025-12-21T22:39:21.5825188Z });
+2025-12-21T22:39:21.5825548Z /* assert on the output */
+2025-12-21T22:39:21.5825825Z 
+2025-12-21T22:39:21.5826773Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5828251Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5828743Z 
+2025-12-21T22:39:21.5841907Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.5846232Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.5846500Z 
+2025-12-21T22:39:21.5846807Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.5847114Z 
+2025-12-21T22:39:21.5847192Z act(() => {
+2025-12-21T22:39:21.5847419Z   /* fire events that update state */
+2025-12-21T22:39:21.5847661Z });
+2025-12-21T22:39:21.5848073Z /* assert on the output */
+2025-12-21T22:39:21.5848326Z 
+2025-12-21T22:39:21.5848902Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.5849576Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.5849851Z 
+2025-12-21T22:39:21.7346040Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mcompares two traces successfully and displays side-by-side[22m[39m
+2025-12-21T22:39:21.7348435Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.7348853Z 
+2025-12-21T22:39:21.7349495Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.7350040Z 
+2025-12-21T22:39:21.7350169Z act(() => {
+2025-12-21T22:39:21.7350529Z   /* fire events that update state */
+2025-12-21T22:39:21.7350918Z });
+2025-12-21T22:39:21.7351589Z /* assert on the output */
+2025-12-21T22:39:21.7351844Z 
+2025-12-21T22:39:21.7352753Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.7353908Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.7354759Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.7355186Z 
+2025-12-21T22:39:21.7355704Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.7356211Z 
+2025-12-21T22:39:21.7356329Z act(() => {
+2025-12-21T22:39:21.7356679Z   /* fire events that update state */
+2025-12-21T22:39:21.7357064Z });
+2025-12-21T22:39:21.7357355Z /* assert on the output */
+2025-12-21T22:39:21.7357584Z 
+2025-12-21T22:39:21.7358909Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.7360042Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.7360909Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.7361343Z 
+2025-12-21T22:39:21.7361888Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.7362401Z 
+2025-12-21T22:39:21.7362523Z act(() => {
+2025-12-21T22:39:21.7362885Z   /* fire events that update state */
+2025-12-21T22:39:21.7363289Z });
+2025-12-21T22:39:21.7363617Z /* assert on the output */
+2025-12-21T22:39:21.7363866Z 
+2025-12-21T22:39:21.7364784Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.7365983Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.7366898Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.7367351Z 
+2025-12-21T22:39:21.7368111Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.7368645Z 
+2025-12-21T22:39:21.7368787Z act(() => {
+2025-12-21T22:39:21.7369161Z   /* fire events that update state */
+2025-12-21T22:39:21.7369572Z });
+2025-12-21T22:39:21.7369897Z /* assert on the output */
+2025-12-21T22:39:21.7370140Z 
+2025-12-21T22:39:21.7371066Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.7372249Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.7373116Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.7373556Z 
+2025-12-21T22:39:21.7374084Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.7374612Z 
+2025-12-21T22:39:21.7374733Z act(() => {
+2025-12-21T22:39:21.7375095Z   /* fire events that update state */
+2025-12-21T22:39:21.7375550Z });
+2025-12-21T22:39:21.7375886Z /* assert on the output */
+2025-12-21T22:39:21.7376140Z 
+2025-12-21T22:39:21.7377064Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.7378465Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.7378891Z 
+2025-12-21T22:39:21.7922951Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.7925703Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.7926163Z 
+2025-12-21T22:39:21.7926717Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.7927255Z 
+2025-12-21T22:39:21.7927400Z act(() => {
+2025-12-21T22:39:21.7928035Z   /* fire events that update state */
+2025-12-21T22:39:21.7928475Z });
+2025-12-21T22:39:21.7928817Z /* assert on the output */
+2025-12-21T22:39:21.7929458Z 
+2025-12-21T22:39:21.7930403Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.7931638Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.7932563Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.7933006Z 
+2025-12-21T22:39:21.7933535Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.7934097Z 
+2025-12-21T22:39:21.7934245Z act(() => {
+2025-12-21T22:39:21.7934636Z   /* fire events that update state */
+2025-12-21T22:39:21.7935062Z });
+2025-12-21T22:39:21.7935406Z /* assert on the output */
+2025-12-21T22:39:21.7935657Z 
+2025-12-21T22:39:21.7936583Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.7938326Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.7939264Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.7939728Z 
+2025-12-21T22:39:21.7940292Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.7940853Z 
+2025-12-21T22:39:21.7940992Z act(() => {
+2025-12-21T22:39:21.7941378Z   /* fire events that update state */
+2025-12-21T22:39:21.7941799Z });
+2025-12-21T22:39:21.7942128Z /* assert on the output */
+2025-12-21T22:39:21.7942390Z 
+2025-12-21T22:39:21.7943337Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.7944580Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.7945514Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.7945982Z 
+2025-12-21T22:39:21.7946538Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.7947067Z 
+2025-12-21T22:39:21.7947206Z act(() => {
+2025-12-21T22:39:21.7947588Z   /* fire events that update state */
+2025-12-21T22:39:21.7948194Z });
+2025-12-21T22:39:21.7948512Z /* assert on the output */
+2025-12-21T22:39:21.7948756Z 
+2025-12-21T22:39:21.7949689Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.7950896Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.7951388Z 
+2025-12-21T22:39:21.7984682Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.7986379Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.7986679Z 
+2025-12-21T22:39:21.7986992Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.7987288Z 
+2025-12-21T22:39:21.7987375Z act(() => {
+2025-12-21T22:39:21.7987598Z   /* fire events that update state */
+2025-12-21T22:39:21.7988047Z });
+2025-12-21T22:39:21.7988288Z /* assert on the output */
+2025-12-21T22:39:21.7988436Z 
+2025-12-21T22:39:21.7988959Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.7989632Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.7989897Z 
+2025-12-21T22:39:21.8012035Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8013679Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8013950Z 
+2025-12-21T22:39:21.8014261Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8014608Z 
+2025-12-21T22:39:21.8014685Z act(() => {
+2025-12-21T22:39:21.8015082Z   /* fire events that update state */
+2025-12-21T22:39:21.8015332Z });
+2025-12-21T22:39:21.8015519Z /* assert on the output */
+2025-12-21T22:39:21.8015666Z 
+2025-12-21T22:39:21.8016176Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8016845Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8017105Z 
+2025-12-21T22:39:21.8045439Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8047738Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8048367Z 
+2025-12-21T22:39:21.8048923Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8049451Z 
+2025-12-21T22:39:21.8049804Z act(() => {
+2025-12-21T22:39:21.8050186Z   /* fire events that update state */
+2025-12-21T22:39:21.8050582Z });
+2025-12-21T22:39:21.8050902Z /* assert on the output */
+2025-12-21T22:39:21.8051136Z 
+2025-12-21T22:39:21.8052049Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8053238Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8053708Z 
+2025-12-21T22:39:21.8083665Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8085964Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8086392Z 
+2025-12-21T22:39:21.8086884Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8087336Z 
+2025-12-21T22:39:21.8087454Z act(() => {
+2025-12-21T22:39:21.8087792Z   /* fire events that update state */
+2025-12-21T22:39:21.8088378Z });
+2025-12-21T22:39:21.8088676Z /* assert on the output */
+2025-12-21T22:39:21.8088897Z 
+2025-12-21T22:39:21.8089776Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8090887Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8091326Z 
+2025-12-21T22:39:21.8114711Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8116372Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8116641Z 
+2025-12-21T22:39:21.8116944Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8117259Z 
+2025-12-21T22:39:21.8117335Z act(() => {
+2025-12-21T22:39:21.8117558Z   /* fire events that update state */
+2025-12-21T22:39:21.8117792Z });
+2025-12-21T22:39:21.8118265Z /* assert on the output */
+2025-12-21T22:39:21.8118416Z 
+2025-12-21T22:39:21.8118931Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8119620Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8119887Z 
+2025-12-21T22:39:21.8142328Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8143991Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8144255Z 
+2025-12-21T22:39:21.8144566Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8144860Z 
+2025-12-21T22:39:21.8144935Z act(() => {
+2025-12-21T22:39:21.8145155Z   /* fire events that update state */
+2025-12-21T22:39:21.8145385Z });
+2025-12-21T22:39:21.8145571Z /* assert on the output */
+2025-12-21T22:39:21.8145709Z 
+2025-12-21T22:39:21.8146225Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8147120Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8147405Z 
+2025-12-21T22:39:21.8180415Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8182901Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8183364Z 
+2025-12-21T22:39:21.8183913Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8184455Z 
+2025-12-21T22:39:21.8184607Z act(() => {
+2025-12-21T22:39:21.8184999Z   /* fire events that update state */
+2025-12-21T22:39:21.8185416Z });
+2025-12-21T22:39:21.8185764Z /* assert on the output */
+2025-12-21T22:39:21.8186019Z 
+2025-12-21T22:39:21.8187016Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8188769Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8189272Z 
+2025-12-21T22:39:21.8230156Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8232023Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8232477Z 
+2025-12-21T22:39:21.8233036Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8233577Z 
+2025-12-21T22:39:21.8233717Z act(() => {
+2025-12-21T22:39:21.8234116Z   /* fire events that update state */
+2025-12-21T22:39:21.8234535Z });
+2025-12-21T22:39:21.8234872Z /* assert on the output */
+2025-12-21T22:39:21.8235148Z 
+2025-12-21T22:39:21.8236662Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8237499Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8237772Z 
+2025-12-21T22:39:21.8238859Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8239732Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8240064Z 
+2025-12-21T22:39:21.8240624Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8240926Z 
+2025-12-21T22:39:21.8241002Z act(() => {
+2025-12-21T22:39:21.8241384Z   /* fire events that update state */
+2025-12-21T22:39:21.8241708Z });
+2025-12-21T22:39:21.8242046Z /* assert on the output */
+2025-12-21T22:39:21.8242343Z 
+2025-12-21T22:39:21.8243028Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8243726Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8264081Z 
+2025-12-21T22:39:21.8264726Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8265361Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8265623Z 
+2025-12-21T22:39:21.8265923Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8266220Z 
+2025-12-21T22:39:21.8266294Z act(() => {
+2025-12-21T22:39:21.8266509Z   /* fire events that update state */
+2025-12-21T22:39:21.8266735Z });
+2025-12-21T22:39:21.8266922Z /* assert on the output */
+2025-12-21T22:39:21.8267065Z 
+2025-12-21T22:39:21.8267605Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8268509Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8268775Z 
+2025-12-21T22:39:21.8292105Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8292968Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8293234Z 
+2025-12-21T22:39:21.8293541Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8293976Z 
+2025-12-21T22:39:21.8294242Z act(() => {
+2025-12-21T22:39:21.8294557Z   /* fire events that update state */
+2025-12-21T22:39:21.8294800Z });
+2025-12-21T22:39:21.8294989Z /* assert on the output */
+2025-12-21T22:39:21.8295217Z 
+2025-12-21T22:39:21.8295993Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8296668Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8297014Z 
+2025-12-21T22:39:21.8330327Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8332552Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8333029Z 
+2025-12-21T22:39:21.8333585Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8334125Z 
+2025-12-21T22:39:21.8334275Z act(() => {
+2025-12-21T22:39:21.8334679Z   /* fire events that update state */
+2025-12-21T22:39:21.8335082Z });
+2025-12-21T22:39:21.8335421Z /* assert on the output */
+2025-12-21T22:39:21.8335677Z 
+2025-12-21T22:39:21.8336630Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8338106Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8338610Z 
+2025-12-21T22:39:21.8360200Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8362125Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8362589Z 
+2025-12-21T22:39:21.8363141Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8363665Z 
+2025-12-21T22:39:21.8363794Z act(() => {
+2025-12-21T22:39:21.8364161Z   /* fire events that update state */
+2025-12-21T22:39:21.8364553Z });
+2025-12-21T22:39:21.8364861Z /* assert on the output */
+2025-12-21T22:39:21.8365106Z 
+2025-12-21T22:39:21.8366017Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8367182Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8367639Z 
+2025-12-21T22:39:21.8406291Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8407469Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8408001Z 
+2025-12-21T22:39:21.8408475Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8408775Z 
+2025-12-21T22:39:21.8409001Z act(() => {
+2025-12-21T22:39:21.8409405Z   /* fire events that update state */
+2025-12-21T22:39:21.8409816Z });
+2025-12-21T22:39:21.8410178Z /* assert on the output */
+2025-12-21T22:39:21.8410452Z 
+2025-12-21T22:39:21.8411110Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8411795Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8412060Z 
+2025-12-21T22:39:21.8434560Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8435176Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8435440Z 
+2025-12-21T22:39:21.8435739Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8436045Z 
+2025-12-21T22:39:21.8436119Z act(() => {
+2025-12-21T22:39:21.8436560Z   /* fire events that update state */
+2025-12-21T22:39:21.8436802Z });
+2025-12-21T22:39:21.8436985Z /* assert on the output */
+2025-12-21T22:39:21.8437130Z 
+2025-12-21T22:39:21.8437638Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8438548Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8438816Z 
+2025-12-21T22:39:21.8494129Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8496054Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8496495Z 
+2025-12-21T22:39:21.8497039Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8497779Z 
+2025-12-21T22:39:21.8498093Z act(() => {
+2025-12-21T22:39:21.8498472Z   /* fire events that update state */
+2025-12-21T22:39:21.8498876Z });
+2025-12-21T22:39:21.8499214Z /* assert on the output */
+2025-12-21T22:39:21.8499457Z 
+2025-12-21T22:39:21.8500265Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8500982Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8501268Z 
+2025-12-21T22:39:21.8501765Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8502337Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8502578Z 
+2025-12-21T22:39:21.8502879Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8503382Z 
+2025-12-21T22:39:21.8503522Z act(() => {
+2025-12-21T22:39:21.8503903Z   /* fire events that update state */
+2025-12-21T22:39:21.8504322Z });
+2025-12-21T22:39:21.8504651Z /* assert on the output */
+2025-12-21T22:39:21.8504906Z 
+2025-12-21T22:39:21.8505865Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8507133Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8507620Z 
+2025-12-21T22:39:21.8523011Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8524661Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8524932Z 
+2025-12-21T22:39:21.8525240Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8525543Z 
+2025-12-21T22:39:21.8525618Z act(() => {
+2025-12-21T22:39:21.8525838Z   /* fire events that update state */
+2025-12-21T22:39:21.8526085Z });
+2025-12-21T22:39:21.8526272Z /* assert on the output */
+2025-12-21T22:39:21.8526414Z 
+2025-12-21T22:39:21.8526925Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8527600Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8528120Z 
+2025-12-21T22:39:21.8550082Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8551722Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8551982Z 
+2025-12-21T22:39:21.8552299Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8552600Z 
+2025-12-21T22:39:21.8552675Z act(() => {
+2025-12-21T22:39:21.8552899Z   /* fire events that update state */
+2025-12-21T22:39:21.8553132Z });
+2025-12-21T22:39:21.8553325Z /* assert on the output */
+2025-12-21T22:39:21.8553479Z 
+2025-12-21T22:39:21.8554167Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8554859Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8555128Z 
+2025-12-21T22:39:21.8608884Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8613684Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8614166Z 
+2025-12-21T22:39:21.8614741Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8615288Z 
+2025-12-21T22:39:21.8615445Z act(() => {
+2025-12-21T22:39:21.8615846Z   /* fire events that update state */
+2025-12-21T22:39:21.8616268Z });
+2025-12-21T22:39:21.8616604Z /* assert on the output */
+2025-12-21T22:39:21.8616856Z 
+2025-12-21T22:39:21.8617814Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8619580Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8620076Z 
+2025-12-21T22:39:21.8668822Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8670062Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8670597Z 
+2025-12-21T22:39:21.8671221Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8671828Z 
+2025-12-21T22:39:21.8672032Z act(() => {
+2025-12-21T22:39:21.8672473Z   /* fire events that update state */
+2025-12-21T22:39:21.8672953Z });
+2025-12-21T22:39:21.8673345Z /* assert on the output */
+2025-12-21T22:39:21.8673669Z 
+2025-12-21T22:39:21.8674641Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8675944Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8676517Z 
+2025-12-21T22:39:21.8700907Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8702135Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8702680Z 
+2025-12-21T22:39:21.8703319Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8704063Z 
+2025-12-21T22:39:21.8704344Z act(() => {
+2025-12-21T22:39:21.8705443Z   /* fire events that update state */
+2025-12-21T22:39:21.8705840Z });
+2025-12-21T22:39:21.8706163Z /* assert on the output */
+2025-12-21T22:39:21.8706410Z 
+2025-12-21T22:39:21.8707319Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8708691Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8709171Z 
+2025-12-21T22:39:21.8738040Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8739914Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8740360Z 
+2025-12-21T22:39:21.8740901Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8741425Z 
+2025-12-21T22:39:21.8741549Z act(() => {
+2025-12-21T22:39:21.8741920Z   /* fire events that update state */
+2025-12-21T22:39:21.8742328Z });
+2025-12-21T22:39:21.8742644Z /* assert on the output */
+2025-12-21T22:39:21.8742890Z 
+2025-12-21T22:39:21.8743802Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8745088Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8745677Z 
+2025-12-21T22:39:21.8774653Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8776103Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8776538Z 
+2025-12-21T22:39:21.8777316Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8777661Z 
+2025-12-21T22:39:21.8778075Z act(() => {
+2025-12-21T22:39:21.8778442Z   /* fire events that update state */
+2025-12-21T22:39:21.8778854Z });
+2025-12-21T22:39:21.8779145Z /* assert on the output */
+2025-12-21T22:39:21.8779323Z 
+2025-12-21T22:39:21.8780210Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8781327Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8781723Z 
+2025-12-21T22:39:21.8802499Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8803361Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8803814Z 
+2025-12-21T22:39:21.8804151Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8804515Z 
+2025-12-21T22:39:21.8804623Z act(() => {
+2025-12-21T22:39:21.8804972Z   /* fire events that update state */
+2025-12-21T22:39:21.8805353Z });
+2025-12-21T22:39:21.8867532Z /* assert on the output */
+2025-12-21T22:39:21.8868143Z 
+2025-12-21T22:39:21.8869065Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8870226Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8870644Z 
+2025-12-21T22:39:21.8871755Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8873752Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8874180Z 
+2025-12-21T22:39:21.8874701Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8875211Z 
+2025-12-21T22:39:21.8875338Z act(() => {
+2025-12-21T22:39:21.8875700Z   /* fire events that update state */
+2025-12-21T22:39:21.8876092Z });
+2025-12-21T22:39:21.8876413Z /* assert on the output */
+2025-12-21T22:39:21.8876644Z 
+2025-12-21T22:39:21.8877533Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8878901Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8879401Z 
+2025-12-21T22:39:21.8880295Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8881362Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8881828Z 
+2025-12-21T22:39:21.8882392Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8882936Z 
+2025-12-21T22:39:21.8883092Z act(() => {
+2025-12-21T22:39:21.8883477Z   /* fire events that update state */
+2025-12-21T22:39:21.8883923Z });
+2025-12-21T22:39:21.8884276Z /* assert on the output */
+2025-12-21T22:39:21.8884530Z 
+2025-12-21T22:39:21.8885505Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8886757Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8887250Z 
+2025-12-21T22:39:21.8903608Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8905465Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8905914Z 
+2025-12-21T22:39:21.8906449Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8906972Z 
+2025-12-21T22:39:21.8907099Z act(() => {
+2025-12-21T22:39:21.8907754Z   /* fire events that update state */
+2025-12-21T22:39:21.8908437Z });
+2025-12-21T22:39:21.8908762Z /* assert on the output */
+2025-12-21T22:39:21.8909009Z 
+2025-12-21T22:39:21.8909917Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8911073Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8911530Z 
+2025-12-21T22:39:21.8938531Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8940970Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8941457Z 
+2025-12-21T22:39:21.8941997Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8942790Z 
+2025-12-21T22:39:21.8942925Z act(() => {
+2025-12-21T22:39:21.8943280Z   /* fire events that update state */
+2025-12-21T22:39:21.8943538Z });
+2025-12-21T22:39:21.8943741Z /* assert on the output */
+2025-12-21T22:39:21.8943889Z 
+2025-12-21T22:39:21.8944399Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8945078Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8945348Z 
+2025-12-21T22:39:21.8965161Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8966185Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8966541Z 
+2025-12-21T22:39:21.8967102Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8967408Z 
+2025-12-21T22:39:21.8967494Z act(() => {
+2025-12-21T22:39:21.8968048Z   /* fire events that update state */
+2025-12-21T22:39:21.8968511Z });
+2025-12-21T22:39:21.8968884Z /* assert on the output */
+2025-12-21T22:39:21.8969176Z 
+2025-12-21T22:39:21.8969846Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8970540Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8970809Z 
+2025-12-21T22:39:21.8992609Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.8993537Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.8993884Z 
+2025-12-21T22:39:21.8994442Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.8994761Z 
+2025-12-21T22:39:21.8994840Z act(() => {
+2025-12-21T22:39:21.8995230Z   /* fire events that update state */
+2025-12-21T22:39:21.8995564Z });
+2025-12-21T22:39:21.8995907Z /* assert on the output */
+2025-12-21T22:39:21.8996206Z 
+2025-12-21T22:39:21.8996915Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.8997603Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.8998076Z 
+2025-12-21T22:39:21.9030471Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9032479Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9032956Z 
+2025-12-21T22:39:21.9033519Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9034058Z 
+2025-12-21T22:39:21.9034216Z act(() => {
+2025-12-21T22:39:21.9034628Z   /* fire events that update state */
+2025-12-21T22:39:21.9035045Z });
+2025-12-21T22:39:21.9035399Z /* assert on the output */
+2025-12-21T22:39:21.9035674Z 
+2025-12-21T22:39:21.9036896Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9038424Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9038922Z 
+2025-12-21T22:39:21.9059469Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9061933Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9062405Z 
+2025-12-21T22:39:21.9062969Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9063517Z 
+2025-12-21T22:39:21.9063663Z act(() => {
+2025-12-21T22:39:21.9064068Z   /* fire events that update state */
+2025-12-21T22:39:21.9064489Z });
+2025-12-21T22:39:21.9064834Z /* assert on the output */
+2025-12-21T22:39:21.9065102Z 
+2025-12-21T22:39:21.9066056Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9067600Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9068299Z 
+2025-12-21T22:39:21.9082170Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9084122Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9084587Z 
+2025-12-21T22:39:21.9085161Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9085750Z 
+2025-12-21T22:39:21.9085922Z act(() => {
+2025-12-21T22:39:21.9086287Z   /* fire events that update state */
+2025-12-21T22:39:21.9086681Z });
+2025-12-21T22:39:21.9086996Z /* assert on the output */
+2025-12-21T22:39:21.9087237Z 
+2025-12-21T22:39:21.9088355Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9089560Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9090041Z 
+2025-12-21T22:39:21.9135635Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9168412Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9169063Z 
+2025-12-21T22:39:21.9169707Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9170340Z 
+2025-12-21T22:39:21.9170558Z act(() => {
+2025-12-21T22:39:21.9171017Z   /* fire events that update state */
+2025-12-21T22:39:21.9171500Z });
+2025-12-21T22:39:21.9171914Z /* assert on the output */
+2025-12-21T22:39:21.9172258Z 
+2025-12-21T22:39:21.9173254Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9175191Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9175671Z 
+2025-12-21T22:39:21.9189487Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9190940Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9191781Z 
+2025-12-21T22:39:21.9192703Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9193614Z 
+2025-12-21T22:39:21.9194113Z act(() => {
+2025-12-21T22:39:21.9194863Z   /* fire events that update state */
+2025-12-21T22:39:21.9195627Z });
+2025-12-21T22:39:21.9196299Z /* assert on the output */
+2025-12-21T22:39:21.9196878Z 
+2025-12-21T22:39:21.9198315Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9219698Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9220621Z 
+2025-12-21T22:39:21.9761185Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9763436Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9764894Z 
+2025-12-21T22:39:21.9766848Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9768589Z 
+2025-12-21T22:39:21.9769739Z act(() => {
+2025-12-21T22:39:21.9771147Z   /* fire events that update state */
+2025-12-21T22:39:21.9771989Z });
+2025-12-21T22:39:21.9772680Z /* assert on the output */
+2025-12-21T22:39:21.9773668Z 
+2025-12-21T22:39:21.9774824Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9776001Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9776464Z 
+2025-12-21T22:39:21.9777959Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9779264Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9779708Z 
+2025-12-21T22:39:21.9780230Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9780738Z 
+2025-12-21T22:39:21.9780864Z act(() => {
+2025-12-21T22:39:21.9781229Z   /* fire events that update state */
+2025-12-21T22:39:21.9781620Z });
+2025-12-21T22:39:21.9781935Z /* assert on the output */
+2025-12-21T22:39:21.9782182Z 
+2025-12-21T22:39:21.9783103Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9784297Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9784758Z 
+2025-12-21T22:39:21.9820056Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9830223Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9830691Z 
+2025-12-21T22:39:21.9831265Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9831821Z 
+2025-12-21T22:39:21.9831967Z act(() => {
+2025-12-21T22:39:21.9832370Z   /* fire events that update state */
+2025-12-21T22:39:21.9833250Z });
+2025-12-21T22:39:21.9833527Z /* assert on the output */
+2025-12-21T22:39:21.9833682Z 
+2025-12-21T22:39:21.9834207Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9834889Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9835163Z 
+2025-12-21T22:39:21.9836132Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9836712Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9836980Z 
+2025-12-21T22:39:21.9837293Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9837595Z 
+2025-12-21T22:39:21.9837676Z act(() => {
+2025-12-21T22:39:21.9838128Z   /* fire events that update state */
+2025-12-21T22:39:21.9838376Z });
+2025-12-21T22:39:21.9838580Z /* assert on the output */
+2025-12-21T22:39:21.9838727Z 
+2025-12-21T22:39:21.9839242Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9839921Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9840185Z 
+2025-12-21T22:39:21.9876175Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9888730Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9889353Z 
+2025-12-21T22:39:21.9890047Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9890726Z 
+2025-12-21T22:39:21.9891269Z act(() => {
+2025-12-21T22:39:21.9891821Z   /* fire events that update state */
+2025-12-21T22:39:21.9892371Z });
+2025-12-21T22:39:21.9892826Z /* assert on the output */
+2025-12-21T22:39:21.9893937Z 
+2025-12-21T22:39:21.9894904Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9896157Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9896656Z 
+2025-12-21T22:39:21.9903932Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9905779Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9906223Z 
+2025-12-21T22:39:21.9906772Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9907542Z 
+2025-12-21T22:39:21.9907673Z act(() => {
+2025-12-21T22:39:21.9908249Z   /* fire events that update state */
+2025-12-21T22:39:21.9908682Z });
+2025-12-21T22:39:21.9909011Z /* assert on the output */
+2025-12-21T22:39:21.9909256Z 
+2025-12-21T22:39:21.9910194Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9911374Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9911843Z 
+2025-12-21T22:39:21.9931365Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9932010Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9932278Z 
+2025-12-21T22:39:21.9932577Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9932872Z 
+2025-12-21T22:39:21.9932965Z act(() => {
+2025-12-21T22:39:21.9933181Z   /* fire events that update state */
+2025-12-21T22:39:21.9933409Z });
+2025-12-21T22:39:21.9933605Z /* assert on the output */
+2025-12-21T22:39:21.9933753Z 
+2025-12-21T22:39:21.9934265Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9934946Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9935349Z 
+2025-12-21T22:39:21.9968376Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9970364Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9970825Z 
+2025-12-21T22:39:21.9971387Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9971943Z 
+2025-12-21T22:39:21.9972086Z act(() => {
+2025-12-21T22:39:21.9972484Z   /* fire events that update state */
+2025-12-21T22:39:21.9972914Z });
+2025-12-21T22:39:21.9973256Z /* assert on the output */
+2025-12-21T22:39:21.9973523Z 
+2025-12-21T22:39:21.9974478Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9975744Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9976252Z 
+2025-12-21T22:39:21.9987130Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:21.9988848Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:21.9989266Z 
+2025-12-21T22:39:21.9989848Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:21.9990162Z 
+2025-12-21T22:39:21.9990246Z act(() => {
+2025-12-21T22:39:21.9990654Z   /* fire events that update state */
+2025-12-21T22:39:21.9991101Z });
+2025-12-21T22:39:21.9991446Z /* assert on the output */
+2025-12-21T22:39:21.9991720Z 
+2025-12-21T22:39:21.9992607Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:21.9993581Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:21.9993936Z 
+2025-12-21T22:39:22.0014089Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:22.0014712Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:22.0014974Z 
+2025-12-21T22:39:22.0015269Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:22.0015563Z 
+2025-12-21T22:39:22.0015646Z act(() => {
+2025-12-21T22:39:22.0015871Z   /* fire events that update state */
+2025-12-21T22:39:22.0016097Z });
+2025-12-21T22:39:22.0016287Z /* assert on the output */
+2025-12-21T22:39:22.0016431Z 
+2025-12-21T22:39:22.0017125Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:22.0017797Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:22.0018308Z 
+2025-12-21T22:39:22.0050822Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:22.0052820Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:22.0053276Z 
+2025-12-21T22:39:22.0053849Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:22.0054409Z 
+2025-12-21T22:39:22.0054558Z act(() => {
+2025-12-21T22:39:22.0054961Z   /* fire events that update state */
+2025-12-21T22:39:22.0055380Z });
+2025-12-21T22:39:22.0055717Z /* assert on the output */
+2025-12-21T22:39:22.0055986Z 
+2025-12-21T22:39:22.0056939Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:22.0058459Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:22.0058965Z 
+2025-12-21T22:39:22.0079155Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:22.0081553Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:22.0081996Z 
+2025-12-21T22:39:22.0082536Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:22.0083041Z 
+2025-12-21T22:39:22.0083187Z act(() => {
+2025-12-21T22:39:22.0083575Z   /* fire events that update state */
+2025-12-21T22:39:22.0083975Z });
+2025-12-21T22:39:22.0084292Z /* assert on the output */
+2025-12-21T22:39:22.0084536Z 
+2025-12-21T22:39:22.0085470Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:22.0086688Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:22.0087175Z 
+2025-12-21T22:39:22.0649098Z [90mstderr[2m | src/App.test.tsx[2m > [22m[2mApp[2m > [22m[2mdisplays error when comparison fails[22m[39m
+2025-12-21T22:39:22.0650236Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:22.0650600Z 
+2025-12-21T22:39:22.0651175Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:22.0651480Z 
+2025-12-21T22:39:22.0651562Z act(() => {
+2025-12-21T22:39:22.0651776Z   /* fire events that update state */
+2025-12-21T22:39:22.0652148Z });
+2025-12-21T22:39:22.0652464Z /* assert on the output */
+2025-12-21T22:39:22.0652691Z 
+2025-12-21T22:39:22.0653465Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:22.0654148Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:22.0654911Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:22.0655242Z 
+2025-12-21T22:39:22.0656107Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:22.0656426Z 
+2025-12-21T22:39:22.0656504Z act(() => {
+2025-12-21T22:39:22.0657414Z   /* fire events that update state */
+2025-12-21T22:39:22.0658210Z });
+2025-12-21T22:39:22.0659210Z /* assert on the output */
+2025-12-21T22:39:22.0660243Z 
+2025-12-21T22:39:22.0661212Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:22.0662426Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:22.0663333Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:22.0663771Z 
+2025-12-21T22:39:22.0664310Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:22.0665089Z 
+2025-12-21T22:39:22.0665226Z act(() => {
+2025-12-21T22:39:22.0665618Z   /* fire events that update state */
+2025-12-21T22:39:22.0666041Z });
+2025-12-21T22:39:22.0666392Z /* assert on the output */
+2025-12-21T22:39:22.0666656Z 
+2025-12-21T22:39:22.0667584Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:22.0669012Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:22.0669951Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:22.0670413Z 
+2025-12-21T22:39:22.0670963Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:22.0671513Z 
+2025-12-21T22:39:22.0671648Z act(() => {
+2025-12-21T22:39:22.0672029Z   /* fire events that update state */
+2025-12-21T22:39:22.0672439Z });
+2025-12-21T22:39:22.0672773Z /* assert on the output */
+2025-12-21T22:39:22.0673028Z 
+2025-12-21T22:39:22.0674010Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:22.0675210Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:22.0676136Z Warning: An update to App inside a test was not wrapped in act(...).
+2025-12-21T22:39:22.0676594Z 
+2025-12-21T22:39:22.0677147Z When testing, code that causes React state updates should be wrapped into act(...):
+2025-12-21T22:39:22.0677665Z 
+2025-12-21T22:39:22.0677807Z act(() => {
+2025-12-21T22:39:22.0678390Z   /* fire events that update state */
+2025-12-21T22:39:22.0678819Z });
+2025-12-21T22:39:22.0679165Z /* assert on the output */
+2025-12-21T22:39:22.0679417Z 
+2025-12-21T22:39:22.0680374Z This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+2025-12-21T22:39:22.0681622Z     at App (/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx:10:59)
+2025-12-21T22:39:22.0682123Z 
+2025-12-21T22:39:22.1452563Z  [32m✓[39m src/App.test.tsx [2m ([22m[2m11 tests[22m[2m)[22m[33m 1881[2mms[22m[39m
+2025-12-21T22:39:22.1790188Z 
+2025-12-21T22:39:22.1804567Z [2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+2025-12-21T22:39:22.1809055Z [2m      Tests [22m [1m[32m11 passed[39m[22m[90m (11)[39m
+2025-12-21T22:39:22.1822941Z [2m   Start at [22m 22:39:18
+2025-12-21T22:39:22.1825156Z [2m   Duration [22m 3.26s[2m (transform 195ms, setup 78ms, collect 387ms, tests 1.88s, environment 551ms, prepare 99ms)[22m
+2025-12-21T22:39:22.1825823Z 
+2025-12-21T22:39:22.3352447Z [34m % [39m[2mCoverage report from [22m[33mv8[39m
+2025-12-21T22:39:22.3378249Z ------------------|---------|----------|---------|---------|--------------------
+2025-12-21T22:39:22.3382210Z File              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s  
+2025-12-21T22:39:22.3384639Z ------------------|---------|----------|---------|---------|--------------------
+2025-12-21T22:39:22.3408862Z All files         |   81.93 |    79.71 |      68 |   81.93 |                    
+2025-12-21T22:39:22.3410143Z  src              |   76.34 |    75.86 |   64.28 |   76.34 |                    
+2025-12-21T22:39:22.3411055Z   App.tsx         |   75.85 |    77.19 |   69.23 |   75.85 | ...435-437,441-461 
+2025-12-21T22:39:22.3411953Z   exampleTrace.ts |     100 |      100 |     100 |     100 |                    
+2025-12-21T22:39:22.3412857Z   main.tsx        |       0 |        0 |       0 |       0 | 1-10               
+2025-12-21T22:39:22.3413725Z  src/api          |   91.47 |      100 |   72.72 |   91.47 |                    
+2025-12-21T22:39:22.3414636Z   client.ts       |   91.47 |      100 |   72.72 |   91.47 | ...228-236,297-305 
+2025-12-21T22:39:22.3417194Z ------------------|---------|----------|---------|---------|--------------------
+2025-12-21T22:39:22.3944185Z ##[group]Run actions/upload-artifact@v4
+2025-12-21T22:39:22.3944633Z with:
+2025-12-21T22:39:22.3944811Z   name: frontend-coverage
+2025-12-21T22:39:22.3945036Z   path: frontend/coverage/
+2025-12-21T22:39:22.3945244Z   retention-days: 30
+2025-12-21T22:39:22.3945443Z   if-no-files-found: warn
+2025-12-21T22:39:22.3945644Z   compression-level: 6
+2025-12-21T22:39:22.3945830Z   overwrite: false
+2025-12-21T22:39:22.3946018Z   include-hidden-files: false
+2025-12-21T22:39:22.3946229Z ##[endgroup]
+2025-12-21T22:39:22.6557460Z With the provided path, there will be 15 files uploaded
+2025-12-21T22:39:22.6558572Z Artifact name is valid!
+2025-12-21T22:39:22.6559006Z Root directory input is valid!
+2025-12-21T22:39:22.7742167Z Beginning upload of artifact content to blob storage
+2025-12-21T22:39:22.9001188Z Uploaded bytes 47855
+2025-12-21T22:39:22.9197436Z Finished uploading artifact content to blob storage!
+2025-12-21T22:39:22.9201898Z SHA256 digest of uploaded artifact zip is 22323f2e822e8a18bc52f3a4cb339cacab677f17093a6736627c683efb2216b1
+2025-12-21T22:39:22.9203610Z Finalizing artifact upload
+2025-12-21T22:39:23.0159758Z Artifact frontend-coverage.zip successfully finalized. Artifact ID 4938429730
+2025-12-21T22:39:23.0161122Z Artifact frontend-coverage has been successfully uploaded! Final size is 47855 bytes. Artifact ID is 4938429730
+2025-12-21T22:39:23.0162578Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20416856591/artifacts/4938429730
+2025-12-21T22:39:23.0299224Z ##[group]Run npm run build
+2025-12-21T22:39:23.0299497Z [36;1mnpm run build[0m
+2025-12-21T22:39:23.0331496Z shell: /usr/bin/bash -e {0}
+2025-12-21T22:39:23.0331742Z ##[endgroup]
+2025-12-21T22:39:23.1633600Z 
+2025-12-21T22:39:23.1635912Z > tunix-rt-frontend@0.1.0 build
+2025-12-21T22:39:23.1640900Z > tsc && vite build
+2025-12-21T22:39:23.1641137Z 
+2025-12-21T22:39:25.4403218Z [36mvite v5.4.21 [32mbuilding for production...[36m[39m
+2025-12-21T22:39:25.4976581Z transforming...
+2025-12-21T22:39:26.4000969Z [32m✓[39m 33 modules transformed.
+2025-12-21T22:39:26.5408457Z rendering chunks...
+2025-12-21T22:39:26.5470689Z computing gzip size...
+2025-12-21T22:39:26.5537272Z [2mdist/[22m[32mindex.html                 [39m[1m[2m  0.48 kB[22m[1m[22m[2m │ gzip:  0.31 kB[22m
+2025-12-21T22:39:26.5543489Z [2mdist/[22m[2massets/[22m[35mindex-QBhrFh9-.css  [39m[1m[2m  3.87 kB[22m[1m[22m[2m │ gzip:  1.08 kB[22m
+2025-12-21T22:39:26.5544936Z [2mdist/[22m[2massets/[22m[36mindex-CkfmMqhz.js   [39m[1m[2m153.77 kB[22m[1m[22m[2m │ gzip: 48.70 kB[22m
+2025-12-21T22:39:26.5545752Z [32m✓ built in 1.09s[39m
+2025-12-21T22:39:26.5810793Z Post job cleanup.
+2025-12-21T22:39:26.7331810Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-582e97bbf2f73a4c9de6a422350d7e5fa7ccd4c5a0bae6af7327cebe3d1d946a, not saving cache.
+2025-12-21T22:39:26.7432565Z Post job cleanup.
+2025-12-21T22:39:26.8399681Z [command]/usr/bin/git version
+2025-12-21T22:39:26.8439656Z git version 2.52.0
+2025-12-21T22:39:26.8484684Z Temporarily overriding HOME='/home/runner/work/_temp/f342727a-c5c7-4ca3-abee-3a62af508e34' before making global git config changes
+2025-12-21T22:39:26.8487052Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-21T22:39:26.8492114Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-21T22:39:26.8534065Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-21T22:39:26.8568819Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-21T22:39:26.8826432Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-21T22:39:26.8862811Z http.https://github.com/.extraheader
+2025-12-21T22:39:26.8908990Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-12-21T22:39:26.8931679Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-21T22:39:26.9279321Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-21T22:39:26.9327126Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-21T22:39:26.9807544Z Cleaning up orphan processes

@@ -77,19 +77,7 @@ markers = [
     "ungar: UNGAR integration tests (requires backend[ungar] installed)",
 ]
 
-[tool.coverage.run]
-source = ["tunix_rt_backend"]
-branch = true
-
-[tool.coverage.report]
-fail_under = 70
-exclude_lines = [
-    "pragma: no cover",
-    "def __repr__",
-    "if __name__ == .__main__.:",
-    "raise AssertionError",
-    "raise NotImplementedError",
-    "if TYPE_CHECKING:",
-    "@abstractmethod",
-]
+# Coverage configuration moved to .coveragerc for better control
+# Default CI uses .coveragerc (omits optional UNGAR generator)
+# Optional UNGAR workflow uses .coveragerc.full (includes everything)
 

@@ -1,0 +1,30 @@
+﻿2025-12-21T22:40:44.5088675Z ##[group]Run actions/upload-artifact@v4
+2025-12-21T22:40:44.5088938Z with:
+2025-12-21T22:40:44.5089109Z   name: playwright-report
+2025-12-21T22:40:44.5089318Z   path: e2e/playwright-report/
+2025-12-21T22:40:44.5089528Z   retention-days: 7
+2025-12-21T22:40:44.5089713Z   if-no-files-found: warn
+2025-12-21T22:40:44.5089910Z   compression-level: 6
+2025-12-21T22:40:44.5090081Z   overwrite: false
+2025-12-21T22:40:44.5090260Z   include-hidden-files: false
+2025-12-21T22:40:44.5090454Z env:
+2025-12-21T22:40:44.5090596Z   REDIAI_MODE: mock
+2025-12-21T22:40:44.5091060Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-21T22:40:44.5091362Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:40:44.5091724Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T22:40:44.5092104Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:40:44.5092435Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:40:44.5092750Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:40:44.5093125Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T22:40:44.5093395Z ##[endgroup]
+2025-12-21T22:40:44.7157868Z With the provided path, there will be 1 file uploaded
+2025-12-21T22:40:44.7158994Z Artifact name is valid!
+2025-12-21T22:40:44.7159659Z Root directory input is valid!
+2025-12-21T22:40:44.9743761Z Beginning upload of artifact content to blob storage
+2025-12-21T22:40:45.4271193Z Uploaded bytes 199080
+2025-12-21T22:40:45.4967160Z Finished uploading artifact content to blob storage!
+2025-12-21T22:40:45.4971905Z SHA256 digest of uploaded artifact zip is cda151a0b44de8b66b2c3db4474b9716dedc26b3199ef347dba58988ae79bde0
+2025-12-21T22:40:45.4973803Z Finalizing artifact upload
+2025-12-21T22:40:45.6294294Z Artifact playwright-report.zip successfully finalized. Artifact ID 4938433842
+2025-12-21T22:40:45.6295841Z Artifact playwright-report has been successfully uploaded! Final size is 199080 bytes. Artifact ID is 4938433842
+2025-12-21T22:40:45.6304418Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20416856591/artifacts/4938433842

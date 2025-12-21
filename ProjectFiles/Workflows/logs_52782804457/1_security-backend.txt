@@ -1,0 +1,455 @@
+﻿2025-12-21T22:39:07.1490043Z Current runner version: '2.330.0'
+2025-12-21T22:39:07.1564707Z ##[group]Runner Image Provisioner
+2025-12-21T22:39:07.1565871Z Hosted Compute Agent
+2025-12-21T22:39:07.1566706Z Version: 20251211.462
+2025-12-21T22:39:07.1567580Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-21T22:39:07.1568865Z Build Date: 2025-12-11T16:28:49Z
+2025-12-21T22:39:07.1569929Z Worker ID: {9e9c6dcc-a570-4a1f-93e1-67a69adef9b8}
+2025-12-21T22:39:07.1570953Z ##[endgroup]
+2025-12-21T22:39:07.1571728Z ##[group]Operating System
+2025-12-21T22:39:07.1572616Z Ubuntu
+2025-12-21T22:39:07.1573254Z 24.04.3
+2025-12-21T22:39:07.1573899Z LTS
+2025-12-21T22:39:07.1574476Z ##[endgroup]
+2025-12-21T22:39:07.1575315Z ##[group]Runner Image
+2025-12-21T22:39:07.1576156Z Image: ubuntu-24.04
+2025-12-21T22:39:07.1576879Z Version: 20251215.174.1
+2025-12-21T22:39:07.1578741Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-21T22:39:07.1598644Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-21T22:39:07.1600493Z ##[endgroup]
+2025-12-21T22:39:07.1602036Z ##[group]GITHUB_TOKEN Permissions
+2025-12-21T22:39:07.1604911Z Contents: read
+2025-12-21T22:39:07.1605707Z Metadata: read
+2025-12-21T22:39:07.1606370Z ##[endgroup]
+2025-12-21T22:39:07.1629989Z Secret source: Actions
+2025-12-21T22:39:07.1631011Z Prepare workflow directory
+2025-12-21T22:39:07.2740549Z Prepare all required actions
+2025-12-21T22:39:07.2858815Z Getting action download info
+2025-12-21T22:39:07.6430967Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2025-12-21T22:39:07.7742237Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2025-12-21T22:39:07.8739541Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2025-12-21T22:39:07.9957958Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2025-12-21T22:39:08.2137769Z Complete job name: security-backend
+2025-12-21T22:39:08.2859462Z ##[group]Run actions/checkout@v4
+2025-12-21T22:39:08.2860818Z with:
+2025-12-21T22:39:08.2861486Z   repository: m-cahill/tunix-rt
+2025-12-21T22:39:08.2862553Z   token: ***
+2025-12-21T22:39:08.2863102Z   ssh-strict: true
+2025-12-21T22:39:08.2863670Z   ssh-user: git
+2025-12-21T22:39:08.2864326Z   persist-credentials: true
+2025-12-21T22:39:08.2864978Z   clean: true
+2025-12-21T22:39:08.2865580Z   sparse-checkout-cone-mode: true
+2025-12-21T22:39:08.2866320Z   fetch-depth: 1
+2025-12-21T22:39:08.2866929Z   fetch-tags: false
+2025-12-21T22:39:08.2867556Z   show-progress: true
+2025-12-21T22:39:08.2868576Z   lfs: false
+2025-12-21T22:39:08.2869139Z   submodules: false
+2025-12-21T22:39:08.2869710Z   set-safe-directory: true
+2025-12-21T22:39:08.2870729Z ##[endgroup]
+2025-12-21T22:39:08.3953839Z Syncing repository: m-cahill/tunix-rt
+2025-12-21T22:39:08.3956355Z ##[group]Getting Git version info
+2025-12-21T22:39:08.3957374Z Working directory is '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-21T22:39:08.3959123Z [command]/usr/bin/git version
+2025-12-21T22:39:08.4006678Z git version 2.52.0
+2025-12-21T22:39:08.4031679Z ##[endgroup]
+2025-12-21T22:39:08.4047104Z Temporarily overriding HOME='/home/runner/work/_temp/8fb77de6-61d9-4ab9-ba0c-9ef499238dec' before making global git config changes
+2025-12-21T22:39:08.4050401Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-21T22:39:08.4065028Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-21T22:39:08.4102739Z Deleting the contents of '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-21T22:39:08.4105650Z ##[group]Initializing the repository
+2025-12-21T22:39:08.4110743Z [command]/usr/bin/git init /home/runner/work/tunix-rt/tunix-rt
+2025-12-21T22:39:08.4175399Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-21T22:39:08.4177744Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-21T22:39:08.4179547Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-21T22:39:08.4180549Z hint: call:
+2025-12-21T22:39:08.4181400Z hint:
+2025-12-21T22:39:08.4182451Z hint: 	git config --global init.defaultBranch <name>
+2025-12-21T22:39:08.4183315Z hint:
+2025-12-21T22:39:08.4184128Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-21T22:39:08.4185492Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-21T22:39:08.4186502Z hint:
+2025-12-21T22:39:08.4187061Z hint: 	git branch -m <name>
+2025-12-21T22:39:08.4187709Z hint:
+2025-12-21T22:39:08.4188785Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-21T22:39:08.4190894Z Initialized empty Git repository in /home/runner/work/tunix-rt/tunix-rt/.git/
+2025-12-21T22:39:08.4194339Z [command]/usr/bin/git remote add origin https://github.com/m-cahill/tunix-rt
+2025-12-21T22:39:08.4228755Z ##[endgroup]
+2025-12-21T22:39:08.4229889Z ##[group]Disabling automatic garbage collection
+2025-12-21T22:39:08.4233165Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-21T22:39:08.4260588Z ##[endgroup]
+2025-12-21T22:39:08.4261543Z ##[group]Setting up auth
+2025-12-21T22:39:08.4267453Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-21T22:39:08.4295645Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-21T22:39:08.4567299Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-21T22:39:08.4594994Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-21T22:39:08.4772752Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-21T22:39:08.4804049Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-21T22:39:08.4997404Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-21T22:39:08.5030140Z ##[endgroup]
+2025-12-21T22:39:08.5031346Z ##[group]Fetching the repository
+2025-12-21T22:39:08.5039708Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +4d53b164a0bfc0208889ed91784230a2960913d6:refs/remotes/origin/main
+2025-12-21T22:39:08.8613456Z From https://github.com/m-cahill/tunix-rt
+2025-12-21T22:39:08.8616639Z  * [new ref]         4d53b164a0bfc0208889ed91784230a2960913d6 -> origin/main
+2025-12-21T22:39:08.8619983Z ##[endgroup]
+2025-12-21T22:39:08.8621227Z ##[group]Determining the checkout info
+2025-12-21T22:39:08.8622536Z ##[endgroup]
+2025-12-21T22:39:08.8624612Z [command]/usr/bin/git sparse-checkout disable
+2025-12-21T22:39:08.8655837Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-21T22:39:08.8681247Z ##[group]Checking out the ref
+2025-12-21T22:39:08.8684294Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-21T22:39:08.9141680Z Switched to a new branch 'main'
+2025-12-21T22:39:08.9144479Z branch 'main' set up to track 'origin/main'.
+2025-12-21T22:39:08.9147191Z ##[endgroup]
+2025-12-21T22:39:08.9178669Z [command]/usr/bin/git log -1 --format=%H
+2025-12-21T22:39:08.9199823Z 4d53b164a0bfc0208889ed91784230a2960913d6
+2025-12-21T22:39:08.9417856Z ##[group]Run actions/setup-python@v5
+2025-12-21T22:39:08.9418771Z with:
+2025-12-21T22:39:08.9419170Z   python-version: 3.11
+2025-12-21T22:39:08.9419595Z   cache: pip
+2025-12-21T22:39:08.9420054Z   cache-dependency-path: backend/pyproject.toml
+2025-12-21T22:39:08.9420618Z   check-latest: false
+2025-12-21T22:39:08.9421239Z   token: ***
+2025-12-21T22:39:08.9421846Z   update-environment: true
+2025-12-21T22:39:08.9422309Z   allow-prereleases: false
+2025-12-21T22:39:08.9422768Z   freethreaded: false
+2025-12-21T22:39:08.9423186Z ##[endgroup]
+2025-12-21T22:39:09.1384761Z ##[group]Installed versions
+2025-12-21T22:39:09.1817100Z Successfully set up CPython (3.11.14)
+2025-12-21T22:39:09.1820090Z ##[endgroup]
+2025-12-21T22:39:09.2366900Z [command]/opt/hostedtoolcache/Python/3.11.14/x64/bin/pip cache dir
+2025-12-21T22:39:10.5420509Z /home/runner/.cache/pip
+2025-12-21T22:39:10.6892742Z Cache hit for: setup-python-Linux-x64-24.04-Ubuntu-python-3.11.14-pip-bf08d09ccdeee9985fec4c088a52eae4fd4483b8a4aa406f55378acca9f6954a
+2025-12-21T22:39:11.4183586Z Received 52909928 of 52909928 (100.0%), 82.6 MBs/sec
+2025-12-21T22:39:11.4185443Z Cache Size: ~50 MB (52909928 B)
+2025-12-21T22:39:11.4262858Z [command]/usr/bin/tar -xf /home/runner/work/_temp/bcca001b-8a55-4b48-9594-5f5fc02c2070/cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --use-compress-program unzstd
+2025-12-21T22:39:11.5045611Z Cache restored successfully
+2025-12-21T22:39:11.5112509Z Cache restored from key: setup-python-Linux-x64-24.04-Ubuntu-python-3.11.14-pip-03c7608b5f84f960b906408ec3b56871463b52d83fb30980bbf2ad28085364b0
+2025-12-21T22:39:11.5239397Z ##[group]Run python -m pip install -e ".[dev]"
+2025-12-21T22:39:11.5239851Z [36;1mpython -m pip install -e ".[dev]"[0m
+2025-12-21T22:39:11.5264739Z shell: /usr/bin/bash -e {0}
+2025-12-21T22:39:11.5265013Z env:
+2025-12-21T22:39:11.5265276Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:11.5265688Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T22:39:11.5266068Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:11.5266418Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:11.5266753Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:11.5267090Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T22:39:11.5267370Z ##[endgroup]
+2025-12-21T22:39:12.7276598Z Obtaining file:///home/runner/work/tunix-rt/tunix-rt/backend
+2025-12-21T22:39:12.7296540Z   Installing build dependencies: started
+2025-12-21T22:39:13.9034961Z   Installing build dependencies: finished with status 'done'
+2025-12-21T22:39:13.9042060Z   Checking if build backend supports build_editable: started
+2025-12-21T22:39:14.2286258Z   Checking if build backend supports build_editable: finished with status 'done'
+2025-12-21T22:39:14.2298685Z   Getting requirements to build editable: started
+2025-12-21T22:39:14.5132996Z   Getting requirements to build editable: finished with status 'done'
+2025-12-21T22:39:14.5145585Z   Preparing editable metadata (pyproject.toml): started
+2025-12-21T22:39:14.6787944Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+2025-12-21T22:39:14.7987590Z Collecting fastapi>=0.104.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:14.8572693Z   Downloading fastapi-0.127.0-py3-none-any.whl.metadata (30 kB)
+2025-12-21T22:39:14.9015263Z Collecting uvicorn>=0.24.0 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:14.9051852Z   Downloading uvicorn-0.40.0-py3-none-any.whl.metadata (6.7 kB)
+2025-12-21T22:39:14.9387024Z Collecting httpx>=0.25.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:14.9402672Z   Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+2025-12-21T22:39:15.0366144Z Collecting pydantic>=2.4.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.0384801Z   Using cached pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)
+2025-12-21T22:39:15.0561996Z Collecting pydantic-settings>=2.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.0575278Z   Using cached pydantic_settings-2.12.0-py3-none-any.whl.metadata (3.4 kB)
+2025-12-21T22:39:15.2833364Z Collecting sqlalchemy>=2.0.0 (from sqlalchemy[asyncio]>=2.0.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.2849559Z   Using cached sqlalchemy-2.0.45-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+2025-12-21T22:39:15.3091936Z Collecting alembic>=1.12.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.3106235Z   Using cached alembic-1.17.2-py3-none-any.whl.metadata (7.2 kB)
+2025-12-21T22:39:15.3675430Z Collecting asyncpg>=0.29.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.3691520Z   Using cached asyncpg-0.31.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.4 kB)
+2025-12-21T22:39:15.4032304Z Collecting pytest>=7.4.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.4047592Z   Using cached pytest-9.0.2-py3-none-any.whl.metadata (7.6 kB)
+2025-12-21T22:39:15.4200493Z Collecting pytest-cov>=4.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.4215513Z   Using cached pytest_cov-7.0.0-py3-none-any.whl.metadata (31 kB)
+2025-12-21T22:39:15.4401618Z Collecting pytest-asyncio>=0.21.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.4416014Z   Using cached pytest_asyncio-1.3.0-py3-none-any.whl.metadata (4.1 kB)
+2025-12-21T22:39:15.7371060Z Collecting ruff>=0.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.7386625Z   Using cached ruff-0.14.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (26 kB)
+2025-12-21T22:39:15.8541889Z Collecting mypy>=1.6.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.8557802Z   Using cached mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.2 kB)
+2025-12-21T22:39:15.8686201Z Collecting aiosqlite>=0.19.0 (from tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.8701828Z   Using cached aiosqlite-0.22.0-py3-none-any.whl.metadata (4.3 kB)
+2025-12-21T22:39:15.8997850Z Collecting Mako (from alembic>=1.12.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.9012267Z   Using cached mako-1.3.10-py3-none-any.whl.metadata (2.9 kB)
+2025-12-21T22:39:15.9144619Z Collecting typing-extensions>=4.12 (from alembic>=1.12.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.9159100Z   Using cached typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+2025-12-21T22:39:15.9404882Z Collecting starlette<0.51.0,>=0.40.0 (from fastapi>=0.104.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.9425621Z   Using cached starlette-0.50.0-py3-none-any.whl.metadata (6.3 kB)
+2025-12-21T22:39:15.9643622Z Collecting annotated-doc>=0.0.2 (from fastapi>=0.104.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.9658333Z   Using cached annotated_doc-0.0.4-py3-none-any.whl.metadata (6.6 kB)
+2025-12-21T22:39:15.9831528Z Collecting anyio<5,>=3.6.2 (from starlette<0.51.0,>=0.40.0->fastapi>=0.104.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:15.9846355Z   Using cached anyio-4.12.0-py3-none-any.whl.metadata (4.3 kB)
+2025-12-21T22:39:15.9993827Z Collecting idna>=2.8 (from anyio<5,>=3.6.2->starlette<0.51.0,>=0.40.0->fastapi>=0.104.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.0007406Z   Using cached idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+2025-12-21T22:39:16.0229731Z Collecting certifi (from httpx>=0.25.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.0244176Z   Using cached certifi-2025.11.12-py3-none-any.whl.metadata (2.5 kB)
+2025-12-21T22:39:16.0393997Z Collecting httpcore==1.* (from httpx>=0.25.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.0408048Z   Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+2025-12-21T22:39:16.0515350Z Collecting h11>=0.16 (from httpcore==1.*->httpx>=0.25.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.0546706Z   Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+2025-12-21T22:39:16.0672603Z Collecting mypy_extensions>=1.0.0 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.0685608Z   Using cached mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
+2025-12-21T22:39:16.0793277Z Collecting pathspec>=0.9.0 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.0807682Z   Using cached pathspec-0.12.1-py3-none-any.whl.metadata (21 kB)
+2025-12-21T22:39:16.1458357Z Collecting librt>=0.6.2 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.1474631Z   Using cached librt-0.7.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (1.3 kB)
+2025-12-21T22:39:16.1581515Z Collecting annotated-types>=0.6.0 (from pydantic>=2.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.1597158Z   Using cached annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+2025-12-21T22:39:16.7990890Z Collecting pydantic-core==2.41.5 (from pydantic>=2.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.8007159Z   Using cached pydantic_core-2.41.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.3 kB)
+2025-12-21T22:39:16.8197891Z Collecting typing-inspection>=0.4.2 (from pydantic>=2.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.8236083Z   Using cached typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+2025-12-21T22:39:16.8375033Z Collecting python-dotenv>=0.21.0 (from pydantic-settings>=2.0.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.8389950Z   Using cached python_dotenv-1.2.1-py3-none-any.whl.metadata (25 kB)
+2025-12-21T22:39:16.8502226Z Collecting iniconfig>=1.0.1 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.8515711Z   Using cached iniconfig-2.3.0-py3-none-any.whl.metadata (2.5 kB)
+2025-12-21T22:39:16.8664910Z Collecting packaging>=22 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.8680610Z   Using cached packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+2025-12-21T22:39:16.8784305Z Collecting pluggy<2,>=1.5 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.8797565Z   Using cached pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+2025-12-21T22:39:16.8959213Z Collecting pygments>=2.7.2 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:16.8973310Z   Using cached pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+2025-12-21T22:39:17.1959580Z Collecting coverage>=7.10.6 (from coverage[toml]>=7.10.6->pytest-cov>=4.1.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:17.1975414Z   Using cached coverage-7.13.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.5 kB)
+2025-12-21T22:39:17.3756904Z Collecting greenlet>=1 (from sqlalchemy>=2.0.0->sqlalchemy[asyncio]>=2.0.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:17.3772593Z   Using cached greenlet-3.3.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (4.1 kB)
+2025-12-21T22:39:17.3979425Z Collecting click>=7.0 (from uvicorn>=0.24.0->uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:17.3993054Z   Using cached click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
+2025-12-21T22:39:17.4254964Z Collecting httptools>=0.6.3 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:17.4276209Z   Using cached httptools-0.7.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+2025-12-21T22:39:17.4694631Z Collecting pyyaml>=5.1 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:17.4710131Z   Using cached pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2025-12-21T22:39:17.5031212Z Collecting uvloop>=0.15.1 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:17.5047131Z   Using cached uvloop-0.22.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.9 kB)
+2025-12-21T22:39:17.5692627Z Collecting watchfiles>=0.13 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:17.5708602Z   Using cached watchfiles-1.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+2025-12-21T22:39:17.6444448Z Collecting websockets>=10.4 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:17.6460695Z   Using cached websockets-15.0.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+2025-12-21T22:39:17.7013685Z Collecting MarkupSafe>=0.9.2 (from Mako->alembic>=1.12.0->tunix-rt-backend==0.1.0)
+2025-12-21T22:39:17.7028707Z   Using cached markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+2025-12-21T22:39:17.7072686Z Using cached aiosqlite-0.22.0-py3-none-any.whl (17 kB)
+2025-12-21T22:39:17.7085980Z Using cached alembic-1.17.2-py3-none-any.whl (248 kB)
+2025-12-21T22:39:17.7100301Z Using cached asyncpg-0.31.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.0 MB)
+2025-12-21T22:39:17.7147390Z Downloading fastapi-0.127.0-py3-none-any.whl (112 kB)
+2025-12-21T22:39:17.7253561Z Using cached starlette-0.50.0-py3-none-any.whl (74 kB)
+2025-12-21T22:39:17.7267129Z Using cached anyio-4.12.0-py3-none-any.whl (113 kB)
+2025-12-21T22:39:17.7279928Z Using cached annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
+2025-12-21T22:39:17.7293089Z Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+2025-12-21T22:39:17.7305528Z Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+2025-12-21T22:39:17.7318559Z Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+2025-12-21T22:39:17.7331243Z Using cached idna-3.11-py3-none-any.whl (71 kB)
+2025-12-21T22:39:17.7344349Z Using cached mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (13.4 MB)
+2025-12-21T22:39:17.7424872Z Using cached librt-0.7.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (184 kB)
+2025-12-21T22:39:17.7438462Z Using cached mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+2025-12-21T22:39:17.7451611Z Using cached pathspec-0.12.1-py3-none-any.whl (31 kB)
+2025-12-21T22:39:17.7463797Z Using cached pydantic-2.12.5-py3-none-any.whl (463 kB)
+2025-12-21T22:39:17.7480088Z Using cached pydantic_core-2.41.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+2025-12-21T22:39:17.7503726Z Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+2025-12-21T22:39:17.7515978Z Using cached pydantic_settings-2.12.0-py3-none-any.whl (51 kB)
+2025-12-21T22:39:17.7529428Z Using cached pytest-9.0.2-py3-none-any.whl (374 kB)
+2025-12-21T22:39:17.7543374Z Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+2025-12-21T22:39:17.7555823Z Using cached iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+2025-12-21T22:39:17.7568028Z Using cached packaging-25.0-py3-none-any.whl (66 kB)
+2025-12-21T22:39:17.7579815Z Using cached pygments-2.19.2-py3-none-any.whl (1.2 MB)
+2025-12-21T22:39:17.7599040Z Using cached pytest_asyncio-1.3.0-py3-none-any.whl (15 kB)
+2025-12-21T22:39:17.7611694Z Using cached pytest_cov-7.0.0-py3-none-any.whl (22 kB)
+2025-12-21T22:39:17.7624520Z Using cached coverage-7.13.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (250 kB)
+2025-12-21T22:39:17.7637811Z Using cached python_dotenv-1.2.1-py3-none-any.whl (21 kB)
+2025-12-21T22:39:17.7650346Z Using cached ruff-0.14.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (14.2 MB)
+2025-12-21T22:39:17.7734835Z Using cached sqlalchemy-2.0.45-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.3 MB)
+2025-12-21T22:39:17.7763053Z Using cached greenlet-3.3.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (590 kB)
+2025-12-21T22:39:17.7780235Z Using cached typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+2025-12-21T22:39:17.7792505Z Using cached typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+2025-12-21T22:39:17.7831434Z Downloading uvicorn-0.40.0-py3-none-any.whl (68 kB)
+2025-12-21T22:39:17.7865314Z Using cached click-8.3.1-py3-none-any.whl (108 kB)
+2025-12-21T22:39:17.7879904Z Using cached httptools-0.7.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (456 kB)
+2025-12-21T22:39:17.7895802Z Using cached pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (806 kB)
+2025-12-21T22:39:17.7913844Z Using cached uvloop-0.22.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.8 MB)
+2025-12-21T22:39:17.7944293Z Using cached watchfiles-1.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (456 kB)
+2025-12-21T22:39:17.7960489Z Using cached websockets-15.0.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (182 kB)
+2025-12-21T22:39:17.7973666Z Using cached certifi-2025.11.12-py3-none-any.whl (159 kB)
+2025-12-21T22:39:17.7986949Z Using cached mako-1.3.10-py3-none-any.whl (78 kB)
+2025-12-21T22:39:17.7999940Z Using cached markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+2025-12-21T22:39:17.8802274Z Building wheels for collected packages: tunix-rt-backend
+2025-12-21T22:39:17.8809851Z   Building editable for tunix-rt-backend (pyproject.toml): started
+2025-12-21T22:39:18.0578640Z   Building editable for tunix-rt-backend (pyproject.toml): finished with status 'done'
+2025-12-21T22:39:18.0584147Z   Created wheel for tunix-rt-backend: filename=tunix_rt_backend-0.1.0-0.editable-py3-none-any.whl size=3073 sha256=24a3a3f3b234e9f6fad915c9024ad5633edbc16d0ec82bdc6e08e898be7fcfd3
+2025-12-21T22:39:18.0587036Z   Stored in directory: /tmp/pip-ephem-wheel-cache-cwq9dowi/wheels/6c/ee/47/0b2814d300ad026845dfa3996505f4a0f855be918f2df7eb34
+2025-12-21T22:39:18.0599421Z Successfully built tunix-rt-backend
+2025-12-21T22:39:18.1224912Z Installing collected packages: websockets, uvloop, typing-extensions, ruff, pyyaml, python-dotenv, pygments, pluggy, pathspec, packaging, mypy_extensions, MarkupSafe, librt, iniconfig, idna, httptools, h11, greenlet, coverage, click, certifi, asyncpg, annotated-types, annotated-doc, aiosqlite, uvicorn, typing-inspection, sqlalchemy, pytest, pydantic-core, mypy, Mako, httpcore, anyio, watchfiles, starlette, pytest-cov, pytest-asyncio, pydantic, httpx, alembic, pydantic-settings, fastapi, tunix-rt-backend
+2025-12-21T22:39:22.5935795Z 
+2025-12-21T22:39:22.5974060Z Successfully installed Mako-1.3.10 MarkupSafe-3.0.3 aiosqlite-0.22.0 alembic-1.17.2 annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.0 asyncpg-0.31.0 certifi-2025.11.12 click-8.3.1 coverage-7.13.0 fastapi-0.127.0 greenlet-3.3.0 h11-0.16.0 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 idna-3.11 iniconfig-2.3.0 librt-0.7.4 mypy-1.19.1 mypy_extensions-1.1.0 packaging-25.0 pathspec-0.12.1 pluggy-1.6.0 pydantic-2.12.5 pydantic-core-2.41.5 pydantic-settings-2.12.0 pygments-2.19.2 pytest-9.0.2 pytest-asyncio-1.3.0 pytest-cov-7.0.0 python-dotenv-1.2.1 pyyaml-6.0.3 ruff-0.14.10 sqlalchemy-2.0.45 starlette-0.50.0 tunix-rt-backend-0.1.0 typing-extensions-4.15.0 typing-inspection-0.4.2 uvicorn-0.40.0 uvloop-0.22.1 watchfiles-1.1.1 websockets-15.0.1
+2025-12-21T22:39:23.1808902Z ##[group]Run actions/cache@v4
+2025-12-21T22:39:23.1809165Z with:
+2025-12-21T22:39:23.1809351Z   path: ~/.cache/pip
+2025-12-21T22:39:23.1809750Z   key: security-tools-Linux-bf08d09ccdeee9985fec4c088a52eae4fd4483b8a4aa406f55378acca9f6954a
+2025-12-21T22:39:23.1810202Z   restore-keys: security-tools-Linux-
+
+2025-12-21T22:39:23.1810450Z   enableCrossOsArchive: false
+2025-12-21T22:39:23.1810668Z   fail-on-cache-miss: false
+2025-12-21T22:39:23.1810869Z   lookup-only: false
+2025-12-21T22:39:23.1811049Z   save-always: false
+2025-12-21T22:39:23.1811222Z env:
+2025-12-21T22:39:23.1811441Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:23.1811823Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T22:39:23.1812193Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:23.1812517Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:23.1812877Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:23.1813201Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T22:39:23.1813464Z ##[endgroup]
+2025-12-21T22:39:23.4273784Z Cache hit for restore-key: security-tools-Linux-03c7608b5f84f960b906408ec3b56871463b52d83fb30980bbf2ad28085364b0
+2025-12-21T22:39:24.1301370Z Received 56304595 of 56304595 (100.0%), 93.1 MBs/sec
+2025-12-21T22:39:24.1302240Z Cache Size: ~54 MB (56304595 B)
+2025-12-21T22:39:24.1329906Z [command]/usr/bin/tar -xf /home/runner/work/_temp/25a6ffe3-9b10-4664-9b91-474fc88dbc6f/cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --use-compress-program unzstd
+2025-12-21T22:39:24.2265069Z Cache restored successfully
+2025-12-21T22:39:24.2413500Z Cache restored from key: security-tools-Linux-03c7608b5f84f960b906408ec3b56871463b52d83fb30980bbf2ad28085364b0
+2025-12-21T22:39:24.2492369Z ##[group]Run pip install pip-audit
+2025-12-21T22:39:24.2492701Z [36;1mpip install pip-audit[0m
+2025-12-21T22:39:24.2493057Z [36;1mpip-audit --desc --format json --output pip-audit-report.json || true[0m
+2025-12-21T22:39:24.2493406Z [36;1mpip-audit --desc || true[0m
+2025-12-21T22:39:24.2514718Z shell: /usr/bin/bash -e {0}
+2025-12-21T22:39:24.2514959Z env:
+2025-12-21T22:39:24.2515208Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:24.2515604Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T22:39:24.2515972Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:24.2516308Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:24.2516645Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:24.2516995Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T22:39:24.2517277Z ##[endgroup]
+2025-12-21T22:39:25.0749039Z Collecting pip-audit
+2025-12-21T22:39:25.0768824Z   Using cached pip_audit-2.10.0-py3-none-any.whl.metadata (28 kB)
+2025-12-21T22:39:25.0944713Z Collecting CacheControl>=0.13.0 (from CacheControl[filecache]>=0.13.0->pip-audit)
+2025-12-21T22:39:25.0960089Z   Using cached cachecontrol-0.14.4-py3-none-any.whl.metadata (3.1 kB)
+2025-12-21T22:39:25.1266301Z Collecting cyclonedx-python-lib<12,>=5 (from pip-audit)
+2025-12-21T22:39:25.1282351Z   Using cached cyclonedx_python_lib-11.6.0-py3-none-any.whl.metadata (6.8 kB)
+2025-12-21T22:39:25.1309746Z Requirement already satisfied: packaging>=23.0.0 in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (from pip-audit) (25.0)
+2025-12-21T22:39:25.1412857Z Collecting pip-api>=0.0.28 (from pip-audit)
+2025-12-21T22:39:25.1427384Z   Using cached pip_api-0.0.34-py3-none-any.whl.metadata (6.6 kB)
+2025-12-21T22:39:25.1520994Z Collecting pip-requirements-parser>=32.0.0 (from pip-audit)
+2025-12-21T22:39:25.1533742Z   Using cached pip_requirements_parser-32.0.1-py3-none-any.whl.metadata (9.3 kB)
+2025-12-21T22:39:25.1850946Z Collecting requests>=2.31.0 (from pip-audit)
+2025-12-21T22:39:25.1865884Z   Using cached requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+2025-12-21T22:39:25.2188605Z Collecting rich>=12.4 (from pip-audit)
+2025-12-21T22:39:25.2203183Z   Using cached rich-14.2.0-py3-none-any.whl.metadata (18 kB)
+2025-12-21T22:39:25.2353769Z Collecting tomli>=2.2.1 (from pip-audit)
+2025-12-21T22:39:25.2368965Z   Using cached tomli-2.3.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (10 kB)
+2025-12-21T22:39:25.2456489Z Collecting tomli-w>=1.2.0 (from pip-audit)
+2025-12-21T22:39:25.2469798Z   Using cached tomli_w-1.2.0-py3-none-any.whl.metadata (5.7 kB)
+2025-12-21T22:39:25.2609096Z Collecting platformdirs>=4.2.0 (from pip-audit)
+2025-12-21T22:39:25.2622899Z   Using cached platformdirs-4.5.1-py3-none-any.whl.metadata (12 kB)
+2025-12-21T22:39:25.2779224Z Collecting license-expression<31,>=30 (from cyclonedx-python-lib<12,>=5->pip-audit)
+2025-12-21T22:39:25.2792603Z   Using cached license_expression-30.4.4-py3-none-any.whl.metadata (11 kB)
+2025-12-21T22:39:25.2967739Z Collecting packageurl-python<2,>=0.11 (from cyclonedx-python-lib<12,>=5->pip-audit)
+2025-12-21T22:39:25.2981811Z   Using cached packageurl_python-0.17.6-py3-none-any.whl.metadata (5.1 kB)
+2025-12-21T22:39:25.3141528Z Collecting py-serializable<3.0.0,>=2.1.0 (from cyclonedx-python-lib<12,>=5->pip-audit)
+2025-12-21T22:39:25.3155237Z   Using cached py_serializable-2.1.0-py3-none-any.whl.metadata (4.3 kB)
+2025-12-21T22:39:25.3286545Z Collecting sortedcontainers<3.0.0,>=2.4.0 (from cyclonedx-python-lib<12,>=5->pip-audit)
+2025-12-21T22:39:25.3300676Z   Using cached sortedcontainers-2.4.0-py2.py3-none-any.whl.metadata (10 kB)
+2025-12-21T22:39:25.3322769Z Requirement already satisfied: typing_extensions<5.0,>=4.6 in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (from cyclonedx-python-lib<12,>=5->pip-audit) (4.15.0)
+2025-12-21T22:39:25.3428704Z Collecting boolean.py>=4.0 (from license-expression<31,>=30->cyclonedx-python-lib<12,>=5->pip-audit)
+2025-12-21T22:39:25.3443009Z   Using cached boolean_py-5.0-py3-none-any.whl.metadata (2.3 kB)
+2025-12-21T22:39:25.3552911Z Collecting defusedxml<0.8.0,>=0.7.1 (from py-serializable<3.0.0,>=2.1.0->cyclonedx-python-lib<12,>=5->pip-audit)
+2025-12-21T22:39:25.3567489Z   Using cached defusedxml-0.7.1-py2.py3-none-any.whl.metadata (32 kB)
+2025-12-21T22:39:25.4199646Z Collecting msgpack<2.0.0,>=0.5.2 (from CacheControl>=0.13.0->CacheControl[filecache]>=0.13.0->pip-audit)
+2025-12-21T22:39:25.4215449Z   Using cached msgpack-1.1.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (8.1 kB)
+2025-12-21T22:39:25.4412798Z Collecting filelock>=3.8.0 (from CacheControl[filecache]>=0.13.0->pip-audit)
+2025-12-21T22:39:25.4427114Z   Using cached filelock-3.20.1-py3-none-any.whl.metadata (2.1 kB)
+2025-12-21T22:39:25.4460679Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (from pip-api>=0.0.28->pip-audit) (25.3)
+2025-12-21T22:39:25.4782518Z Collecting pyparsing (from pip-requirements-parser>=32.0.0->pip-audit)
+2025-12-21T22:39:25.4798265Z   Using cached pyparsing-3.2.5-py3-none-any.whl.metadata (5.0 kB)
+2025-12-21T22:39:25.5533300Z Collecting charset_normalizer<4,>=2 (from requests>=2.31.0->pip-audit)
+2025-12-21T22:39:25.5550463Z   Using cached charset_normalizer-3.4.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (37 kB)
+2025-12-21T22:39:25.5585616Z Requirement already satisfied: idna<4,>=2.5 in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (from requests>=2.31.0->pip-audit) (3.11)
+2025-12-21T22:39:25.5807442Z Collecting urllib3<3,>=1.21.1 (from requests>=2.31.0->pip-audit)
+2025-12-21T22:39:25.5821657Z   Using cached urllib3-2.6.2-py3-none-any.whl.metadata (6.6 kB)
+2025-12-21T22:39:25.5851051Z Requirement already satisfied: certifi>=2017.4.17 in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (from requests>=2.31.0->pip-audit) (2025.11.12)
+2025-12-21T22:39:25.5998022Z Collecting markdown-it-py>=2.2.0 (from rich>=12.4->pip-audit)
+2025-12-21T22:39:25.6014047Z   Using cached markdown_it_py-4.0.0-py3-none-any.whl.metadata (7.3 kB)
+2025-12-21T22:39:25.6055669Z Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (from rich>=12.4->pip-audit) (2.19.2)
+2025-12-21T22:39:25.6134836Z Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=12.4->pip-audit)
+2025-12-21T22:39:25.6148430Z   Using cached mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+2025-12-21T22:39:25.6209894Z Using cached pip_audit-2.10.0-py3-none-any.whl (61 kB)
+2025-12-21T22:39:25.6223364Z Using cached cyclonedx_python_lib-11.6.0-py3-none-any.whl (511 kB)
+2025-12-21T22:39:25.6241229Z Using cached license_expression-30.4.4-py3-none-any.whl (120 kB)
+2025-12-21T22:39:25.6254245Z Using cached packageurl_python-0.17.6-py3-none-any.whl (36 kB)
+2025-12-21T22:39:25.6266062Z Using cached py_serializable-2.1.0-py3-none-any.whl (23 kB)
+2025-12-21T22:39:25.6279069Z Using cached defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+2025-12-21T22:39:25.6292108Z Using cached sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
+2025-12-21T22:39:25.6304974Z Using cached boolean_py-5.0-py3-none-any.whl (26 kB)
+2025-12-21T22:39:25.6317144Z Using cached cachecontrol-0.14.4-py3-none-any.whl (22 kB)
+2025-12-21T22:39:25.6330567Z Using cached msgpack-1.1.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (426 kB)
+2025-12-21T22:39:25.6346160Z Using cached filelock-3.20.1-py3-none-any.whl (16 kB)
+2025-12-21T22:39:25.6358494Z Using cached pip_api-0.0.34-py3-none-any.whl (120 kB)
+2025-12-21T22:39:25.6371908Z Using cached pip_requirements_parser-32.0.1-py3-none-any.whl (35 kB)
+2025-12-21T22:39:25.6385239Z Using cached platformdirs-4.5.1-py3-none-any.whl (18 kB)
+2025-12-21T22:39:25.6397390Z Using cached requests-2.32.5-py3-none-any.whl (64 kB)
+2025-12-21T22:39:25.6411589Z Using cached charset_normalizer-3.4.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (151 kB)
+2025-12-21T22:39:25.6424851Z Using cached urllib3-2.6.2-py3-none-any.whl (131 kB)
+2025-12-21T22:39:25.6437470Z Using cached rich-14.2.0-py3-none-any.whl (243 kB)
+2025-12-21T22:39:25.6451280Z Using cached markdown_it_py-4.0.0-py3-none-any.whl (87 kB)
+2025-12-21T22:39:25.6464407Z Using cached mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+2025-12-21T22:39:25.6477675Z Using cached tomli-2.3.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (242 kB)
+2025-12-21T22:39:25.6491401Z Using cached tomli_w-1.2.0-py3-none-any.whl (6.7 kB)
+2025-12-21T22:39:25.6503638Z Using cached pyparsing-3.2.5-py3-none-any.whl (113 kB)
+2025-12-21T22:39:25.7281411Z Installing collected packages: sortedcontainers, boolean.py, urllib3, tomli-w, tomli, pyparsing, platformdirs, pip-api, packageurl-python, msgpack, mdurl, license-expression, filelock, defusedxml, charset_normalizer, requests, py-serializable, pip-requirements-parser, markdown-it-py, rich, cyclonedx-python-lib, CacheControl, pip-audit
+2025-12-21T22:39:26.4200091Z 
+2025-12-21T22:39:26.4230200Z Successfully installed CacheControl-0.14.4 boolean.py-5.0 charset_normalizer-3.4.4 cyclonedx-python-lib-11.6.0 defusedxml-0.7.1 filelock-3.20.1 license-expression-30.4.4 markdown-it-py-4.0.0 mdurl-0.1.2 msgpack-1.1.2 packageurl-python-0.17.6 pip-api-0.0.34 pip-audit-2.10.0 pip-requirements-parser-32.0.1 platformdirs-4.5.1 py-serializable-2.1.0 pyparsing-3.2.5 requests-2.32.5 rich-14.2.0 sortedcontainers-2.4.0 tomli-2.3.0 tomli-w-1.2.0 urllib3-2.6.2
+2025-12-21T22:39:27.8866393Z No known vulnerabilities found
+2025-12-21T22:39:28.6137282Z No known vulnerabilities found
+2025-12-21T22:39:28.6146647Z Name             Skip Reason
+2025-12-21T22:39:28.6148970Z ---------------- -------------------------------------------------------------------------------
+2025-12-21T22:39:28.6150348Z tunix-rt-backend Dependency not found on PyPI and could not be audited: tunix-rt-backend (0.1.0)
+2025-12-21T22:39:28.6647319Z ##[group]Run actions/upload-artifact@v4
+2025-12-21T22:39:28.6647574Z with:
+2025-12-21T22:39:28.6647750Z   name: pip-audit-report
+2025-12-21T22:39:28.6647978Z   path: backend/pip-audit-report.json
+2025-12-21T22:39:28.6648576Z   retention-days: 30
+2025-12-21T22:39:28.6648782Z   if-no-files-found: warn
+2025-12-21T22:39:28.6648995Z   compression-level: 6
+2025-12-21T22:39:28.6649188Z   overwrite: false
+2025-12-21T22:39:28.6649380Z   include-hidden-files: false
+2025-12-21T22:39:28.6649589Z env:
+2025-12-21T22:39:28.6649806Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:28.6650185Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-21T22:39:28.6650554Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:28.6650905Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:28.6651236Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-21T22:39:28.6651597Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-21T22:39:28.6651876Z ##[endgroup]
+2025-12-21T22:39:28.8734061Z With the provided path, there will be 1 file uploaded
+2025-12-21T22:39:28.8736928Z Artifact name is valid!
+2025-12-21T22:39:28.8739478Z Root directory input is valid!
+2025-12-21T22:39:29.0031213Z Beginning upload of artifact content to blob storage
+2025-12-21T22:39:29.1116283Z Uploaded bytes 1032
+2025-12-21T22:39:29.1411671Z Finished uploading artifact content to blob storage!
+2025-12-21T22:39:29.1415368Z SHA256 digest of uploaded artifact zip is 6d75fea500bc22792f598e3f4982752a5fe7f86252ffd340877cd866dc14f5f0
+2025-12-21T22:39:29.1417431Z Finalizing artifact upload
+2025-12-21T22:39:29.2405469Z Artifact pip-audit-report.zip successfully finalized. Artifact ID 4938430014
+2025-12-21T22:39:29.2407042Z Artifact pip-audit-report has been successfully uploaded! Final size is 1032 bytes. Artifact ID is 4938430014
+2025-12-21T22:39:29.2413850Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20416856591/artifacts/4938430014
+2025-12-21T22:39:29.3073985Z Post job cleanup.
+2025-12-21T22:39:29.4479168Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --files-from manifest.txt --use-compress-program zstdmt
+2025-12-21T22:39:30.7149637Z Sent 56303329 of 56303329 (100.0%), 57.8 MBs/sec
+2025-12-21T22:39:30.8213095Z Cache saved with key: security-tools-Linux-bf08d09ccdeee9985fec4c088a52eae4fd4483b8a4aa406f55378acca9f6954a
+2025-12-21T22:39:30.8311636Z Post job cleanup.
+2025-12-21T22:39:31.0175762Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --files-from manifest.txt --use-compress-program zstdmt
+2025-12-21T22:39:32.2496835Z Sent 56301367 of 56301367 (100.0%), 57.0 MBs/sec
+2025-12-21T22:39:32.4180835Z Cache saved with the key: setup-python-Linux-x64-24.04-Ubuntu-python-3.11.14-pip-bf08d09ccdeee9985fec4c088a52eae4fd4483b8a4aa406f55378acca9f6954a
+2025-12-21T22:39:32.4307759Z Post job cleanup.
+2025-12-21T22:39:32.5364779Z [command]/usr/bin/git version
+2025-12-21T22:39:32.5402034Z git version 2.52.0
+2025-12-21T22:39:32.5444247Z Temporarily overriding HOME='/home/runner/work/_temp/1c51c9ef-1319-4b33-9801-7636a4cf9ee7' before making global git config changes
+2025-12-21T22:39:32.5446264Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-21T22:39:32.5451132Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-21T22:39:32.5493266Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-21T22:39:32.5525137Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-21T22:39:32.5718964Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-21T22:39:32.5743143Z http.https://github.com/.extraheader
+2025-12-21T22:39:32.5755361Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-12-21T22:39:32.5785915Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-21T22:39:32.6005905Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-21T22:39:32.6059338Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-21T22:39:32.6372511Z Cleaning up orphan processes
