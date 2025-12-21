@@ -16,6 +16,11 @@ from tunix_rt_backend.schemas.trace import (
     TraceListResponse,
     TraceStep,
 )
+from tunix_rt_backend.schemas.ungar import (
+    UngarGenerateRequest,
+    UngarGenerateResponse,
+    UngarStatusResponse,
+)
 
 __all__ = [
     "TraceStep",
@@ -30,4 +35,7 @@ __all__ = [
     "ScoreDetails",
     "TraceWithScore",
     "CompareResponse",
+    "UngarStatusResponse",
+    "UngarGenerateRequest",
+    "UngarGenerateResponse",
 ]

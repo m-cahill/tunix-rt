@@ -284,6 +284,37 @@ curl "http://localhost:8000/api/traces/compare?base=550e8400-e29b-41d4-a716-4466
 
 Response: Both traces with full payloads and computed scores
 
+### UNGAR Generator (Optional - M7)
+
+**Check UNGAR availability:**
+
+```bash
+curl http://localhost:8000/api/ungar/status
+```
+
+**Generate High Card Duel traces:**
+
+```bash
+curl -X POST http://localhost:8000/api/ungar/high-card-duel/generate \
+  -H "Content-Type: application/json" \
+  -d '{"count": 5, "seed": 42, "persist": true}'
+```
+
+**Export traces as JSONL:**
+
+```bash
+curl "http://localhost:8000/api/ungar/high-card-duel/export.jsonl?limit=10"
+```
+
+**Installation:** To use UNGAR features, install with the optional extra:
+
+```bash
+cd backend
+pip install -e ".[dev,ungar]"
+```
+
+See [docs/M07_UNGAR_INTEGRATION.md](docs/M07_UNGAR_INTEGRATION.md) for complete documentation.
+
 ## Project Structure
 
 ```

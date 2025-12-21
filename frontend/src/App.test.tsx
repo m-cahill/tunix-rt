@@ -17,7 +17,7 @@ describe('App', () => {
   })
 
   it('displays API healthy status', async () => {
-    // Mock both fetch calls
+    // Mock all three health fetch calls (API, RediAI, UNGAR)
     (global.fetch as any)
       .mockResolvedValueOnce({
         ok: true,
@@ -26,6 +26,10 @@ describe('App', () => {
       .mockResolvedValueOnce({
         ok: true,
         json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
       })
 
     render(<App />)
@@ -45,6 +49,10 @@ describe('App', () => {
         ok: true,
         json: async () => ({ status: 'healthy' }),
       })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
+      })
 
     render(<App />)
 
@@ -63,6 +71,10 @@ describe('App', () => {
         ok: true,
         json: async () => ({ status: 'down', error: 'Connection refused' }),
       })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
+      })
 
     render(<App />)
 
@@ -77,6 +89,7 @@ describe('App', () => {
     (global.fetch as any)
       .mockRejectedValueOnce(new Error('Network error'))
       .mockRejectedValueOnce(new Error('Network error'))
+      .mockRejectedValueOnce(new Error('Network error'))
 
     render(<App />)
 
@@ -89,7 +102,7 @@ describe('App', () => {
   it('populates textarea when Load Example is clicked', async () => {
     const user = userEvent.setup()
     
-    // Mock health checks
+    // Mock health checks (API, RediAI, UNGAR)
     ;(global.fetch as any)
       .mockResolvedValueOnce({
         ok: true,
@@ -98,6 +111,10 @@ describe('App', () => {
       .mockResolvedValueOnce({
         ok: true,
         json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
       })
 
     render(<App />)
@@ -114,7 +131,7 @@ describe('App', () => {
     const user = userEvent.setup()
     const mockTraceId = '550e8400-e29b-41d4-a716-446655440000'
     
-    // Mock health checks + upload
+    // Mock health checks (API, RediAI, UNGAR) + upload
     ;(global.fetch as any)
       .mockResolvedValueOnce({
         ok: true,
@@ -123,6 +140,10 @@ describe('App', () => {
       .mockResolvedValueOnce({
         ok: true,
         json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
       })
       .mockResolvedValueOnce({
         ok: true,
@@ -168,7 +189,7 @@ describe('App', () => {
       },
     }
 
-    // Mock health checks + upload + fetch
+    // Mock health checks (API, RediAI, UNGAR) + upload + fetch
     ;(global.fetch as any)
       .mockResolvedValueOnce({
         ok: true,
@@ -177,6 +198,10 @@ describe('App', () => {
       .mockResolvedValueOnce({
         ok: true,
         json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
       })
       .mockResolvedValueOnce({
         ok: true,
@@ -256,7 +281,7 @@ describe('App', () => {
       },
     }
 
-    // Mock health checks + compare
+    // Mock health checks (API, RediAI, UNGAR) + compare
     ;(global.fetch as any)
       .mockResolvedValueOnce({
         ok: true,
@@ -265,6 +290,10 @@ describe('App', () => {
       .mockResolvedValueOnce({
         ok: true,
         json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
       })
       .mockResolvedValueOnce({
         ok: true,
@@ -308,7 +337,7 @@ describe('App', () => {
     const baseTraceId = '550e8400-e29b-41d4-a716-446655440000'
     const otherTraceId = 'invalid-uuid'
 
-    // Mock health checks + failed compare
+    // Mock health checks (API, RediAI, UNGAR) + failed compare
     ;(global.fetch as any)
       .mockResolvedValueOnce({
         ok: true,
@@ -317,6 +346,10 @@ describe('App', () => {
       .mockResolvedValueOnce({
         ok: true,
         json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
       })
       .mockResolvedValueOnce({
         ok: false,
@@ -342,7 +375,7 @@ describe('App', () => {
   })
 
   it('disables compare button when trace IDs are missing', () => {
-    // Mock health checks
+    // Mock health checks (API, RediAI, UNGAR)
     ;(global.fetch as any)
       .mockResolvedValueOnce({
         ok: true,
@@ -351,6 +384,10 @@ describe('App', () => {
       .mockResolvedValueOnce({
         ok: true,
         json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
       })
 
     render(<App />)

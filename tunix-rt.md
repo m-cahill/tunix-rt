@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M6 Complete** ✅  
-**Coverage:** 90% Line, 88% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic | **Features:** Trace Evaluation, Comparison & Validation Helpers
+**Milestone M7 Complete** ✅  
+**Coverage:** 90% Line, 88% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic | **Features:** Trace Evaluation, Comparison, Validation & UNGAR Integration
 
 ## Overview
 
@@ -770,12 +770,31 @@ docs: update README
 - Frontend tests updated to use new naming convention (11/11 passing)
 - Backend: 56 tests passing | Frontend: 11 tests passing
 
-## Next Steps (M7+)
+### M7: UNGAR Integration Bridge ✅
+- **Optional dependency**: UNGAR installable via `backend[ungar]` extra
+- **Pinned version**: Commit `0e29e104aa1b13542b193515e3895ee87122c1cb` for reproducibility
+- **High Card Duel generator**: Converts game episodes to reasoning traces
+- **JSONL export**: Tunix-friendly format with `prompts`, `trace_steps`, `final_answer`
+- **Three new endpoints**:
+  - `GET /api/ungar/status` - Check availability
+  - `POST /api/ungar/high-card-duel/generate` - Generate traces
+  - `GET /api/ungar/high-card-duel/export.jsonl` - Export JSONL
+- **Frontend panel**: Minimal UNGAR UI with status display and generator
+- **Testing**:
+  - Default tests (3): Verify 501 responses without UNGAR
+  - Optional tests (6): Full integration validation with UNGAR installed
+  - All 59 backend tests passing, 11 frontend tests passing
+- **CI**: Optional workflow (`.github/workflows/ungar-integration.yml`) for manual/nightly runs
+- **Documentation**: Complete integration guide in `docs/M07_UNGAR_INTEGRATION.md`
+- **Guardrails**: Core runtime never requires UNGAR; graceful degradation with 501 responses
+- **Coverage maintained**: 90% line, 88% branch
 
-1. **M7**: UNGAR integration (on solid foundation)
-2. **M8**: LLM-based judge scoring integration
-3. **M9**: Trace optimization and recommendations
-4. **M10**: Production deployment (Netlify + Render)
+## Next Steps (M8+)
+
+1. **M8**: Multi-game UNGAR support (Mini Spades, Gin Rummy)
+2. **M9**: Tunix SFT training workflow integration
+3. **M10**: Richer trace schemas with reasoning explanations
+4. **M11**: Production deployment (Netlify + Render)
 
 ## Architecture Decisions
 

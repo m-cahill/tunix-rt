@@ -5,10 +5,14 @@ import {
   createTrace,
   getTrace,
   compareTraces,
+  getUngarStatus,
+  generateUngarTraces,
   type HealthResponse, 
   type RediHealthResponse,
   type TraceDetail,
   type CompareResponse,
+  type UngarStatusResponse,
+  type UngarGenerateResponse,
   ApiError,
 } from './api/client'
 import { EXAMPLE_TRACE } from './exampleTrace'
@@ -31,6 +35,14 @@ function App() {
   const [compareResult, setCompareResult] = useState<CompareResponse | null>(null)
   const [compareError, setCompareError] = useState<string | null>(null)
   const [compareLoading, setCompareLoading] = useState(false)
+  
+  // UNGAR state
+  const [ungarStatus, setUngarStatus] = useState<UngarStatusResponse | null>(null)
+  const [ungarCount, setUngarCount] = useState('5')
+  const [ungarSeed, setUngarSeed] = useState('42')
+  const [ungarResult, setUngarResult] = useState<UngarGenerateResponse | null>(null)
+  const [ungarError, setUngarError] = useState<string | null>(null)
+  const [ungarLoading, setUngarLoading] = useState(false)
 
   useEffect(() => {
     const fetchHealth = async () => {
@@ -50,6 +62,14 @@ function App() {
         setRediHealth(rediData)
       } catch (error) {
         setRediHealth({ status: 'down', error: 'Failed to fetch' })
+      }
+
+      try {
+        // Fetch UNGAR status
+        const ungarData = await getUngarStatus()
+        setUngarStatus(ungarData)
+      } catch (error) {
+        setUngarStatus({ available: false, version: null })
       }
 
       setLoading(false)
@@ -146,6 +166,34 @@ function App() {
       setCompareResult(null)
     } finally {
       setCompareLoading(false)
+    }
+  }
+
+  const handleUngarGenerate = async () => {
+    const count = parseInt(ungarCount, 10)
+    const seed = ungarSeed ? parseInt(ungarSeed, 10) : null
+    
+    if (isNaN(count) || count < 1 || count > 100) {
+      setUngarError('Count must be between 1 and 100')
+      return
+    }
+    
+    setUngarError(null)
+    setUngarLoading(true)
+    
+    try {
+      const result = await generateUngarTraces({ count, seed, persist: true })
+      setUngarResult(result)
+      setUngarError(null)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setUngarError(`Generation failed: ${error.message} (${error.status})`)
+      } else {
+        setUngarError('Generation failed: Unknown error')
+      }
+      setUngarResult(null)
+    } finally {
+      setUngarLoading(false)
     }
   }
 
@@ -326,6 +374,90 @@ function App() {
                 </div>
               </div>
             </div>
+          </div>
+        )}
+      </div>
+
+      <div className="ungar-section" data-testid="ungar:section">
+        <h2>UNGAR Generator (Optional)</h2>
+        
+        <div className="ungar-status" data-testid="ungar:status-container">
+          <p data-testid="ungar:status">
+            <strong>Status:</strong> {loading ? 'Loading...' : (ungarStatus?.available ? '✅ Available' : '❌ Not Installed')}
+          </p>
+          {ungarStatus?.version && (
+            <p data-testid="ungar:version">
+              <strong>Version:</strong> {ungarStatus.version}
+            </p>
+          )}
+        </div>
+
+        {ungarStatus?.available && (
+          <div className="ungar-generator" data-testid="ungar:generator">
+            <div className="input-group">
+              <label htmlFor="ungar-count">Trace Count (1-100):</label>
+              <input
+                id="ungar-count"
+                data-testid="ungar:generate-count"
+                type="number"
+                min="1"
+                max="100"
+                value={ungarCount}
+                onChange={(e) => setUngarCount(e.target.value)}
+                disabled={ungarLoading}
+              />
+            </div>
+            
+            <div className="input-group">
+              <label htmlFor="ungar-seed">Random Seed (optional):</label>
+              <input
+                id="ungar-seed"
+                data-testid="ungar:generate-seed"
+                type="number"
+                value={ungarSeed}
+                onChange={(e) => setUngarSeed(e.target.value)}
+                disabled={ungarLoading}
+                placeholder="42"
+              />
+            </div>
+            
+            <button
+              data-testid="ungar:generate-btn"
+              onClick={handleUngarGenerate}
+              disabled={ungarLoading}
+            >
+              Generate High Card Duel Traces
+            </button>
+          </div>
+        )}
+
+        {ungarError && (
+          <div className="trace-error" data-testid="ungar:error">
+            <strong>Error:</strong> {ungarError}
+          </div>
+        )}
+
+        {ungarResult && (
+          <div className="ungar-results" data-testid="ungar:results">
+            <h3>Generated {ungarResult.trace_ids.length} Traces</h3>
+            <p><strong>Trace IDs:</strong></p>
+            <ul data-testid="ungar:trace-ids">
+              {ungarResult.trace_ids.map((id) => (
+                <li key={id} data-testid={`ungar:trace-id-${id}`}>{id}</li>
+              ))}
+            </ul>
+            {ungarResult.preview.length > 0 && (
+              <div data-testid="ungar:preview">
+                <p><strong>Preview:</strong></p>
+                <ul>
+                  {ungarResult.preview.map((p, idx) => (
+                    <li key={idx}>
+                      Game: {p.game}, Result: {p.result}, Card: {p.my_card}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -250,3 +250,57 @@ export async function compareTraces(baseId: string, otherId: string): Promise<Co
   return fetchJSON<CompareResponse>(`/api/traces/compare?${searchParams.toString()}`)
 }
 
+/**
+ * UNGAR availability status
+ */
+export interface UngarStatusResponse {
+  available: boolean
+  version: string | null
+}
+
+/**
+ * Request parameters for UNGAR trace generation
+ */
+export interface UngarGenerateRequest {
+  count: number
+  seed?: number | null
+  persist?: boolean
+}
+
+/**
+ * Response from UNGAR trace generation
+ */
+export interface UngarGenerateResponse {
+  trace_ids: string[]
+  preview: Array<{
+    trace_id: string
+    game: string | null
+    result: string | null
+    my_card: string | null
+  }>
+}
+
+/**
+ * Get UNGAR availability status
+ * @returns Promise resolving to UNGAR status (always succeeds, check 'available' field)
+ */
+export async function getUngarStatus(): Promise<UngarStatusResponse> {
+  return fetchJSON<UngarStatusResponse>('/api/ungar/status')
+}
+
+/**
+ * Generate High Card Duel traces from UNGAR
+ * @param request - Generation parameters (count, seed, persist)
+ * @returns Promise resolving to generated trace IDs and preview
+ * @throws {ApiError} on HTTP error (including 501 if UNGAR not installed)
+ */
+export async function generateUngarTraces(request: UngarGenerateRequest): Promise<UngarGenerateResponse> {
+  return fetchJSON<UngarGenerateResponse>('/api/ungar/high-card-duel/generate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(request),
+  })
+}
+
