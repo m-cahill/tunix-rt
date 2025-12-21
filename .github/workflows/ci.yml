@@ -25,6 +25,9 @@ jobs:
       - uses: dorny/paths-filter@v2
         id: filter
         with:
+          token: ''
+          base: ${{ github.event.pull_request.base.sha || 'HEAD~1' }}
+          ref: ${{ github.event.pull_request.head.sha || 'HEAD' }}
           filters: |
             backend:
               - 'backend/**'
@@ -196,6 +199,8 @@ jobs:
       
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # E2E job - runs if backend, frontend, e2e, or workflow changed
   e2e:
