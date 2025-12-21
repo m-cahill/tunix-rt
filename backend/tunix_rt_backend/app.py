@@ -26,7 +26,7 @@ app.add_middleware(
 
 def get_redi_client() -> RediClientProtocol:
     """Dependency provider for RediAI client.
-    
+
     Returns MockRediClient in mock mode, RediClient in real mode.
     This allows easy testing via dependency_overrides.
     """
@@ -38,7 +38,7 @@ def get_redi_client() -> RediClientProtocol:
 @app.get("/api/health")
 async def health() -> dict[str, str]:
     """Check tunix-rt application health.
-    
+
     Returns:
         {"status": "healthy"}
     """
@@ -50,16 +50,15 @@ async def redi_health(
     redi_client: Annotated[RediClientProtocol, Depends(get_redi_client)],
 ) -> dict[str, str]:
     """Check RediAI integration health.
-    
+
     In mock mode: always returns healthy.
     In real mode: probes actual RediAI instance.
-    
+
     Args:
         redi_client: Injected RediAI client (real or mock)
-    
+
     Returns:
         {"status": "healthy"} if RediAI is reachable
         {"status": "down", "error": "..."} if RediAI is unreachable
     """
     return await redi_client.health()
-

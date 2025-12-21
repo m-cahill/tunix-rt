@@ -22,4 +22,3 @@ def test_health_endpoint_returns_correct_json(client: TestClient) -> None:
     """Test that /api/health returns exact JSON structure."""
     response = client.get("/api/health")
     assert response.json() == {"status": "healthy"}
-

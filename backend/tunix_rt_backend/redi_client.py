@@ -10,7 +10,7 @@ class RediClientProtocol(Protocol):
 
     async def health(self) -> dict[str, str]:
         """Check RediAI health status.
-        
+
         Returns:
             dict with "status" key, optionally "error" key if unhealthy
         """
@@ -22,7 +22,7 @@ class RediClient:
 
     def __init__(self, base_url: str, health_path: str = "/health") -> None:
         """Initialize RediAI client.
-        
+
         Args:
             base_url: Base URL of RediAI instance (e.g., "http://localhost:8080")
             health_path: Path to health endpoint (default: "/health")
@@ -33,7 +33,7 @@ class RediClient:
 
     async def health(self) -> dict[str, str]:
         """Check RediAI health by calling its health endpoint.
-        
+
         Returns:
             {"status": "healthy"} if RediAI is reachable
             {"status": "down", "error": "..."} if unreachable or error
@@ -54,7 +54,7 @@ class MockRediClient:
 
     def __init__(self, simulate_healthy: bool = True) -> None:
         """Initialize mock client.
-        
+
         Args:
             simulate_healthy: If True, returns healthy; if False, returns down
         """
@@ -62,7 +62,7 @@ class MockRediClient:
 
     async def health(self) -> dict[str, str]:
         """Return mock health status.
-        
+
         Returns:
             {"status": "healthy"} if simulate_healthy is True
             {"status": "down", "error": "..."} if simulate_healthy is False
@@ -70,4 +70,3 @@ class MockRediClient:
         if self.simulate_healthy:
             return {"status": "healthy"}
         return {"status": "down", "error": "Mock unhealthy state"}
-
