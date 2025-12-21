@@ -188,9 +188,9 @@ test.describe('Trace Comparison and Evaluation', () => {
     await expect(page.locator('.comparison-result').getByText('What is 2 + 2?')).toBeVisible();
     await expect(page.locator('.comparison-result').getByText('Explain the process of photosynthesis in plants')).toBeVisible();
     
-    // Verify steps are listed
-    await expect(page.locator('text=Add 2 and 2')).toBeVisible();
-    await expect(page.locator('text=Light energy is absorbed by chlorophyll in the chloroplasts')).toBeVisible();
+    // Verify steps are listed (scope to comparison-result to avoid textarea collision)
+    await expect(page.locator('.comparison-result').getByText('Add 2 and 2')).toBeVisible();
+    await expect(page.locator('.comparison-result').getByText('Light energy is absorbed by chlorophyll in the chloroplasts')).toBeVisible();
   });
 });
 

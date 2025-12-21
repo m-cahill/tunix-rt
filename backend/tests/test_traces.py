@@ -317,7 +317,7 @@ async def test_list_traces_with_zero_limit(client: AsyncClient) -> None:
 @pytest.mark.asyncio
 async def test_get_trace_success_path_explicit(client: AsyncClient, example_trace: dict) -> None:
     """Explicit test for get_trace success branch (db_trace is NOT None).
-    
+
     This test ensures the ELSE branch of 'if db_trace is None' is counted as covered.
     """
     # Create trace
@@ -339,7 +339,7 @@ async def test_get_trace_success_path_explicit(client: AsyncClient, example_trac
 @pytest.mark.asyncio
 async def test_list_traces_valid_pagination(client: AsyncClient, example_trace: dict) -> None:
     """Explicit test for list_traces validation success branches.
-    
+
     Ensures the ELSE paths of limit/offset validation are covered:
     - if limit < 1 or limit > 100 → FALSE (valid limit)
     - if offset < 0 → FALSE (valid offset)

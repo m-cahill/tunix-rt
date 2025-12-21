@@ -253,7 +253,7 @@ class TestScoreEndpoint:
     @pytest.mark.asyncio
     async def test_score_trace_success_branch_explicit(self, async_client: AsyncClient):
         """Explicit test for score_trace success branches.
-        
+
         Ensures these branches are marked as covered:
         - if db_trace is None → FALSE (trace exists)
         - if score_request.criteria == "baseline" → TRUE (baseline used)
@@ -451,7 +451,7 @@ class TestCompareEndpoint:
     @pytest.mark.asyncio
     async def test_compare_both_traces_exist_explicit(self, async_client: AsyncClient):
         """Explicit test for successful branch when both traces exist.
-        
+
         This test explicitly covers the ELSE branches of validation checks:
         - if base not in db_traces → FALSE (base exists)
         - if other not in db_traces → FALSE (other exists)
