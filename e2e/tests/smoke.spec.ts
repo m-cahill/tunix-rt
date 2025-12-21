@@ -1,5 +1,14 @@
 import { test, expect } from '@playwright/test';
 
+/**
+ * E2E Selector Policy (M6.3):
+ * - ALL selectors must use either `getByTestId` or `getByRole` with scoped containers
+ * - Global text selectors (`page.locator('text=...')`) are FORBIDDEN
+ * - Text matching (`hasText`) is allowed ONLY within scoped containers or with role/testid
+ * - Prefer data-testid for UI elements that may change copy/labels
+ * - Use role-based selectors only for semantic HTML elements (buttons, headings, etc.)
+ */
+
 test.describe('Smoke Tests', () => {
   test('homepage loads successfully', async ({ page }) => {
     await page.goto('/');
@@ -11,8 +20,8 @@ test.describe('Smoke Tests', () => {
   test('displays API healthy status', async ({ page }) => {
     await page.goto('/');
     
-    // Wait for the API status to load
-    const apiStatus = page.getByTestId('api-status');
+    // Wait for the API status to load using data-testid
+    const apiStatus = page.getByTestId('sys:api-status');
     await expect(apiStatus).toBeVisible();
     
     // In mock mode (CI), should always be healthy
@@ -23,8 +32,8 @@ test.describe('Smoke Tests', () => {
   test('displays RediAI status', async ({ page }) => {
     await page.goto('/');
     
-    // Wait for the RediAI status to load
-    const rediStatus = page.getByTestId('redi-status');
+    // Wait for the RediAI status to load using data-testid
+    const rediStatus = page.getByTestId('sys:redi-status');
     await expect(rediStatus).toBeVisible();
     
     // Should show some status (healthy or down)
@@ -37,9 +46,11 @@ test.describe('Smoke Tests', () => {
     // Wait for loading to complete
     await page.waitForTimeout(1000);
     
-    // Should have status cards
-    const statusCards = page.locator('.status-card');
-    await expect(statusCards).toHaveCount(2);
+    // Should have status cards using data-testid
+    const apiCard = page.getByTestId('sys:api-card');
+    const rediCard = page.getByTestId('sys:redi-card');
+    await expect(apiCard).toBeVisible();
+    await expect(rediCard).toBeVisible();
   });
 });
 
@@ -50,36 +61,36 @@ test.describe('Trace Upload and Retrieval', () => {
     // Wait for page to load
     await expect(page.locator('h1')).toContainText('Tunix RT');
     
-    // Find and click "Load Example" button
-    const loadExampleBtn = page.locator('button', { hasText: 'Load Example' });
+    // Click "Load Example" button using data-testid
+    const loadExampleBtn = page.getByTestId('trace:load-example');
     await loadExampleBtn.click();
     
-    // Verify textarea is populated
-    const traceTextarea = page.locator('#trace-json');
+    // Verify textarea is populated using data-testid
+    const traceTextarea = page.getByTestId('trace:json');
     const textareaValue = await traceTextarea.inputValue();
     expect(textareaValue.length).toBeGreaterThan(0);
     expect(textareaValue).toContain('trace_version');
     
-    // Click upload button
-    const uploadBtn = page.locator('button', { hasText: 'Upload' });
+    // Click upload button using data-testid
+    const uploadBtn = page.getByTestId('trace:upload');
     await uploadBtn.click();
     
-    // Wait for success message with trace ID
-    const successMessage = page.locator('.trace-success');
+    // Wait for success message with trace ID using data-testid
+    const successMessage = page.getByTestId('trace:success');
     await expect(successMessage).toBeVisible({ timeout: 5000 });
     await expect(successMessage).toContainText('Trace uploaded with ID:');
     
-    // Click fetch button (use exact match to avoid matching "Fetch & Compare")
-    const fetchBtn = page.getByRole('button', { name: 'Fetch', exact: true });
+    // Click fetch button using data-testid
+    const fetchBtn = page.getByTestId('trace:fetch');
     await fetchBtn.click();
     
-    // Wait for fetched trace to appear
-    const traceResult = page.locator('.trace-result');
+    // Wait for fetched trace to appear using data-testid
+    const traceResult = page.getByTestId('trace:result');
     await expect(traceResult).toBeVisible({ timeout: 5000 });
     
-    // Verify the fetched trace contains expected data
-    const resultPre = traceResult.locator('pre');
-    const resultText = await resultPre.textContent();
+    // Verify the fetched trace contains expected data using data-testid
+    const resultContent = page.getByTestId('trace:result-content');
+    const resultText = await resultContent.textContent();
     expect(resultText).toContain('payload');
     expect(resultText).toContain('Convert 68°F to Celsius');
     expect(resultText).toContain('20°C');
@@ -93,8 +104,8 @@ test.describe('Trace Comparison and Evaluation', () => {
     // Wait for page to load
     await expect(page.locator('h1')).toContainText('Tunix RT');
     
-    // Create first trace (simple)
-    const traceTextarea = page.locator('#trace-json');
+    // Create first trace (simple) using data-testid
+    const traceTextarea = page.getByTestId('trace:json');
     const simpleTrace = JSON.stringify({
       trace_version: '1.0',
       prompt: 'What is 2 + 2?',
@@ -107,11 +118,11 @@ test.describe('Trace Comparison and Evaluation', () => {
     
     await traceTextarea.fill(simpleTrace);
     
-    const uploadBtn = page.locator('button', { hasText: 'Upload' });
+    const uploadBtn = page.getByTestId('trace:upload');
     await uploadBtn.click();
     
-    // Wait for success and extract first trace ID
-    const successMessage = page.locator('.trace-success');
+    // Wait for success and extract first trace ID using data-testid
+    const successMessage = page.getByTestId('trace:success');
     await expect(successMessage).toBeVisible({ timeout: 5000 });
     const firstSuccessText = await successMessage.textContent();
     const firstTraceId = firstSuccessText?.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?.[0];
@@ -136,10 +147,10 @@ test.describe('Trace Comparison and Evaluation', () => {
     
     // Wait for success message to update with NEW trace ID (not the first one)
     await expect(successMessage).toBeVisible({ timeout: 5000 });
-    // Wait for the trace ID to change from the first one
+    // Wait for the trace ID to change from the first one using data-testid
     await page.waitForFunction(
       (oldId) => {
-        const elem = document.querySelector('.trace-success');
+        const elem = document.querySelector('[data-testid="trace:success"]');
         return elem && elem.textContent && !elem.textContent.includes(oldId);
       },
       firstTraceId,
@@ -151,46 +162,55 @@ test.describe('Trace Comparison and Evaluation', () => {
     expect(secondTraceId).toBeTruthy();
     expect(secondTraceId).not.toBe(firstTraceId);
     
-    // Now perform comparison
-    const baseTraceInput = page.locator('#base-trace-id');
-    const otherTraceInput = page.locator('#other-trace-id');
+    // Now perform comparison using data-testid
+    const baseTraceInput = page.getByTestId('compare:base-id');
+    const otherTraceInput = page.getByTestId('compare:other-id');
     
     await baseTraceInput.fill(firstTraceId!);
     await otherTraceInput.fill(secondTraceId!);
     
-    const compareBtn = page.locator('button', { hasText: 'Fetch & Compare' });
+    const compareBtn = page.getByTestId('compare:submit');
     await compareBtn.click();
     
-    // Wait for comparison result
-    const comparisonResult = page.locator('.comparison-result');
+    // Wait for comparison result using data-testid
+    const comparisonResult = page.getByTestId('compare:result');
     await expect(comparisonResult).toBeVisible({ timeout: 5000 });
     
-    // Verify side-by-side columns exist
-    const columns = page.locator('.comparison-column');
-    await expect(columns).toHaveCount(2);
+    // Verify side-by-side columns exist using data-testid
+    const baseColumn = page.getByTestId('compare:base-column');
+    const otherColumn = page.getByTestId('compare:other-column');
+    await expect(baseColumn).toBeVisible();
+    await expect(otherColumn).toBeVisible();
     
-    // Verify both traces are displayed (use role-based selectors to avoid label collision)
+    // Verify both traces are displayed using role-based selectors
     await expect(page.getByRole('heading', { name: 'Base Trace' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Other Trace' })).toBeVisible();
     
-    // Verify scores are displayed
-    const traceScores = page.locator('.trace-score');
-    await expect(traceScores).toHaveCount(2);
+    // Verify scores are displayed using data-testid
+    const baseScore = page.getByTestId('compare:base-score');
+    const otherScore = page.getByTestId('compare:other-score');
+    await expect(baseScore).toBeVisible();
+    await expect(otherScore).toBeVisible();
     
     // Verify the simple trace has lower score than complex trace
     // (simple has 1 step, complex has 4 steps)
-    const scoreTexts = await traceScores.allTextContents();
-    const baseScore = parseFloat(scoreTexts[0].match(/[\d.]+/)?.[0] || '0');
-    const otherScore = parseFloat(scoreTexts[1].match(/[\d.]+/)?.[0] || '0');
-    expect(otherScore).toBeGreaterThan(baseScore);
+    const baseScoreText = await baseScore.textContent();
+    const otherScoreText = await otherScore.textContent();
+    const baseScoreValue = parseFloat(baseScoreText?.match(/[\d.]+/)?.[0] || '0');
+    const otherScoreValue = parseFloat(otherScoreText?.match(/[\d.]+/)?.[0] || '0');
+    expect(otherScoreValue).toBeGreaterThan(baseScoreValue);
     
-    // Verify trace content is displayed (scope to comparison-result to avoid textarea collision)
-    await expect(page.locator('.comparison-result').getByText('What is 2 + 2?')).toBeVisible();
-    await expect(page.locator('.comparison-result').getByText('Explain the process of photosynthesis in plants')).toBeVisible();
+    // Verify trace content is displayed using data-testid (no text collision)
+    const basePrompt = page.getByTestId('compare:base-prompt');
+    const otherPrompt = page.getByTestId('compare:other-prompt');
+    await expect(basePrompt).toContainText('What is 2 + 2?');
+    await expect(otherPrompt).toContainText('Explain the process of photosynthesis in plants');
     
-    // Verify steps are listed (scope to comparison-result to avoid textarea collision)
-    await expect(page.locator('.comparison-result').getByText('Add 2 and 2')).toBeVisible();
-    await expect(page.locator('.comparison-result').getByText('Light energy is absorbed by chlorophyll in the chloroplasts')).toBeVisible();
+    // Verify steps are listed using data-testid (no text collision)
+    const baseSteps = page.getByTestId('compare:base-steps');
+    const otherSteps = page.getByTestId('compare:other-steps');
+    await expect(baseSteps).toContainText('Add 2 and 2');
+    await expect(otherSteps).toContainText('Light energy is absorbed by chlorophyll in the chloroplasts');
   });
 });
 

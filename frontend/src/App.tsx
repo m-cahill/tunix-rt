@@ -154,87 +154,89 @@ function App() {
       <h1>Tunix RT</h1>
       <p>Reasoning-Trace Framework with RediAI Integration</p>
 
-      <div className={`status-card ${getStatusClass(apiHealth?.status)}`}>
+      <div className={`status-card ${getStatusClass(apiHealth?.status)}`} data-testid="sys:api-card">
         <h2>API Status</h2>
         {loading ? (
           <p>Loading...</p>
         ) : (
           <>
-            <p data-testid="api-status">
+            <p data-testid="sys:api-status">
               API: {apiHealth?.status || 'unknown'}
             </p>
           </>
         )}
       </div>
 
-      <div className={`status-card ${getStatusClass(rediHealth?.status)}`}>
+      <div className={`status-card ${getStatusClass(rediHealth?.status)}`} data-testid="sys:redi-card">
         <h2>RediAI Integration</h2>
         {loading ? (
           <p>Loading...</p>
         ) : (
           <>
-            <p data-testid="redi-status">
+            <p data-testid="sys:redi-status">
               RediAI: {rediHealth?.status || 'unknown'}
             </p>
-            {rediHealth?.error && <p>Error: {rediHealth.error}</p>}
+            {rediHealth?.error && <p data-testid="sys:redi-error">Error: {rediHealth.error}</p>}
           </>
         )}
       </div>
 
-      <div className="trace-section">
+      <div className="trace-section" data-testid="trace:section">
         <h2>Reasoning Traces</h2>
         
-        <div className="trace-input">
+        <div className="trace-input" data-testid="trace:input-container">
           <label htmlFor="trace-json">Trace JSON:</label>
           <textarea
             id="trace-json"
+            data-testid="trace:json"
             value={traceInput}
             onChange={(e) => setTraceInput(e.target.value)}
             placeholder="Enter trace JSON here or click 'Load Example'"
             rows={10}
           />
           
-          <div className="trace-actions">
-            <button onClick={handleLoadExample} disabled={traceLoading}>
+          <div className="trace-actions" data-testid="trace:actions">
+            <button data-testid="trace:load-example" onClick={handleLoadExample} disabled={traceLoading}>
               Load Example
             </button>
-            <button onClick={handleUpload} disabled={traceLoading || !traceInput}>
+            <button data-testid="trace:upload" onClick={handleUpload} disabled={traceLoading || !traceInput}>
               Upload
             </button>
-            <button onClick={handleFetch} disabled={traceLoading || !uploadedTraceId}>
+            <button data-testid="trace:fetch" onClick={handleFetch} disabled={traceLoading || !uploadedTraceId}>
               Fetch
             </button>
           </div>
         </div>
 
         {traceError && (
-          <div className="trace-error">
+          <div className="trace-error" data-testid="trace:error">
             <strong>Error:</strong> {traceError}
           </div>
         )}
 
         {uploadedTraceId && !traceError && (
-          <div className="trace-success">
+          <div className="trace-success" data-testid="trace:success">
             <strong>Success!</strong> Trace uploaded with ID: {uploadedTraceId}
           </div>
         )}
 
         {fetchedTrace && (
-          <div className="trace-result">
+          <div className="trace-result" data-testid="trace:result">
             <h3>Fetched Trace</h3>
-            <pre>{JSON.stringify(fetchedTrace, null, 2)}</pre>
+            <pre data-testid="trace:result-content">{JSON.stringify(fetchedTrace, null, 2)}</pre>
           </div>
         )}
       </div>
 
-      <div className="evaluation-section">
+      <div className="evaluation-section" data-testid="compare:section">
         <h2>Evaluate Traces</h2>
         
-        <div className="comparison-input">
+        <div className="comparison-input" data-testid="compare:input-container">
           <div className="input-group">
             <label htmlFor="base-trace-id">Base Trace ID:</label>
             <input
               id="base-trace-id"
+              data-testid="compare:base-id"
               type="text"
               value={baseTraceId}
               onChange={(e) => setBaseTraceId(e.target.value)}
@@ -246,6 +248,7 @@ function App() {
             <label htmlFor="other-trace-id">Other Trace ID:</label>
             <input
               id="other-trace-id"
+              data-testid="compare:other-id"
               type="text"
               value={otherTraceId}
               onChange={(e) => setOtherTraceId(e.target.value)}
@@ -254,6 +257,7 @@ function App() {
           </div>
           
           <button 
+            data-testid="compare:submit"
             onClick={handleCompare} 
             disabled={compareLoading || !baseTraceId || !otherTraceId}
           >
@@ -262,17 +266,17 @@ function App() {
         </div>
 
         {compareError && (
-          <div className="trace-error">
+          <div className="trace-error" data-testid="compare:error">
             <strong>Error:</strong> {compareError}
           </div>
         )}
 
         {compareResult && (
-          <div className="comparison-result">
-            <div className="comparison-columns">
-              <div className="comparison-column">
+          <div className="comparison-result" data-testid="compare:result">
+            <div className="comparison-columns" data-testid="compare:columns">
+              <div className="comparison-column" data-testid="compare:base-column">
                 <h3>Base Trace</h3>
-                <div className="trace-score">
+                <div className="trace-score" data-testid="compare:base-score">
                   <strong>Score:</strong> {compareResult.base.score.toFixed(2)}
                 </div>
                 <div className="trace-metadata">
@@ -280,15 +284,15 @@ function App() {
                   <p><strong>Created:</strong> {new Date(compareResult.base.created_at).toLocaleString()}</p>
                   <p><strong>Version:</strong> {compareResult.base.trace_version}</p>
                 </div>
-                <div className="trace-content">
+                <div className="trace-content" data-testid="compare:base-content">
                   <h4>Prompt:</h4>
-                  <p>{compareResult.base.payload.prompt}</p>
+                  <p data-testid="compare:base-prompt">{compareResult.base.payload.prompt}</p>
                   <h4>Final Answer:</h4>
-                  <p>{compareResult.base.payload.final_answer}</p>
+                  <p data-testid="compare:base-answer">{compareResult.base.payload.final_answer}</p>
                   <h4>Steps:</h4>
-                  <ul>
+                  <ul data-testid="compare:base-steps">
                     {compareResult.base.payload.steps.map((step) => (
-                      <li key={step.i}>
+                      <li key={step.i} data-testid={`compare:base-step-${step.i}`}>
                         <strong>{step.type}:</strong> {step.content}
                       </li>
                     ))}
@@ -296,9 +300,9 @@ function App() {
                 </div>
               </div>
 
-              <div className="comparison-column">
+              <div className="comparison-column" data-testid="compare:other-column">
                 <h3>Other Trace</h3>
-                <div className="trace-score">
+                <div className="trace-score" data-testid="compare:other-score">
                   <strong>Score:</strong> {compareResult.other.score.toFixed(2)}
                 </div>
                 <div className="trace-metadata">
@@ -306,15 +310,15 @@ function App() {
                   <p><strong>Created:</strong> {new Date(compareResult.other.created_at).toLocaleString()}</p>
                   <p><strong>Version:</strong> {compareResult.other.trace_version}</p>
                 </div>
-                <div className="trace-content">
+                <div className="trace-content" data-testid="compare:other-content">
                   <h4>Prompt:</h4>
-                  <p>{compareResult.other.payload.prompt}</p>
+                  <p data-testid="compare:other-prompt">{compareResult.other.payload.prompt}</p>
                   <h4>Final Answer:</h4>
-                  <p>{compareResult.other.payload.final_answer}</p>
+                  <p data-testid="compare:other-answer">{compareResult.other.payload.final_answer}</p>
                   <h4>Steps:</h4>
-                  <ul>
+                  <ul data-testid="compare:other-steps">
                     {compareResult.other.payload.steps.map((step) => (
-                      <li key={step.i}>
+                      <li key={step.i} data-testid={`compare:other-step-${step.i}`}>
                         <strong>{step.type}:</strong> {step.content}
                       </li>
                     ))}

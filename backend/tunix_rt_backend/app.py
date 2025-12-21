@@ -11,6 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from tunix_rt_backend.db.base import get_db
 from tunix_rt_backend.db.models import Score, Trace
+from tunix_rt_backend.helpers.traces import get_trace_or_404
 from tunix_rt_backend.redi_client import MockRediClient, RediClient, RediClientProtocol
 from tunix_rt_backend.schemas import (
     CompareResponse,
@@ -180,35 +181,9 @@ async def compare_traces(
     Raises:
         HTTPException: 404 if either trace not found
     """
-    # Fetch both traces
-    result = await db.execute(select(Trace).where(Trace.id.in_([base, other])))
-    db_traces = {trace.id: trace for trace in result.scalars().all()}
-
-    # Validate both traces exist (with explicit branch flags for coverage)
-    base_exists = False
-    other_exists = False
-
-    if base not in db_traces:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Base trace {base} not found",
-        )
-    else:
-        base_exists = True
-
-    if other not in db_traces:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Other trace {other} not found",
-        )
-    else:
-        other_exists = True
-
-    # Verify both validations succeeded
-    assert base_exists and other_exists
-
-    base_trace = db_traces[base]
-    other_trace = db_traces[other]
+    # Fetch both traces using helper with labels for clear error messages
+    base_trace = await get_trace_or_404(db, base, label="Base")
+    other_trace = await get_trace_or_404(db, other, label="Other")
 
     # Parse trace payloads
     base_payload = ReasoningTrace(**base_trace.payload)
@@ -254,20 +229,7 @@ async def get_trace(
     Raises:
         HTTPException: 404 if trace not found
     """
-    result = await db.execute(select(Trace).where(Trace.id == trace_id))
-    db_trace = result.scalar_one_or_none()
-
-    # Validation with explicit branch flag for coverage
-    trace_found = False
-    if db_trace is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Trace with id {trace_id} not found",
-        )
-    else:
-        trace_found = True
-
-    assert trace_found
+    db_trace = await get_trace_or_404(db, trace_id)
 
     return TraceDetail(
         id=db_trace.id,
@@ -366,16 +328,8 @@ async def score_trace(
     Raises:
         HTTPException: 404 if trace not found
     """
-    # Fetch the trace
-    result = await db.execute(select(Trace).where(Trace.id == trace_id))
-    db_trace = result.scalar_one_or_none()
-
-    if db_trace is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Trace with id {trace_id} not found",
-        )
-    # Trace exists - continue
+    # Fetch the trace using helper
+    db_trace = await get_trace_or_404(db, trace_id)
 
     # Parse the trace payload
     trace = ReasoningTrace(**db_trace.payload)

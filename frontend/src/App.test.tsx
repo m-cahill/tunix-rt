@@ -31,7 +31,7 @@ describe('App', () => {
     render(<App />)
 
     await waitFor(() => {
-      expect(screen.getByTestId('api-status')).toHaveTextContent('API: healthy')
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
     })
   })
 
@@ -49,7 +49,7 @@ describe('App', () => {
     render(<App />)
 
     await waitFor(() => {
-      expect(screen.getByTestId('redi-status')).toHaveTextContent('RediAI: healthy')
+      expect(screen.getByTestId('sys:redi-status')).toHaveTextContent('RediAI: healthy')
     })
   })
 
@@ -67,7 +67,7 @@ describe('App', () => {
     render(<App />)
 
     await waitFor(() => {
-      const rediStatus = screen.getByTestId('redi-status')
+      const rediStatus = screen.getByTestId('sys:redi-status')
       expect(rediStatus).toHaveTextContent('RediAI: down')
       expect(screen.getByText(/Connection refused/)).toBeInTheDocument()
     })
@@ -81,8 +81,8 @@ describe('App', () => {
     render(<App />)
 
     await waitFor(() => {
-      expect(screen.getByTestId('api-status')).toHaveTextContent('API: down')
-      expect(screen.getByTestId('redi-status')).toHaveTextContent('RediAI: down')
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: down')
+      expect(screen.getByTestId('sys:redi-status')).toHaveTextContent('RediAI: down')
     })
   })
 

@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M5 Complete** ✅  
-**Coverage:** 89% Line, 79% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic | **Features:** Trace Evaluation & Comparison
+**Milestone M6 Complete** ✅  
+**Coverage:** 90% Line, 88% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic | **Features:** Trace Evaluation, Comparison & Validation Helpers
 
 ## Overview
 
@@ -758,12 +758,24 @@ docs: update README
 - E2E test for complete comparison flow with two distinct traces
 - API documentation in README.md and tunix-rt.md
 
-## Next Steps (M6+)
+### M6: Validation Refactor & CI Stability Hardening ✅
+- Validation helper extraction (`get_trace_or_404`) with optional label parameter
+- Centralized validation logic (eliminated 3 instances of duplication)
+- Removed synthetic branch flags (coverage workarounds)
+- Coverage improvements: 90% line (+1%), 88% branch (+9%)
+- E2E selector hardening with data-testid convention (`sys:*`, `trace:*`, `compare:*`)
+- All text-based selectors replaced with getByTestId (no global text matching)
+- 3 new helper unit tests (100% coverage)
+- Comprehensive guardrails documentation (validation + selector rules)
+- Frontend tests updated to use new naming convention (11/11 passing)
+- Backend: 56 tests passing | Frontend: 11 tests passing
 
-1. **M6**: LLM-based judge scoring integration
-2. **M7**: Trace optimization and recommendations
-3. **M8**: Historical performance dashboard
-4. **M9**: Production deployment (Netlify + Render)
+## Next Steps (M7+)
+
+1. **M7**: UNGAR integration (on solid foundation)
+2. **M8**: LLM-based judge scoring integration
+3. **M9**: Trace optimization and recommendations
+4. **M10**: Production deployment (Netlify + Render)
 
 ## Architecture Decisions
 
