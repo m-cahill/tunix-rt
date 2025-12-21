@@ -26,8 +26,8 @@ jobs:
         id: filter
         with:
           token: ''
-          base: ${{ github.event.pull_request.base.sha || github.event.before || 'HEAD' }}
-          ref: ${{ github.event.pull_request.head.sha || 'HEAD' }}
+          base: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           filters: |
             backend:
               - 'backend/**'
