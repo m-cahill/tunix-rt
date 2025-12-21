@@ -32,6 +32,22 @@ test-e2e:  ## Run E2E tests (mock mode)
 test-e2e-real:  ## Run E2E tests (real mode, requires RediAI)
 	cd e2e && REDIAI_MODE=real npx playwright test
 
+# M4: Local E2E with full infrastructure
+e2e:  ## Run E2E tests with full setup (postgres + migrations + playwright)
+	@echo "Starting Postgres..."
+	docker compose up -d postgres
+	@echo "Waiting for Postgres to be ready..."
+	@timeout 30 sh -c 'until docker compose exec -T postgres pg_isready -U postgres; do sleep 1; done' || (echo "Postgres failed to start" && exit 1)
+	@echo "Running migrations..."
+	cd backend && alembic upgrade head
+	@echo "Running E2E tests (Playwright will start backend + frontend)..."
+	cd e2e && REDIAI_MODE=mock npx playwright test
+	@echo "E2E tests complete. Postgres left running for iteration. Use 'make e2e-down' to stop."
+
+e2e-down:  ## Stop E2E infrastructure (postgres)
+	@echo "Stopping Postgres..."
+	docker compose down
+
 # Linting and formatting targets
 lint: lint-backend  ## Run all linters
 

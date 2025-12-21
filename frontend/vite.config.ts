@@ -8,7 +8,8 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        // M4: Use 127.0.0.1 (IPv4) to match backend binding and avoid IPv6 issues
+        target: 'http://127.0.0.1:8000',
         changeOrigin: true,
       },
     },

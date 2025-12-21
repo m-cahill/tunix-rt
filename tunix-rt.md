@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M3 Complete** ✅  
-**Coverage:** 92% Line, 90% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic + Optimized
+**Milestone M4 Complete** ✅  
+**Coverage:** 92% Line, 90% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic + Optimized | **E2E:** Deterministic & Green
 
 ## Overview
 
@@ -328,6 +328,16 @@ npm run dev
 
 ### E2E Tests
 
+**Quick Start (M4+):**
+```bash
+# Run E2E with full infrastructure setup
+make e2e
+
+# Stop infrastructure when done
+make e2e-down
+```
+
+**Manual:**
 ```bash
 cd e2e
 npm ci
@@ -338,6 +348,12 @@ REDIAI_MODE=mock npx playwright test
 # Real mode (requires RediAI)
 REDIAI_MODE=real REDIAI_BASE_URL=http://localhost:8080 npx playwright test
 ```
+
+**M4 Changes:**
+- All servers bind to `127.0.0.1` (IPv4) to avoid IPv6 connection issues
+- CI includes Postgres service container + automated migrations
+- Playwright config supports environment variables for port configuration
+- `make e2e` handles full lifecycle (DB setup → migrations → tests)
 
 ### Docker Compose
 
@@ -600,12 +616,24 @@ docs: update README
 - DB troubleshooting guide added to README (docker compose, psql, alembic commands)
 - All tests passing: Backend 92% line/90% branch, Frontend 8/8 tests
 
-## Next Steps (M4+)
+## Completed Milestones
 
-1. **M4**: Trace analysis and quality scoring
-2. **M5**: RediAI workflow registry integration
-3. **M6**: Trace optimization and recommendations
-4. **M7**: Production deployment (Netlify + Render)
+### M4: E2E Infrastructure Hardening ✅
+- IPv4 (127.0.0.1) standardization across all services
+- Postgres service container in CI with healthcheck
+- Automated migrations before E2E tests
+- Cross-platform Playwright webServer configuration
+- Reduced retries from 2 to 1 (no flakiness masking)
+- Local `make e2e` target for full lifecycle testing
+- All 5 E2E tests passing (including trace upload/fetch)
+- CORS support for both localhost and 127.0.0.1
+
+## Next Steps (M5+)
+
+1. **M5**: Trace analysis and quality scoring
+2. **M6**: RediAI workflow registry integration
+3. **M7**: Trace optimization and recommendations
+4. **M8**: Production deployment (Netlify + Render)
 
 ## Architecture Decisions
 

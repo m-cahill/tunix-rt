@@ -65,6 +65,24 @@ npm run dev
 
 ### E2E Tests
 
+**Quick Start (Recommended - M4+):**
+
+```bash
+# Run E2E with full infrastructure (one command)
+make e2e
+
+# Stop infrastructure when done
+make e2e-down
+```
+
+This will:
+1. Start Postgres in Docker
+2. Run database migrations
+3. Run Playwright tests (automatically starts backend + frontend)
+4. Leave Postgres running for iteration
+
+**Manual Setup:**
+
 ```bash
 cd e2e
 npm ci
@@ -75,6 +93,10 @@ REDIAI_MODE=mock npx playwright test
 # Run with real RediAI (requires RediAI running)
 REDIAI_MODE=real REDIAI_BASE_URL=http://localhost:8080 npx playwright test
 ```
+
+**Notes:**
+- E2E tests now use `127.0.0.1` instead of `localhost` to avoid IPv6 connection issues
+- If you have a local Postgres on port 5432, temporarily change `docker-compose.yml` to use `5433:5432` and set `DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5433/postgres`
 
 ### Docker Compose
 

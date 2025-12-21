@@ -29,9 +29,15 @@ app = FastAPI(
 )
 
 # CORS middleware for frontend integration
+# M4: Allow both localhost and 127.0.0.1 for dev (5173) and preview (4173) modes
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Vite dev server
+    allow_origins=[
+        "http://localhost:5173",  # Vite dev server (DNS)
+        "http://127.0.0.1:5173",  # Vite dev server (IPv4)
+        "http://localhost:4173",  # Vite preview (DNS)
+        "http://127.0.0.1:4173",  # Vite preview (IPv4)
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
