@@ -2,7 +2,7 @@
 
 **Tunix Reasoning-Trace Framework for AI-Native Development**
 
-**Status:** M4 Complete ✅ | Coverage: 89% Line, 79% Branch | E2E: Deterministic & Green | Database: PostgreSQL + Alembic
+**Status:** M5 Complete ✅ | Coverage: 89% Line, 79% Branch | Features: Trace Evaluation & Comparison | Database: PostgreSQL + Alembic
 
 A full-stack application for managing reasoning traces and integrating with the RediAI framework for the Tunix Hackathon.
 
@@ -250,6 +250,39 @@ curl "http://localhost:8000/api/traces?limit=10&offset=20"
 ```
 
 Response: `{"data": [...], "pagination": {"limit": 20, "offset": 0, "next_offset": 20}}`
+
+**Score a trace:**
+
+```bash
+# Score a trace using baseline criteria
+curl -X POST http://localhost:8000/api/traces/550e8400-e29b-41d4-a716-446655440000/score \
+  -H "Content-Type: application/json" \
+  -d '{"criteria": "baseline"}'
+```
+
+Response: 
+```json
+{
+  "trace_id": "550e8400-...",
+  "score": 67.5,
+  "details": {
+    "step_count": 5,
+    "avg_step_length": 342.5,
+    "step_score": 25.0,
+    "length_score": 34.25,
+    "criteria": "baseline"
+  }
+}
+```
+
+**Compare two traces:**
+
+```bash
+# Compare two traces side-by-side with scores
+curl "http://localhost:8000/api/traces/compare?base=550e8400-e29b-41d4-a716-446655440000&other=660f9500-f39c-52e5-b827-557766551111"
+```
+
+Response: Both traces with full payloads and computed scores
 
 ## Project Structure
 

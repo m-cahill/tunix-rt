@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M4 Complete** ✅  
-**Coverage:** 89% Line, 79% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic + Optimized | **E2E:** Deterministic & Green
+**Milestone M5 Complete** ✅  
+**Coverage:** 89% Line, 79% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic | **Features:** Trace Evaluation & Comparison
 
 ## Overview
 
@@ -207,6 +207,101 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 
 ---
 
+### Scoring Endpoints (M5)
+
+#### `POST /api/traces/{id}/score`
+
+**Description:** Score a trace using specified criteria
+
+**Request Body:**
+```json
+{
+  "criteria": "baseline"
+}
+```
+
+**Response:**
+```json
+{
+  "trace_id": "550e8400-e29b-41d4-a716-446655440000",
+  "score": 67.5,
+  "details": {
+    "step_count": 5,
+    "avg_step_length": 342.5,
+    "total_chars": 1712,
+    "step_score": 25.0,
+    "length_score": 34.25,
+    "criteria": "baseline",
+    "scored_at": "2025-12-21T10:30:00Z"
+  }
+}
+```
+
+**Status Codes:**
+- `201 Created`: Score computed and stored successfully
+- `404 Not Found`: Trace with given ID doesn't exist
+
+**Scoring Logic (Baseline):**
+- **Score range:** 0-100
+- **Step score (0-50):** Rewards having 1-10 steps (ideal range)
+- **Length score (0-50):** Rewards average step length of 100-500 chars (ideal range)
+- **Formula:** `step_score = min(step_count / 10, 1.0) * 50`  
+  `length_score = min(avg_step_length / 500, 1.0) * 50`
+
+---
+
+#### `GET /api/traces/compare?base=ID1&other=ID2`
+
+**Description:** Compare two traces side-by-side with scores
+
+**Query Parameters:**
+- `base` (required): UUID of the base trace
+- `other` (required): UUID of the other trace
+
+**Response:**
+```json
+{
+  "base": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "created_at": "2025-12-21T10:30:00Z",
+    "score": 25.5,
+    "trace_version": "1.0",
+    "payload": {
+      "trace_version": "1.0",
+      "prompt": "Simple task",
+      "final_answer": "Simple answer",
+      "steps": [
+        {"i": 0, "type": "think", "content": "Short reasoning"}
+      ]
+    }
+  },
+  "other": {
+    "id": "660f9500-f39c-52e5-b827-557766551111",
+    "created_at": "2025-12-21T10:35:00Z",
+    "score": 75.8,
+    "trace_version": "1.0",
+    "payload": {
+      "trace_version": "1.0",
+      "prompt": "Complex task",
+      "final_answer": "Detailed answer",
+      "steps": [
+        {"i": 0, "type": "analyze", "content": "Deep analysis"},
+        {"i": 1, "type": "compute", "content": "Complex computation"},
+        {"i": 2, "type": "verify", "content": "Verification step"}
+      ]
+    }
+  }
+}
+```
+
+**Status Codes:**
+- `200 OK`: Comparison successful
+- `404 Not Found`: One or both traces don't exist
+
+**Note:** Scores are computed on-the-fly using the baseline scorer for each comparison request.
+
+---
+
 ## Database Schema
 
 ### M2 Schema
@@ -224,6 +319,27 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - Primary key on `id` (automatic)
 - Index `ix_traces_created_at` on `created_at` for list pagination performance (M3)
 
+### M5 Schema
+
+**Table: `scores`**
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| `id` | UUID | PRIMARY KEY | Score unique identifier |
+| `trace_id` | UUID | FK → traces.id (CASCADE) | Associated trace |
+| `criteria` | VARCHAR(64) | NOT NULL | Scoring criteria (e.g., 'baseline') |
+| `score` | FLOAT | NOT NULL | Numeric score value (0-100 for baseline) |
+| `details` | JSON | NULLABLE | Detailed scoring breakdown |
+| `created_at` | TIMESTAMPTZ | NOT NULL | Score creation timestamp (UTC) |
+
+**Indexes:**
+- Primary key on `id` (automatic)
+- Index `ix_scores_trace_id` on `trace_id` for trace-based lookups
+- Index `ix_scores_criteria` on `criteria` for criteria-based filtering
+
+**Relationships:**
+- `scores.trace_id` → `traces.id` (CASCADE on delete)
+
 **Migrations:**
 - Managed by Alembic (async mode)
 - Migration files in `backend/alembic/versions/`
@@ -232,8 +348,11 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **Migration Policy (M3):**
 - **DO NOT** manually set revision IDs; use Alembic-generated UUIDs
 - Create new migrations: `alembic revision -m "description"`
-- Alembic will auto-generate a unique revision ID (e.g., `f8f1393630e4`)
+- Alembic will auto-generate a unique revision ID (e.g., `f8f1393630e4`, `f3cc010ca8a6`)
 - Existing migration `001` is grandfathered; all future migrations use auto-generated IDs
+
+**M5 Migrations:**
+- `f3cc010ca8a6_add_scores_table.py` - Creates scores table with FK to traces
 
 ## Configuration
 
@@ -628,12 +747,23 @@ docs: update README
 - All 5 E2E tests passing (including trace upload/fetch)
 - CORS support for both localhost and 127.0.0.1
 
-## Next Steps (M5+)
+### M5: Evaluation & Comparison Loop (Phase 1) ✅
+- Baseline scoring logic (0-100 range based on step count + average length)
+- `POST /api/traces/{id}/score` endpoint with 201 Created response
+- `GET /api/traces/compare` endpoint for side-by-side comparison
+- Scores table with FK to traces (cascade delete)
+- Frontend comparison UI with side-by-side layout
+- 12 backend tests for scoring logic and endpoints (all passing)
+- 3 new frontend tests for comparison UI (11 total)
+- E2E test for complete comparison flow with two distinct traces
+- API documentation in README.md and tunix-rt.md
 
-1. **M5**: Trace analysis and quality scoring
-2. **M6**: RediAI workflow registry integration
-3. **M7**: Trace optimization and recommendations
-4. **M8**: Production deployment (Netlify + Render)
+## Next Steps (M6+)
+
+1. **M6**: LLM-based judge scoring integration
+2. **M7**: Trace optimization and recommendations
+3. **M8**: Historical performance dashboard
+4. **M9**: Production deployment (Netlify + Render)
 
 ## Architecture Decisions
 

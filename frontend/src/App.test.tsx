@@ -217,5 +217,146 @@ describe('App', () => {
       expect(preElement.textContent).toContain('Convert 68°F to Celsius')
     })
   })
+
+  it('compares two traces successfully and displays side-by-side', async () => {
+    const user = userEvent.setup()
+    const baseTraceId = '550e8400-e29b-41d4-a716-446655440000'
+    const otherTraceId = '660f9500-f39c-52e5-b827-557766551111'
+    
+    const mockCompareResponse = {
+      base: {
+        id: baseTraceId,
+        created_at: '2025-12-21T10:30:00Z',
+        score: 25.5,
+        trace_version: '1.0',
+        payload: {
+          trace_version: '1.0',
+          prompt: 'Simple task',
+          final_answer: 'Simple answer',
+          steps: [
+            { i: 0, type: 'think', content: 'Short reasoning' },
+          ],
+        },
+      },
+      other: {
+        id: otherTraceId,
+        created_at: '2025-12-21T10:35:00Z',
+        score: 75.8,
+        trace_version: '1.0',
+        payload: {
+          trace_version: '1.0',
+          prompt: 'Complex task requiring detailed reasoning',
+          final_answer: 'Detailed answer with extensive explanation',
+          steps: [
+            { i: 0, type: 'analyze', content: 'Deep analysis step' },
+            { i: 1, type: 'compute', content: 'Complex computation' },
+            { i: 2, type: 'verify', content: 'Verification step' },
+          ],
+        },
+      },
+    }
+
+    // Mock health checks + compare
+    ;(global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockCompareResponse,
+      })
+
+    render(<App />)
+
+    // Fill in trace IDs
+    const baseInput = screen.getByPlaceholderText(/Enter base trace UUID/i) as HTMLInputElement
+    const otherInput = screen.getByPlaceholderText(/Enter other trace UUID/i) as HTMLInputElement
+    
+    await user.type(baseInput, baseTraceId)
+    await user.type(otherInput, otherTraceId)
+
+    // Click compare
+    const compareButton = screen.getByText('Fetch & Compare')
+    await user.click(compareButton)
+
+    await waitFor(() => {
+      // Check that both traces are displayed
+      expect(screen.getByText('Base Trace')).toBeInTheDocument()
+      expect(screen.getByText('Other Trace')).toBeInTheDocument()
+      
+      // Check scores are displayed
+      expect(screen.getByText(/25.50/)).toBeInTheDocument()
+      expect(screen.getByText(/75.80/)).toBeInTheDocument()
+      
+      // Check prompts are displayed
+      expect(screen.getByText('Simple task')).toBeInTheDocument()
+      expect(screen.getByText('Complex task requiring detailed reasoning')).toBeInTheDocument()
+      
+      // Check steps are displayed
+      expect(screen.getByText(/Short reasoning/)).toBeInTheDocument()
+      expect(screen.getByText(/Deep analysis step/)).toBeInTheDocument()
+    })
+  })
+
+  it('displays error when comparison fails', async () => {
+    const user = userEvent.setup()
+    const baseTraceId = '550e8400-e29b-41d4-a716-446655440000'
+    const otherTraceId = 'invalid-uuid'
+
+    // Mock health checks + failed compare
+    ;(global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+        statusText: 'Not Found',
+        json: async () => ({ detail: 'Base trace not found' }),
+      })
+
+    render(<App />)
+
+    const baseInput = screen.getByPlaceholderText(/Enter base trace UUID/i) as HTMLInputElement
+    const otherInput = screen.getByPlaceholderText(/Enter other trace UUID/i) as HTMLInputElement
+    
+    await user.type(baseInput, baseTraceId)
+    await user.type(otherInput, otherTraceId)
+
+    const compareButton = screen.getByText('Fetch & Compare')
+    await user.click(compareButton)
+
+    await waitFor(() => {
+      expect(screen.getByText(/Compare failed/i)).toBeInTheDocument()
+    })
+  })
+
+  it('disables compare button when trace IDs are missing', () => {
+    // Mock health checks
+    ;(global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+
+    render(<App />)
+
+    const compareButton = screen.getByText('Fetch & Compare') as HTMLButtonElement
+    expect(compareButton.disabled).toBe(true)
+  })
 })
 

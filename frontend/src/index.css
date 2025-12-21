@@ -153,3 +153,148 @@ h1 {
   line-height: 1.5;
 }
 
+/* Evaluation Section */
+.evaluation-section {
+  margin-top: 3em;
+  padding: 2em;
+  border: 2px solid #9c27b0;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.comparison-input {
+  margin: 1em 0;
+}
+
+.input-group {
+  margin-bottom: 1em;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+.input-group input[type="text"] {
+  width: 100%;
+  padding: 0.75em;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  border: 1px solid #9c27b0;
+  border-radius: 4px;
+  background-color: #1a1a1a;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.comparison-input button {
+  padding: 0.75em 1.5em;
+  border: 1px solid #9c27b0;
+  border-radius: 4px;
+  background-color: #1a1a1a;
+  color: #9c27b0;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 0.5em;
+}
+
+.comparison-input button:hover:not(:disabled) {
+  background-color: #9c27b0;
+  color: white;
+}
+
+.comparison-input button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Side-by-side comparison */
+.comparison-result {
+  margin-top: 2em;
+}
+
+.comparison-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+  margin-top: 1em;
+}
+
+.comparison-column {
+  padding: 1.5em;
+  border: 2px solid #9c27b0;
+  border-radius: 8px;
+  background-color: rgba(156, 39, 176, 0.05);
+}
+
+.comparison-column h3 {
+  margin-top: 0;
+  color: #9c27b0;
+  border-bottom: 2px solid #9c27b0;
+  padding-bottom: 0.5em;
+}
+
+.trace-score {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 1em 0;
+  padding: 0.75em;
+  background-color: rgba(156, 39, 176, 0.15);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.trace-metadata {
+  margin: 1em 0;
+  padding: 1em;
+  background-color: #1a1a1a;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.trace-metadata p {
+  margin: 0.5em 0;
+}
+
+.trace-content {
+  margin-top: 1.5em;
+}
+
+.trace-content h4 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  color: #9c27b0;
+  font-size: 1em;
+}
+
+.trace-content p {
+  margin: 0.5em 0;
+  padding: 0.75em;
+  background-color: #1a1a1a;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.trace-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5em 0;
+}
+
+.trace-content li {
+  padding: 0.75em;
+  margin: 0.5em 0;
+  background-color: #1a1a1a;
+  border-radius: 4px;
+  border-left: 3px solid #9c27b0;
+  font-size: 0.9em;
+}
+
+/* Responsive: stack columns on small screens */
+@media (max-width: 900px) {
+  .comparison-columns {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -4,9 +4,11 @@ import {
   getRediHealth, 
   createTrace,
   getTrace,
+  compareTraces,
   type HealthResponse, 
   type RediHealthResponse,
   type TraceDetail,
+  type CompareResponse,
   ApiError,
 } from './api/client'
 import { EXAMPLE_TRACE } from './exampleTrace'
@@ -22,6 +24,13 @@ function App() {
   const [fetchedTrace, setFetchedTrace] = useState<TraceDetail | null>(null)
   const [traceError, setTraceError] = useState<string | null>(null)
   const [traceLoading, setTraceLoading] = useState(false)
+  
+  // Comparison state
+  const [baseTraceId, setBaseTraceId] = useState('')
+  const [otherTraceId, setOtherTraceId] = useState('')
+  const [compareResult, setCompareResult] = useState<CompareResponse | null>(null)
+  const [compareError, setCompareError] = useState<string | null>(null)
+  const [compareLoading, setCompareLoading] = useState(false)
 
   useEffect(() => {
     const fetchHealth = async () => {
@@ -115,6 +124,31 @@ function App() {
     }
   }
 
+  const handleCompare = async () => {
+    if (!baseTraceId || !otherTraceId) {
+      setCompareError('Both trace IDs are required')
+      return
+    }
+    
+    setCompareError(null)
+    setCompareLoading(true)
+    
+    try {
+      const result = await compareTraces(baseTraceId, otherTraceId)
+      setCompareResult(result)
+      setCompareError(null)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setCompareError(`Compare failed: ${error.message} (${error.status})`)
+      } else {
+        setCompareError('Compare failed: Unknown error')
+      }
+      setCompareResult(null)
+    } finally {
+      setCompareLoading(false)
+    }
+  }
+
   return (
     <div>
       <h1>Tunix RT</h1>
@@ -189,6 +223,105 @@ function App() {
           <div className="trace-result">
             <h3>Fetched Trace</h3>
             <pre>{JSON.stringify(fetchedTrace, null, 2)}</pre>
+          </div>
+        )}
+      </div>
+
+      <div className="evaluation-section">
+        <h2>Evaluate Traces</h2>
+        
+        <div className="comparison-input">
+          <div className="input-group">
+            <label htmlFor="base-trace-id">Base Trace ID:</label>
+            <input
+              id="base-trace-id"
+              type="text"
+              value={baseTraceId}
+              onChange={(e) => setBaseTraceId(e.target.value)}
+              placeholder="Enter base trace UUID"
+            />
+          </div>
+          
+          <div className="input-group">
+            <label htmlFor="other-trace-id">Other Trace ID:</label>
+            <input
+              id="other-trace-id"
+              type="text"
+              value={otherTraceId}
+              onChange={(e) => setOtherTraceId(e.target.value)}
+              placeholder="Enter other trace UUID"
+            />
+          </div>
+          
+          <button 
+            onClick={handleCompare} 
+            disabled={compareLoading || !baseTraceId || !otherTraceId}
+          >
+            Fetch & Compare
+          </button>
+        </div>
+
+        {compareError && (
+          <div className="trace-error">
+            <strong>Error:</strong> {compareError}
+          </div>
+        )}
+
+        {compareResult && (
+          <div className="comparison-result">
+            <div className="comparison-columns">
+              <div className="comparison-column">
+                <h3>Base Trace</h3>
+                <div className="trace-score">
+                  <strong>Score:</strong> {compareResult.base.score.toFixed(2)}
+                </div>
+                <div className="trace-metadata">
+                  <p><strong>ID:</strong> {compareResult.base.id}</p>
+                  <p><strong>Created:</strong> {new Date(compareResult.base.created_at).toLocaleString()}</p>
+                  <p><strong>Version:</strong> {compareResult.base.trace_version}</p>
+                </div>
+                <div className="trace-content">
+                  <h4>Prompt:</h4>
+                  <p>{compareResult.base.payload.prompt}</p>
+                  <h4>Final Answer:</h4>
+                  <p>{compareResult.base.payload.final_answer}</p>
+                  <h4>Steps:</h4>
+                  <ul>
+                    {compareResult.base.payload.steps.map((step) => (
+                      <li key={step.i}>
+                        <strong>{step.type}:</strong> {step.content}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="comparison-column">
+                <h3>Other Trace</h3>
+                <div className="trace-score">
+                  <strong>Score:</strong> {compareResult.other.score.toFixed(2)}
+                </div>
+                <div className="trace-metadata">
+                  <p><strong>ID:</strong> {compareResult.other.id}</p>
+                  <p><strong>Created:</strong> {new Date(compareResult.other.created_at).toLocaleString()}</p>
+                  <p><strong>Version:</strong> {compareResult.other.trace_version}</p>
+                </div>
+                <div className="trace-content">
+                  <h4>Prompt:</h4>
+                  <p>{compareResult.other.payload.prompt}</p>
+                  <h4>Final Answer:</h4>
+                  <p>{compareResult.other.payload.final_answer}</p>
+                  <h4>Steps:</h4>
+                  <ul>
+                    {compareResult.other.payload.steps.map((step) => (
+                      <li key={step.i}>
+                        <strong>{step.type}:</strong> {step.content}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>

@@ -86,3 +86,101 @@ test.describe('Trace Upload and Retrieval', () => {
   });
 });
 
+test.describe('Trace Comparison and Evaluation', () => {
+  test('can create two traces and compare them', async ({ page }) => {
+    await page.goto('/');
+    
+    // Wait for page to load
+    await expect(page.locator('h1')).toContainText('Tunix RT');
+    
+    // Create first trace (simple)
+    const traceTextarea = page.locator('#trace-json');
+    const simpleTrace = JSON.stringify({
+      trace_version: '1.0',
+      prompt: 'What is 2 + 2?',
+      final_answer: '4',
+      steps: [
+        { i: 0, type: 'compute', content: 'Add 2 and 2' }
+      ],
+      meta: { source: 'e2e-test-simple' }
+    });
+    
+    await traceTextarea.fill(simpleTrace);
+    
+    const uploadBtn = page.locator('button', { hasText: 'Upload' });
+    await uploadBtn.click();
+    
+    // Wait for success and extract first trace ID
+    const successMessage = page.locator('.trace-success');
+    await expect(successMessage).toBeVisible({ timeout: 5000 });
+    const successText = await successMessage.textContent();
+    const firstTraceId = successText?.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?.[0];
+    expect(firstTraceId).toBeTruthy();
+    
+    // Create second trace (complex)
+    const complexTrace = JSON.stringify({
+      trace_version: '1.0',
+      prompt: 'Explain the process of photosynthesis in plants',
+      final_answer: 'Photosynthesis is the process by which plants convert light energy into chemical energy',
+      steps: [
+        { i: 0, type: 'define', content: 'Photosynthesis is a biochemical process used by plants to convert light into energy' },
+        { i: 1, type: 'explain', content: 'Light energy is absorbed by chlorophyll in the chloroplasts' },
+        { i: 2, type: 'detail', content: 'Carbon dioxide and water are converted into glucose and oxygen' },
+        { i: 3, type: 'conclude', content: 'This process is essential for plant growth and produces oxygen for the atmosphere' }
+      ],
+      meta: { source: 'e2e-test-complex' }
+    });
+    
+    await traceTextarea.fill(complexTrace);
+    await uploadBtn.click();
+    
+    // Wait for second success message and extract second trace ID
+    await expect(successMessage).toBeVisible({ timeout: 5000 });
+    const secondSuccessText = await successMessage.textContent();
+    const secondTraceId = secondSuccessText?.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?.[0];
+    expect(secondTraceId).toBeTruthy();
+    expect(secondTraceId).not.toBe(firstTraceId);
+    
+    // Now perform comparison
+    const baseTraceInput = page.locator('#base-trace-id');
+    const otherTraceInput = page.locator('#other-trace-id');
+    
+    await baseTraceInput.fill(firstTraceId!);
+    await otherTraceInput.fill(secondTraceId!);
+    
+    const compareBtn = page.locator('button', { hasText: 'Fetch & Compare' });
+    await compareBtn.click();
+    
+    // Wait for comparison result
+    const comparisonResult = page.locator('.comparison-result');
+    await expect(comparisonResult).toBeVisible({ timeout: 5000 });
+    
+    // Verify side-by-side columns exist
+    const columns = page.locator('.comparison-column');
+    await expect(columns).toHaveCount(2);
+    
+    // Verify both traces are displayed
+    await expect(page.locator('text=Base Trace')).toBeVisible();
+    await expect(page.locator('text=Other Trace')).toBeVisible();
+    
+    // Verify scores are displayed
+    const traceScores = page.locator('.trace-score');
+    await expect(traceScores).toHaveCount(2);
+    
+    // Verify the simple trace has lower score than complex trace
+    // (simple has 1 step, complex has 4 steps)
+    const scoreTexts = await traceScores.allTextContents();
+    const baseScore = parseFloat(scoreTexts[0].match(/[\d.]+/)?.[0] || '0');
+    const otherScore = parseFloat(scoreTexts[1].match(/[\d.]+/)?.[0] || '0');
+    expect(otherScore).toBeGreaterThan(baseScore);
+    
+    // Verify trace content is displayed
+    await expect(page.locator('text=What is 2 + 2?')).toBeVisible();
+    await expect(page.locator('text=Explain the process of photosynthesis in plants')).toBeVisible();
+    
+    // Verify steps are listed
+    await expect(page.locator('text=Add 2 and 2')).toBeVisible();
+    await expect(page.locator('text=Light energy is absorbed by chlorophyll in the chloroplasts')).toBeVisible();
+  });
+});
+

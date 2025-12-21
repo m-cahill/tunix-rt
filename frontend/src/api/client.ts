@@ -177,3 +177,76 @@ export async function listTraces(params?: { limit?: number; offset?: number }): 
   return fetchJSON<TraceListResponse>(url)
 }
 
+/**
+ * Score details from evaluation
+ */
+export interface ScoreDetails {
+  step_count: number
+  avg_step_length: number
+  total_chars: number
+  step_score: number
+  length_score: number
+  criteria: string
+  scored_at: string
+}
+
+/**
+ * Response from scoring a trace
+ */
+export interface ScoreResponse {
+  trace_id: string
+  score: number
+  details: ScoreDetails
+}
+
+/**
+ * Trace with associated score
+ */
+export interface TraceWithScore {
+  id: string
+  created_at: string
+  score: number
+  trace_version: string
+  payload: ReasoningTrace
+}
+
+/**
+ * Response from comparing two traces
+ */
+export interface CompareResponse {
+  base: TraceWithScore
+  other: TraceWithScore
+}
+
+/**
+ * Score a trace using specified criteria
+ * @param id - The trace UUID
+ * @param criteria - Scoring criteria (default: 'baseline')
+ * @returns Promise resolving to score response with value and details
+ * @throws {ApiError} on HTTP error (including 404 if trace not found)
+ */
+export async function scoreTrace(id: string, criteria: string = 'baseline'): Promise<ScoreResponse> {
+  return fetchJSON<ScoreResponse>(`/api/traces/${id}/score`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ criteria }),
+  })
+}
+
+/**
+ * Compare two traces side-by-side with scores
+ * @param baseId - UUID of the base trace
+ * @param otherId - UUID of the other trace
+ * @returns Promise resolving to comparison with both traces and scores
+ * @throws {ApiError} on HTTP error (including 404 if either trace not found)
+ */
+export async function compareTraces(baseId: string, otherId: string): Promise<CompareResponse> {
+  const searchParams = new URLSearchParams()
+  searchParams.set('base', baseId)
+  searchParams.set('other', otherId)
+  
+  return fetchJSON<CompareResponse>(`/api/traces/compare?${searchParams.toString()}`)
+}
+

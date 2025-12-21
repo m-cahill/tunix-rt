@@ -10,16 +10,21 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from tunix_rt_backend.db.base import get_db
-from tunix_rt_backend.db.models import Trace
+from tunix_rt_backend.db.models import Score, Trace
 from tunix_rt_backend.redi_client import MockRediClient, RediClient, RediClientProtocol
 from tunix_rt_backend.schemas import (
+    CompareResponse,
     PaginationInfo,
     ReasoningTrace,
+    ScoreRequest,
+    ScoreResponse,
     TraceCreateResponse,
     TraceDetail,
     TraceListItem,
     TraceListResponse,
+    TraceWithScore,
 )
+from tunix_rt_backend.scoring import baseline_score
 from tunix_rt_backend.settings import settings
 
 app = FastAPI(
@@ -154,6 +159,71 @@ async def create_trace(
     )
 
 
+@app.get("/api/traces/compare", response_model=CompareResponse)
+async def compare_traces(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    base: uuid.UUID,
+    other: uuid.UUID,
+) -> CompareResponse:
+    """Compare two traces side-by-side with scores.
+
+    Args:
+        base: UUID of the base trace
+        other: UUID of the other trace
+        db: Database session
+
+    Returns:
+        CompareResponse with both traces and their scores
+
+    Raises:
+        HTTPException: 404 if either trace not found
+    """
+    # Fetch both traces
+    result = await db.execute(select(Trace).where(Trace.id.in_([base, other])))
+    db_traces = {trace.id: trace for trace in result.scalars().all()}
+
+    # Validate both traces exist
+    if base not in db_traces:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Base trace {base} not found",
+        )
+    if other not in db_traces:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Other trace {other} not found",
+        )
+
+    base_trace = db_traces[base]
+    other_trace = db_traces[other]
+
+    # Parse trace payloads
+    base_payload = ReasoningTrace(**base_trace.payload)
+    other_payload = ReasoningTrace(**other_trace.payload)
+
+    # Compute scores for both traces using baseline scorer
+    base_score_value, _ = baseline_score(base_payload)
+    other_score_value, _ = baseline_score(other_payload)
+
+    # Build response
+    return CompareResponse(
+        base=TraceWithScore(
+            id=base_trace.id,
+            created_at=base_trace.created_at,
+            score=base_score_value,
+            trace_version=base_trace.trace_version,
+            payload=base_payload,
+        ),
+        other=TraceWithScore(
+            id=other_trace.id,
+            created_at=other_trace.created_at,
+            score=other_score_value,
+            trace_version=other_trace.trace_version,
+            payload=other_payload,
+        ),
+    )
+
+
 @app.get("/api/traces/{trace_id}", response_model=TraceDetail)
 async def get_trace(
     trace_id: uuid.UUID,
@@ -248,4 +318,68 @@ async def list_traces(
             offset=offset,
             next_offset=next_offset,
         ),
+    )
+
+
+@app.post(
+    "/api/traces/{trace_id}/score",
+    response_model=ScoreResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def score_trace(
+    trace_id: uuid.UUID,
+    score_request: ScoreRequest,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> ScoreResponse:
+    """Score a trace using specified criteria.
+
+    Args:
+        trace_id: UUID of the trace to score
+        score_request: Scoring request with criteria
+        db: Database session
+
+    Returns:
+        ScoreResponse with score value and details
+
+    Raises:
+        HTTPException: 404 if trace not found
+    """
+    # Fetch the trace
+    result = await db.execute(select(Trace).where(Trace.id == trace_id))
+    db_trace = result.scalar_one_or_none()
+
+    if db_trace is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Trace with id {trace_id} not found",
+        )
+
+    # Parse the trace payload
+    trace = ReasoningTrace(**db_trace.payload)
+
+    # Compute score based on criteria
+    if score_request.criteria == "baseline":
+        score_value, details = baseline_score(trace)
+    else:
+        # This shouldn't happen due to Literal type, but defensive check
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Unsupported criteria: {score_request.criteria}",
+        )
+
+    # Store score in database
+    db_score = Score(
+        trace_id=trace_id,
+        criteria=score_request.criteria,
+        score=score_value,
+        details=details.model_dump(mode="json"),  # Use mode="json" for proper serialization
+    )
+    db.add(db_score)
+    await db.commit()
+    await db.refresh(db_score)
+
+    return ScoreResponse(
+        trace_id=trace_id,
+        score=score_value,
+        details=details,
     )
