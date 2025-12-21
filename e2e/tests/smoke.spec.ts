@@ -69,8 +69,8 @@ test.describe('Trace Upload and Retrieval', () => {
     await expect(successMessage).toBeVisible({ timeout: 5000 });
     await expect(successMessage).toContainText('Trace uploaded with ID:');
     
-    // Click fetch button
-    const fetchBtn = page.locator('button', { hasText: 'Fetch' });
+    // Click fetch button (use exact match to avoid matching "Fetch & Compare")
+    const fetchBtn = page.getByRole('button', { name: 'Fetch', exact: true });
     await fetchBtn.click();
     
     // Wait for fetched trace to appear
@@ -113,8 +113,8 @@ test.describe('Trace Comparison and Evaluation', () => {
     // Wait for success and extract first trace ID
     const successMessage = page.locator('.trace-success');
     await expect(successMessage).toBeVisible({ timeout: 5000 });
-    const successText = await successMessage.textContent();
-    const firstTraceId = successText?.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?.[0];
+    const firstSuccessText = await successMessage.textContent();
+    const firstTraceId = firstSuccessText?.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?.[0];
     expect(firstTraceId).toBeTruthy();
     
     // Create second trace (complex)
@@ -134,8 +134,18 @@ test.describe('Trace Comparison and Evaluation', () => {
     await traceTextarea.fill(complexTrace);
     await uploadBtn.click();
     
-    // Wait for second success message and extract second trace ID
+    // Wait for success message to update with NEW trace ID (not the first one)
     await expect(successMessage).toBeVisible({ timeout: 5000 });
+    // Wait for the trace ID to change from the first one
+    await page.waitForFunction(
+      (oldId) => {
+        const elem = document.querySelector('.trace-success');
+        return elem && elem.textContent && !elem.textContent.includes(oldId);
+      },
+      firstTraceId,
+      { timeout: 5000 }
+    );
+    
     const secondSuccessText = await successMessage.textContent();
     const secondTraceId = secondSuccessText?.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?.[0];
     expect(secondTraceId).toBeTruthy();

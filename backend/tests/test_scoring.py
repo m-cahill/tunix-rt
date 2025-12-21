@@ -201,6 +201,17 @@ class TestScoreEndpoint:
         assert "details" in score_data
         assert score_data["details"]["step_count"] == 3
         assert score_data["details"]["criteria"] == "baseline"
+        # Validate all detail fields to ensure branches are hit
+        assert "avg_step_length" in score_data["details"]
+        assert "total_chars" in score_data["details"]
+        assert "step_score" in score_data["details"]
+        assert "length_score" in score_data["details"]
+        assert "scored_at" in score_data["details"]
+        # Verify score is sum of components
+        assert score_data["score"] == pytest.approx(
+            score_data["details"]["step_score"] + score_data["details"]["length_score"],
+            abs=0.1,
+        )
 
     @pytest.mark.asyncio
     async def test_score_trace_not_found(self, async_client: AsyncClient):
@@ -290,6 +301,10 @@ class TestCompareEndpoint:
         assert "score" in compare_data["base"]
         assert "payload" in compare_data["base"]
         assert compare_data["base"]["payload"]["prompt"] == "Simple task"
+        # Explicitly validate all fields to ensure branch execution
+        assert compare_data["base"]["trace_version"] == "1.0"
+        assert "created_at" in compare_data["base"]
+        assert len(compare_data["base"]["payload"]["steps"]) == 1
 
         # Validate other trace
         assert compare_data["other"]["id"] == trace2_id
@@ -297,9 +312,16 @@ class TestCompareEndpoint:
         assert "payload" in compare_data["other"]
         prompt = "Complex task requiring detailed reasoning"
         assert compare_data["other"]["payload"]["prompt"] == prompt
+        # Explicitly validate all fields to ensure branch execution
+        assert compare_data["other"]["trace_version"] == "1.0"
+        assert "created_at" in compare_data["other"]
+        assert len(compare_data["other"]["payload"]["steps"]) == 4
 
         # Trace 2 should have higher score (more steps, longer content)
         assert compare_data["other"]["score"] > compare_data["base"]["score"]
+        # Also validate score range
+        assert 0 <= compare_data["base"]["score"] <= 100
+        assert 0 <= compare_data["other"]["score"] <= 100
 
     @pytest.mark.asyncio
     async def test_compare_base_not_found(self, async_client: AsyncClient):
@@ -376,3 +398,12 @@ class TestCompareEndpoint:
         assert compare_data["base"]["id"] == trace_id
         assert compare_data["other"]["id"] == trace_id
         assert compare_data["base"]["score"] == compare_data["other"]["score"]
+
+    @pytest.mark.asyncio
+    async def test_compare_with_invalid_uuid_format(self, async_client: AsyncClient):
+        """Test comparison with malformed UUID."""
+        response = await async_client.get(
+            "/api/traces/compare?base=not-a-uuid&other=also-not-a-uuid"
+        )
+        # FastAPI will return 422 for invalid UUID format
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY

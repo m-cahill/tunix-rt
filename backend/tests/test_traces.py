@@ -296,3 +296,19 @@ async def test_trace_list_excludes_payload(client: AsyncClient, example_trace: d
     assert "created_at" in list_item
     assert "trace_version" in list_item
     assert "payload" not in list_item
+
+
+@pytest.mark.asyncio
+async def test_get_trace_with_invalid_uuid_format(client: AsyncClient) -> None:
+    """Test getting a trace with malformed UUID."""
+    response = await client.get("/api/traces/not-a-valid-uuid")
+    # FastAPI validation should return 422
+    assert response.status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_list_traces_with_zero_limit(client: AsyncClient) -> None:
+    """Test listing traces with limit=0."""
+    response = await client.get("/api/traces?limit=0")
+    assert response.status_code == 422
+    assert "limit" in response.json()["detail"].lower()
