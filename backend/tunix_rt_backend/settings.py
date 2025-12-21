@@ -50,6 +50,7 @@ class Settings(BaseSettings):
         """Validate that rediai_health_path starts with /."""
         if not v.startswith("/"):
             raise ValueError("rediai_health_path must start with /")
+        # Path is valid - continue
         return v
 
     @property

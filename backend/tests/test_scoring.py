@@ -250,6 +250,46 @@ class TestScoreEndpoint:
         score_data = score_response.json()
         assert score_data["details"]["criteria"] == "baseline"
 
+    @pytest.mark.asyncio
+    async def test_score_trace_success_branch_explicit(self, async_client: AsyncClient):
+        """Explicit test for score_trace success branches.
+        
+        Ensures these branches are marked as covered:
+        - if db_trace is None → FALSE (trace exists)
+        - if score_request.criteria == "baseline" → TRUE (baseline used)
+        """
+        # Create a trace
+        trace_data = {
+            "trace_version": "1.0",
+            "prompt": "Explicit test",
+            "final_answer": "Answer",
+            "steps": [
+                {"i": 0, "type": "step1", "content": "a" * 100},
+                {"i": 1, "type": "step2", "content": "b" * 200},
+            ],
+        }
+        create_response = await async_client.post("/api/traces", json=trace_data)
+        trace_id = create_response.json()["id"]
+
+        # Score with explicit baseline criteria (hits SUCCESS branches)
+        score_response = await async_client.post(
+            f"/api/traces/{trace_id}/score",
+            json={"criteria": "baseline"},
+        )
+
+        # Verify success path was taken
+        assert score_response.status_code == status.HTTP_201_CREATED
+        score_data = score_response.json()
+
+        # Explicitly assert all fields to ensure full code path execution
+        assert score_data["trace_id"] == trace_id
+        assert isinstance(score_data["score"], (int, float))
+        assert 0 <= score_data["score"] <= 100
+        assert score_data["details"]["criteria"] == "baseline"
+        assert score_data["details"]["step_count"] == 2
+        assert score_data["details"]["step_score"] > 0
+        assert score_data["details"]["length_score"] > 0
+
 
 class TestCompareEndpoint:
     """Tests for GET /api/traces/compare endpoint."""
@@ -407,3 +447,43 @@ class TestCompareEndpoint:
         )
         # FastAPI will return 422 for invalid UUID format
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+
+    @pytest.mark.asyncio
+    async def test_compare_both_traces_exist_explicit(self, async_client: AsyncClient):
+        """Explicit test for successful branch when both traces exist.
+        
+        This test explicitly covers the ELSE branches of validation checks:
+        - if base not in db_traces → FALSE (base exists)
+        - if other not in db_traces → FALSE (other exists)
+        """
+        # Create two traces
+        trace1_data = {
+            "trace_version": "1.0",
+            "prompt": "First",
+            "final_answer": "Answer1",
+            "steps": [{"i": 0, "type": "test", "content": "Content1"}],
+        }
+        trace2_data = {
+            "trace_version": "1.0",
+            "prompt": "Second",
+            "final_answer": "Answer2",
+            "steps": [{"i": 0, "type": "test", "content": "Content2"}],
+        }
+
+        r1 = await async_client.post("/api/traces", json=trace1_data)
+        r2 = await async_client.post("/api/traces", json=trace2_data)
+
+        id1 = r1.json()["id"]
+        id2 = r2.json()["id"]
+
+        # This hits the SUCCESS path (both traces exist)
+        response = await async_client.get(f"/api/traces/compare?base={id1}&other={id2}")
+
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+
+        # Explicitly verify both branches succeeded (neither raised 404)
+        assert data["base"]["id"] == id1
+        assert data["other"]["id"] == id2
+        assert data["base"]["payload"] is not None
+        assert data["other"]["payload"] is not None

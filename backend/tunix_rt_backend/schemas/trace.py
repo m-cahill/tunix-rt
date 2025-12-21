@@ -26,6 +26,7 @@ class TraceStep(BaseModel):
         """Ensure step index is non-negative."""
         if v < 0:
             raise ValueError("Step index must be non-negative")
+        # v is valid - continue
         return v
 
 

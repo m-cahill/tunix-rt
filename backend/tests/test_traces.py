@@ -312,3 +312,47 @@ async def test_list_traces_with_zero_limit(client: AsyncClient) -> None:
     response = await client.get("/api/traces?limit=0")
     assert response.status_code == 422
     assert "limit" in response.json()["detail"].lower()
+
+
+@pytest.mark.asyncio
+async def test_get_trace_success_path_explicit(client: AsyncClient, example_trace: dict) -> None:
+    """Explicit test for get_trace success branch (db_trace is NOT None).
+    
+    This test ensures the ELSE branch of 'if db_trace is None' is counted as covered.
+    """
+    # Create trace
+    create_response = await client.post("/api/traces", json=example_trace)
+    trace_id = create_response.json()["id"]
+
+    # Fetch it (hits the SUCCESS branch: db_trace is NOT None)
+    get_response = await client.get(f"/api/traces/{trace_id}")
+
+    # Explicitly verify we took the success branch
+    assert get_response.status_code == 200
+    data = get_response.json()
+    assert data["id"] == trace_id
+    assert data["payload"] is not None
+    assert data["payload"]["prompt"] == "What is 27 × 19?"
+    assert data["payload"]["final_answer"] == "513"
+
+
+@pytest.mark.asyncio
+async def test_list_traces_valid_pagination_success(client: AsyncClient, example_trace: dict) -> None:
+    """Explicit test for list_traces validation success branches.
+    
+    Ensures the ELSE paths of limit/offset validation are covered:
+    - if limit < 1 or limit > 100 → FALSE (valid limit)
+    - if offset < 0 → FALSE (valid offset)
+    """
+    # Create a trace
+    await client.post("/api/traces", json=example_trace)
+
+    # Valid pagination (hits success branches)
+    response = await client.get("/api/traces?limit=20&offset=0")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "data" in data
+    assert "pagination" in data
+    assert data["pagination"]["limit"] == 20
+    assert data["pagination"]["offset"] == 0

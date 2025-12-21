@@ -169,9 +169,9 @@ test.describe('Trace Comparison and Evaluation', () => {
     const columns = page.locator('.comparison-column');
     await expect(columns).toHaveCount(2);
     
-    // Verify both traces are displayed
-    await expect(page.locator('text=Base Trace')).toBeVisible();
-    await expect(page.locator('text=Other Trace')).toBeVisible();
+    // Verify both traces are displayed (use role-based selectors to avoid label collision)
+    await expect(page.getByRole('heading', { name: 'Base Trace' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Other Trace' })).toBeVisible();
     
     // Verify scores are displayed
     const traceScores = page.locator('.trace-score');
