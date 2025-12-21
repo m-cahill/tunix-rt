@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react'
-
-interface HealthStatus {
-  status: string
-  error?: string
-}
+import { getApiHealth, getRediHealth, type HealthResponse, type RediHealthResponse } from './api/client'
 
 function App() {
-  const [apiHealth, setApiHealth] = useState<HealthStatus | null>(null)
-  const [rediHealth, setRediHealth] = useState<HealthStatus | null>(null)
+  const [apiHealth, setApiHealth] = useState<HealthResponse | null>(null)
+  const [rediHealth, setRediHealth] = useState<RediHealthResponse | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -16,17 +12,15 @@ function App() {
       
       try {
         // Fetch API health
-        const apiResponse = await fetch('/api/health')
-        const apiData = await apiResponse.json()
+        const apiData = await getApiHealth()
         setApiHealth(apiData)
       } catch (error) {
-        setApiHealth({ status: 'down', error: 'Failed to fetch' })
+        setApiHealth({ status: 'down' })
       }
 
       try {
         // Fetch RediAI health
-        const rediResponse = await fetch('/api/redi/health')
-        const rediData = await rediResponse.json()
+        const rediData = await getRediHealth()
         setRediHealth(rediData)
       } catch (error) {
         setRediHealth({ status: 'down', error: 'Failed to fetch' })
@@ -35,7 +29,16 @@ function App() {
       setLoading(false)
     }
 
+    // Fetch immediately
     fetchHealth()
+
+    // Set up polling every 30 seconds
+    const intervalId = setInterval(fetchHealth, 30000)
+
+    // Cleanup on unmount
+    return () => {
+      clearInterval(intervalId)
+    }
   }, [])
 
   const getStatusClass = (status: string | undefined) => {
@@ -57,7 +60,6 @@ function App() {
             <p data-testid="api-status">
               API: {apiHealth?.status || 'unknown'}
             </p>
-            {apiHealth?.error && <p>Error: {apiHealth.error}</p>}
           </>
         )}
       </div>

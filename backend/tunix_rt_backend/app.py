@@ -1,5 +1,6 @@
 """FastAPI application with health endpoints."""
 
+from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
 from fastapi import Depends, FastAPI
@@ -22,6 +23,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Simple TTL cache for RediAI health
+_redi_health_cache: dict[str, tuple[dict[str, str], datetime]] = {}
 
 
 def get_redi_client() -> RediClientProtocol:
@@ -49,10 +53,10 @@ async def health() -> dict[str, str]:
 async def redi_health(
     redi_client: Annotated[RediClientProtocol, Depends(get_redi_client)],
 ) -> dict[str, str]:
-    """Check RediAI integration health.
+    """Check RediAI integration health with TTL caching.
 
     In mock mode: always returns healthy.
-    In real mode: probes actual RediAI instance.
+    In real mode: probes actual RediAI instance (with 30s cache).
 
     Args:
         redi_client: Injected RediAI client (real or mock)
@@ -61,4 +65,16 @@ async def redi_health(
         {"status": "healthy"} if RediAI is reachable
         {"status": "down", "error": "..."} if RediAI is unreachable
     """
-    return await redi_client.health()
+    # Check cache
+    now = datetime.now(timezone.utc)
+    cache_ttl = timedelta(seconds=settings.rediai_health_cache_ttl_seconds)
+    
+    if "redi_health" in _redi_health_cache:
+        cached_result, cached_time = _redi_health_cache["redi_health"]
+        if now - cached_time < cache_ttl:
+            return cached_result
+    
+    # Cache miss or expired - fetch fresh result
+    result = await redi_client.health()
+    _redi_health_cache["redi_health"] = (result, now)
+    return result
