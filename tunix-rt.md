@@ -383,6 +383,14 @@ The CI pipeline uses conditional jobs based on changed files:
 
 Uses `dorny/paths-filter@v2` to avoid merge-blocking issues with required checks. When only documentation changes, jobs skip cleanly without blocking PRs.
 
+**Important CI Invariants (M3 Hardening):**
+- **Concrete SHAs Required**: paths-filter uses event-aware commit SHAs, never symbolic refs like `HEAD`
+  - Pull requests: `github.event.pull_request.base.sha` and `github.event.pull_request.head.sha`
+  - Push events: `github.event.before` and `github.sha`
+- **Full History Checkout**: `changes` job uses `fetch-depth: 0` to ensure diff computation works correctly
+- **Validation Step**: CI fails fast with clear error if base/ref SHAs are empty (prevents silent misconfigurations)
+- **Why This Matters**: Symbolic refs can point to incorrect commits or not exist, causing nondeterministic CI failures. Event-aware SHAs guarantee reproducible builds.
+
 ## Testing Strategy
 
 ### Backend Tests (pytest)

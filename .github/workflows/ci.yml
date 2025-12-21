@@ -10,6 +10,12 @@ permissions:
 
 jobs:
   # Path filter job - always runs
+  # NOTE: paths-filter requires concrete commit SHAs, not symbolic refs like HEAD.
+  # - base/ref are resolved from event payloads to ensure deterministic behavior
+  # - For PRs: use pull_request.base.sha and pull_request.head.sha
+  # - For pushes: use github.event.before and github.sha
+  # - fetch-depth: 0 ensures full history is available for diff computation
+  # This prevents CI nondeterminism when HEAD doesn't exist or points incorrectly.
   changes:
     runs-on: ubuntu-latest
     outputs:
@@ -21,6 +27,18 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      
+      # Sanity check: Ensure base and ref SHAs are resolved correctly
+      - name: Validate paths-filter inputs
+        run: |
+          BASE="${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}"
+          REF="${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}"
+          echo "Base SHA: $BASE"
+          echo "Ref SHA: $REF"
+          if [ -z "$BASE" ] || [ -z "$REF" ]; then
+            echo "::error::paths-filter base or ref SHA is empty — workflow misconfigured"
+            exit 1
+          fi
       
       - uses: dorny/paths-filter@v2
         id: filter
