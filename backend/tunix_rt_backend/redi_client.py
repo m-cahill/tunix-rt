@@ -42,14 +42,14 @@ class RediClient:
         try:
             async with httpx.AsyncClient(timeout=5.0) as client:
                 response = await client.get(self.health_url)
-                
+
                 # Check for 2xx response
                 if 200 <= response.status_code < 300:
                     return {"status": "healthy"}
-                
+
                 # Non-2xx response
                 return {"status": "down", "error": f"HTTP {response.status_code}"}
-        
+
         except httpx.TimeoutException:
             return {"status": "down", "error": "Timeout after 5s"}
         except httpx.ConnectError as e:

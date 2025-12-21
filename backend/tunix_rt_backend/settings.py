@@ -8,7 +8,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     """Application settings loaded from environment variables.
-    
+
     All settings are validated on initialization. Invalid configuration will
     raise ValidationError with detailed error messages.
     """
@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     rediai_base_url: str = "http://localhost:8080"
     rediai_health_path: str = "/health"
     rediai_health_cache_ttl_seconds: int = Field(default=30, ge=0, le=300)
-    
+
     @field_validator("rediai_base_url")
     @classmethod
     def validate_rediai_base_url(cls, v: str) -> str:

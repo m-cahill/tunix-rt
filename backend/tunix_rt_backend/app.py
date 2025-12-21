@@ -68,12 +68,12 @@ async def redi_health(
     # Check cache
     now = datetime.now(timezone.utc)
     cache_ttl = timedelta(seconds=settings.rediai_health_cache_ttl_seconds)
-    
+
     if "redi_health" in _redi_health_cache:
         cached_result, cached_time = _redi_health_cache["redi_health"]
         if now - cached_time < cache_ttl:
             return cached_result
-    
+
     # Cache miss or expired - fetch fresh result
     result = await redi_client.health()
     _redi_health_cache["redi_health"] = (result, now)

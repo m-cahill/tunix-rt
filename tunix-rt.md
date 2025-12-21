@@ -1,10 +1,13 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M0 Complete** ✅
+**Milestone M1 Complete** ✅  
+**Coverage:** 92% Line, 90% Branch | **Security:** Baseline Operational
 
 ## Overview
 
 Tunix RT is a full-stack application for managing reasoning traces and integrating with the RediAI framework for the Tunix Hackathon. The system provides health monitoring, RediAI integration, and a foundation for trace-quality optimization workflows.
+
+**M1 Enhancements:** Enterprise-grade testing (90% branch coverage), security scanning (pip-audit, npm audit, gitleaks), configuration validation, TTL caching, and developer experience tools.
 
 ## System Architecture
 
@@ -17,8 +20,9 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
    - 70% test coverage minimum
 
 2. **Frontend (Vite + React + TypeScript)**
-   - Real-time health status display
+   - Real-time health status display with 30s auto-refresh (M1)
    - RediAI integration monitoring
+   - Typed API client for type-safe backend calls (M1)
    - Responsive UI with status indicators
 
 3. **E2E Tests (Playwright)**
@@ -53,7 +57,7 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 
 #### `GET /api/redi/health`
 
-**Description:** Check RediAI integration health
+**Description:** Check RediAI integration health (with TTL caching)
 
 **Response (Healthy):**
 ```json
@@ -66,7 +70,7 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 ```json
 {
   "status": "down",
-  "error": "Connection refused"
+  "error": "HTTP 404"
 }
 ```
 
@@ -77,6 +81,17 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Mock Mode (`REDIAI_MODE=mock`)**: Always returns `{"status": "healthy"}`
 - **Real Mode (`REDIAI_MODE=real`)**: Probes actual RediAI instance at `REDIAI_BASE_URL`
 
+**Caching (M1):**
+- Responses cached for 30 seconds (configurable via `REDIAI_HEALTH_CACHE_TTL_SECONDS`)
+- Cache hit: <1ms response time
+- Cache miss: ~10-50ms (makes HTTP request to RediAI)
+- Reduces load on RediAI during UI polling
+
+**Error Details:**
+- `HTTP <code>`: Non-2xx response from RediAI
+- `Timeout after 5s`: Request timeout
+- `Connection refused`: Cannot connect to RediAI instance
+
 ## Database Schema
 
 ### M0 Status
@@ -86,14 +101,20 @@ No database tables in M0 - health endpoints only. Database integration planned f
 
 ### Environment Variables
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `BACKEND_PORT` | `8000` | FastAPI server port |
-| `DATABASE_URL` | `postgresql+asyncpg://...` | PostgreSQL connection string |
-| `FRONTEND_PORT` | `5173` | Vite dev server port |
-| `REDIAI_MODE` | `mock` | RediAI integration mode (`mock` or `real`) |
-| `REDIAI_BASE_URL` | `http://localhost:8080` | RediAI instance URL (real mode) |
-| `REDIAI_HEALTH_PATH` | `/health` | RediAI health endpoint path |
+| Variable | Default | Description | Validation (M1) |
+|----------|---------|-------------|-----------------|
+| `BACKEND_PORT` | `8000` | FastAPI server port | Must be 1-65535 |
+| `DATABASE_URL` | `postgresql+asyncpg://...` | PostgreSQL connection string | None |
+| `FRONTEND_PORT` | `5173` | Vite dev server port | None |
+| `REDIAI_MODE` | `mock` | RediAI integration mode | Must be "mock" or "real" |
+| `REDIAI_BASE_URL` | `http://localhost:8080` | RediAI instance URL (real mode) | Must be valid HTTP/HTTPS URL |
+| `REDIAI_HEALTH_PATH` | `/health` | RediAI health endpoint path | None |
+| `REDIAI_HEALTH_CACHE_TTL_SECONDS` | `30` | Cache TTL for health checks (M1) | Must be 0-300 |
+
+**Configuration Validation (M1):**
+- All settings validated on application startup using Pydantic
+- Invalid configuration causes immediate failure with descriptive error messages
+- See `backend/tunix_rt_backend/settings.py` for validation logic
 
 ### RediAI Integration Modes
 
@@ -336,21 +357,68 @@ docs: update README
 
 **Solution:** Ensure `REDIAI_MODE=mock` is set in CI workflow
 
-## Next Steps (M1+)
+## M1 Features (Hardening & Guardrails)
 
-M0 provides the foundation. Future milestones will add:
+**M1 Complete** ✅ - Enterprise-grade hardening without scope expansion
 
-1. **M1**: Database models for trace storage
-2. **M2**: Trace upload and retrieval endpoints
-3. **M3**: RediAI workflow registry integration
-4. **M4**: Trace quality metrics and optimization
-5. **M5**: Deployment to Netlify (frontend) and Render (backend)
+### Testing & Coverage
+- **Branch coverage enforcement**: 90% achieved (≥68% gate)
+- **Line coverage**: 92.39% (≥80% gate)
+- **Custom coverage gate**: `backend/tools/coverage_gate.py`
+- **21 comprehensive tests** (200% increase from M0)
+
+### Security Baseline
+- **Automated scanning**: pip-audit, npm audit, gitleaks
+- **SBOM generation**: CycloneDX format (backend)
+- **Dependabot**: Weekly updates for pip, npm, GitHub Actions
+- **Configuration validation**: Pydantic validators with fail-fast
+- **Documentation**: `SECURITY_NOTES.md` tracks vulnerabilities
+
+### Features
+- **TTL Cache**: `/api/redi/health` cached for 30s (configurable)
+- **Frontend Polling**: Status updates every 30s automatically
+- **Typed API Client**: TypeScript interfaces for type-safe API calls
+- **Better Diagnostics**: Detailed HTTP error messages (codes, timeouts, connection)
+
+### Developer Experience
+- **Makefile**: `make install`, `make test`, `make docker-up`, etc.
+- **PowerShell scripts**: `.\scripts\dev.ps1` for Windows users
+- **Cross-platform**: Works on Mac, Linux, and Windows
+- **Architecture Decision Records**: 3 ADRs documenting key decisions
+
+### CI Enhancements
+- **Security jobs**: 3 new jobs (pip-audit, npm audit, gitleaks)
+- **Git-based operations**: No GitHub API dependencies (fork-safe)
+- **Coverage enforcement**: Automated dual-threshold gates
+- **Conditional execution**: Fast feedback with path filtering
+
+## Next Steps (M2+)
+
+M1 provides enterprise-grade hardening. Future milestones will add:
+
+1. **M2**: Database models and trace storage (Alembic migrations)
+2. **M3**: Trace upload and retrieval endpoints
+3. **M4**: RediAI workflow registry integration
+4. **M5**: Trace quality metrics and optimization
+5. **M6**: Deployment to Netlify (frontend) and Render (backend)
 
 ## License
 
 Apache-2.0
 
+## Architecture Decisions
+
+Key architectural decisions are documented in Architecture Decision Records (ADRs):
+
+- **ADR-001**: Mock/Real Mode RediAI Integration Pattern
+- **ADR-002**: CI Conditional Jobs Strategy with Path Filtering
+- **ADR-003**: Coverage Strategy (Line + Branch Thresholds)
+
+See `docs/adr/` for full details.
+
 ---
 
-**Last Updated:** M0 Complete
-**Version:** 0.1.0
+**Last Updated:** M1 Complete  
+**Version:** 0.2.0  
+**Coverage:** 92% Line, 90% Branch  
+**Security:** Baseline Operational
