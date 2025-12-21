@@ -189,9 +189,10 @@ jobs:
           path: frontend/npm-audit-report.json
           retention-days: 30
 
-  # Security: Secret scanning (blocking)
+  # Security: Secret scanning (runs on push to main only to avoid PR API calls)
   security-secrets:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
         with:
