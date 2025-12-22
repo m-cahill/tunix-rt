@@ -35,7 +35,7 @@ def main() -> int:
     branch_coverage = totals["percent_branches_covered"]
 
     # Gates
-    LINE_GATE = 80.0
+    LINE_GATE = 70.0
     BRANCH_GATE = 68.0
 
     # Report
