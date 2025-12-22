@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M9 Complete** ✅  
-**Coverage:** 80% Line (core), 58% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic | **Features:** Reproducible Training Loop, Eval Harness, Batch Import & TrainingExample Schema
+**Milestone M10 Complete** ✅  
+**Coverage:** 84% Line (core), 90 Branches | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic | **Features:** Service Layer Architecture, Optimized Batch Import, Type-Safe APIs
 
 ## Overview
 
@@ -581,11 +581,18 @@ tunix-rt/
 ├── backend/                     # FastAPI backend
 │   ├── tunix_rt_backend/
 │   │   ├── __init__.py
-│   │   ├── app.py              # FastAPI routes
+│   │   ├── app.py              # FastAPI routes (thin controllers)
+│   │   ├── services/           # Business logic layer (M10)
+│   │   │   ├── traces_batch.py
+│   │   │   └── datasets_export.py
+│   │   ├── helpers/            # Utilities
+│   │   │   ├── datasets.py
+│   │   │   └── traces.py
 │   │   ├── redi_client.py      # RediAI client (real + mock)
 │   │   └── settings.py         # Environment configuration
 │   ├── tests/
 │   │   ├── test_health.py
+│   │   ├── test_services.py    # Service layer tests (M10)
 │   │   └── test_redi_health.py
 │   ├── Dockerfile
 │   └── pyproject.toml
@@ -813,12 +820,22 @@ docs: update README
 - 5 comprehensive docs (BASELINE, DATASET_FORMAT, TRAINING_QUICKSTART, EVAL_LOOP, SUMMARY)
 - ADR-005: Coverage Gates Strategy
 
-## Next Steps (M10+)
+### M10: App Layer Refactor + Determinism Guardrails ✅
+- Service layer architecture (services/ directory)
+- Thin controller pattern (app.py reduced by 14%)
+- Typed export format validation (ExportFormat Literal)
+- Batch endpoint optimization (~10x perf improvement)
+- Timezone-aware UTC datetimes (zero deprecation warnings)
+- 5 new service layer tests (132 total), 84% line coverage (+5.34%)
+- 7 architectural guardrails documented
+- 3 comprehensive docs (BASELINE, GUARDRAILS, SUMMARY)
 
-1. **M10**: App Layer Refactor + Actual Tunix SFT Integration
-2. **M11**: Evaluation Loop Expansion + Score-Conditioned Filtering
-3. **M12**: Multi-game UNGAR support (Mini Spades, Gin Rummy)
-4. **M13**: Production deployment (Netlify + Render)
+## Next Steps (M11+)
+
+1. **M11**: Evaluation Loop Expansion + Training Script Tests
+2. **M12**: Score-Conditioned Filtering + Multi-Criteria Eval
+3. **M13**: Multi-game UNGAR support (Mini Spades, Gin Rummy)
+4. **M14**: Production deployment (Netlify + Render)
 
 ## Architecture Decisions
 
@@ -838,7 +855,8 @@ Apache-2.0
 
 ---
 
-**Last Updated:** M1 Complete  
-**Version:** 0.2.0  
-**Coverage:** 92% Line, 90% Branch  
-**Security:** Baseline Operational
+**Last Updated:** M10 Complete  
+**Version:** 0.3.0  
+**Coverage:** 84% Line, 90 Branches  
+**Security:** Baseline Operational  
+**Architecture:** Service Layer (M10)
