@@ -1,0 +1,22 @@
+﻿2025-12-22T01:41:26.1246016Z ##[group]Run actions/setup-python@v5
+2025-12-22T01:41:26.1247161Z with:
+2025-12-22T01:41:26.1247945Z   python-version: 3.11
+2025-12-22T01:41:26.1248829Z   cache: pip
+2025-12-22T01:41:26.1249774Z   cache-dependency-path: backend/pyproject.toml
+2025-12-22T01:41:26.1250946Z   check-latest: false
+2025-12-22T01:41:26.1252083Z   token: ***
+2025-12-22T01:41:26.1252915Z   update-environment: true
+2025-12-22T01:41:26.1254044Z   allow-prereleases: false
+2025-12-22T01:41:26.1254984Z   freethreaded: false
+2025-12-22T01:41:26.1256113Z ##[endgroup]
+2025-12-22T01:41:26.3261696Z ##[group]Installed versions
+2025-12-22T01:41:26.3467076Z Successfully set up CPython (3.11.14)
+2025-12-22T01:41:26.3475177Z ##[endgroup]
+2025-12-22T01:41:26.3855819Z [command]/opt/hostedtoolcache/Python/3.11.14/x64/bin/pip cache dir
+2025-12-22T01:41:26.7224302Z /home/runner/.cache/pip
+2025-12-22T01:41:26.8905356Z Cache hit for: setup-python-Linux-x64-24.04-Ubuntu-python-3.11.14-pip-d6b02fc59ca5dcb638981079f0f08bfb35ebf7ccbdea839cf22f8f7e8eed0ba8
+2025-12-22T01:41:27.7094209Z Received 56301410 of 56301410 (100.0%), 74.1 MBs/sec
+2025-12-22T01:41:27.7095873Z Cache Size: ~54 MB (56301410 B)
+2025-12-22T01:41:27.7132202Z [command]/usr/bin/tar -xf /home/runner/work/_temp/41151910-7dd2-406b-9e9d-e68dcfccd01e/cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --use-compress-program unzstd
+2025-12-22T01:41:27.8664483Z Cache restored successfully
+2025-12-22T01:41:27.8783244Z Cache restored from key: setup-python-Linux-x64-24.04-Ubuntu-python-3.11.14-pip-d6b02fc59ca5dcb638981079f0f08bfb35ebf7ccbdea839cf22f8f7e8eed0ba8

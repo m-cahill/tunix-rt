@@ -2,7 +2,7 @@
 
 **Tunix Reasoning-Trace Framework for AI-Native Development**
 
-**Status:** M5 Complete ✅ | Coverage: 89% Line, 79% Branch | Features: Trace Evaluation & Comparison | Database: PostgreSQL + Alembic
+**Status:** M9 Complete ✅ | Coverage: 79% Line, 58% Branch | Features: Reproducible Training Loop, Batch Import, Eval Harness | Database: PostgreSQL + Alembic
 
 A full-stack application for managing reasoning traces and integrating with the RediAI framework for the Tunix Hackathon.
 
@@ -345,7 +345,21 @@ curl "http://localhost:8000/api/datasets/my_dataset-v1/export.jsonl" > dataset.j
 curl "http://localhost:8000/api/datasets/my_dataset-v1/export.jsonl?format=tunix_sft" > dataset_sft.jsonl
 ```
 
-See [docs/M08_SUMMARY.md](docs/M08_SUMMARY.md) for complete dataset documentation.
+**Export dataset (Training Example format - M9+):**
+
+```bash
+curl "http://localhost:8000/api/datasets/my_dataset-v1/export.jsonl?format=training_example" > training_examples.jsonl
+```
+
+**Batch import traces (M9+):**
+
+```bash
+curl -X POST http://localhost:8000/api/traces/batch \
+  -H "Content-Type: application/json" \
+  -d @eval_traces.json
+```
+
+See [docs/M09_DATASET_FORMAT.md](docs/M09_DATASET_FORMAT.md) for format specifications and [docs/M09_TRAINING_QUICKSTART.md](docs/M09_TRAINING_QUICKSTART.md) for training workflows.
 
 ## Project Structure
 
