@@ -395,5 +395,215 @@ describe('App', () => {
     const compareButton = screen.getByText('Fetch & Compare') as HTMLButtonElement
     expect(compareButton.disabled).toBe(true)
   })
+
+  it('displays UNGAR available status', async () => {
+    // Mock health checks with UNGAR available
+    ;(global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: true, version: '0.1.0' }),
+      })
+
+    render(<App />)
+
+    await waitFor(() => {
+      const statusElement = screen.getByTestId('ungar:status')
+      expect(statusElement).toHaveTextContent('Status:')
+      expect(statusElement).toHaveTextContent('Available')
+      expect(screen.getByTestId('ungar:version')).toHaveTextContent('0.1.0')
+    })
+  })
+
+  it('generates UNGAR traces successfully', async () => {
+    const user = userEvent.setup()
+    const mockGenerateResponse = {
+      trace_ids: ['abc-123', 'def-456'],
+      preview: [
+        { trace_id: 'abc-123', game: 'HighCardDuel', result: 'win', my_card: 'A' },
+        { trace_id: 'def-456', game: 'HighCardDuel', result: 'loss', my_card: '5' },
+      ],
+    }
+
+    // Mock health checks (API, RediAI, UNGAR available) + generate
+    ;(global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: true, version: '0.1.0' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        status: 201,
+        json: async () => mockGenerateResponse,
+      })
+
+    render(<App />)
+
+    // Wait for UNGAR to be available and button to appear
+    await waitFor(() => {
+      expect(screen.getByTestId('ungar:status')).toHaveTextContent('Available')
+    })
+
+    // Click generate button
+    const generateButton = screen.getByTestId('ungar:generate-btn')
+    await user.click(generateButton)
+
+    await waitFor(() => {
+      expect(screen.getByText(/Generated 2 Traces/i)).toBeInTheDocument()
+    })
+  })
+
+  it('displays error when UNGAR generation fails', async () => {
+    const user = userEvent.setup()
+
+    // Mock health checks (API, RediAI, UNGAR available) + failed generate
+    ;(global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: true, version: '0.1.0' }),
+      })
+      .mockResolvedValueOnce({
+        ok: false,
+        status: 501,
+        statusText: 'Not Implemented',
+        json: async () => ({ detail: 'UNGAR not installed' }),
+      })
+
+    render(<App />)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('ungar:status')).toHaveTextContent('Available')
+    })
+
+    const generateButton = screen.getByTestId('ungar:generate-btn')
+    await user.click(generateButton)
+
+    await waitFor(() => {
+      const errorElement = screen.getByTestId('ungar:error')
+      expect(errorElement).toHaveTextContent('Error:')
+      expect(errorElement).toHaveTextContent('Generation failed')
+      expect(errorElement).toHaveTextContent('Not Implemented')
+    })
+  })
+
+  it('displays error when trace upload fails', async () => {
+    const user = userEvent.setup()
+
+    // Mock health checks (API, RediAI, UNGAR) + failed upload
+    ;(global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
+      })
+      .mockResolvedValueOnce({
+        ok: false,
+        status: 422,
+        statusText: 'Unprocessable Entity',
+        json: async () => ({ detail: 'Invalid trace format' }),
+      })
+
+    render(<App />)
+
+    const loadExampleButton = screen.getByTestId('trace:load-example')
+    await user.click(loadExampleButton)
+
+    const uploadButton = screen.getByTestId('trace:upload')
+    await user.click(uploadButton)
+
+    await waitFor(() => {
+      const errorElement = screen.getByTestId('trace:error')
+      expect(errorElement).toHaveTextContent('Error:')
+      expect(errorElement).toHaveTextContent('Upload failed')
+      expect(errorElement).toHaveTextContent('Unprocessable Entity')
+    })
+  })
+
+  it('displays error when trace fetch fails', async () => {
+    const user = userEvent.setup()
+    const mockTraceId = '550e8400-e29b-41d4-a716-446655440000'
+
+    // Mock health checks (API, RediAI, UNGAR) + upload success + fetch failure
+    ;(global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        status: 201,
+        json: async () => ({
+          id: mockTraceId,
+          created_at: '2025-12-21T10:30:00Z',
+          trace_version: '1.0',
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+        statusText: 'Not Found',
+        json: async () => ({ detail: 'Trace not found' }),
+      })
+
+    render(<App />)
+
+    const loadExampleButton = screen.getByTestId('trace:load-example')
+    await user.click(loadExampleButton)
+
+    const uploadButton = screen.getByTestId('trace:upload')
+    await user.click(uploadButton)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('trace:success')).toHaveTextContent('Success!')
+    })
+
+    const fetchButton = screen.getByTestId('trace:fetch')
+    await user.click(fetchButton)
+
+    await waitFor(() => {
+      const errorElement = screen.getByTestId('trace:error')
+      expect(errorElement).toHaveTextContent('Error:')
+      expect(errorElement).toHaveTextContent('Fetch failed')
+      expect(errorElement).toHaveTextContent('Not Found')
+    })
+  })
 })
 
