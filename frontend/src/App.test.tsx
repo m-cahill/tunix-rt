@@ -101,7 +101,7 @@ describe('App', () => {
 
   it('populates textarea when Load Example is clicked', async () => {
     const user = userEvent.setup()
-    
+
     // Mock health checks (API, RediAI, UNGAR)
     ;(global.fetch as any)
       .mockResolvedValueOnce({
@@ -130,7 +130,7 @@ describe('App', () => {
   it('uploads trace successfully and displays trace ID', async () => {
     const user = userEvent.setup()
     const mockTraceId = '550e8400-e29b-41d4-a716-446655440000'
-    
+
     // Mock health checks (API, RediAI, UNGAR) + upload
     ;(global.fetch as any)
       .mockResolvedValueOnce({
@@ -247,7 +247,7 @@ describe('App', () => {
     const user = userEvent.setup()
     const baseTraceId = '550e8400-e29b-41d4-a716-446655440000'
     const otherTraceId = '660f9500-f39c-52e5-b827-557766551111'
-    
+
     const mockCompareResponse = {
       base: {
         id: baseTraceId,
@@ -305,7 +305,7 @@ describe('App', () => {
     // Fill in trace IDs
     const baseInput = screen.getByPlaceholderText(/Enter base trace UUID/i) as HTMLInputElement
     const otherInput = screen.getByPlaceholderText(/Enter other trace UUID/i) as HTMLInputElement
-    
+
     await user.type(baseInput, baseTraceId)
     await user.type(otherInput, otherTraceId)
 
@@ -317,15 +317,15 @@ describe('App', () => {
       // Check that both traces are displayed
       expect(screen.getByText('Base Trace')).toBeInTheDocument()
       expect(screen.getByText('Other Trace')).toBeInTheDocument()
-      
+
       // Check scores are displayed
       expect(screen.getByText(/25.50/)).toBeInTheDocument()
       expect(screen.getByText(/75.80/)).toBeInTheDocument()
-      
+
       // Check prompts are displayed
       expect(screen.getByText('Simple task')).toBeInTheDocument()
       expect(screen.getByText('Complex task requiring detailed reasoning')).toBeInTheDocument()
-      
+
       // Check steps are displayed
       expect(screen.getByText(/Short reasoning/)).toBeInTheDocument()
       expect(screen.getByText(/Deep analysis step/)).toBeInTheDocument()
@@ -362,7 +362,7 @@ describe('App', () => {
 
     const baseInput = screen.getByPlaceholderText(/Enter base trace UUID/i) as HTMLInputElement
     const otherInput = screen.getByPlaceholderText(/Enter other trace UUID/i) as HTMLInputElement
-    
+
     await user.type(baseInput, baseTraceId)
     await user.type(otherInput, otherTraceId)
 
@@ -605,5 +605,232 @@ describe('App', () => {
       expect(errorElement).toHaveTextContent('Not Found')
     })
   })
-})
 
+  // Tunix Integration Tests (M12)
+  it('displays Tunix status message', async () => {
+    // Mock all health calls including Tunix
+    (global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          available: false,
+          version: null,
+          runtime_required: false,
+          message: 'Tunix artifacts can be generated without Tunix runtime.',
+        }),
+      })
+
+    render(<App />)
+
+    await waitFor(() => {
+      const statusElement = screen.getByTestId('tunix:status')
+      expect(statusElement).toHaveTextContent('Tunix artifacts')
+    })
+  })
+
+  it('displays runtime not required for Tunix', async () => {
+    (global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          available: false,
+          version: null,
+          runtime_required: false,
+          message: 'Tunix artifacts can be generated.',
+        }),
+      })
+
+    render(<App />)
+
+    await waitFor(() => {
+      const runtimeElement = screen.getByTestId('tunix:runtime-required')
+      expect(runtimeElement).toHaveTextContent('No (Artifact-based)')
+    })
+  })
+
+  it('exports Tunix JSONL when dataset key provided', async () => {
+    // Mock initial health calls (API, Redi, UNGAR, Tunix)
+    (global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          available: false,
+          version: null,
+          runtime_required: false,
+          message: 'Tunix artifacts ready',
+        }),
+      })
+
+    render(<App />)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
+    })
+
+    // Mock export response
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      blob: async () => new Blob(['test jsonl content'], { type: 'application/x-ndjson' }),
+    })
+
+    // Mock URL.createObjectURL
+    global.URL.createObjectURL = vi.fn(() => 'blob:mock-url')
+    global.URL.revokeObjectURL = vi.fn()
+
+    // Fill in dataset key and click export
+    const datasetInput = screen.getByTestId('tunix:dataset-key') as HTMLInputElement
+    datasetInput.value = 'test-v1'
+
+    const exportButton = screen.getByTestId('tunix:export-btn')
+    exportButton.click()
+
+    await waitFor(() => {
+      expect(global.URL.createObjectURL).toHaveBeenCalled()
+    }, { timeout: 3000 })
+  })
+
+  it('generates Tunix manifest successfully', async () => {
+    // Mock initial health calls (API, Redi, UNGAR, Tunix)
+    (global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          available: false,
+          version: null,
+          runtime_required: false,
+          message: 'Ready',
+        }),
+      })
+
+    render(<App />)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
+    })
+
+    // Mock manifest response
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        manifest_yaml: 'version: "1.0"\nrunner: tunix\n',
+        dataset_key: 'test-v1',
+        model_id: 'google/gemma-2b-it',
+        format: 'tunix_sft',
+        message: 'Manifest generated successfully',
+      }),
+    })
+
+    // Fill in dataset key and click manifest button
+    const datasetInput = screen.getByTestId('tunix:dataset-key') as HTMLInputElement
+    datasetInput.value = 'test-v1'
+
+    const manifestButton = screen.getByTestId('tunix:manifest-btn')
+    manifestButton.click()
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:manifest-result')).toBeInTheDocument()
+      expect(screen.getByTestId('tunix:manifest-message')).toHaveTextContent('Manifest generated')
+      expect(screen.getByTestId('tunix:manifest-yaml')).toHaveTextContent('version: "1.0"')
+    }, { timeout: 3000 })
+  })
+
+  it('displays error when Tunix export fails', async () => {
+    // Mock initial health calls (API, Redi, UNGAR, Tunix)
+    (global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'healthy' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ available: false, version: null }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          available: false,
+          version: null,
+          runtime_required: false,
+          message: 'Ready',
+        }),
+      })
+
+    render(<App />)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
+    })
+
+    // Mock failed export
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: false,
+      status: 404,
+      statusText: 'Not Found',
+    })
+
+    // Fill in dataset key and click export
+    const datasetInput = screen.getByTestId('tunix:dataset-key') as HTMLInputElement
+    datasetInput.value = 'nonexistent-v1'
+
+    const exportButton = screen.getByTestId('tunix:export-btn')
+    exportButton.click()
+
+    await waitFor(() => {
+      const errorElement = screen.getByTestId('tunix:error')
+      expect(errorElement).toHaveTextContent('Error:')
+      expect(errorElement).toHaveTextContent('Export failed')
+    }, { timeout: 3000 })
+  })
+})

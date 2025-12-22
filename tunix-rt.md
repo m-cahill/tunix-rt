@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M11 Complete** ✅  
-**Coverage:** 84% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Complete Service Extraction (app.py 588 lines, 4 services) | **Testing:** 146 backend + 16 frontend + training smoke tests
+**Milestone M12 Complete** ✅  
+**Coverage:** 92% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Mock-First Tunix Integration (artifact-based, no runtime dependency) | **Testing:** 160 backend + 21 frontend tests
 
 ## Overview
 
@@ -299,6 +299,123 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - `404 Not Found`: One or both traces don't exist
 
 **Note:** Scores are computed on-the-fly using the baseline scorer for each comparison request.
+
+---
+
+### Tunix Integration Endpoints (M12)
+
+**M12 Design:** Mock-first, artifact-based integration (no Tunix runtime required)
+
+#### `GET /api/tunix/status`
+
+**Description:** Check Tunix integration status
+
+**Response:**
+```json
+{
+  "available": false,
+  "version": null,
+  "runtime_required": false,
+  "message": "Tunix artifacts (JSONL + manifests) can be generated without Tunix runtime."
+}
+```
+
+**Status Codes:**
+- `200 OK`: Status retrieved successfully
+
+**M12 Note:** Always returns `runtime_required: false` - artifacts can be generated without Tunix installed.
+
+---
+
+#### `POST /api/tunix/sft/export`
+
+**Description:** Export traces in Tunix SFT format (JSONL). Reuses the `tunix_sft` export format from M09 (Gemma chat templates with reasoning steps).
+
+**Request Body:**
+```json
+{
+  "dataset_key": "my_dataset-v1",
+  "trace_ids": null,
+  "limit": 100
+}
+```
+
+**Parameters:**
+- `dataset_key` (optional): Dataset identifier to export
+- `trace_ids` (optional): Array of specific trace IDs to export
+- `limit` (optional, default 100): Maximum traces to export
+
+**Note:** Either `dataset_key` OR `trace_ids` must be provided.
+
+**Response:** `application/x-ndjson` (JSONL content)
+
+**Status Codes:**
+- `200 OK`: Export successful (returns JSONL)
+- `400 Bad Request`: Neither dataset_key nor trace_ids provided
+- `404 Not Found`: Dataset not found
+
+**Example:**
+```bash
+curl -X POST http://localhost:8000/api/tunix/sft/export \
+  -H "Content-Type: application/json" \
+  -d '{"dataset_key": "ungar_hcd-v1"}' > export.jsonl
+```
+
+---
+
+#### `POST /api/tunix/sft/manifest`
+
+**Description:** Generate a Tunix SFT training run manifest (YAML config)
+
+**Request Body:**
+```json
+{
+  "dataset_key": "my_dataset-v1",
+  "model_id": "google/gemma-2b-it",
+  "output_dir": "./output/run_001",
+  "learning_rate": 2e-5,
+  "num_epochs": 3,
+  "batch_size": 8,
+  "max_seq_length": 2048
+}
+```
+
+**Parameters:**
+- `dataset_key` (required): Dataset identifier
+- `model_id` (required): Model identifier (e.g., "google/gemma-2b-it")
+- `output_dir` (required): Output directory for training artifacts
+- `learning_rate` (optional, default 2e-5): Learning rate
+- `num_epochs` (optional, default 3): Number of epochs
+- `batch_size` (optional, default 8): Batch size
+- `max_seq_length` (optional, default 2048): Maximum sequence length
+
+**Response:**
+```json
+{
+  "manifest_yaml": "version: \"1.0\"\nrunner: tunix\n...",
+  "dataset_key": "my_dataset-v1",
+  "model_id": "google/gemma-2b-it",
+  "format": "tunix_sft",
+  "message": "Manifest generated. Save as YAML and execute with Tunix CLI."
+}
+```
+
+**Status Codes:**
+- `201 Created`: Manifest generated successfully
+- `404 Not Found`: Dataset not found
+
+**Example:**
+```bash
+curl -X POST http://localhost:8000/api/tunix/sft/manifest \
+  -H "Content-Type: application/json" \
+  -d '{
+    "dataset_key": "ungar_hcd-v1",
+    "model_id": "google/gemma-2b-it",
+    "output_dir": "./output/run_001"
+  }' | jq -r '.manifest_yaml' > config.yaml
+```
+
+**See also:** `docs/M12_TUNIX_INTEGRATION.md` for complete documentation.
 
 ---
 
@@ -847,12 +964,24 @@ docs: update README
 - **Test growth:** 146 backend tests (+14), 16 frontend tests (+5), 10 total skipped (optional deps)
 - **Comprehensive M11 documentation:** BASELINE.md, SUMMARY.md
 
-## Next Steps (M11+)
+### M12: Tunix Integration Skeleton + Run Manifest Pipeline (Phase 1) ✅
+- **Mock-first integration:** No Tunix runtime dependency required
+- **Artifact-based approach:** Generates JSONL exports + YAML training manifests
+- **3 new endpoints:** /api/tunix/status, /sft/export, /sft/manifest
+- **Reuses tunix_sft format:** Leverages M09 Gemma chat template export format
+- **YAML manifest generation:** Complete training configs with hyperparameters
+- **Frontend Tunix panel:** Status display + export/manifest generation UI
+- **Test growth:** 160 backend tests (+14), 21 frontend tests (+5)
+- **Coverage improvement:** 92% backend line (+8%), 77% frontend line (maintained)
+- **Optional CI workflow:** tunix-integration.yml (non-blocking, nightly)
+- **Complete documentation:** M12_BASELINE.md, M12_TUNIX_INTEGRATION.md
 
-1. **M11**: Evaluation Loop Expansion + Training Script Tests
-2. **M12**: Score-Conditioned Filtering + Multi-Criteria Eval
-3. **M13**: Multi-game UNGAR support (Mini Spades, Gin Rummy)
-4. **M14**: Production deployment (Netlify + Render)
+## Next Steps (M12+)
+
+1. **M13**: Real Tunix execution hooks (optional runtime integration)
+2. **M14**: Training result ingestion + run registry
+3. **M15**: Evaluation loop closure (trace → train → compare)
+4. **M16**: Multi-game UNGAR support + RL pipelines (GRPO/PPO/DPO)
 
 ## Architecture Decisions
 
@@ -873,9 +1002,9 @@ Apache-2.0
 
 ---
 
-**Last Updated:** M11 Complete  
-**Version:** 0.4.0  
-**Coverage:** Backend 84% Line, Frontend 77% Line  
+**Last Updated:** M12 Complete  
+**Version:** 0.5.0  
+**Coverage:** Backend 92% Line, Frontend 77% Line  
 **Security:** SHA-Pinned CI + SBOM + Pre-commit Hooks  
-**Architecture:** Complete Service Extraction (M11)  
-**Tests:** 162 total (146 backend + 16 frontend)
+**Architecture:** Mock-First Tunix Integration + Complete Service Extraction  
+**Tests:** 181 total (160 backend + 21 frontend)

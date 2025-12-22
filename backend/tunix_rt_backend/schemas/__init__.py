@@ -23,6 +23,12 @@ from tunix_rt_backend.schemas.trace import (
     TraceListResponse,
     TraceStep,
 )
+from tunix_rt_backend.schemas.tunix import (
+    TunixExportRequest,
+    TunixManifestRequest,
+    TunixManifestResponse,
+    TunixStatusResponse,
+)
 from tunix_rt_backend.schemas.ungar import (
     UngarGenerateRequest,
     UngarGenerateResponse,
@@ -50,4 +56,8 @@ __all__ = [
     "DatasetBuildResponse",
     "DatasetManifest",
     "ExportFormat",
+    "TunixStatusResponse",
+    "TunixExportRequest",
+    "TunixManifestRequest",
+    "TunixManifestResponse",
 ]

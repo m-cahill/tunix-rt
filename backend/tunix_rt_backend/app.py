@@ -28,6 +28,9 @@ from tunix_rt_backend.schemas import (
     TraceListItem,
     TraceListResponse,
     TraceWithScore,
+    TunixExportRequest,
+    TunixManifestRequest,
+    TunixManifestResponse,
     UngarGenerateRequest,
     UngarGenerateResponse,
     UngarStatusResponse,
@@ -463,7 +466,7 @@ async def ungar_generate_high_card_duel(
         raise HTTPException(
             status_code=status.HTTP_501_NOT_IMPLEMENTED,
             detail=str(e),
-    )
+        )
 
     return UngarGenerateResponse(trace_ids=trace_ids, preview=preview)
 
@@ -528,7 +531,12 @@ async def build_dataset(
 
     # Delegate to service layer
     try:
-        dataset_key, build_id, trace_count, manifest_path = await build_dataset_manifest(request, db)
+        (
+            dataset_key,
+            build_id,
+            trace_count,
+            manifest_path,
+        ) = await build_dataset_manifest(request, db)
     except ValueError as e:
         # Convert service-level ValueError to HTTP 422
         raise HTTPException(
@@ -586,3 +594,153 @@ async def export_dataset(
 
     # Return as NDJSON
     return Response(content=content, media_type="application/x-ndjson")
+
+
+# ================================================================================
+# TUNIX INTEGRATION ENDPOINTS (M12)
+#
+# M12 Design: Mock-first, artifact-based integration
+# - No Tunix runtime dependency required
+# - Generates JSONL exports + YAML manifests
+# - Reuses existing tunix_sft export format from M09
+# ================================================================================
+
+
+@app.get("/api/tunix/status")
+async def tunix_status() -> dict[str, str | bool | None]:
+    """Check Tunix integration status.
+
+    Returns Tunix availability and configuration information. M12 implementation
+    is mock-first: Tunix runtime is NOT required for export/manifest generation.
+
+    Returns:
+        Status information including availability, version, and runtime requirements
+
+    Note:
+        M12: Returns available=False, runtime_required=False (artifacts only)
+        Future milestones may add real Tunix runtime integration
+    """
+    from tunix_rt_backend.integrations.tunix.availability import (
+        tunix_available,
+        tunix_runtime_required,
+        tunix_version,
+    )
+
+    return {
+        "available": tunix_available(),
+        "version": tunix_version(),
+        "runtime_required": tunix_runtime_required(),
+        "message": "Tunix artifacts (JSONL + manifests) can be generated without Tunix runtime. "
+        "Compatible with Tunix SFT workflows.",
+    }
+
+
+@app.post("/api/tunix/sft/export")
+async def tunix_export_sft(
+    request: TunixExportRequest,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> Response:
+    """Export traces in Tunix SFT format (JSONL).
+
+    Exports traces using the tunix_sft format from M09 (Gemma chat template
+    with reasoning steps). Supports two modes:
+    1. Export from dataset key (uses dataset manifest)
+    2. Export from specific trace IDs
+
+    Args:
+        request: Export request with dataset_key OR trace_ids
+        db: Database session
+
+    Returns:
+        NDJSON response with Tunix SFT formatted traces
+
+    Raises:
+        HTTPException: 400 if neither dataset_key nor trace_ids provided
+        HTTPException: 404 if dataset not found
+    """
+    from tunix_rt_backend.services.tunix_export import export_tunix_sft_jsonl
+
+    # Validate request has at least one export mode
+    if not request.dataset_key and not request.trace_ids:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Either dataset_key or trace_ids must be provided",
+        )
+
+    # Delegate to service layer
+    try:
+        jsonl_content = await export_tunix_sft_jsonl(request, db)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
+        )
+    except FileNotFoundError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e),
+        )
+
+    # Return as NDJSON
+    return Response(content=jsonl_content, media_type="application/x-ndjson")
+
+
+@app.post(
+    "/api/tunix/sft/manifest",
+    response_model=TunixManifestResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def tunix_generate_manifest(
+    request: TunixManifestRequest,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> TunixManifestResponse:
+    """Generate a Tunix SFT training run manifest.
+
+    Creates a YAML configuration file that can be used to execute Tunix SFT
+    training on a local machine or TPU VM. The manifest references the dataset
+    and includes hyperparameters.
+
+    Args:
+        request: Manifest generation request with dataset_key, model_id, and hyperparameters
+        db: Database session
+
+    Returns:
+        Manifest response with YAML content and metadata
+
+    Raises:
+        HTTPException: 404 if dataset not found
+
+    Note:
+        Generated manifest assumes dataset has been exported to a JSONL file.
+        Typical workflow:
+        1. POST /api/tunix/sft/export to create dataset JSONL
+        2. POST /api/tunix/sft/manifest to create training config
+        3. Execute training locally: tunix train --config manifest.yaml
+    """
+    from tunix_rt_backend.helpers.datasets import load_manifest
+    from tunix_rt_backend.integrations.tunix.manifest import build_sft_manifest
+
+    # Verify dataset exists
+    try:
+        load_manifest(request.dataset_key)
+    except FileNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Dataset not found: {request.dataset_key}",
+        )
+
+    # Build dataset path (convention: datasets/{dataset_key}.jsonl)
+    dataset_path = f"./datasets/{request.dataset_key}.jsonl"
+
+    # Generate manifest
+    manifest_yaml = build_sft_manifest(request, dataset_path)
+
+    # Return response
+    return TunixManifestResponse(
+        manifest_yaml=manifest_yaml,
+        dataset_key=request.dataset_key,
+        model_id=request.model_id,
+        format="tunix_sft",
+        message=f"Manifest generated for dataset {request.dataset_key}. "
+        f"Save as YAML and execute with Tunix CLI.",
+    )

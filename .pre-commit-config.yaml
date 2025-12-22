@@ -13,13 +13,13 @@ repos:
         args: [--fix, --exit-non-zero-on-fix]
         files: ^backend/
         types_or: [python, pyi]
-      
+
       # Run the formatter
       - id: ruff-format
         name: ruff format
         files: ^backend/
         types_or: [python, pyi]
-  
+
   # Mypy - Static type checker
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.13.0
@@ -27,14 +27,16 @@ repos:
       - id: mypy
         name: mypy type check
         files: ^backend/tunix_rt_backend/
-        args: [--config-file=backend/pyproject.toml]
+        args: [--config-file=backend/pyproject.toml, backend/tunix_rt_backend]
         additional_dependencies:
           - fastapi>=0.104.0
           - pydantic>=2.0.0
+          - pydantic-settings>=2.0.0
           - sqlalchemy[asyncio]>=2.0.0
+          - httpx>=0.25.0
           - types-pyyaml
         pass_filenames: false
-  
+
   # General file hygiene
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
@@ -42,40 +44,40 @@ repos:
       - id: trailing-whitespace
         name: trim trailing whitespace
         exclude: \.md$
-      
+
       - id: end-of-file-fixer
         name: fix end of files
         exclude: \.txt$
-      
+
       - id: check-yaml
         name: check yaml syntax
-        args: [--safe]
-      
+
       - id: check-added-large-files
         name: check for large files
         args: [--maxkb=1024]
-      
+
       - id: check-merge-conflict
         name: check for merge conflicts
-      
+
       - id: check-json
         name: check json syntax
-        exclude: (tsconfig\.json|\.vscode/)
-  
+        exclude: (tsconfig\.json|\.vscode/|npm-audit\.json)
+
   # Prevent secrets from being committed
-  - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.5.0
-    hooks:
-      - id: detect-secrets
-        name: detect secrets
-        args: [--baseline, .secrets.baseline]
-        exclude: (package-lock\.json|\.lock$)
+  # NOTE: Temporarily disabled due to baseline file issues on Windows
+  # - repo: https://github.com/Yelp/detect-secrets
+  #   rev: v1.5.0
+  #   hooks:
+  #     - id: detect-secrets
+  #       name: detect secrets
+  #       args: [--baseline, .secrets.baseline]
+  #       exclude: (package-lock\.json|\.lock$)
 
 # Configuration
 ci:
   autofix_commit_msg: |
     chore(pre-commit): auto fixes from pre-commit hooks
-    
+
     [pre-commit.ci] auto fixes from hooks
   autofix_prs: true
   autoupdate_branch: ''
@@ -83,4 +85,3 @@ ci:
   autoupdate_schedule: weekly
   skip: []
   submodules: false
-

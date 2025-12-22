@@ -1,18 +1,23 @@
 import { useEffect, useState } from 'react'
-import { 
-  getApiHealth, 
-  getRediHealth, 
+import {
+  getApiHealth,
+  getRediHealth,
   createTrace,
   getTrace,
   compareTraces,
   getUngarStatus,
   generateUngarTraces,
-  type HealthResponse, 
+  getTunixStatus,
+  exportTunixSft,
+  generateTunixManifest,
+  type HealthResponse,
   type RediHealthResponse,
   type TraceDetail,
   type CompareResponse,
   type UngarStatusResponse,
   type UngarGenerateResponse,
+  type TunixStatusResponse,
+  type TunixManifestResponse,
   ApiError,
 } from './api/client'
 import { EXAMPLE_TRACE } from './exampleTrace'
@@ -21,21 +26,21 @@ function App() {
   const [apiHealth, setApiHealth] = useState<HealthResponse | null>(null)
   const [rediHealth, setRediHealth] = useState<RediHealthResponse | null>(null)
   const [loading, setLoading] = useState(true)
-  
+
   // Trace state
   const [traceInput, setTraceInput] = useState('')
   const [uploadedTraceId, setUploadedTraceId] = useState<string | null>(null)
   const [fetchedTrace, setFetchedTrace] = useState<TraceDetail | null>(null)
   const [traceError, setTraceError] = useState<string | null>(null)
   const [traceLoading, setTraceLoading] = useState(false)
-  
+
   // Comparison state
   const [baseTraceId, setBaseTraceId] = useState('')
   const [otherTraceId, setOtherTraceId] = useState('')
   const [compareResult, setCompareResult] = useState<CompareResponse | null>(null)
   const [compareError, setCompareError] = useState<string | null>(null)
   const [compareLoading, setCompareLoading] = useState(false)
-  
+
   // UNGAR state
   const [ungarStatus, setUngarStatus] = useState<UngarStatusResponse | null>(null)
   const [ungarCount, setUngarCount] = useState('5')
@@ -44,10 +49,19 @@ function App() {
   const [ungarError, setUngarError] = useState<string | null>(null)
   const [ungarLoading, setUngarLoading] = useState(false)
 
+  // Tunix state (M12)
+  const [tunixStatus, setTunixStatus] = useState<TunixStatusResponse | null>(null)
+  const [tunixDatasetKey, setTunixDatasetKey] = useState('')
+  const [tunixModelId, setTunixModelId] = useState('google/gemma-2b-it')
+  const [tunixOutputDir, setTunixOutputDir] = useState('./output/tunix_run')
+  const [tunixManifestResult, setTunixManifestResult] = useState<TunixManifestResponse | null>(null)
+  const [tunixError, setTunixError] = useState<string | null>(null)
+  const [tunixLoading, setTunixLoading] = useState(false)
+
   useEffect(() => {
     const fetchHealth = async () => {
       setLoading(true)
-      
+
       try {
         // Fetch API health
         const apiData = await getApiHealth()
@@ -70,6 +84,14 @@ function App() {
         setUngarStatus(ungarData)
       } catch (error) {
         setUngarStatus({ available: false, version: null })
+      }
+
+      try {
+        // Fetch Tunix status (M12)
+        const tunixData = await getTunixStatus()
+        setTunixStatus(tunixData)
+      } catch (error) {
+        setTunixStatus({ available: false, version: null, runtime_required: false, message: 'Failed to fetch status' })
       }
 
       setLoading(false)
@@ -100,7 +122,7 @@ function App() {
   const handleUpload = async () => {
     setTraceError(null)
     setTraceLoading(true)
-    
+
     try {
       const trace = JSON.parse(traceInput)
       const response = await createTrace(trace)
@@ -124,10 +146,10 @@ function App() {
       setTraceError('No trace ID to fetch')
       return
     }
-    
+
     setTraceError(null)
     setTraceLoading(true)
-    
+
     try {
       const trace = await getTrace(uploadedTraceId)
       setFetchedTrace(trace)
@@ -149,10 +171,10 @@ function App() {
       setCompareError('Both trace IDs are required')
       return
     }
-    
+
     setCompareError(null)
     setCompareLoading(true)
-    
+
     try {
       const result = await compareTraces(baseTraceId, otherTraceId)
       setCompareResult(result)
@@ -172,15 +194,15 @@ function App() {
   const handleUngarGenerate = async () => {
     const count = parseInt(ungarCount, 10)
     const seed = ungarSeed ? parseInt(ungarSeed, 10) : null
-    
+
     if (isNaN(count) || count < 1 || count > 100) {
       setUngarError('Count must be between 1 and 100')
       return
     }
-    
+
     setUngarError(null)
     setUngarLoading(true)
-    
+
     try {
       const result = await generateUngarTraces({ count, seed, persist: true })
       setUngarResult(result)
@@ -194,6 +216,70 @@ function App() {
       setUngarResult(null)
     } finally {
       setUngarLoading(false)
+    }
+  }
+
+  const handleTunixExport = async () => {
+    if (!tunixDatasetKey) {
+      setTunixError('Dataset key is required')
+      return
+    }
+
+    setTunixError(null)
+    setTunixLoading(true)
+
+    try {
+      const blob = await exportTunixSft({ dataset_key: tunixDatasetKey })
+
+      // Download the JSONL file
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `${tunixDatasetKey}.jsonl`
+      document.body.appendChild(a)
+      a.click()
+      window.URL.revokeObjectURL(url)
+      document.body.removeChild(a)
+
+      setTunixError(null)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setTunixError(`Export failed: ${error.message} (${error.status})`)
+      } else {
+        setTunixError('Export failed: Unknown error')
+      }
+    } finally {
+      setTunixLoading(false)
+    }
+  }
+
+  const handleTunixManifest = async () => {
+    if (!tunixDatasetKey || !tunixModelId || !tunixOutputDir) {
+      setTunixError('Dataset key, model ID, and output directory are required')
+      return
+    }
+
+    setTunixError(null)
+    setTunixLoading(true)
+    setTunixManifestResult(null)
+
+    try {
+      const result = await generateTunixManifest({
+        dataset_key: tunixDatasetKey,
+        model_id: tunixModelId,
+        output_dir: tunixOutputDir,
+      })
+      setTunixManifestResult(result)
+      setTunixError(null)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setTunixError(`Manifest generation failed: ${error.message} (${error.status})`)
+      } else {
+        setTunixError('Manifest generation failed: Unknown error')
+      }
+      setTunixManifestResult(null)
+    } finally {
+      setTunixLoading(false)
     }
   }
 
@@ -231,7 +317,7 @@ function App() {
 
       <div className="trace-section" data-testid="trace:section">
         <h2>Reasoning Traces</h2>
-        
+
         <div className="trace-input" data-testid="trace:input-container">
           <label htmlFor="trace-json">Trace JSON:</label>
           <textarea
@@ -242,7 +328,7 @@ function App() {
             placeholder="Enter trace JSON here or click 'Load Example'"
             rows={10}
           />
-          
+
           <div className="trace-actions" data-testid="trace:actions">
             <button data-testid="trace:load-example" onClick={handleLoadExample} disabled={traceLoading}>
               Load Example
@@ -278,7 +364,7 @@ function App() {
 
       <div className="evaluation-section" data-testid="compare:section">
         <h2>Evaluate Traces</h2>
-        
+
         <div className="comparison-input" data-testid="compare:input-container">
           <div className="input-group">
             <label htmlFor="base-trace-id">Base Trace ID:</label>
@@ -291,7 +377,7 @@ function App() {
               placeholder="Enter base trace UUID"
             />
           </div>
-          
+
           <div className="input-group">
             <label htmlFor="other-trace-id">Other Trace ID:</label>
             <input
@@ -303,10 +389,10 @@ function App() {
               placeholder="Enter other trace UUID"
             />
           </div>
-          
-          <button 
+
+          <button
             data-testid="compare:submit"
-            onClick={handleCompare} 
+            onClick={handleCompare}
             disabled={compareLoading || !baseTraceId || !otherTraceId}
           >
             Fetch & Compare
@@ -380,7 +466,7 @@ function App() {
 
       <div className="ungar-section" data-testid="ungar:section">
         <h2>UNGAR Generator (Optional)</h2>
-        
+
         <div className="ungar-status" data-testid="ungar:status-container">
           <p data-testid="ungar:status">
             <strong>Status:</strong> {loading ? 'Loading...' : (ungarStatus?.available ? '✅ Available' : '❌ Not Installed')}
@@ -407,7 +493,7 @@ function App() {
                 disabled={ungarLoading}
               />
             </div>
-            
+
             <div className="input-group">
               <label htmlFor="ungar-seed">Random Seed (optional):</label>
               <input
@@ -420,7 +506,7 @@ function App() {
                 placeholder="42"
               />
             </div>
-            
+
             <button
               data-testid="ungar:generate-btn"
               onClick={handleUngarGenerate}
@@ -461,9 +547,97 @@ function App() {
           </div>
         )}
       </div>
+
+      <div className="tunix-section" data-testid="tunix:section">
+        <h2>Tunix Integration (M12)</h2>
+
+        <div className="tunix-status" data-testid="tunix:status-container">
+          <p data-testid="tunix:status">
+            <strong>Status:</strong> {loading ? 'Loading...' : tunixStatus?.message || 'Unknown'}
+          </p>
+          <p data-testid="tunix:runtime-required">
+            <strong>Runtime Required:</strong> {tunixStatus?.runtime_required ? 'Yes' : 'No (Artifact-based)'}
+          </p>
+        </div>
+
+        <div className="tunix-form" data-testid="tunix:form">
+          <div className="input-group">
+            <label htmlFor="tunix-dataset-key">Dataset Key (e.g., ungar_hcd-v1):</label>
+            <input
+              id="tunix-dataset-key"
+              data-testid="tunix:dataset-key"
+              type="text"
+              value={tunixDatasetKey}
+              onChange={(e) => setTunixDatasetKey(e.target.value)}
+              disabled={tunixLoading}
+              placeholder="my_dataset-v1"
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="tunix-model-id">Model ID:</label>
+            <input
+              id="tunix-model-id"
+              data-testid="tunix:model-id"
+              type="text"
+              value={tunixModelId}
+              onChange={(e) => setTunixModelId(e.target.value)}
+              disabled={tunixLoading}
+              placeholder="google/gemma-2b-it"
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="tunix-output-dir">Output Directory:</label>
+            <input
+              id="tunix-output-dir"
+              data-testid="tunix:output-dir"
+              type="text"
+              value={tunixOutputDir}
+              onChange={(e) => setTunixOutputDir(e.target.value)}
+              disabled={tunixLoading}
+              placeholder="./output/tunix_run"
+            />
+          </div>
+
+          <div className="button-group">
+            <button
+              data-testid="tunix:export-btn"
+              onClick={handleTunixExport}
+              disabled={tunixLoading || !tunixDatasetKey}
+            >
+              Export JSONL
+            </button>
+
+            <button
+              data-testid="tunix:manifest-btn"
+              onClick={handleTunixManifest}
+              disabled={tunixLoading || !tunixDatasetKey}
+            >
+              Generate Manifest
+            </button>
+          </div>
+        </div>
+
+        {tunixError && (
+          <div className="trace-error" data-testid="tunix:error">
+            <strong>Error:</strong> {tunixError}
+          </div>
+        )}
+
+        {tunixManifestResult && (
+          <div className="tunix-manifest-result" data-testid="tunix:manifest-result">
+            <h3>Manifest Generated</h3>
+            <p data-testid="tunix:manifest-message">{tunixManifestResult.message}</p>
+            <details>
+              <summary>View YAML Manifest</summary>
+              <pre data-testid="tunix:manifest-yaml">{tunixManifestResult.manifest_yaml}</pre>
+            </details>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
 
 export default App
-

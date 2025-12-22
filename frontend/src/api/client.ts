@@ -106,7 +106,7 @@ export class ApiError extends Error {
  */
 async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
   const response = await fetch(url, options)
-  
+
   if (!response.ok) {
     throw new ApiError(
       `HTTP error: ${response.statusText}`,
@@ -114,7 +114,7 @@ async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
       response.statusText
     )
   }
-  
+
   return response.json()
 }
 
@@ -172,7 +172,7 @@ export async function listTraces(params?: { limit?: number; offset?: number }): 
   const searchParams = new URLSearchParams()
   if (params?.limit) searchParams.set('limit', params.limit.toString())
   if (params?.offset) searchParams.set('offset', params.offset.toString())
-  
+
   const url = `/api/traces${searchParams.toString() ? `?${searchParams.toString()}` : ''}`
   return fetchJSON<TraceListResponse>(url)
 }
@@ -246,7 +246,7 @@ export async function compareTraces(baseId: string, otherId: string): Promise<Co
   const searchParams = new URLSearchParams()
   searchParams.set('base', baseId)
   searchParams.set('other', otherId)
-  
+
   return fetchJSON<CompareResponse>(`/api/traces/compare?${searchParams.toString()}`)
 }
 
@@ -304,3 +304,95 @@ export async function generateUngarTraces(request: UngarGenerateRequest): Promis
   })
 }
 
+/**
+ * Tunix availability status (M12)
+ */
+export interface TunixStatusResponse {
+  available: boolean
+  version: string | null
+  runtime_required: boolean
+  message: string
+}
+
+/**
+ * Request parameters for Tunix export
+ */
+export interface TunixExportRequest {
+  dataset_key?: string | null
+  trace_ids?: string[] | null
+  limit?: number
+}
+
+/**
+ * Request parameters for Tunix manifest generation
+ */
+export interface TunixManifestRequest {
+  dataset_key: string
+  model_id: string
+  output_dir: string
+  learning_rate?: number
+  num_epochs?: number
+  batch_size?: number
+  max_seq_length?: number
+}
+
+/**
+ * Response from Tunix manifest generation
+ */
+export interface TunixManifestResponse {
+  manifest_yaml: string
+  dataset_key: string
+  model_id: string
+  format: string
+  message: string
+}
+
+/**
+ * Get Tunix availability status
+ * @returns Promise resolving to Tunix status (always succeeds, check fields)
+ */
+export async function getTunixStatus(): Promise<TunixStatusResponse> {
+  return fetchJSON<TunixStatusResponse>('/api/tunix/status')
+}
+
+/**
+ * Export traces in Tunix SFT format (JSONL)
+ * @param request - Export parameters (dataset_key OR trace_ids)
+ * @returns Promise resolving to JSONL blob
+ * @throws {ApiError} on HTTP error (including 400 if neither dataset_key nor trace_ids provided)
+ */
+export async function exportTunixSft(request: TunixExportRequest): Promise<Blob> {
+  const response = await fetch('/api/tunix/sft/export', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(request),
+  })
+
+  if (!response.ok) {
+    throw new ApiError(
+      `HTTP error: ${response.statusText}`,
+      response.status,
+      response.statusText
+    )
+  }
+
+  return response.blob()
+}
+
+/**
+ * Generate Tunix SFT training manifest
+ * @param request - Manifest generation parameters
+ * @returns Promise resolving to manifest response with YAML content
+ * @throws {ApiError} on HTTP error (including 404 if dataset not found)
+ */
+export async function generateTunixManifest(request: TunixManifestRequest): Promise<TunixManifestResponse> {
+  return fetchJSON<TunixManifestResponse>('/api/tunix/sft/manifest', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(request),
+  })
+}

@@ -1,0 +1,57 @@
+name: Tunix Integration (Optional)
+
+on:
+  workflow_dispatch:  # Manual trigger
+  schedule:
+    - cron: '0 3 * * *'  # Nightly at 3 AM UTC
+
+permissions:
+  contents: read
+
+jobs:
+  tunix-integration:
+    runs-on: ubuntu-latest
+    continue-on-error: true  # Non-blocking
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a20  # v5.3.0
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'backend/pyproject.toml'
+
+      - name: Install dependencies (M12 mock-first, no Tunix runtime needed)
+        working-directory: backend
+        run: python -m pip install -e ".[dev]"
+
+      - name: Run Tunix integration tests
+        working-directory: backend
+        run: |
+          pytest -v tests/test_tunix.py --cov=tunix_rt_backend --cov-branch --cov-report=term --cov-report=xml
+          echo "Tunix integration test coverage:"
+          coverage report
+
+      - name: Verify JSONL export format
+        working-directory: backend
+        run: |
+          echo "Running format validation for Tunix exports..."
+          pytest -v tests/test_tunix.py::test_tunix_export_with_trace_ids
+          pytest -v tests/test_tunix.py::test_manifest_builder_generates_valid_yaml
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b  # v4.5.0
+        with:
+          name: tunix-integration-coverage
+          path: backend/coverage.xml
+          retention-days: 30
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b  # v4.5.0
+        with:
+          name: tunix-test-results
+          path: backend/test-results/
+          retention-days: 7
