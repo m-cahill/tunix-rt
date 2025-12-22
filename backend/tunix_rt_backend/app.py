@@ -463,7 +463,7 @@ async def ungar_generate_high_card_duel(
         raise HTTPException(
             status_code=status.HTTP_501_NOT_IMPLEMENTED,
             detail=str(e),
-        )
+    )
 
     return UngarGenerateResponse(trace_ids=trace_ids, preview=preview)
 
