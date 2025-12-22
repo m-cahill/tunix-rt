@@ -163,4 +163,3 @@ def _build_training_example_record(trace: Trace, trace_payload: ReasoningTrace) 
     )
 
     return example.model_dump(mode="json")
-

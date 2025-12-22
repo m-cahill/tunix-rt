@@ -10,7 +10,6 @@ from typing import AsyncGenerator
 
 import pytest
 import pytest_asyncio
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from tunix_rt_backend.db.base import Base
@@ -193,4 +192,3 @@ class TestDatasetsExportService:
         assert records[0]["prompts"] == "Q2"
         assert records[1]["prompts"] == "Q1"
         assert records[2]["prompts"] == "Q0"
-

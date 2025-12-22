@@ -153,4 +153,3 @@ async def create_traces_batch_optimized(
         created_count=len(created_traces),
         traces=created_traces,
     )
-

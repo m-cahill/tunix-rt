@@ -12,8 +12,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from tunix_rt_backend.db.base import get_db
 from tunix_rt_backend.db.models import Score, Trace
 from tunix_rt_backend.helpers.traces import get_trace_or_404
-from tunix_rt_backend.services.datasets_export import export_dataset_to_jsonl
-from tunix_rt_backend.services.traces_batch import create_traces_batch_optimized
 from tunix_rt_backend.redi_client import MockRediClient, RediClient, RediClientProtocol
 from tunix_rt_backend.schemas import (
     CompareResponse,
@@ -35,6 +33,8 @@ from tunix_rt_backend.schemas import (
     UngarStatusResponse,
 )
 from tunix_rt_backend.scoring import baseline_score
+from tunix_rt_backend.services.datasets_export import export_dataset_to_jsonl
+from tunix_rt_backend.services.traces_batch import create_traces_batch_optimized
 from tunix_rt_backend.settings import settings
 
 app = FastAPI(
