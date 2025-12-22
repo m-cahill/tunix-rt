@@ -6,6 +6,10 @@ omit =
     # Tested separately in .github/workflows/ungar-integration.yml with .coveragerc.full
     tunix_rt_backend/integrations/ungar/high_card_duel.py
 
+# Note: Top-level training/ folder (scripts) is not part of tunix_rt_backend source
+# and is therefore automatically excluded from coverage. Only tunix_rt_backend/training/
+# (library code: schemas, renderers) is measured.
+
 [report]
 fail_under = 70
 exclude_lines =

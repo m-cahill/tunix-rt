@@ -95,4 +95,3 @@ class DatasetBuildResponse(BaseModel):
     build_id: uuid.UUID
     trace_count: int
     manifest_path: str
-

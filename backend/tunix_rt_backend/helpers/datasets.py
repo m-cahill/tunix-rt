@@ -135,4 +135,3 @@ def compute_dataset_stats(traces: list[dict[str, Any]]) -> dict[str, Any]:
             sum(total_chars_list) / len(total_chars_list) if total_chars_list else 0.0
         ),
     }
-

@@ -1,0 +1,44 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - heading "Tunix RT" [level=1] [ref=e4]
+  - paragraph [ref=e5]: Reasoning-Trace Framework with RediAI Integration
+  - generic [ref=e6]:
+    - heading "API Status" [level=2] [ref=e7]
+    - paragraph [ref=e8]: "API: healthy"
+  - generic [ref=e9]:
+    - heading "RediAI Integration" [level=2] [ref=e10]
+    - paragraph [ref=e11]: "RediAI: healthy"
+  - generic [ref=e12]:
+    - heading "Reasoning Traces" [level=2] [ref=e13]
+    - generic [ref=e14]:
+      - generic [ref=e15]: "Trace JSON:"
+      - textbox "Trace JSON:" [ref=e16]:
+        - /placeholder: Enter trace JSON here or click 'Load Example'
+        - text: "{\"trace_version\":\"1.0\",\"prompt\":\"What is 2 + 2?\",\"final_answer\":\"4\",\"steps\":[{\"i\":0,\"type\":\"compute\",\"content\":\"Add 2 and 2\"}],\"meta\":{\"source\":\"e2e-test-simple\"}}"
+      - generic [ref=e17]:
+        - button "Load Example" [ref=e18] [cursor=pointer]
+        - button "Upload" [ref=e19] [cursor=pointer]
+        - button "Fetch" [disabled] [ref=e20]
+    - generic [ref=e21]:
+      - strong [ref=e22]: "Error:"
+      - text: "Upload failed: HTTP error: Internal Server Error (500)"
+  - generic [ref=e23]:
+    - heading "Evaluate Traces" [level=2] [ref=e24]
+    - generic [ref=e25]:
+      - generic [ref=e26]:
+        - generic [ref=e27]: "Base Trace ID:"
+        - textbox "Base Trace ID:" [ref=e28]:
+          - /placeholder: Enter base trace UUID
+      - generic [ref=e29]:
+        - generic [ref=e30]: "Other Trace ID:"
+        - textbox "Other Trace ID:" [ref=e31]:
+          - /placeholder: Enter other trace UUID
+      - button "Fetch & Compare" [disabled] [ref=e32]
+  - generic [ref=e33]:
+    - heading "UNGAR Generator (Optional)" [level=2] [ref=e34]
+    - paragraph [ref=e36]:
+      - strong [ref=e37]: "Status:"
+      - text: ❌ Not Installed
+```

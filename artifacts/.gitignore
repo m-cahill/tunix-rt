@@ -1,0 +1,7 @@
+# Ignore all training artifacts
+*
+!.gitignore
+
+# Training runs should not be committed - they can be large and are reproducible from manifests
+# To reproduce a training run, use the run_manifest.json with the same dataset + config
+

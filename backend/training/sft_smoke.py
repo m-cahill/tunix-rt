@@ -48,7 +48,7 @@ def load_dataset_jsonl(jsonl_path: Path, max_samples: int = 32) -> list[dict[str
                 sample = json.loads(line.strip())
                 samples.append(sample)
             except json.JSONDecodeError as e:
-                print(f"⚠️  Warning: Invalid JSON on line {i+1}: {e}")
+                print(f"⚠️  Warning: Invalid JSON on line {i + 1}: {e}")
                 continue
 
     print(f"✅ Loaded {len(samples)} samples")
@@ -195,4 +195,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

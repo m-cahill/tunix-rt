@@ -127,3 +127,15 @@ class TraceListResponse(BaseModel):
 
     data: list[TraceListItem]
     pagination: PaginationInfo
+
+
+class TraceBatchCreateResponse(BaseModel):
+    """Response from batch creating traces.
+
+    Attributes:
+        created_count: Number of traces created
+        traces: List of created trace responses
+    """
+
+    created_count: int = Field(..., ge=0, description="Number of traces successfully created")
+    traces: list[TraceCreateResponse] = Field(..., description="List of created traces")

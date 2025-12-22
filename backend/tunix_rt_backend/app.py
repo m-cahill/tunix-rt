@@ -21,6 +21,7 @@ from tunix_rt_backend.schemas import (
     ReasoningTrace,
     ScoreRequest,
     ScoreResponse,
+    TraceBatchCreateResponse,
     TraceCreateResponse,
     TraceDetail,
     TraceListItem,
@@ -164,6 +165,82 @@ async def create_trace(
         id=db_trace.id,
         created_at=db_trace.created_at,
         trace_version=db_trace.trace_version,
+    )
+
+
+@app.post(
+    "/api/traces/batch",
+    response_model=TraceBatchCreateResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def create_traces_batch(
+    traces: list[ReasoningTrace],
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> TraceBatchCreateResponse:
+    """Create multiple reasoning traces in a single transaction.
+
+    Useful for bulk importing traces from evaluation runs or other sources.
+    All traces are validated before any are inserted. If any trace is invalid,
+    the entire batch is rejected.
+
+    Args:
+        traces: List of ReasoningTrace payloads (validated by Pydantic)
+        db: Database session
+
+    Returns:
+        TraceBatchCreateResponse with created_count and list of created traces
+
+    Raises:
+        HTTPException: 422 if any trace fails validation
+        HTTPException: 400 if batch is empty or exceeds max size
+
+    Note:
+        Maximum batch size is 1000 traces per request.
+    """
+    # Validate batch size
+    if not traces:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Batch must contain at least one trace",
+        )
+
+    max_batch_size = 1000
+    if len(traces) > max_batch_size:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Batch size ({len(traces)}) exceeds maximum ({max_batch_size})",
+        )
+
+    # Create all trace models
+    db_traces = []
+    for trace in traces:
+        db_trace = Trace(
+            trace_version=trace.trace_version,
+            payload=trace.model_dump(),
+        )
+        db_traces.append(db_trace)
+
+    # Insert all traces in a single transaction
+    db.add_all(db_traces)
+    await db.commit()
+
+    # Refresh all traces to get generated IDs and timestamps
+    for db_trace in db_traces:
+        await db.refresh(db_trace)
+
+    # Build response
+    created_traces = [
+        TraceCreateResponse(
+            id=db_trace.id,
+            created_at=db_trace.created_at,
+            trace_version=db_trace.trace_version,
+        )
+        for db_trace in db_traces
+    ]
+
+    return TraceBatchCreateResponse(
+        created_count=len(created_traces),
+        traces=created_traces,
     )
 
 
@@ -609,9 +686,7 @@ async def build_dataset(
     elif request.selection_strategy == "random":
         # Random selection with seed
         random.seed(request.seed)
-        selected_traces = random.sample(
-            filtered_traces, min(len(filtered_traces), request.limit)
-        )
+        selected_traces = random.sample(filtered_traces, min(len(filtered_traces), request.limit))
     else:
         # Should never happen due to Pydantic validation
         selected_traces = filtered_traces[: request.limit]
@@ -663,14 +738,15 @@ async def export_dataset(
     """Export a dataset as JSONL.
 
     Loads the dataset manifest and exports all included traces in JSONL format.
-    Supports two formats:
+    Supports three formats:
     - 'trace': Raw trace data (default)
     - 'tunix_sft': Formatted for Tunix SFT training with rendered prompts
+    - 'training_example': TrainingExample objects (prompt/response pairs)
 
     Args:
         dataset_key: Dataset identifier (name-version)
         db: Database session
-        format: Export format ('trace' or 'tunix_sft', default: 'trace')
+        format: Export format ('trace', 'tunix_sft', or 'training_example', default: 'trace')
 
     Returns:
         NDJSON response with one trace per line
@@ -681,12 +757,13 @@ async def export_dataset(
     """
     from tunix_rt_backend.helpers.datasets import load_manifest
     from tunix_rt_backend.training.renderers import render_tunix_sft_prompt
+    from tunix_rt_backend.training.schema import TrainingExample
 
     # Validate format
-    if format not in ["trace", "tunix_sft"]:
+    if format not in ["trace", "tunix_sft", "training_example"]:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=f"Invalid format: {format}. Must be 'trace' or 'tunix_sft'",
+            detail=f"Invalid format: {format}. Must be 'trace', 'tunix_sft', or 'training_example'",
         )
 
     # Load manifest
@@ -730,7 +807,7 @@ async def export_dataset(
                     **(trace_payload.meta or {}),
                 },
             }
-        else:  # format == "tunix_sft"
+        elif format == "tunix_sft":
             # Build SFT-formatted record with rendered prompt
             trace_data = {
                 "prompt": trace_payload.prompt,
@@ -750,6 +827,34 @@ async def export_dataset(
                     **(trace_payload.meta or {}),
                 },
             }
+        else:  # format == "training_example"
+            # Build TrainingExample (prompt/response pair)
+            # Prompt: original question with instruction
+            prompt = f"{trace_payload.prompt}\n\nPlease show your reasoning steps."
+
+            # Response: reasoning steps + final answer
+            reasoning_steps = [step.content for step in trace_payload.steps]
+            response_parts = []
+            if reasoning_steps:
+                response_parts.append("Reasoning:")
+                for i, step in enumerate(reasoning_steps, 1):
+                    response_parts.append(f"{i}. {step}")
+            response_parts.append(f"Answer: {trace_payload.final_answer}")
+            response = "\n".join(response_parts)
+
+            # Create TrainingExample
+            example = TrainingExample(
+                prompt=prompt,
+                response=response,
+                metadata={
+                    "source_trace_id": str(trace.id),
+                    "created_at": trace.created_at.isoformat(),
+                    "trace_version": trace.trace_version,
+                    **(trace_payload.meta or {}),
+                },
+            )
+
+            record = example.model_dump(mode="json")
 
         lines.append(json.dumps(record))
 

@@ -15,6 +15,7 @@ from tunix_rt_backend.schemas.score import (
 from tunix_rt_backend.schemas.trace import (
     PaginationInfo,
     ReasoningTrace,
+    TraceBatchCreateResponse,
     TraceCreateResponse,
     TraceDetail,
     TraceListItem,
@@ -30,6 +31,7 @@ from tunix_rt_backend.schemas.ungar import (
 __all__ = [
     "TraceStep",
     "ReasoningTrace",
+    "TraceBatchCreateResponse",
     "TraceCreateResponse",
     "TraceDetail",
     "TraceListItem",

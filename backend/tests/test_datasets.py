@@ -117,9 +117,7 @@ class TestDatasetHelpers:
         from datetime import datetime, timezone
 
         # Monkeypatch datasets directory
-        monkeypatch.setattr(
-            "tunix_rt_backend.helpers.datasets.get_datasets_dir", lambda: tmp_path
-        )
+        monkeypatch.setattr("tunix_rt_backend.helpers.datasets.get_datasets_dir", lambda: tmp_path)
 
         # Create a test manifest
         manifest = DatasetManifest(
@@ -149,9 +147,7 @@ class TestDatasetHelpers:
 
     def test_load_manifest_not_found(self, tmp_path, monkeypatch):
         """Test load_manifest raises FileNotFoundError for missing dataset."""
-        monkeypatch.setattr(
-            "tunix_rt_backend.helpers.datasets.get_datasets_dir", lambda: tmp_path
-        )
+        monkeypatch.setattr("tunix_rt_backend.helpers.datasets.get_datasets_dir", lambda: tmp_path)
 
         with pytest.raises(FileNotFoundError, match="Manifest not found"):
             load_manifest("nonexistent-v1")
@@ -445,3 +441,94 @@ class TestDatasetExportEndpoint:
         # Latest strategy returns newest first, so reverse the expected order
         assert exported_ids == list(reversed(expected_order))
 
+    @pytest.mark.asyncio
+    async def test_export_dataset_training_example_format(self, client: AsyncClient):
+        """Test exporting dataset in training_example format."""
+        # Create a test trace
+        create_response = await client.post(
+            "/api/traces",
+            json={
+                "trace_version": "1.0",
+                "prompt": "What is 3+3?",
+                "final_answer": "6",
+                "steps": [
+                    {"i": 0, "type": "compute", "content": "Add 3 and 3 to get 6"},
+                ],
+                "meta": {"source": "training_format_test"},
+            },
+        )
+        assert create_response.status_code == 201
+
+        # Build dataset
+        build_response = await client.post(
+            "/api/datasets/build",
+            json={
+                "dataset_name": "training_test",
+                "dataset_version": "v1",
+                "filters": {"source": "training_format_test"},
+                "limit": 10,
+                "selection_strategy": "latest",
+            },
+        )
+        assert build_response.status_code == 201
+
+        # Export in training_example format
+        export_response = await client.get(
+            "/api/datasets/training_test-v1/export.jsonl?format=training_example"
+        )
+        assert export_response.status_code == 200
+
+        # Parse JSONL
+        line = export_response.text.strip()
+        record = json.loads(line)
+
+        # Verify TrainingExample structure
+        assert "id" in record  # UUID should be present
+        assert "prompt" in record
+        assert "response" in record
+        assert "metadata" in record
+
+        # Verify prompt includes instruction
+        assert "What is 3+3?" in record["prompt"]
+        assert "show your reasoning steps" in record["prompt"].lower()
+
+        # Verify response includes reasoning and answer
+        assert "Reasoning:" in record["response"]
+        assert "1. Add 3 and 3 to get 6" in record["response"]
+        assert "Answer: 6" in record["response"]
+
+        # Verify metadata includes source trace
+        assert "source_trace_id" in record["metadata"]
+
+    @pytest.mark.asyncio
+    async def test_export_dataset_invalid_format(self, client: AsyncClient):
+        """Test that invalid format parameter returns 422."""
+        # Create minimal trace + dataset first
+        await client.post(
+            "/api/traces",
+            json={
+                "trace_version": "1.0",
+                "prompt": "Test",
+                "final_answer": "Answer",
+                "steps": [{"i": 0, "type": "test", "content": "Step"}],
+                "meta": {"source": "format_test"},
+            },
+        )
+
+        await client.post(
+            "/api/datasets/build",
+            json={
+                "dataset_name": "format_test_ds",
+                "dataset_version": "v1",
+                "filters": {"source": "format_test"},
+                "limit": 10,
+            },
+        )
+
+        # Try to export with invalid format
+        response = await client.get(
+            "/api/datasets/format_test_ds-v1/export.jsonl?format=invalid_format"
+        )
+
+        assert response.status_code == 422
+        assert "invalid" in response.json()["detail"].lower()
