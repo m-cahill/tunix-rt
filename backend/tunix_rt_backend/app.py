@@ -524,97 +524,22 @@ async def build_dataset(
     Raises:
         HTTPException: 422 if validation fails (e.g., random strategy without seed)
     """
-    import random
-    from datetime import datetime, timezone
+    from tunix_rt_backend.services.datasets_builder import build_dataset_manifest
 
-    from tunix_rt_backend.helpers.datasets import (
-        compute_dataset_stats,
-        create_dataset_key,
-        save_manifest,
-    )
-    from tunix_rt_backend.schemas.dataset import DatasetManifest
-
-    # Validate random strategy requires seed
-    if request.selection_strategy == "random" and request.seed is None:
+    # Delegate to service layer
+    try:
+        dataset_key, build_id, trace_count, manifest_path = await build_dataset_manifest(request, db)
+    except ValueError as e:
+        # Convert service-level ValueError to HTTP 422
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="Random selection strategy requires a seed for reproducibility",
+            detail=str(e),
         )
-
-    # Create dataset key
-    dataset_key = create_dataset_key(request.dataset_name, request.dataset_version)
-
-    # Build query based on filters
-    query = select(Trace).order_by(Trace.created_at.desc())
-
-    # Apply filters (e.g., source=ungar)
-    # For now, filters are applied at Python level for DB compatibility
-    # Future: Use DB-specific JSON queries for better performance
-    result = await db.execute(query.limit(request.limit * 10))  # Fetch more for filtering
-    all_traces = result.scalars().all()
-
-    # Filter traces based on request filters
-    filtered_traces = []
-    for trace in all_traces:
-        payload = trace.payload
-        meta = payload.get("meta", {})
-
-        # Check if trace matches all filters
-        matches = True
-        for key, value in request.filters.items():
-            if meta.get(key) != value:
-                matches = False
-                break
-
-        if matches:
-            filtered_traces.append(trace)
-
-    # Apply selection strategy
-    if request.selection_strategy == "latest":
-        # Already sorted by created_at desc, just take first N
-        selected_traces = filtered_traces[: request.limit]
-    elif request.selection_strategy == "random":
-        # Random selection with seed
-        random.seed(request.seed)
-        selected_traces = random.sample(filtered_traces, min(len(filtered_traces), request.limit))
-    else:
-        # Should never happen due to Pydantic validation
-        selected_traces = filtered_traces[: request.limit]
-
-    # Extract trace IDs and payloads
-    trace_ids = [trace.id for trace in selected_traces]
-    trace_payloads = [trace.payload for trace in selected_traces]
-
-    # Compute stats
-    stats = compute_dataset_stats(trace_payloads)
-
-    # Create manifest
-    build_id = uuid.uuid4()
-    manifest = DatasetManifest(
-        dataset_key=dataset_key,
-        build_id=build_id,
-        dataset_name=request.dataset_name,
-        dataset_version=request.dataset_version,
-        dataset_schema_version="1.0",
-        created_at=datetime.now(timezone.utc),
-        filters=request.filters,
-        selection_strategy=request.selection_strategy,
-        seed=request.seed,
-        trace_ids=trace_ids,
-        trace_count=len(trace_ids),
-        stats=stats,
-        session_id=request.session_id,
-        parent_dataset_id=request.parent_dataset_id,
-        training_run_id=request.training_run_id,
-    )
-
-    # Save manifest to disk
-    manifest_path = save_manifest(manifest)
 
     return DatasetBuildResponse(
         dataset_key=dataset_key,
         build_id=build_id,
-        trace_count=len(trace_ids),
+        trace_count=trace_count,
         manifest_path=str(manifest_path),
     )
 

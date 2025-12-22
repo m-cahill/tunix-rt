@@ -8,6 +8,7 @@ Organization:
 - services/ = business logic and orchestration (batch processing, export formatting)
 """
 
+from tunix_rt_backend.services.datasets_builder import build_dataset_manifest
 from tunix_rt_backend.services.datasets_export import export_dataset_to_jsonl
 from tunix_rt_backend.services.traces_batch import create_traces_batch
 from tunix_rt_backend.services.ungar_generator import (
@@ -19,6 +20,7 @@ from tunix_rt_backend.services.ungar_generator import (
 __all__ = [
     "create_traces_batch",
     "export_dataset_to_jsonl",
+    "build_dataset_manifest",
     "check_ungar_status",
     "generate_high_card_duel_traces",
     "export_high_card_duel_jsonl",
