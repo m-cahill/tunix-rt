@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M11 In Progress** 🔄  
-**Coverage:** 84% Line (core), 90 Branches | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Complete Service Extraction (app.py <600 lines) | **Features:** Production Training Docs, Performance SLOs
+**Milestone M11 Complete** ✅  
+**Coverage:** 84% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Complete Service Extraction (app.py 588 lines, 4 services) | **Testing:** 146 backend + 16 frontend + training smoke tests
 
 ## Overview
 
@@ -836,6 +836,17 @@ docs: update README
 - 7 architectural guardrails documented
 - 3 comprehensive docs (BASELINE, GUARDRAILS, SUMMARY)
 
+### M11: Stabilize + Complete Service Extraction + Training Script Smoke Tests ✅
+- **Complete app extraction:** UNGAR + dataset build moved to services/
+- **app.py thin controller:** 741 → 588 lines (21% reduction, <600 line target achieved)
+- **4 total services:** traces_batch, datasets_export, datasets_builder, ungar_generator
+- **Security hardening:** SHA-pinned GitHub Actions, SBOM re-enabled, pre-commit hooks
+- **Training infrastructure:** Dry-run smoke tests via subprocess (7 tests, JAX-gated)
+- **Frontend coverage boost:** 60% → 77% line coverage (16 tests, +5 component tests)
+- **Production documentation:** ADR-006, TRAINING_PRODUCTION.md, PERFORMANCE_SLOs.md
+- **Test growth:** 146 backend tests (+14), 16 frontend tests (+5), 10 total skipped (optional deps)
+- **Comprehensive M11 documentation:** BASELINE.md, SUMMARY.md
+
 ## Next Steps (M11+)
 
 1. **M11**: Evaluation Loop Expansion + Training Script Tests
@@ -852,6 +863,7 @@ Key architectural decisions are documented in Architecture Decision Records (ADR
 - **ADR-003**: Coverage Strategy (Line + Branch Thresholds)
 - **ADR-004**: Optional Code Coverage Strategy
 - **ADR-005**: Coverage Gates for Optional and Expanding Runtime Code (M09)
+- **ADR-006**: Tunix API Abstraction Pattern (M11)
 
 See `docs/adr/` for full details.
 
@@ -861,8 +873,9 @@ Apache-2.0
 
 ---
 
-**Last Updated:** M10 Complete  
-**Version:** 0.3.0  
-**Coverage:** 84% Line, 90 Branches  
-**Security:** Baseline Operational  
-**Architecture:** Service Layer (M10)
+**Last Updated:** M11 Complete  
+**Version:** 0.4.0  
+**Coverage:** Backend 84% Line, Frontend 77% Line  
+**Security:** SHA-Pinned CI + SBOM + Pre-commit Hooks  
+**Architecture:** Complete Service Extraction (M11)  
+**Tests:** 162 total (146 backend + 16 frontend)
