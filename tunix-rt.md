@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M10 Complete** ✅  
-**Coverage:** 84% Line (core), 90 Branches | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic | **Features:** Service Layer Architecture, Optimized Batch Import, Type-Safe APIs
+**Milestone M11 In Progress** 🔄  
+**Coverage:** 84% Line (core), 90 Branches | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Complete Service Extraction (app.py <600 lines) | **Features:** Production Training Docs, Performance SLOs
 
 ## Overview
 
@@ -581,18 +581,24 @@ tunix-rt/
 ├── backend/                     # FastAPI backend
 │   ├── tunix_rt_backend/
 │   │   ├── __init__.py
-│   │   ├── app.py              # FastAPI routes (thin controllers)
-│   │   ├── services/           # Business logic layer (M10)
-│   │   │   ├── traces_batch.py
-│   │   │   └── datasets_export.py
+│   │   ├── app.py              # FastAPI routes (thin controllers, <600 lines)
+│   │   ├── services/           # Business logic layer (M10, M11)
+│   │   │   ├── traces_batch.py         # Batch trace operations
+│   │   │   ├── datasets_export.py      # Dataset export formatting
+│   │   │   ├── datasets_builder.py     # Dataset manifest creation (M11)
+│   │   │   └── ungar_generator.py      # UNGAR trace generation (M11)
 │   │   ├── helpers/            # Utilities
 │   │   │   ├── datasets.py
 │   │   │   └── traces.py
+│   │   ├── integrations/       # External service integrations
+│   │   │   └── ungar/          # Optional UNGAR integration
 │   │   ├── redi_client.py      # RediAI client (real + mock)
 │   │   └── settings.py         # Environment configuration
 │   ├── tests/
 │   │   ├── test_health.py
-│   │   ├── test_services.py    # Service layer tests (M10)
+│   │   ├── test_services.py            # Service layer tests (M10)
+│   │   ├── test_services_ungar.py      # UNGAR service tests (M11)
+│   │   ├── test_services_datasets.py   # Dataset service tests (M11)
 │   │   └── test_redi_health.py
 │   ├── Dockerfile
 │   └── pyproject.toml
@@ -611,7 +617,7 @@ tunix-rt/
 │   ├── package.json
 │   └── playwright.config.ts
 ├── .github/workflows/
-│   └── ci.yml                  # CI pipeline
+│   └── ci.yml                  # CI pipeline (SHA-pinned actions)
 ├── docker-compose.yml          # Postgres + backend
 ├── LICENSE                     # Apache-2.0
 └── README.md                   # User documentation
