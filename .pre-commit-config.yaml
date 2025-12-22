@@ -1,0 +1,86 @@
+# Pre-commit hooks for tunix-rt
+# Installation: pip install pre-commit && pre-commit install
+# Documentation: https://pre-commit.com/
+
+repos:
+  # Ruff - Fast Python linter and formatter
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.4
+    hooks:
+      # Run the linter
+      - id: ruff
+        name: ruff lint
+        args: [--fix, --exit-non-zero-on-fix]
+        files: ^backend/
+        types_or: [python, pyi]
+      
+      # Run the formatter
+      - id: ruff-format
+        name: ruff format
+        files: ^backend/
+        types_or: [python, pyi]
+  
+  # Mypy - Static type checker
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.13.0
+    hooks:
+      - id: mypy
+        name: mypy type check
+        files: ^backend/tunix_rt_backend/
+        args: [--config-file=backend/pyproject.toml]
+        additional_dependencies:
+          - fastapi>=0.104.0
+          - pydantic>=2.0.0
+          - sqlalchemy[asyncio]>=2.0.0
+          - types-pyyaml
+        pass_filenames: false
+  
+  # General file hygiene
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        name: trim trailing whitespace
+        exclude: \.md$
+      
+      - id: end-of-file-fixer
+        name: fix end of files
+        exclude: \.txt$
+      
+      - id: check-yaml
+        name: check yaml syntax
+        args: [--safe]
+      
+      - id: check-added-large-files
+        name: check for large files
+        args: [--maxkb=1024]
+      
+      - id: check-merge-conflict
+        name: check for merge conflicts
+      
+      - id: check-json
+        name: check json syntax
+        exclude: (tsconfig\.json|\.vscode/)
+  
+  # Prevent secrets from being committed
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        name: detect secrets
+        args: [--baseline, .secrets.baseline]
+        exclude: (package-lock\.json|\.lock$)
+
+# Configuration
+ci:
+  autofix_commit_msg: |
+    chore(pre-commit): auto fixes from pre-commit hooks
+    
+    [pre-commit.ci] auto fixes from hooks
+  autofix_prs: true
+  autoupdate_branch: ''
+  autoupdate_commit_msg: 'chore(pre-commit): autoupdate hook versions'
+  autoupdate_schedule: weekly
+  skip: []
+  submodules: false
+
