@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """Tunix SFT Training Script for tunix-rt.
 
 This script runs Supervised Fine-Tuning using Google's Tunix library.
@@ -26,6 +27,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+# Configure stdout for UTF-8 on Windows
+if sys.platform == "win32":
+    import codecs
+    sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
+
 # Check for required dependencies before importing
 try:
     import yaml  # noqa: F401
@@ -43,6 +49,7 @@ def check_tunix_available() -> bool:
     """
     try:
         import tunix  # noqa: F401
+
         return True
     except ImportError:
         return False
@@ -56,6 +63,7 @@ def check_jax_available() -> bool:
     """
     try:
         import jax  # noqa: F401
+
         return True
     except ImportError:
         return False
@@ -73,7 +81,9 @@ def print_installation_instructions():
     print("   # OR for GPU:")
     print("   pip install 'jax[cuda12]'")
     print("\n2. Install Tunix from GitHub (pinned commit for reproducibility):")
-    print("   pip install git+https://github.com/google-deepmind/tunix.git@<COMMIT_SHA>")
+    print(
+        "   pip install git+https://github.com/google-deepmind/tunix.git@<COMMIT_SHA>"
+    )
     print("\n   See docs/M09_TRAINING_QUICKSTART.md for recommended commit SHA")
     print("\nAlternatively, you can:")
     print("- Run the smoke test only (validates data format without training)")
@@ -101,7 +111,9 @@ def load_config(config_path: Path) -> dict[str, Any]:
     return config
 
 
-def load_dataset(data_path: Path, max_samples: int | None = None) -> list[dict[str, Any]]:
+def load_dataset(
+    data_path: Path, max_samples: int | None = None
+) -> list[dict[str, Any]]:
     """Load training dataset from JSONL file.
 
     Args:
@@ -122,7 +134,7 @@ def load_dataset(data_path: Path, max_samples: int | None = None) -> list[dict[s
                 sample = json.loads(line.strip())
                 samples.append(sample)
             except json.JSONDecodeError as e:
-                print(f"⚠️  Warning: Skipping invalid JSON on line {i+1}: {e}")
+                print(f"⚠️  Warning: Skipping invalid JSON on line {i + 1}: {e}")
                 continue
 
     return samples
@@ -316,7 +328,7 @@ def main():
         sys.exit(1)
 
     config = load_config(args.config)
-    print(f"✅ Config loaded")
+    print("✅ Config loaded")
 
     # Load dataset
     print(f"\n📂 Loading dataset: {args.data}")
@@ -363,8 +375,8 @@ def main():
     print("\n" + "=" * 70)
     print("✅ Training Complete!")
     print(f"\nArtifacts saved to: {args.output}")
-    print(f"- run_manifest.json  (reproducibility metadata)")
-    print(f"- metrics.jsonl      (training metrics)")
+    print("- run_manifest.json  (reproducibility metadata)")
+    print("- metrics.jsonl      (training metrics)")
     print(f"- {config['output']['checkpoint_dir']}/  (model checkpoint)")
     print("\nNext steps:")
     print("1. Run evaluation: python training/eval_generate.py ...")
@@ -375,4 +387,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
