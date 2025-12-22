@@ -1,5 +1,10 @@
 """Pydantic schemas for tunix-rt backend."""
 
+from tunix_rt_backend.schemas.dataset import (
+    DatasetBuildRequest,
+    DatasetBuildResponse,
+    DatasetManifest,
+)
 from tunix_rt_backend.schemas.score import (
     CompareResponse,
     ScoreDetails,
@@ -38,4 +43,7 @@ __all__ = [
     "UngarStatusResponse",
     "UngarGenerateRequest",
     "UngarGenerateResponse",
+    "DatasetBuildRequest",
+    "DatasetBuildResponse",
+    "DatasetManifest",
 ]

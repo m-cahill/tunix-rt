@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M7 Complete** ✅  
-**Coverage:** 90% Line, 88% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic | **Features:** Trace Evaluation, Comparison, Validation & UNGAR Integration
+**Milestone M8 Complete** ✅  
+**Coverage:** 84% Line (core), 89% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic | **Features:** Dataset Pipelines, Tunix SFT Rendering, Training Bridge & UNGAR Integration
 
 ## Overview
 

@@ -30,6 +30,16 @@ dev = [
 ungar = [
     "ungar @ git+https://github.com/m-cahill/ungar.git@0e29e104aa1b13542b193515e3895ee87122c1cb",
 ]
+training = [
+    # Note: Tunix is Google's JAX-native post-training library
+    # As of Dec 2025, may need to be installed from source
+    # For smoke tests, we use minimal CPU-only JAX
+    "jax[cpu]>=0.4.20",
+    "flax>=0.7.0",
+    "optax>=0.1.7",
+    # Tunix library (if/when available on PyPI)
+    # "tunix>=0.1.0",
+]
 
 [tool.setuptools.packages.find]
 where = ["."]
@@ -75,6 +85,7 @@ markers = [
     "unit: Unit tests (fast, no external dependencies)",
     "integration: Integration tests (may require external services)",
     "ungar: UNGAR integration tests (requires backend[ungar] installed)",
+    "training: Training smoke tests (requires backend[training] installed)",
 ]
 
 # Coverage configuration moved to .coveragerc for better control

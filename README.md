@@ -315,6 +315,38 @@ pip install -e ".[dev,ungar]"
 
 See [docs/M07_UNGAR_INTEGRATION.md](docs/M07_UNGAR_INTEGRATION.md) for complete documentation.
 
+### Dataset Endpoints (M8+)
+
+**Build a dataset:**
+
+```bash
+curl -X POST http://localhost:8000/api/datasets/build \
+  -H "Content-Type: application/json" \
+  -d '{
+    "dataset_name": "my_dataset",
+    "dataset_version": "v1",
+    "filters": {"source": "ungar"},
+    "limit": 100,
+    "selection_strategy": "latest"
+  }'
+```
+
+Response: `{"dataset_key": "my_dataset-v1", "build_id": "...", "trace_count": 100, ...}`
+
+**Export dataset (trace format):**
+
+```bash
+curl "http://localhost:8000/api/datasets/my_dataset-v1/export.jsonl" > dataset.jsonl
+```
+
+**Export dataset (Tunix SFT format):**
+
+```bash
+curl "http://localhost:8000/api/datasets/my_dataset-v1/export.jsonl?format=tunix_sft" > dataset_sft.jsonl
+```
+
+See [docs/M08_SUMMARY.md](docs/M08_SUMMARY.md) for complete dataset documentation.
+
 ## Project Structure
 
 ```

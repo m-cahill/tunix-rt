@@ -88,6 +88,13 @@ jobs:
       - name: mypy type check
         run: mypy tunix_rt_backend
       
+      - name: Validate dataset schemas
+        run: |
+          # Validate dataset schemas can be imported
+          python -c "from tunix_rt_backend.schemas.dataset import DatasetManifest, DatasetBuildRequest; print('✅ Dataset schemas valid')"
+          # Validate renderer works
+          python -c "from tunix_rt_backend.training.renderers import render_tunix_sft_prompt; trace={'prompt':'test','trace_steps':['step'],'final_answer':'answer'}; result=render_tunix_sft_prompt(trace); assert '<start_of_turn>' in result; print('✅ Renderer works')"
+      
       - name: pytest with coverage
         run: pytest -q --cov=tunix_rt_backend --cov-branch --cov-config=.coveragerc --cov-report=term --cov-report=xml --cov-report=json:coverage.json
       

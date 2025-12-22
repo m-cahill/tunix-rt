@@ -9,9 +9,12 @@ Note:
     Functions will raise ImportError if UNGAR is not available.
 """
 
+import logging
 from typing import Any
 
 from tunix_rt_backend.schemas.trace import ReasoningTrace, TraceStep
+
+logger = logging.getLogger(__name__)
 
 
 def generate_high_card_duel_traces(count: int, seed: int | None = None) -> list[ReasoningTrace]:
@@ -49,6 +52,7 @@ def generate_high_card_duel_traces(count: int, seed: int | None = None) -> list[
           result: "win"
     """
     # Lazy import to avoid requiring UNGAR at module load time
+    # UNGAR is an optional dependency, not available to mypy in default CI
     try:
         from ungar.games.high_card_duel import make_high_card_duel_spec  # type: ignore
         from ungar.runner import play_random_episode  # type: ignore
@@ -166,8 +170,10 @@ def _extract_my_card(state: Any) -> str:
         if my_hand:
             card = list(my_hand)[0]  # Get first (and only) card
             return _format_card(card)
+        logger.warning("Failed to extract my_card: my_hand is empty")
         return "??"
-    except (AttributeError, KeyError):
+    except (AttributeError, KeyError) as e:
+        logger.warning(f"Failed to extract my_card: {e}")
         return "??"
 
 
@@ -183,6 +189,7 @@ def _extract_opponent_card(episode_result: dict[str, Any]) -> str:
     try:
         final_state = episode_result.get("final_state")
         if final_state is None:
+            logger.warning("Failed to extract opponent_card: final_state is None")
             return "??"
 
         # In High Card Duel, opponent's card is revealed in final state
@@ -190,8 +197,10 @@ def _extract_opponent_card(episode_result: dict[str, Any]) -> str:
         if opponent_hand:
             card = list(opponent_hand)[0]
             return _format_card(card)
+        logger.warning("Failed to extract opponent_card: opponent_hand is empty")
         return "??"
-    except (AttributeError, KeyError):
+    except (AttributeError, KeyError) as e:
+        logger.warning(f"Failed to extract opponent_card: {e}")
         return "??"
 
 
@@ -231,5 +240,6 @@ def _format_card(card: Any) -> str:
         rank_str = rank_map.get(card.rank.name, "?")
         suit_str = suit_map.get(card.suit.name, "?")
         return f"{rank_str}{suit_str}"
-    except (AttributeError, KeyError):
+    except (AttributeError, KeyError) as e:
+        logger.warning(f"Failed to format card: {e}")
         return "??"

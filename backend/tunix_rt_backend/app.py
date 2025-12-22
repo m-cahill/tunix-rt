@@ -15,6 +15,8 @@ from tunix_rt_backend.helpers.traces import get_trace_or_404
 from tunix_rt_backend.redi_client import MockRediClient, RediClient, RediClientProtocol
 from tunix_rt_backend.schemas import (
     CompareResponse,
+    DatasetBuildRequest,
+    DatasetBuildResponse,
     PaginationInfo,
     ReasoningTrace,
     ScoreRequest,
@@ -519,6 +521,236 @@ async def ungar_export_high_card_duel_jsonl(
                 **(trace_payload.meta or {}),
             },
         }
+        lines.append(json.dumps(record))
+
+    # Return as NDJSON
+    content = "\n".join(lines) + "\n" if lines else ""
+    return Response(content=content, media_type="application/x-ndjson")
+
+
+# ================================================================================
+# Dataset Endpoints
+# ================================================================================
+
+
+@app.post(
+    "/api/datasets/build",
+    response_model=DatasetBuildResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def build_dataset(
+    request: DatasetBuildRequest,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> DatasetBuildResponse:
+    """Build a new dataset from traces.
+
+    Creates a dataset manifest and saves it to disk. The dataset can then be
+    exported using the export endpoint.
+
+    Args:
+        request: Dataset build parameters
+        db: Database session
+
+    Returns:
+        Dataset build response with dataset_key and build_id
+
+    Raises:
+        HTTPException: 422 if validation fails (e.g., random strategy without seed)
+    """
+    import random
+    from datetime import datetime, timezone
+
+    from tunix_rt_backend.helpers.datasets import (
+        compute_dataset_stats,
+        create_dataset_key,
+        save_manifest,
+    )
+    from tunix_rt_backend.schemas.dataset import DatasetManifest
+
+    # Validate random strategy requires seed
+    if request.selection_strategy == "random" and request.seed is None:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Random selection strategy requires a seed for reproducibility",
+        )
+
+    # Create dataset key
+    dataset_key = create_dataset_key(request.dataset_name, request.dataset_version)
+
+    # Build query based on filters
+    query = select(Trace).order_by(Trace.created_at.desc())
+
+    # Apply filters (e.g., source=ungar)
+    # For now, filters are applied at Python level for DB compatibility
+    # Future: Use DB-specific JSON queries for better performance
+    result = await db.execute(query.limit(request.limit * 10))  # Fetch more for filtering
+    all_traces = result.scalars().all()
+
+    # Filter traces based on request filters
+    filtered_traces = []
+    for trace in all_traces:
+        payload = trace.payload
+        meta = payload.get("meta", {})
+
+        # Check if trace matches all filters
+        matches = True
+        for key, value in request.filters.items():
+            if meta.get(key) != value:
+                matches = False
+                break
+
+        if matches:
+            filtered_traces.append(trace)
+
+    # Apply selection strategy
+    if request.selection_strategy == "latest":
+        # Already sorted by created_at desc, just take first N
+        selected_traces = filtered_traces[: request.limit]
+    elif request.selection_strategy == "random":
+        # Random selection with seed
+        random.seed(request.seed)
+        selected_traces = random.sample(
+            filtered_traces, min(len(filtered_traces), request.limit)
+        )
+    else:
+        # Should never happen due to Pydantic validation
+        selected_traces = filtered_traces[: request.limit]
+
+    # Extract trace IDs and payloads
+    trace_ids = [trace.id for trace in selected_traces]
+    trace_payloads = [trace.payload for trace in selected_traces]
+
+    # Compute stats
+    stats = compute_dataset_stats(trace_payloads)
+
+    # Create manifest
+    build_id = uuid.uuid4()
+    manifest = DatasetManifest(
+        dataset_key=dataset_key,
+        build_id=build_id,
+        dataset_name=request.dataset_name,
+        dataset_version=request.dataset_version,
+        dataset_schema_version="1.0",
+        created_at=datetime.now(timezone.utc),
+        filters=request.filters,
+        selection_strategy=request.selection_strategy,
+        seed=request.seed,
+        trace_ids=trace_ids,
+        trace_count=len(trace_ids),
+        stats=stats,
+        session_id=request.session_id,
+        parent_dataset_id=request.parent_dataset_id,
+        training_run_id=request.training_run_id,
+    )
+
+    # Save manifest to disk
+    manifest_path = save_manifest(manifest)
+
+    return DatasetBuildResponse(
+        dataset_key=dataset_key,
+        build_id=build_id,
+        trace_count=len(trace_ids),
+        manifest_path=str(manifest_path),
+    )
+
+
+@app.get("/api/datasets/{dataset_key}/export.jsonl")
+async def export_dataset(
+    dataset_key: str,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    format: str = "trace",
+) -> Response:
+    """Export a dataset as JSONL.
+
+    Loads the dataset manifest and exports all included traces in JSONL format.
+    Supports two formats:
+    - 'trace': Raw trace data (default)
+    - 'tunix_sft': Formatted for Tunix SFT training with rendered prompts
+
+    Args:
+        dataset_key: Dataset identifier (name-version)
+        db: Database session
+        format: Export format ('trace' or 'tunix_sft', default: 'trace')
+
+    Returns:
+        NDJSON response with one trace per line
+
+    Raises:
+        HTTPException: 404 if dataset not found
+        HTTPException: 422 if format is invalid
+    """
+    from tunix_rt_backend.helpers.datasets import load_manifest
+    from tunix_rt_backend.training.renderers import render_tunix_sft_prompt
+
+    # Validate format
+    if format not in ["trace", "tunix_sft"]:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"Invalid format: {format}. Must be 'trace' or 'tunix_sft'",
+        )
+
+    # Load manifest
+    try:
+        manifest = load_manifest(dataset_key)
+    except FileNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Dataset not found: {dataset_key}",
+        )
+
+    # Fetch traces by IDs from manifest
+    result = await db.execute(select(Trace).where(Trace.id.in_(manifest.trace_ids)))
+    db_traces = result.scalars().all()
+
+    # Create a mapping for fast lookup
+    trace_map = {trace.id: trace for trace in db_traces}
+
+    # Build JSONL output in manifest order
+    import json
+
+    lines = []
+    for trace_id in manifest.trace_ids:
+        trace = trace_map.get(trace_id)
+        if not trace:
+            # Trace was deleted after manifest was created; skip it
+            continue
+
+        trace_payload = ReasoningTrace(**trace.payload)
+
+        if format == "trace":
+            # Build JSONL record (trace format - same as UNGAR export)
+            record = {
+                "id": str(trace.id),
+                "prompts": trace_payload.prompt,  # Use 'prompts' for Tunix compatibility
+                "trace_steps": [step.content for step in trace_payload.steps],
+                "final_answer": trace_payload.final_answer,
+                "metadata": {
+                    "created_at": trace.created_at.isoformat(),
+                    "trace_version": trace.trace_version,
+                    **(trace_payload.meta or {}),
+                },
+            }
+        else:  # format == "tunix_sft"
+            # Build SFT-formatted record with rendered prompt
+            trace_data = {
+                "prompt": trace_payload.prompt,
+                "trace_steps": [step.content for step in trace_payload.steps],
+                "final_answer": trace_payload.final_answer,
+            }
+            rendered_prompt = render_tunix_sft_prompt(trace_data)
+
+            record = {
+                "id": str(trace.id),
+                "prompts": rendered_prompt,  # Rendered Tunix SFT prompt
+                "final_answer": trace_payload.final_answer,
+                "metadata": {
+                    "created_at": trace.created_at.isoformat(),
+                    "trace_version": trace.trace_version,
+                    "format": "tunix_sft",
+                    **(trace_payload.meta or {}),
+                },
+            }
+
         lines.append(json.dumps(record))
 
     # Return as NDJSON

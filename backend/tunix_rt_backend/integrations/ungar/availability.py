@@ -17,8 +17,8 @@ def ungar_available() -> bool:
         allowing the application to run without UNGAR installed.
     """
     try:
-        import ungar  # type: ignore  # noqa: F401
-
+        import ungar  # type: ignore[import-not-found]  # noqa: F401
+        # Note: optional dependency, not available to mypy in default environment
         return True
     except ImportError:
         return False

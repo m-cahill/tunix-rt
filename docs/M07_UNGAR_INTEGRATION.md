@@ -46,6 +46,37 @@ pip install -e ".[dev]"
 pip install -e ../../ungar  # Adjust path as needed
 ```
 
+---
+
+## Quick Start Example (Happy Path)
+
+Complete workflow from installation to JSONL export:
+
+```bash
+# 1. Install with UNGAR
+cd backend
+pip install -e ".[dev,ungar]"
+
+# 2. Start server (new terminal)
+uvicorn tunix_rt_backend.app:app --reload
+
+# 3. Verify UNGAR available (in another terminal)
+curl http://localhost:8000/api/ungar/status
+# Expected: {"available": true, "version": "unknown"}
+
+# 4. Generate 5 traces
+curl -X POST http://localhost:8000/api/ungar/high-card-duel/generate \
+  -H "Content-Type: application/json" \
+  -d '{"count": 5, "seed": 42}' | jq '.'
+
+# 5. Export to JSONL
+curl "http://localhost:8000/api/ungar/high-card-duel/export.jsonl?limit=10" > traces.jsonl
+
+# 6. Verify format
+head -1 traces.jsonl | jq '.'
+# Expected: {"id": "...", "prompts": "...", "trace_steps": [...], "final_answer": "...", "metadata": {...}}
+```
+
 ## API Endpoints
 
 ### 1. UNGAR Status

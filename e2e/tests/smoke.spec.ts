@@ -97,6 +97,28 @@ test.describe('Trace Upload and Retrieval', () => {
   });
 });
 
+test.describe('UNGAR Integration Panel', () => {
+  test('UNGAR section renders with status', async ({ page }) => {
+    await page.goto('/');
+    
+    // Wait for UNGAR section to load
+    const ungarSection = page.getByTestId('ungar:section');
+    await expect(ungarSection).toBeVisible();
+    
+    // Verify status container is displayed
+    const statusContainer = page.getByTestId('ungar:status-container');
+    await expect(statusContainer).toBeVisible();
+    
+    // Verify status text is displayed (either Available or Not Installed)
+    const statusText = page.getByTestId('ungar:status');
+    await expect(statusText).toBeVisible();
+    await expect(statusText).toContainText('Status:');
+    
+    // In default E2E environment (no UNGAR installed), should show "Not Installed"
+    await expect(statusText).toContainText('Not Installed');
+  });
+});
+
 test.describe('Trace Comparison and Evaluation', () => {
   test('can create two traces and compare them', async ({ page }) => {
     await page.goto('/');
