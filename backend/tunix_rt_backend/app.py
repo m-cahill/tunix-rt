@@ -425,15 +425,9 @@ async def ungar_status() -> UngarStatusResponse:
         This endpoint always succeeds (200 OK) but the 'available' field
         indicates whether UNGAR is actually installed.
     """
-    from tunix_rt_backend.integrations.ungar.availability import (
-        ungar_available,
-        ungar_version,
-    )
+    from tunix_rt_backend.services.ungar_generator import check_ungar_status
 
-    available = ungar_available()
-    version = ungar_version() if available else None
-
-    return UngarStatusResponse(available=available, version=version)
+    return check_ungar_status()
 
 
 @app.post(
@@ -457,49 +451,19 @@ async def ungar_generate_high_card_duel(
     Raises:
         HTTPException: 501 if UNGAR is not installed
     """
-    from tunix_rt_backend.integrations.ungar.availability import ungar_available
-
-    # Check if UNGAR is available
-    if not ungar_available():
-        raise HTTPException(
-            status_code=status.HTTP_501_NOT_IMPLEMENTED,
-            detail="UNGAR is not installed. Install with: pip install -e '.[ungar]'",
-        )
-
-    # Import generator (lazy to avoid import errors when UNGAR not installed)
-    from tunix_rt_backend.integrations.ungar.high_card_duel import (
-        generate_high_card_duel_traces,
+    from tunix_rt_backend.services.ungar_generator import (
+        generate_high_card_duel_traces as generate_traces,
     )
 
-    # Generate traces
-    traces = generate_high_card_duel_traces(count=request.count, seed=request.seed)
-
-    # Persist to database if requested
-    trace_ids: list[uuid.UUID] = []
-    if request.persist:
-        for trace in traces:
-            db_trace = Trace(
-                trace_version=trace.trace_version,
-                payload=trace.model_dump(),
-            )
-            db.add(db_trace)
-            await db.commit()
-            await db.refresh(db_trace)
-            trace_ids.append(db_trace.id)
-    else:
-        # Generate placeholder IDs for preview
-        trace_ids = [uuid.uuid4() for _ in traces]
-
-    # Build preview (first 3 traces, metadata only)
-    preview = [
-        {
-            "trace_id": str(trace_ids[i]),
-            "game": trace.meta.get("game") if trace.meta else None,
-            "result": trace.meta.get("result") if trace.meta else None,
-            "my_card": trace.meta.get("my_card") if trace.meta else None,
-        }
-        for i, trace in enumerate(traces[:3])
-    ]
+    # Delegate to service layer
+    try:
+        trace_ids, preview = await generate_traces(request, db)
+    except ValueError as e:
+        # Convert service-level ValueError to HTTP 501
+        raise HTTPException(
+            status_code=status.HTTP_501_NOT_IMPLEMENTED,
+            detail=str(e),
+        )
 
     return UngarGenerateResponse(trace_ids=trace_ids, preview=preview)
 
@@ -524,51 +488,10 @@ async def ungar_export_high_card_duel_jsonl(
         If trace_ids is provided, only those traces are exported.
         Otherwise, exports the most recent traces up to limit.
     """
-    # Build query
-    if trace_ids:
-        # Parse comma-separated UUIDs
-        ids = [uuid.UUID(tid.strip()) for tid in trace_ids.split(",")]
-        result = await db.execute(select(Trace).where(Trace.id.in_(ids)))
-    else:
-        # Get most recent traces with source="ungar" in metadata
-        # Note: We fetch all traces and filter in Python for compatibility
-        # (JSON querying syntax varies between SQLite and PostgreSQL)
-        result = await db.execute(
-            select(Trace)
-            .order_by(Trace.created_at.desc())
-            .limit(limit * 10)  # Fetch more to account for filtering
-        )
+    from tunix_rt_backend.services.ungar_generator import export_high_card_duel_jsonl
 
-    all_traces = result.scalars().all()
-
-    # Filter for UNGAR traces (Python-level filtering for DB compatibility)
-    db_traces = [t for t in all_traces if t.payload.get("meta", {}).get("source") == "ungar"][
-        :limit
-    ]
-
-    # Convert to JSONL
-    import json
-
-    lines = []
-    for db_trace in db_traces:
-        trace_payload = ReasoningTrace(**db_trace.payload)
-
-        # Build Tunix-friendly JSONL record
-        record = {
-            "id": str(db_trace.id),
-            "prompts": trace_payload.prompt,  # Use 'prompts' for Tunix compatibility
-            "trace_steps": [step.content for step in trace_payload.steps],
-            "final_answer": trace_payload.final_answer,
-            "metadata": {
-                "created_at": db_trace.created_at.isoformat(),
-                "trace_version": db_trace.trace_version,
-                **(trace_payload.meta or {}),
-            },
-        }
-        lines.append(json.dumps(record))
-
-    # Return as NDJSON
-    content = "\n".join(lines) + "\n" if lines else ""
+    # Delegate to service layer
+    content = await export_high_card_duel_jsonl(db, limit, trace_ids)
     return Response(content=content, media_type="application/x-ndjson")
 
 

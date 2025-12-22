@@ -10,8 +10,16 @@ Organization:
 
 from tunix_rt_backend.services.datasets_export import export_dataset_to_jsonl
 from tunix_rt_backend.services.traces_batch import create_traces_batch
+from tunix_rt_backend.services.ungar_generator import (
+    check_ungar_status,
+    export_high_card_duel_jsonl,
+    generate_high_card_duel_traces,
+)
 
 __all__ = [
     "create_traces_batch",
     "export_dataset_to_jsonl",
+    "check_ungar_status",
+    "generate_high_card_duel_traces",
+    "export_high_card_duel_jsonl",
 ]
