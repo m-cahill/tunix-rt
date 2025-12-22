@@ -1,3 +1,6 @@
+# Dependabot configuration for automated dependency updates
+# Documentation: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates
+
 version: 2
 updates:
   # Backend Python dependencies
@@ -7,16 +10,20 @@ updates:
       interval: "weekly"
       day: "monday"
     open-pull-requests-limit: 5
-    ignore:
-      # Ignore major version updates to reduce churn
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-    commit-message:
-      prefix: "chore(deps)"
-      include: "scope"
     labels:
       - "dependencies"
       - "backend"
+    groups:
+      # Group minor/patch updates together
+      backend-dev-dependencies:
+        patterns:
+          - "pytest*"
+          - "mypy*"
+          - "ruff*"
+          - "coverage*"
+        update-types:
+          - "minor"
+          - "patch"
 
   # Frontend npm dependencies
   - package-ecosystem: "npm"
@@ -25,45 +32,59 @@ updates:
       interval: "weekly"
       day: "monday"
     open-pull-requests-limit: 5
-    ignore:
-      # Ignore major version updates to reduce churn
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-    commit-message:
-      prefix: "chore(deps)"
-      include: "scope"
     labels:
       - "dependencies"
       - "frontend"
+    groups:
+      # Group React and related updates
+      frontend-react:
+        patterns:
+          - "react*"
+          - "@types/react*"
+        update-types:
+          - "minor"
+          - "patch"
+      # Group Vite and Vitest updates (deferred to future milestone)
+      frontend-build-tools:
+        patterns:
+          - "vite*"
+          - "vitest*"
+        update-types:
+          - "patch"
+    # Ignore major version updates for Vite/Vitest (handled separately in M12+)
+    ignore:
+      - dependency-name: "vite"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "vitest"
+        update-types: ["version-update:semver-major"]
 
-  # E2E test dependencies
+  # E2E Playwright dependencies
   - package-ecosystem: "npm"
     directory: "/e2e"
     schedule:
       interval: "weekly"
       day: "monday"
-    open-pull-requests-limit: 5
-    ignore:
-      # Ignore major version updates to reduce churn
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-    commit-message:
-      prefix: "chore(deps)"
-      include: "scope"
+    open-pull-requests-limit: 3
     labels:
       - "dependencies"
       - "e2e"
 
-  # GitHub Actions
+  # GitHub Actions (SHA pinning support)
+  # M11 Phase 1: Automated updates for SHA-pinned actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
       day: "monday"
-    commit-message:
-      prefix: "chore(ci)"
-      include: "scope"
+    open-pull-requests-limit: 5
     labels:
       - "dependencies"
       - "ci"
-
+    # Group all GitHub Actions updates together
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
