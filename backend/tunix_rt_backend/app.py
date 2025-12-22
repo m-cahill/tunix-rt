@@ -13,7 +13,7 @@ from tunix_rt_backend.db.base import get_db
 from tunix_rt_backend.db.models import Score, Trace
 from tunix_rt_backend.helpers.traces import get_trace_or_404
 from tunix_rt_backend.services.datasets_export import export_dataset_to_jsonl
-from tunix_rt_backend.services.traces_batch import create_traces_batch as create_traces_batch_service
+from tunix_rt_backend.services.traces_batch import create_traces_batch_optimized
 from tunix_rt_backend.redi_client import MockRediClient, RediClient, RediClientProtocol
 from tunix_rt_backend.schemas import (
     CompareResponse,
@@ -200,9 +200,9 @@ async def create_traces_batch_endpoint(
     Note:
         Maximum batch size is 1000 traces per request.
     """
-    # Delegate to service layer
+    # Delegate to service layer (optimized version with bulk refresh)
     try:
-        return await create_traces_batch_service(traces, db)
+        return await create_traces_batch_optimized(traces, db)
     except ValueError as e:
         # Convert service-level ValueError to HTTP 400
         raise HTTPException(
