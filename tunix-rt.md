@@ -789,12 +789,24 @@ docs: update README
 - **Guardrails**: Core runtime never requires UNGAR; graceful degradation with 501 responses
 - **Coverage maintained**: 90% line, 88% branch
 
-## Next Steps (M8+)
+## Completed Milestones
 
-1. **M8**: Multi-game UNGAR support (Mini Spades, Gin Rummy)
-2. **M9**: Tunix SFT training workflow integration
-3. **M10**: Richer trace schemas with reasoning explanations
-4. **M11**: Production deployment (Netlify + Render)
+### M8: Dataset & Training Bridge v1 ✅
+- Dataset manifest system (file-based, versioned)
+- Dataset build endpoint (latest/random strategies)
+- Dataset export endpoint (trace + tunix_sft formats)
+- Tunix SFT prompt renderer (Gemma chat template)
+- Training smoke harness (optional backend[training] dependency)
+- M7 hardening (type comments, logging, E2E, quick start)
+- 23 new tests (13 dataset + 9 renderer + 1 E2E)
+- Documentation: M08_BASELINE.md, M08_SUMMARY.md, updated README
+
+## Next Steps (M9+)
+
+1. **M9**: Evaluation Loop v2 + Actual Tunix SFT Run
+2. **M10**: Multi-game UNGAR support (Mini Spades, Gin Rummy)
+3. **M11**: Richer trace schemas with reasoning explanations
+4. **M12**: Production deployment (Netlify + Render)
 
 ## Architecture Decisions
 
