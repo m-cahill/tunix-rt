@@ -4,6 +4,7 @@ from tunix_rt_backend.schemas.dataset import (
     DatasetBuildRequest,
     DatasetBuildResponse,
     DatasetManifest,
+    ExportFormat,
 )
 from tunix_rt_backend.schemas.score import (
     CompareResponse,
@@ -48,4 +49,5 @@ __all__ = [
     "DatasetBuildRequest",
     "DatasetBuildResponse",
     "DatasetManifest",
+    "ExportFormat",
 ]

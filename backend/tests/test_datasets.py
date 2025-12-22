@@ -502,7 +502,7 @@ class TestDatasetExportEndpoint:
 
     @pytest.mark.asyncio
     async def test_export_dataset_invalid_format(self, client: AsyncClient):
-        """Test that invalid format parameter returns 422."""
+        """Test that invalid format parameter returns 422 (FastAPI automatic validation)."""
         # Create minimal trace + dataset first
         await client.post(
             "/api/traces",
@@ -530,5 +530,18 @@ class TestDatasetExportEndpoint:
             "/api/datasets/format_test_ds-v1/export.jsonl?format=invalid_format"
         )
 
+        # FastAPI automatic validation for Literal type returns 422
         assert response.status_code == 422
-        assert "invalid" in response.json()["detail"].lower()
+        # FastAPI/Pydantic validation returns "detail" as a list of error objects
+        response_json = response.json()
+        assert "detail" in response_json
+        # Verify it's a validation error (detail is list of dicts with error info)
+        if isinstance(response_json["detail"], list):
+            # Pydantic validation format: [{"type": "...", "loc": [...], "msg": "..."}]
+            assert len(response_json["detail"]) > 0
+            # Check that the error mentions the format parameter
+            error_str = str(response_json["detail"])
+            assert "format" in error_str.lower()
+        else:
+            # Old format (manual validation) - should not happen after M10 refactor
+            assert "invalid" in response_json["detail"].lower()

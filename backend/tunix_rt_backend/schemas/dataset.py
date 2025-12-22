@@ -10,6 +10,9 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
+# Export format types for dataset export endpoint
+ExportFormat = Literal["trace", "tunix_sft", "training_example"]
+
 
 class DatasetBuildRequest(BaseModel):
     """Request to build a new dataset from traces.

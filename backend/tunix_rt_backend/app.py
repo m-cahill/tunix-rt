@@ -17,6 +17,7 @@ from tunix_rt_backend.schemas import (
     CompareResponse,
     DatasetBuildRequest,
     DatasetBuildResponse,
+    ExportFormat,
     PaginationInfo,
     ReasoningTrace,
     ScoreRequest,
@@ -32,6 +33,8 @@ from tunix_rt_backend.schemas import (
     UngarStatusResponse,
 )
 from tunix_rt_backend.scoring import baseline_score
+from tunix_rt_backend.services.datasets_export import export_dataset_to_jsonl
+from tunix_rt_backend.services.traces_batch import create_traces_batch_optimized
 from tunix_rt_backend.settings import settings
 
 app = FastAPI(
@@ -173,7 +176,7 @@ async def create_trace(
     response_model=TraceBatchCreateResponse,
     status_code=status.HTTP_201_CREATED,
 )
-async def create_traces_batch(
+async def create_traces_batch_endpoint(
     traces: list[ReasoningTrace],
     db: Annotated[AsyncSession, Depends(get_db)],
 ) -> TraceBatchCreateResponse:
@@ -197,51 +200,15 @@ async def create_traces_batch(
     Note:
         Maximum batch size is 1000 traces per request.
     """
-    # Validate batch size
-    if not traces:
+    # Delegate to service layer (optimized version with bulk refresh)
+    try:
+        return await create_traces_batch_optimized(traces, db)
+    except ValueError as e:
+        # Convert service-level ValueError to HTTP 400
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Batch must contain at least one trace",
+            detail=str(e),
         )
-
-    max_batch_size = 1000
-    if len(traces) > max_batch_size:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Batch size ({len(traces)}) exceeds maximum ({max_batch_size})",
-        )
-
-    # Create all trace models
-    db_traces = []
-    for trace in traces:
-        db_trace = Trace(
-            trace_version=trace.trace_version,
-            payload=trace.model_dump(),
-        )
-        db_traces.append(db_trace)
-
-    # Insert all traces in a single transaction
-    db.add_all(db_traces)
-    await db.commit()
-
-    # Refresh all traces to get generated IDs and timestamps
-    for db_trace in db_traces:
-        await db.refresh(db_trace)
-
-    # Build response
-    created_traces = [
-        TraceCreateResponse(
-            id=db_trace.id,
-            created_at=db_trace.created_at,
-            trace_version=db_trace.trace_version,
-        )
-        for db_trace in db_traces
-    ]
-
-    return TraceBatchCreateResponse(
-        created_count=len(created_traces),
-        traces=created_traces,
-    )
 
 
 @app.get("/api/traces/compare", response_model=CompareResponse)
@@ -733,7 +700,7 @@ async def build_dataset(
 async def export_dataset(
     dataset_key: str,
     db: Annotated[AsyncSession, Depends(get_db)],
-    format: str = "trace",
+    format: ExportFormat = "trace",
 ) -> Response:
     """Export a dataset as JSONL.
 
@@ -753,18 +720,9 @@ async def export_dataset(
 
     Raises:
         HTTPException: 404 if dataset not found
-        HTTPException: 422 if format is invalid
+        HTTPException: 422 if format is invalid (FastAPI validates automatically)
     """
     from tunix_rt_backend.helpers.datasets import load_manifest
-    from tunix_rt_backend.training.renderers import render_tunix_sft_prompt
-    from tunix_rt_backend.training.schema import TrainingExample
-
-    # Validate format
-    if format not in ["trace", "tunix_sft", "training_example"]:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=f"Invalid format: {format}. Must be 'trace', 'tunix_sft', or 'training_example'",
-        )
 
     # Load manifest
     try:
@@ -775,89 +733,8 @@ async def export_dataset(
             detail=f"Dataset not found: {dataset_key}",
         )
 
-    # Fetch traces by IDs from manifest
-    result = await db.execute(select(Trace).where(Trace.id.in_(manifest.trace_ids)))
-    db_traces = result.scalars().all()
-
-    # Create a mapping for fast lookup
-    trace_map = {trace.id: trace for trace in db_traces}
-
-    # Build JSONL output in manifest order
-    import json
-
-    lines = []
-    for trace_id in manifest.trace_ids:
-        trace = trace_map.get(trace_id)
-        if not trace:
-            # Trace was deleted after manifest was created; skip it
-            continue
-
-        trace_payload = ReasoningTrace(**trace.payload)
-
-        if format == "trace":
-            # Build JSONL record (trace format - same as UNGAR export)
-            record = {
-                "id": str(trace.id),
-                "prompts": trace_payload.prompt,  # Use 'prompts' for Tunix compatibility
-                "trace_steps": [step.content for step in trace_payload.steps],
-                "final_answer": trace_payload.final_answer,
-                "metadata": {
-                    "created_at": trace.created_at.isoformat(),
-                    "trace_version": trace.trace_version,
-                    **(trace_payload.meta or {}),
-                },
-            }
-        elif format == "tunix_sft":
-            # Build SFT-formatted record with rendered prompt
-            trace_data = {
-                "prompt": trace_payload.prompt,
-                "trace_steps": [step.content for step in trace_payload.steps],
-                "final_answer": trace_payload.final_answer,
-            }
-            rendered_prompt = render_tunix_sft_prompt(trace_data)
-
-            record = {
-                "id": str(trace.id),
-                "prompts": rendered_prompt,  # Rendered Tunix SFT prompt
-                "final_answer": trace_payload.final_answer,
-                "metadata": {
-                    "created_at": trace.created_at.isoformat(),
-                    "trace_version": trace.trace_version,
-                    "format": "tunix_sft",
-                    **(trace_payload.meta or {}),
-                },
-            }
-        else:  # format == "training_example"
-            # Build TrainingExample (prompt/response pair)
-            # Prompt: original question with instruction
-            prompt = f"{trace_payload.prompt}\n\nPlease show your reasoning steps."
-
-            # Response: reasoning steps + final answer
-            reasoning_steps = [step.content for step in trace_payload.steps]
-            response_parts = []
-            if reasoning_steps:
-                response_parts.append("Reasoning:")
-                for i, step in enumerate(reasoning_steps, 1):
-                    response_parts.append(f"{i}. {step}")
-            response_parts.append(f"Answer: {trace_payload.final_answer}")
-            response = "\n".join(response_parts)
-
-            # Create TrainingExample
-            example = TrainingExample(
-                prompt=prompt,
-                response=response,
-                metadata={
-                    "source_trace_id": str(trace.id),
-                    "created_at": trace.created_at.isoformat(),
-                    "trace_version": trace.trace_version,
-                    **(trace_payload.meta or {}),
-                },
-            )
-
-            record = example.model_dump(mode="json")
-
-        lines.append(json.dumps(record))
+    # Delegate to service layer for export formatting
+    content = await export_dataset_to_jsonl(manifest, db, format)
 
     # Return as NDJSON
-    content = "\n".join(lines) + "\n" if lines else ""
     return Response(content=content, media_type="application/x-ndjson")
