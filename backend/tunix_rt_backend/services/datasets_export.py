@@ -5,6 +5,7 @@ This module handles dataset export formatting logic for different output formats
 
 import json
 import uuid
+from typing import Any
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -69,7 +70,7 @@ async def export_dataset_to_jsonl(
     return "\n".join(lines) + "\n" if lines else ""
 
 
-def _build_trace_record(trace: Trace, trace_payload: ReasoningTrace) -> dict:
+def _build_trace_record(trace: Trace, trace_payload: ReasoningTrace) -> dict[str, Any]:
     """Build trace format record (raw trace data).
 
     Args:
@@ -92,7 +93,7 @@ def _build_trace_record(trace: Trace, trace_payload: ReasoningTrace) -> dict:
     }
 
 
-def _build_tunix_sft_record(trace: Trace, trace_payload: ReasoningTrace) -> dict:
+def _build_tunix_sft_record(trace: Trace, trace_payload: ReasoningTrace) -> dict[str, Any]:
     """Build Tunix SFT format record (with rendered prompts).
 
     Args:
@@ -125,7 +126,7 @@ def _build_tunix_sft_record(trace: Trace, trace_payload: ReasoningTrace) -> dict
     }
 
 
-def _build_training_example_record(trace: Trace, trace_payload: ReasoningTrace) -> dict:
+def _build_training_example_record(trace: Trace, trace_payload: ReasoningTrace) -> dict[str, Any]:
     """Build TrainingExample format record (prompt/response pairs).
 
     Args:
