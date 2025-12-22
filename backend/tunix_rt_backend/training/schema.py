@@ -6,7 +6,7 @@ produced from traces/datasets at training time and never stored in the database.
 """
 
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any
 
 from pydantic import BaseModel, Field
@@ -69,7 +69,7 @@ class TrainingManifest(BaseModel):
 
     run_id: uuid.UUID = Field(default_factory=uuid.uuid4, description="Training run ID")
     created_at: datetime = Field(
-        default_factory=lambda: datetime.utcnow(), description="Run creation time"
+        default_factory=lambda: datetime.now(UTC), description="Run creation time (UTC)"
     )
     dataset_key: str = Field(..., description="Dataset used for training")
     training_config: dict[str, Any] = Field(
@@ -121,7 +121,7 @@ class EvaluationManifest(BaseModel):
     eval_id: uuid.UUID = Field(default_factory=uuid.uuid4, description="Evaluation run ID")
     run_id: uuid.UUID | None = Field(None, description="Associated training run ID")
     created_at: datetime = Field(
-        default_factory=lambda: datetime.utcnow(), description="Eval creation time"
+        default_factory=lambda: datetime.now(UTC), description="Eval creation time (UTC)"
     )
     model_checkpoint: str = Field(..., description="Model checkpoint path")
     eval_set_path: str = Field(..., description="Evaluation set file path")
