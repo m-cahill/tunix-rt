@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M8 Complete** ✅  
-**Coverage:** 84% Line (core), 89% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic | **Features:** Dataset Pipelines, Tunix SFT Rendering, Training Bridge & UNGAR Integration
+**Milestone M9 Complete** ✅  
+**Coverage:** 80% Line (core), 58% Branch | **Security:** Baseline Operational | **Database:** PostgreSQL + Alembic | **Features:** Reproducible Training Loop, Eval Harness, Batch Import & TrainingExample Schema
 
 ## Overview
 
@@ -801,12 +801,24 @@ docs: update README
 - 23 new tests (13 dataset + 9 renderer + 1 E2E)
 - Documentation: M08_BASELINE.md, M08_SUMMARY.md, updated README
 
-## Next Steps (M9+)
+### M9: Reproducible Training Loop v1 (SFT) ✅
+- TrainingExample schema and manifests (5 schemas total)
+- Enhanced Gemma IT formatting helpers
+- Three dataset export formats (trace, tunix_sft, training_example)
+- Batch trace import endpoint (POST /api/traces/batch)
+- Training infrastructure (train_sft_tunix.py, eval scripts)
+- Static evaluation set (25 diverse examples)
+- Evaluation loop with delta reporting
+- 39 new tests (127 total), 80% line coverage
+- 5 comprehensive docs (BASELINE, DATASET_FORMAT, TRAINING_QUICKSTART, EVAL_LOOP, SUMMARY)
+- ADR-005: Coverage Gates Strategy
 
-1. **M9**: Evaluation Loop v2 + Actual Tunix SFT Run
-2. **M10**: Multi-game UNGAR support (Mini Spades, Gin Rummy)
-3. **M11**: Richer trace schemas with reasoning explanations
-4. **M12**: Production deployment (Netlify + Render)
+## Next Steps (M10+)
+
+1. **M10**: App Layer Refactor + Actual Tunix SFT Integration
+2. **M11**: Evaluation Loop Expansion + Score-Conditioned Filtering
+3. **M12**: Multi-game UNGAR support (Mini Spades, Gin Rummy)
+4. **M13**: Production deployment (Netlify + Render)
 
 ## Architecture Decisions
 
@@ -815,6 +827,8 @@ Key architectural decisions are documented in Architecture Decision Records (ADR
 - **ADR-001**: Mock/Real Mode RediAI Integration Pattern
 - **ADR-002**: CI Conditional Jobs Strategy with Path Filtering
 - **ADR-003**: Coverage Strategy (Line + Branch Thresholds)
+- **ADR-004**: Optional Code Coverage Strategy
+- **ADR-005**: Coverage Gates for Optional and Expanding Runtime Code (M09)
 
 See `docs/adr/` for full details.
 
