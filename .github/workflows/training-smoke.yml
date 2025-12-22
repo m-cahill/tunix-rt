@@ -19,31 +19,31 @@ jobs:
     defaults:
       run:
         working-directory: backend
-    
+
     steps:
       - uses: actions/checkout@v4
-      
-      - uses: actions/setup-python@v5
+
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
           python-version: '3.11'
           cache: 'pip'
           cache-dependency-path: 'backend/pyproject.toml'
-      
+
       - name: Install dependencies with training extra
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e ".[dev,training]"
-      
+
       - name: Verify training dependencies
         run: |
           python -c "import jax; print(f'JAX version: {jax.__version__}')"
           python -c "import flax; print(f'Flax version: {flax.__version__}')"
-      
+
       - name: Create test dataset
         run: |
           # Run a quick test to create a small dataset
           pytest tests/test_datasets.py::TestDatasetBuildEndpoint::test_build_dataset_latest_strategy -v
-      
+
       - name: Find generated dataset
         id: find_dataset
         run: |
@@ -57,15 +57,15 @@ jobs:
           from pathlib import Path
           from datetime import datetime, timezone
           import uuid
-          
+
           # Create datasets directory
           datasets_dir = Path('datasets')
           datasets_dir.mkdir(exist_ok=True)
-          
+
           # Create a test dataset
           dataset_dir = datasets_dir / 'test_smoke-v1'
           dataset_dir.mkdir(exist_ok=True)
-          
+
           # Create manifest
           manifest = {
               'dataset_key': 'test_smoke-v1',
@@ -81,10 +81,10 @@ jobs:
               'trace_count': 0,
               'stats': {}
           }
-          
+
           with open(dataset_dir / 'manifest.json', 'w') as f:
               json.dump(manifest, f, indent=2)
-          
+
           # Create sample JSONL
           with open(dataset_dir / 'export.jsonl', 'w') as f:
               for i in range(5):
@@ -95,18 +95,18 @@ jobs:
                       'metadata': {'format': 'tunix_sft', 'index': i}
                   }
                   f.write(json.dumps(record) + '\n')
-          
+
           print(f'Created test dataset at {dataset_dir}')
             "
             DATASET_DIR="backend/datasets/test_smoke-v1/"
           fi
           echo "dataset_dir=$DATASET_DIR" >> $GITHUB_OUTPUT
-      
+
       - name: Run smoke test
         run: |
           # Run smoke test on the dataset
           JSONL_FILE="${{ steps.find_dataset.outputs.dataset_dir }}/export.jsonl"
-          
+
           # If export.jsonl doesn't exist, create it from manifest
           if [ ! -f "$JSONL_FILE" ]; then
             echo "Creating export.jsonl for smoke test..."
@@ -114,7 +114,7 @@ jobs:
             python -c "
           import json
           import uuid
-          
+
           # Create minimal valid JSONL
           with open('$JSONL_FILE', 'w') as f:
               for i in range(5):
@@ -127,19 +127,18 @@ jobs:
                   f.write(json.dumps(record) + '\n')
             "
           fi
-          
+
           # Run the smoke test
           python training/sft_smoke.py "$JSONL_FILE" --samples 5
-      
+
       - name: Summary
         if: success()
         run: |
           echo "✅ Training smoke test PASSED"
           echo "Dataset pipeline validated with JAX/Flax dependencies"
-      
+
       - name: Failure notice
         if: failure()
         run: |
           echo "⚠️  Training smoke test failed (non-blocking)"
           echo "This is an optional workflow - it does not block main CI"
-
