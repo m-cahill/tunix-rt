@@ -17,6 +17,7 @@ from tunix_rt_backend.schemas import (
     CompareResponse,
     DatasetBuildRequest,
     DatasetBuildResponse,
+    ExportFormat,
     PaginationInfo,
     ReasoningTrace,
     ScoreRequest,
@@ -733,7 +734,7 @@ async def build_dataset(
 async def export_dataset(
     dataset_key: str,
     db: Annotated[AsyncSession, Depends(get_db)],
-    format: str = "trace",
+    format: ExportFormat = "trace",
 ) -> Response:
     """Export a dataset as JSONL.
 
@@ -753,18 +754,11 @@ async def export_dataset(
 
     Raises:
         HTTPException: 404 if dataset not found
-        HTTPException: 422 if format is invalid
+        HTTPException: 422 if format is invalid (FastAPI validates automatically)
     """
     from tunix_rt_backend.helpers.datasets import load_manifest
     from tunix_rt_backend.training.renderers import render_tunix_sft_prompt
     from tunix_rt_backend.training.schema import TrainingExample
-
-    # Validate format
-    if format not in ["trace", "tunix_sft", "training_example"]:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=f"Invalid format: {format}. Must be 'trace', 'tunix_sft', or 'training_example'",
-        )
 
     # Load manifest
     try:
