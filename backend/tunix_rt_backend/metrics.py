@@ -1,6 +1,6 @@
 """Prometheus metrics for Tunix RT."""
 
-from prometheus_client import Counter, Histogram
+from prometheus_client import Counter, Histogram  # type: ignore
 
 TUNIX_RUNS_TOTAL = Counter(
     "tunix_runs_total",

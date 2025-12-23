@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any
 
-from sqlalchemy import JSON, DateTime, Float, Index, Integer, String, Text
+from sqlalchemy import JSON, DateTime, Float, ForeignKey, Index, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from tunix_rt_backend.db.base import Base
@@ -74,3 +74,23 @@ class TunixRun(Base):
             f"<TunixRun(run_id={self.run_id}, dataset_key={self.dataset_key}, "
             f"mode={self.mode}, status={self.status}, created_at={self.created_at})>"
         )
+
+
+class TunixRunLogChunk(Base):
+    """Log chunk for real-time streaming of Tunix run output."""
+
+    __tablename__ = "tunix_run_log_chunks"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    run_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("tunix_runs.run_id", ondelete="CASCADE"), nullable=False
+    )
+    seq: Mapped[int] = mapped_column(Integer, nullable=False)
+    stream: Mapped[str] = mapped_column(String(16), nullable=False)  # 'stdout' or 'stderr'
+    chunk: Mapped[str] = mapped_column(Text, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+    )
+
+    __table_args__ = (Index("ix_tunix_run_log_chunks_run_id_seq", "run_id", "seq"),)

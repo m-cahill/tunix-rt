@@ -1,21 +1,25 @@
 """FastAPI application with health endpoints."""
 
+import asyncio
+import json
 import logging
 import time
 import uuid
+from collections.abc import AsyncGenerator
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, StreamingResponse
 
 # M15: Observability
-from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest  # type: ignore
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from tunix_rt_backend.db.base import get_db
-from tunix_rt_backend.db.models import Score, Trace
+from tunix_rt_backend.db.models import Score, Trace, TunixRun, TunixRunLogChunk
 from tunix_rt_backend.helpers.traces import get_trace_or_404
 from tunix_rt_backend.metrics import (
     TUNIX_DB_WRITE_LATENCY_MS,
@@ -50,7 +54,8 @@ from tunix_rt_backend.schemas import (
 )
 from tunix_rt_backend.scoring import baseline_score
 from tunix_rt_backend.services.datasets_export import export_dataset_to_jsonl
-from tunix_rt_backend.services.traces_batch import create_traces_batch_optimized
+from tunix_rt_backend.services.traces_batch import create_traces_batch
+from tunix_rt_backend.services.tunix_execution import cancel_tunix_run
 from tunix_rt_backend.settings import settings
 
 # Configure logger
@@ -231,7 +236,7 @@ async def create_traces_batch_endpoint(
     """
     # Delegate to service layer (optimized version with bulk refresh)
     try:
-        return await create_traces_batch_optimized(traces, db)
+        return await create_traces_batch(traces, db)
     except ValueError as e:
         # Convert service-level ValueError to HTTP 400
         raise HTTPException(
@@ -1038,6 +1043,10 @@ async def get_tunix_run(
         message = f"{db_run.mode.capitalize()} execution timed out after 30 seconds"
     elif db_run.status == "running":
         message = f"{db_run.mode.capitalize()} execution in progress"
+    elif db_run.status == "cancel_requested":
+        message = f"{db_run.mode.capitalize()} execution cancellation requested"
+    elif db_run.status == "cancelled":
+        message = f"{db_run.mode.capitalize()} execution cancelled"
     else:  # pending
         message = f"{db_run.mode.capitalize()} execution pending"
 
@@ -1057,3 +1066,231 @@ async def get_tunix_run(
         completed_at=db_run.completed_at.isoformat() if db_run.completed_at else None,
         message=message,
     )
+
+
+@app.get("/api/tunix/runs/{run_id}/logs")
+async def stream_run_logs(
+    run_id: uuid.UUID,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    since_seq: int = 0,
+) -> StreamingResponse:
+    """Stream Tunix run logs via SSE (M16).
+
+    Args:
+        run_id: UUID of the run
+        since_seq: Sequence number to start from (default 0)
+        db: Database session
+
+    Returns:
+        StreamingResponse (SSE) with log events
+    """
+
+    async def event_generator() -> AsyncGenerator[str, None]:
+        current_seq = since_seq
+
+        while True:
+            # Fetch new chunks
+            stmt = (
+                select(TunixRunLogChunk)
+                .where(TunixRunLogChunk.run_id == run_id)
+                .where(TunixRunLogChunk.seq > current_seq)
+                .order_by(TunixRunLogChunk.seq.asc())
+            )
+            result = await db.execute(stmt)
+            chunks = result.scalars().all()
+
+            if chunks:
+                for chunk in chunks:
+                    data = json.dumps(
+                        {
+                            "seq": chunk.seq,
+                            "stream": chunk.stream,
+                            "chunk": chunk.chunk,
+                            "created_at": chunk.created_at.isoformat(),
+                        }
+                    )
+                    yield f"event: log\ndata: {data}\n\n"
+                    current_seq = chunk.seq
+
+            # If no new chunks, check if run is finished
+            else:
+                run_stmt = select(TunixRun).where(TunixRun.run_id == run_id)
+                run_result = await db.execute(run_stmt)
+                run = run_result.scalar_one_or_none()
+
+                if not run:
+                    yield f"event: error\ndata: {json.dumps({'error': 'Run not found'})}\n\n"
+                    break
+
+                if run.status in ["completed", "failed", "timeout", "cancelled"]:
+                    # Final check for chunks in case race condition
+                    final_stmt = (
+                        select(TunixRunLogChunk)
+                        .where(TunixRunLogChunk.run_id == run_id)
+                        .where(TunixRunLogChunk.seq > current_seq)
+                        .order_by(TunixRunLogChunk.seq.asc())
+                    )
+                    final_result = await db.execute(final_stmt)
+                    final_chunks = final_result.scalars().all()
+
+                    for chunk in final_chunks:
+                        data = json.dumps(
+                            {
+                                "seq": chunk.seq,
+                                "stream": chunk.stream,
+                                "chunk": chunk.chunk,
+                                "created_at": chunk.created_at.isoformat(),
+                            }
+                        )
+                        yield f"event: log\ndata: {data}\n\n"
+
+                    yield f"event: status\ndata: {json.dumps({'status': run.status})}\n\n"
+                    break
+
+                # Send heartbeat
+                yield f"event: heartbeat\ndata: {json.dumps({'seq': current_seq})}\n\n"
+                await asyncio.sleep(1)
+
+    return StreamingResponse(event_generator(), media_type="text/event-stream")
+
+
+@app.post("/api/tunix/runs/{run_id}/cancel", status_code=status.HTTP_200_OK)
+async def cancel_run(
+    run_id: uuid.UUID,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> dict[str, str]:
+    """Cancel a pending or running Tunix run.
+
+    Args:
+        run_id: UUID of the run to cancel
+        db: Database session
+
+    Returns:
+        Status message
+
+    Raises:
+        HTTPException: 404 if run not found
+        HTTPException: 400 if run cannot be cancelled (already done)
+    """
+    try:
+        await cancel_tunix_run(run_id, db)
+    except ValueError as e:
+        if "Run not found" in str(e):
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=str(e),
+            )
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
+        )
+
+    return {"message": "Run cancellation requested"}
+
+
+@app.get("/api/tunix/runs/{run_id}/artifacts")
+async def list_artifacts(
+    run_id: uuid.UUID,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> dict[str, list[dict[str, str | int]]]:
+    """List artifacts for a Tunix run.
+
+    Scans the run output directory and returns a list of files.
+
+    Args:
+        run_id: UUID of the run
+        db: Database session
+
+    Returns:
+        List of artifacts with metadata
+    """
+    # Get run to find output_dir
+    run = await db.get(TunixRun, run_id)
+    if not run:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Run not found",
+        )
+
+    # Check config for output_dir
+    if not run.config or "output_dir" not in run.config:
+        # Fallback to default convention if not in config
+        output_dir = f"./output/tunix_run_{str(run.run_id)[:8]}"
+    else:
+        output_dir = run.config["output_dir"]
+        if not output_dir:
+            output_dir = f"./output/tunix_run_{str(run.run_id)[:8]}"
+
+    # Scan directory
+    artifacts: list[dict[str, str | int]] = []
+    try:
+        import os
+        from pathlib import Path
+
+        base_path = Path(output_dir)
+        if base_path.exists() and base_path.is_dir():
+            for entry in os.scandir(base_path):
+                if entry.is_file():
+                    artifacts.append(
+                        {
+                            "name": entry.name,
+                            "size": entry.stat().st_size,
+                            "path": entry.name,  # Only return relative name for security
+                        }
+                    )
+    except Exception as e:
+        logger.error(f"Error scanning artifacts for {run_id}: {e}")
+        # Return empty list or error? Empty list implies no artifacts.
+
+    return {"artifacts": artifacts}
+
+
+@app.get("/api/tunix/runs/{run_id}/artifacts/{filename}/download")
+async def download_artifact(
+    run_id: uuid.UUID,
+    filename: str,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> FileResponse:
+    """Download an artifact file.
+
+    Args:
+        run_id: UUID of the run
+        filename: Name of the file to download
+        db: Database session
+
+    Returns:
+        FileResponse stream
+    """
+    # Get run to find output_dir
+    run = await db.get(TunixRun, run_id)
+    if not run:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Run not found",
+        )
+
+    if not run.config or "output_dir" not in run.config:
+        output_dir = f"./output/tunix_run_{str(run.run_id)[:8]}"
+    else:
+        output_dir = run.config["output_dir"] or f"./output/tunix_run_{str(run.run_id)[:8]}"
+
+    # Validate path
+    from pathlib import Path
+
+    base_path = Path(output_dir).resolve()
+    file_path = (base_path / filename).resolve()
+
+    # Path traversal check
+    if not str(file_path).startswith(str(base_path)):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Invalid artifact path",
+        )
+
+    if not file_path.exists() or not file_path.is_file():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Artifact not found",
+        )
+
+    return FileResponse(path=file_path, filename=filename)
