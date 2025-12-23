@@ -1,17 +1,25 @@
 """FastAPI application with health endpoints."""
 
+import logging
+import time
 import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
+
+# M15: Observability
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from tunix_rt_backend.db.base import get_db
 from tunix_rt_backend.db.models import Score, Trace
 from tunix_rt_backend.helpers.traces import get_trace_or_404
+from tunix_rt_backend.metrics import (
+    TUNIX_DB_WRITE_LATENCY_MS,
+)
 from tunix_rt_backend.redi_client import MockRediClient, RediClient, RediClientProtocol
 from tunix_rt_backend.schemas import (
     CompareResponse,
@@ -35,6 +43,7 @@ from tunix_rt_backend.schemas import (
     TunixRunListResponse,
     TunixRunRequest,
     TunixRunResponse,
+    TunixRunStatusResponse,
     UngarGenerateRequest,
     UngarGenerateResponse,
     UngarStatusResponse,
@@ -43,6 +52,9 @@ from tunix_rt_backend.scoring import baseline_score
 from tunix_rt_backend.services.datasets_export import export_dataset_to_jsonl
 from tunix_rt_backend.services.traces_batch import create_traces_batch_optimized
 from tunix_rt_backend.settings import settings
+
+# Configure logger
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="Tunix RT Backend",
@@ -137,6 +149,12 @@ async def redi_health(
     return result
 
 
+@app.get("/metrics")
+async def metrics() -> Response:
+    """Expose Prometheus metrics (M15)."""
+    return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+
 @app.post(
     "/api/traces",
     response_model=TraceCreateResponse,
@@ -167,9 +185,13 @@ async def create_trace(
     )
 
     # Save to database
+    start_time = time.perf_counter()
     db.add(db_trace)
     await db.commit()
     await db.refresh(db_trace)
+    duration_ms = (time.perf_counter() - start_time) * 1000
+    logger.info(f"DB commit latency for create_trace: {duration_ms:.2f}ms")
+    TUNIX_DB_WRITE_LATENCY_MS.labels(operation="create_trace").observe(duration_ms)
 
     return TraceCreateResponse(
         id=db_trace.id,
@@ -766,67 +788,104 @@ async def tunix_generate_manifest(
 async def tunix_run(
     request: TunixRunRequest,
     db: Annotated[AsyncSession, Depends(get_db)],
+    mode: Annotated[str | None, Query()] = None,
 ) -> TunixRunResponse:
-    """Execute a Tunix training run (M13).
+    """Execute a Tunix training run (M13/M15).
 
-    This endpoint supports two execution modes:
+    This endpoint supports execution modes:
     - **dry-run** (default): Validates manifest + dataset without executing
     - **local**: Executes tunix CLI via subprocess with 30s timeout
+
+    M15 Update: Supports async execution via `?mode=async`.
+    - If `mode=async`, the run is enqueued (status=pending) and returns immediately.
+    - Otherwise, execution is synchronous (blocking).
 
     Args:
         request: Run configuration (dataset_key, model_id, hyperparameters, dry_run flag)
         db: Database session
+        mode: Execution strategy ("async" or None)
 
     Returns:
         Run response with execution status, logs, and metadata
 
     Raises:
-        HTTPException: 501 if Tunix not available and dry_run=False
+        HTTPException: 501 if Tunix not available and dry_run=False (and not async)
 
     Note:
         - Dry-run mode always works (no Tunix required)
         - Local mode requires Tunix to be installed (backend[tunix] extra)
-        - M13 does NOT persist run metadata to database (deferred to M14)
-        - Execution is synchronous (blocking) with 30s timeout
-
-    Example (dry-run):
-        ```
-        POST /api/tunix/run
-        {
-          "dataset_key": "my_dataset-v1",
-          "model_id": "google/gemma-2b-it",
-          "dry_run": true
-        }
-        ```
-
-    Example (local execution):
-        ```
-        POST /api/tunix/run
-        {
-          "dataset_key": "my_dataset-v1",
-          "model_id": "google/gemma-2b-it",
-          "dry_run": false
-        }
-        ```
+        - All runs are persisted to database (M14)
     """
     from tunix_rt_backend.integrations.tunix.availability import tunix_available
     from tunix_rt_backend.services.tunix_execution import execute_tunix_run
 
-    # Check Tunix availability for local execution
-    if not request.dry_run and not tunix_available():
+    async_mode = mode == "async"
+
+    # Check Tunix availability for local execution (unless dry-run or async)
+    # Note: If async, worker will check availability later.
+    # But for now, let's enforce it here too if not dry-run, to fail fast?
+    # Actually, if async, we might want to allow enqueueing even if this node doesn't have Tunix?
+    # But for simplicity, let's keep the check for now or skip it for async.
+    # The plan says "API can enqueue a run and return immediately".
+    # So strictly, we shouldn't check runtime here if async.
+    # But if dry_run=True, we don't check anyway.
+    # If dry_run=False and async=False, we check.
+
+    if not request.dry_run and not async_mode and not tunix_available():
         raise HTTPException(
             status_code=status.HTTP_501_NOT_IMPLEMENTED,
             detail="Tunix runtime not available. Install with: pip install -e '.[tunix]' "
             "or set dry_run=true to validate without executing.",
         )
 
-    # Execute run (dry-run or local)
-    return await execute_tunix_run(request, db)
+    # Execute run (dry-run, local, or async enqueue)
+    return await execute_tunix_run(request, db, async_mode=async_mode)
 
 
 # ================================================================================
 # M14: Tunix Run Registry Endpoints
 # ================================================================================
+
+
+@app.get("/api/tunix/runs/{run_id}/status", response_model=TunixRunStatusResponse)
+async def get_tunix_run_status(
+    run_id: uuid.UUID,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> TunixRunStatusResponse:
+    """Get status of a Tunix training run (M15).
+
+    Args:
+        run_id: UUID of the run
+        db: Database session
+
+    Returns:
+        TunixRunStatusResponse with status and timestamps
+
+    Raises:
+        HTTPException: 404 if run not found
+    """
+    from sqlalchemy import select
+
+    from tunix_rt_backend.db.models import TunixRun
+
+    # Fetch run
+    result = await db.execute(select(TunixRun).where(TunixRun.run_id == run_id))
+    db_run = result.scalar_one_or_none()
+
+    if db_run is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Tunix run not found: {run_id}",
+        )
+
+    return TunixRunStatusResponse(
+        run_id=str(db_run.run_id),
+        status=db_run.status,  # type: ignore[arg-type]
+        queued_at=db_run.created_at.isoformat(),
+        started_at=db_run.started_at.isoformat(),
+        completed_at=db_run.completed_at.isoformat() if db_run.completed_at else None,
+        exit_code=db_run.exit_code,
+    )
 
 
 @app.get("/api/tunix/runs", response_model=TunixRunListResponse)

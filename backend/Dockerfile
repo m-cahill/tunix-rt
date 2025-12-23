@@ -13,6 +13,8 @@ RUN pip install --no-cache-dir -e .
 
 # Copy application code
 COPY tunix_rt_backend/ ./tunix_rt_backend/
+COPY alembic/ ./alembic/
+COPY alembic.ini ./
 
 # Expose port
 EXPOSE 8000

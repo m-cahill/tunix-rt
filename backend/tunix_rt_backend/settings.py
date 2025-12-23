@@ -26,6 +26,9 @@ class Settings(BaseSettings):
 
     # Trace configuration
     trace_max_bytes: int = Field(default=1048576, ge=1024, le=10485760)  # 1MB default, max 10MB
+    tunix_output_max_bytes: int = Field(
+        default=10240, ge=1024, le=1048576
+    )  # 10KB default for stdout/stderr
 
     # RediAI integration
     rediai_mode: Literal["mock", "real"] = "mock"

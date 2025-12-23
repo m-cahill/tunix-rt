@@ -2,8 +2,9 @@
 
 import uuid
 from datetime import datetime, timezone
+from typing import Any
 
-from sqlalchemy import DateTime, Float, Index, Integer, String, Text
+from sqlalchemy import JSON, DateTime, Float, Index, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from tunix_rt_backend.db.base import Base
@@ -50,6 +51,7 @@ class TunixRun(Base):
         String(16), nullable=False
     )  # 'pending', 'running', 'completed', 'failed', 'timeout'
     exit_code: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    config: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
     started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     duration_seconds: Mapped[float | None] = mapped_column(Float, nullable=True)

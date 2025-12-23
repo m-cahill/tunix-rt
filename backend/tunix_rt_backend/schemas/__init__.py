@@ -33,6 +33,7 @@ from tunix_rt_backend.schemas.tunix import (
     TunixRunListResponse,
     TunixRunRequest,
     TunixRunResponse,
+    TunixRunStatusResponse,
     TunixStatusResponse,
 )
 from tunix_rt_backend.schemas.ungar import (
@@ -68,6 +69,7 @@ __all__ = [
     "TunixManifestResponse",
     "TunixRunRequest",
     "TunixRunResponse",
+    "TunixRunStatusResponse",
     "TunixRunListItem",
     "TunixRunListResponse",
     "ExecutionMode",

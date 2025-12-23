@@ -458,3 +458,32 @@ def test_tunix_cli_check():
     assert cli_status["accessible"] is True
     assert cli_status["version"] is not None
     assert cli_status["error"] is None
+
+
+@pytest.mark.asyncio
+async def test_async_enqueue_creates_pending_run(client: AsyncClient):
+    """Test async enqueue via ?mode=async."""
+    response = await client.post(
+        "/api/tunix/run?mode=async",
+        json={
+            "dataset_key": "any-dataset-v1",
+            "model_id": "google/gemma-2b-it",
+            "dry_run": True,
+        },
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert data["status"] == "pending"
+    assert data["mode"] == "dry-run"
+    assert "pending" in data["message"].lower()
+
+    run_id = data["run_id"]
+
+    # Verify status endpoint
+    status_response = await client.get(f"/api/tunix/runs/{run_id}/status")
+    assert status_response.status_code == status.HTTP_200_OK
+    status_data = status_response.json()
+    assert status_data["status"] == "pending"
+    assert status_data["run_id"] == run_id
+    assert status_data["queued_at"] is not None

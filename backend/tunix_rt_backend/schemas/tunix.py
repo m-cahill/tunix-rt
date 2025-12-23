@@ -233,6 +233,26 @@ class TunixRunResponse(BaseModel):
     message: str = Field(..., description="Status message")
 
 
+class TunixRunStatusResponse(BaseModel):
+    """Response from checking Tunix run status (M15).
+
+    Attributes:
+        run_id: Unique identifier for this run
+        status: Execution status
+        queued_at: ISO-8601 timestamp when run was queued (created_at)
+        started_at: ISO-8601 timestamp when execution started
+        completed_at: ISO-8601 timestamp when execution completed (None if still running)
+        exit_code: Process exit code (None if still running or dry-run)
+    """
+
+    run_id: str = Field(..., description="Unique run identifier (UUID)")
+    status: ExecutionStatus = Field(..., description="Execution status")
+    queued_at: str = Field(..., description="Queued timestamp (ISO-8601)")
+    started_at: str = Field(..., description="Start timestamp (ISO-8601)")
+    completed_at: str | None = Field(None, description="Completion timestamp (ISO-8601)")
+    exit_code: int | None = Field(None, description="Process exit code")
+
+
 # M14: Run registry schemas
 
 
