@@ -1,0 +1,27 @@
+﻿2025-12-23T01:52:34.6814440Z ##[group]Run actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b
+2025-12-23T01:52:34.6814827Z with:
+2025-12-23T01:52:34.6815025Z   name: backend-coverage-py3.12
+2025-12-23T01:52:34.6815250Z   path: backend/coverage.xml
+2025-12-23T01:52:34.6815459Z   if-no-files-found: warn
+2025-12-23T01:52:34.6815656Z   compression-level: 6
+2025-12-23T01:52:34.6815842Z   overwrite: false
+2025-12-23T01:52:34.6816021Z   include-hidden-files: false
+2025-12-23T01:52:34.6816228Z env:
+2025-12-23T01:52:34.6816439Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-23T01:52:34.6816831Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib/pkgconfig
+2025-12-23T01:52:34.6817211Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-23T01:52:34.6817540Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-23T01:52:34.6817877Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-23T01:52:34.6818208Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib
+2025-12-23T01:52:34.6818513Z ##[endgroup]
+2025-12-23T01:52:34.8989220Z With the provided path, there will be 1 file uploaded
+2025-12-23T01:52:34.8994424Z Artifact name is valid!
+2025-12-23T01:52:34.8995933Z Root directory input is valid!
+2025-12-23T01:52:34.9953270Z Beginning upload of artifact content to blob storage
+2025-12-23T01:52:35.1121655Z Uploaded bytes 3602
+2025-12-23T01:52:35.1340927Z Finished uploading artifact content to blob storage!
+2025-12-23T01:52:35.1345279Z SHA256 hash of uploaded artifact zip is 595bf2d008cca093ec3b0bcb7f4398a8d4dd1517e7a122d0852789635b1cdd8b
+2025-12-23T01:52:35.1349033Z Finalizing artifact upload
+2025-12-23T01:52:35.2213902Z Artifact backend-coverage-py3.12.zip successfully finalized. Artifact ID 4949075798
+2025-12-23T01:52:35.2215316Z Artifact backend-coverage-py3.12 has been successfully uploaded! Final size is 3602 bytes. Artifact ID is 4949075798
+2025-12-23T01:52:35.2223163Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20449012631/artifacts/4949075798

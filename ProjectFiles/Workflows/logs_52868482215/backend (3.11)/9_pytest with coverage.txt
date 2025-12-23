@@ -1,0 +1,79 @@
+﻿2025-12-23T01:52:30.4261151Z ##[group]Run pytest -q --cov=tunix_rt_backend --cov-branch --cov-config=.coveragerc --cov-report=term --cov-report=xml --cov-report=json:coverage.json
+2025-12-23T01:52:30.4262845Z [36;1mpytest -q --cov=tunix_rt_backend --cov-branch --cov-config=.coveragerc --cov-report=term --cov-report=xml --cov-report=json:coverage.json[0m
+2025-12-23T01:52:30.4309067Z shell: /usr/bin/bash -e {0}
+2025-12-23T01:52:30.4309309Z env:
+2025-12-23T01:52:30.4309571Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T01:52:30.4309985Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T01:52:30.4310386Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T01:52:30.4310731Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T01:52:30.4311075Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T01:52:30.4311419Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T01:52:30.4311712Z ##[endgroup]
+2025-12-23T01:52:34.0602380Z ........................................................................ [ 40%]
+2025-12-23T01:52:35.0664876Z ........ss......................................................s..s.... [ 80%]
+2025-12-23T01:52:36.4785172Z ..................ss.....ssssss.....                                     [100%]
+2025-12-23T01:52:36.4787216Z =============================== warnings summary ===============================
+2025-12-23T01:52:36.4789796Z tests/test_datasets.py::TestDatasetBuildEndpoint::test_build_dataset_random_requires_seed
+2025-12-23T01:52:36.4792706Z   /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/fastapi/routing.py:312: DeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
+2025-12-23T01:52:36.4794107Z     return await dependant.call(**values)
+2025-12-23T01:52:36.4794392Z
+2025-12-23T01:52:36.4794891Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2025-12-23T01:52:36.4795548Z ================================ tests coverage ================================
+2025-12-23T01:52:36.4796164Z _______________ coverage: platform linux, python 3.11.14-final-0 _______________
+2025-12-23T01:52:36.4796576Z
+2025-12-23T01:52:36.4796766Z Name                                                  Stmts   Miss Branch BrPart  Cover
+2025-12-23T01:52:36.4805979Z ---------------------------------------------------------------------------------------
+2025-12-23T01:52:36.4806723Z tunix_rt_backend/__init__.py                              1      0      0      0   100%
+2025-12-23T01:52:36.4807370Z tunix_rt_backend/app.py                                 163     25     18      1    86%
+2025-12-23T01:52:36.4807992Z tunix_rt_backend/db/__init__.py                           0      0      0      0   100%
+2025-12-23T01:52:36.4808817Z tunix_rt_backend/db/base.py                              10      2      0      0    80%
+2025-12-23T01:52:36.4809511Z tunix_rt_backend/db/models/__init__.py                    3      0      0      0   100%
+2025-12-23T01:52:36.4810230Z tunix_rt_backend/db/models/score.py                      15      0      0      0   100%
+2025-12-23T01:52:36.4810944Z tunix_rt_backend/db/models/trace.py                      13      0      0      0   100%
+2025-12-23T01:52:36.4811614Z tunix_rt_backend/helpers/__init__.py                      2      0      0      0   100%
+2025-12-23T01:52:36.4812320Z tunix_rt_backend/helpers/datasets.py                     38      0      4      0   100%
+2025-12-23T01:52:36.4813013Z tunix_rt_backend/helpers/traces.py                       14      0      4      0   100%
+2025-12-23T01:52:36.4813751Z tunix_rt_backend/integrations/__init__.py                 0      0      0      0   100%
+2025-12-23T01:52:36.4814490Z tunix_rt_backend/integrations/tunix/__init__.py           0      0      0      0   100%
+2025-12-23T01:52:36.4815261Z tunix_rt_backend/integrations/tunix/availability.py      40     28     12      1    25%
+2025-12-23T01:52:36.4816064Z tunix_rt_backend/integrations/tunix/manifest.py           6      0      0      0   100%
+2025-12-23T01:52:36.4817221Z tunix_rt_backend/integrations/ungar/__init__.py           0      0      0      0   100%
+2025-12-23T01:52:36.4817988Z tunix_rt_backend/integrations/ungar/availability.py      14      2      2      0    88%
+2025-12-23T01:52:36.4818888Z tunix_rt_backend/redi_client.py                          32      6      4      1    81%
+2025-12-23T01:52:36.4819574Z tunix_rt_backend/schemas/__init__.py                      6      0      0      0   100%
+2025-12-23T01:52:36.4820250Z tunix_rt_backend/schemas/dataset.py                      36      0      0      0   100%
+2025-12-23T01:52:36.4820929Z tunix_rt_backend/schemas/score.py                        28      0      0      0   100%
+2025-12-23T01:52:36.4821592Z tunix_rt_backend/schemas/trace.py                        50      1      4      1    96%
+2025-12-23T01:52:36.4822252Z tunix_rt_backend/schemas/tunix.py                        50      0      0      0   100%
+2025-12-23T01:52:36.4822910Z tunix_rt_backend/schemas/ungar.py                        13      0      0      0   100%
+2025-12-23T01:52:36.4823561Z tunix_rt_backend/scoring.py                              11      0      0      0   100%
+2025-12-23T01:52:36.4824198Z tunix_rt_backend/services/__init__.py                     5      0      0      0   100%
+2025-12-23T01:52:36.4824923Z tunix_rt_backend/services/datasets_builder.py            40      1     14      1    96%
+2025-12-23T01:52:36.4825904Z tunix_rt_backend/services/datasets_export.py             45      1     12      2    95%
+2025-12-23T01:52:36.4826646Z tunix_rt_backend/services/traces_batch.py                39      2     14      0    96%
+2025-12-23T01:52:36.4827376Z tunix_rt_backend/services/tunix_execution.py             91     48     12      1    45%
+2025-12-23T01:52:36.4828102Z tunix_rt_backend/services/tunix_export.py                18      0      4      0   100%
+2025-12-23T01:52:36.4831411Z tunix_rt_backend/services/ungar_generator.py             42     16     10      2    58%
+2025-12-23T01:52:36.4832158Z tunix_rt_backend/settings.py                             33      1      2      1    94%
+2025-12-23T01:52:36.4832821Z tunix_rt_backend/training/__init__.py                     0      0      0      0   100%
+2025-12-23T01:52:36.4833507Z tunix_rt_backend/training/renderers.py                   34      0      8      0   100%
+2025-12-23T01:52:36.4834214Z tunix_rt_backend/training/schema.py                      40      0      0      0   100%
+2025-12-23T01:52:36.4834823Z ---------------------------------------------------------------------------------------
+2025-12-23T01:52:36.4835321Z TOTAL                                                   932    133    124     11    84%
+2025-12-23T01:52:36.4835746Z Coverage XML written to file coverage.xml
+2025-12-23T01:52:36.4836151Z Coverage JSON written to file coverage.json
+2025-12-23T01:52:36.4836633Z Required test coverage of 70.0% reached. Total coverage: 84.28%
+2025-12-23T01:52:36.4837171Z =========================== short test summary info ============================
+2025-12-23T01:52:36.4837855Z SKIPPED [1] tests/test_services_ungar.py:88: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-23T01:52:36.4838996Z SKIPPED [1] tests/test_services_ungar.py:111: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-23T01:52:36.4839912Z SKIPPED [1] tests/test_training_scripts_smoke.py:77: JAX not installed; use: pip install -e '.[training]'
+2025-12-23T01:52:36.4840953Z SKIPPED [1] tests/test_training_scripts_smoke.py:169: JAX not installed; use: pip install -e '.[training]'
+2025-12-23T01:52:36.4841924Z SKIPPED [1] tests/test_tunix_execution.py:375: Tunix not installed; use: pip install -e '.[tunix]'
+2025-12-23T01:52:36.4842891Z SKIPPED [1] tests/test_tunix_execution.py:452: Tunix not installed; use: pip install -e '.[tunix]'
+2025-12-23T01:52:36.4843761Z SKIPPED [1] tests/test_ungar.py:137: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-23T01:52:36.4844539Z SKIPPED [1] tests/test_ungar.py:153: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-23T01:52:36.4845727Z SKIPPED [1] tests/test_ungar.py:186: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-23T01:52:36.4846509Z SKIPPED [1] tests/test_ungar.py:204: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-23T01:52:36.4847256Z SKIPPED [1] tests/test_ungar.py:226: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-23T01:52:36.4848040Z SKIPPED [1] tests/test_ungar.py:264: UNGAR not installed; use: pip install -e '.[ungar]'
+2025-12-23T01:52:36.4849095Z 168 passed, 12 skipped, 1 warning in 4.74s

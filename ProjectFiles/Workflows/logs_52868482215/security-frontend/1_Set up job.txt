@@ -1,0 +1,31 @@
+﻿2025-12-23T01:52:00.2712407Z Current runner version: '2.330.0'
+2025-12-23T01:52:00.2767461Z ##[group]Runner Image Provisioner
+2025-12-23T01:52:00.2789262Z Hosted Compute Agent
+2025-12-23T01:52:00.2790273Z Version: 20251211.462
+2025-12-23T01:52:00.2791318Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-23T01:52:00.2792567Z Build Date: 2025-12-11T16:28:49Z
+2025-12-23T01:52:00.2793666Z Worker ID: {643a7a24-30e8-4bc7-b087-df29297d0314}
+2025-12-23T01:52:00.2794830Z ##[endgroup]
+2025-12-23T01:52:00.2795901Z ##[group]Operating System
+2025-12-23T01:52:00.2796917Z Ubuntu
+2025-12-23T01:52:00.2797749Z 24.04.3
+2025-12-23T01:52:00.2798675Z LTS
+2025-12-23T01:52:00.2799624Z ##[endgroup]
+2025-12-23T01:52:00.2800483Z ##[group]Runner Image
+2025-12-23T01:52:00.2801439Z Image: ubuntu-24.04
+2025-12-23T01:52:00.2802473Z Version: 20251215.174.1
+2025-12-23T01:52:00.2804217Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-23T01:52:00.2806949Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-23T01:52:00.2839753Z ##[endgroup]
+2025-12-23T01:52:00.2841483Z ##[group]GITHUB_TOKEN Permissions
+2025-12-23T01:52:00.2844381Z Contents: read
+2025-12-23T01:52:00.2845278Z Metadata: read
+2025-12-23T01:52:00.2846107Z ##[endgroup]
+2025-12-23T01:52:00.2849277Z Secret source: Actions
+2025-12-23T01:52:00.2850637Z Prepare workflow directory
+2025-12-23T01:52:00.4034230Z Prepare all required actions
+2025-12-23T01:52:00.4143204Z Getting action download info
+2025-12-23T01:52:00.7563684Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2025-12-23T01:52:00.8571902Z Download action repository 'actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af' (SHA:39370e3970a6d050c480ffad4ff0ed4d3fdee5af)
+2025-12-23T01:52:01.1237783Z Download action repository 'actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b' (SHA:6f51ac03b9356f520e9adb1b1b7802705f340c2b)
+2025-12-23T01:52:01.5826859Z Complete job name: security-frontend

@@ -1,0 +1,73 @@
+﻿2025-12-23T01:53:46.5104252Z Print service container logs: 768233ce554b4bf08fd9a4570c177fea_postgres15alpine_8e87e5
+2025-12-23T01:53:46.5108794Z ##[command]/usr/bin/docker logs --details f527ef7522ba675b72620f4cba37ada6c0c583684d1167c49b4cd824f997d724
+2025-12-23T01:53:46.5246058Z  sh: locale: not found
+2025-12-23T01:53:46.5246681Z  The files belonging to this database system will be owned by user "postgres".
+2025-12-23T01:53:46.5247495Z  2025-12-23 01:52:12.882 UTC [34] WARNING:  no usable system locales were found
+2025-12-23T01:53:46.5248204Z  initdb: warning: enabling "trust" authentication for local connections
+2025-12-23T01:53:46.5249526Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2025-12-23T01:53:46.5250820Z  2025-12-23 01:52:13.694 UTC [1] LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2025-12-23T01:53:46.5251764Z  2025-12-23 01:52:13.694 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2025-12-23T01:53:46.5252499Z  2025-12-23 01:52:13.694 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2025-12-23T01:53:46.5253539Z  2025-12-23 01:52:13.696 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2025-12-23T01:53:46.5254366Z  2025-12-23 01:52:13.699 UTC [54] LOG:  database system was shut down at 2025-12-23 01:52:13 UTC
+2025-12-23T01:53:46.5255108Z  2025-12-23 01:52:13.703 UTC [1] LOG:  database system is ready to accept connections
+2025-12-23T01:53:46.5255753Z  2025-12-23 01:52:22.433 UTC [64] FATAL:  role "root" does not exist
+2025-12-23T01:53:46.5256320Z  2025-12-23 01:52:32.502 UTC [70] FATAL:  role "root" does not exist
+2025-12-23T01:53:46.5256875Z  2025-12-23 01:52:42.561 UTC [77] FATAL:  role "root" does not exist
+2025-12-23T01:53:46.5257435Z  2025-12-23 01:52:52.626 UTC [86] FATAL:  role "root" does not exist
+2025-12-23T01:53:46.5257990Z  2025-12-23 01:53:02.681 UTC [93] FATAL:  role "root" does not exist
+2025-12-23T01:53:46.5258566Z  2025-12-23 01:53:12.725 UTC [100] FATAL:  role "root" does not exist
+2025-12-23T01:53:46.5259331Z  2025-12-23 01:53:22.783 UTC [108] FATAL:  role "root" does not exist
+2025-12-23T01:53:46.5259908Z  2025-12-23 01:53:32.843 UTC [114] FATAL:  role "root" does not exist
+2025-12-23T01:53:46.5260482Z  2025-12-23 01:53:42.916 UTC [121] FATAL:  role "root" does not exist
+2025-12-23T01:53:46.5261003Z  This user must also own the server process.
+2025-12-23T01:53:46.5261875Z
+2025-12-23T01:53:46.5262312Z  The database cluster will be initialized with locale "en_US.utf8".
+2025-12-23T01:53:46.5263191Z  The default database encoding has accordingly been set to "UTF8".
+2025-12-23T01:53:46.5263800Z  The default text search configuration will be set to "english".
+2025-12-23T01:53:46.5264247Z
+2025-12-23T01:53:46.5264521Z  Data page checksums are disabled.
+2025-12-23T01:53:46.5264896Z
+2025-12-23T01:53:46.5265553Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
+2025-12-23T01:53:46.5266331Z  creating subdirectories ... ok
+2025-12-23T01:53:46.5266965Z  selecting dynamic shared memory implementation ... posix
+2025-12-23T01:53:46.5267562Z  selecting default max_connections ... 100
+2025-12-23T01:53:46.5268018Z  selecting default shared_buffers ... 128MB
+2025-12-23T01:53:46.5268453Z  selecting default time zone ... UTC
+2025-12-23T01:53:46.5268728Z  creating configuration files ... ok
+2025-12-23T01:53:46.5269141Z  running bootstrap script ... ok
+2025-12-23T01:53:46.5269497Z  performing post-bootstrap initialization ... ok
+2025-12-23T01:53:46.5269781Z  syncing data to disk ... ok
+2025-12-23T01:53:46.5269980Z
+2025-12-23T01:53:46.5270125Z
+2025-12-23T01:53:46.5270323Z  Success. You can now start the database server using:
+2025-12-23T01:53:46.5270587Z
+2025-12-23T01:53:46.5270793Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
+2025-12-23T01:53:46.5271050Z
+2025-12-23T01:53:46.5271536Z  waiting for server to start....2025-12-23 01:52:13.472 UTC [40] LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2025-12-23T01:53:46.5272479Z  2025-12-23 01:52:13.473 UTC [40] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2025-12-23T01:53:46.5272968Z  2025-12-23 01:52:13.476 UTC [43] LOG:  database system was shut down at 2025-12-23 01:52:13 UTC
+2025-12-23T01:53:46.5273408Z  2025-12-23 01:52:13.480 UTC [40] LOG:  database system is ready to accept connections
+2025-12-23T01:53:46.5273727Z   done
+2025-12-23T01:53:46.5273886Z  server started
+2025-12-23T01:53:46.5274051Z
+2025-12-23T01:53:46.5274334Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+2025-12-23T01:53:46.5274692Z
+2025-12-23T01:53:46.5274992Z  waiting for server to shut down...2025-12-23 01:52:13.573 UTC [40] LOG:  received fast shutdown request
+2025-12-23T01:53:46.5275447Z  .2025-12-23 01:52:13.574 UTC [40] LOG:  aborting any active transactions
+2025-12-23T01:53:46.5275940Z  2025-12-23 01:52:13.578 UTC [40] LOG:  background worker "logical replication launcher" (PID 46) exited with exit code 1
+2025-12-23T01:53:46.5276396Z  2025-12-23 01:52:13.579 UTC [41] LOG:  shutting down
+2025-12-23T01:53:46.5276855Z  2025-12-23 01:52:13.580 UTC [41] LOG:  checkpoint starting: shutdown immediate
+2025-12-23T01:53:46.5277655Z  2025-12-23 01:52:13.584 UTC [41] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.001 s, total=0.005 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB
+2025-12-23T01:53:46.5278435Z  2025-12-23 01:52:13.588 UTC [40] LOG:  database system is shut down
+2025-12-23T01:53:46.5278712Z   done
+2025-12-23T01:53:46.5278867Z  server stopped
+2025-12-23T01:53:46.5279210Z
+2025-12-23T01:53:46.5279564Z  PostgreSQL init process complete; ready for start up.
+2025-12-23T01:53:46.5279839Z
+2025-12-23T01:53:46.5285320Z Stop and remove container: 768233ce554b4bf08fd9a4570c177fea_postgres15alpine_8e87e5
+2025-12-23T01:53:46.5290165Z ##[command]/usr/bin/docker rm --force f527ef7522ba675b72620f4cba37ada6c0c583684d1167c49b4cd824f997d724
+2025-12-23T01:53:49.1658716Z f527ef7522ba675b72620f4cba37ada6c0c583684d1167c49b4cd824f997d724
+2025-12-23T01:53:49.1687950Z Remove container network: github_network_845c5d11bcb84d0f82d3b1b3a1a17721
+2025-12-23T01:53:49.1692473Z ##[command]/usr/bin/docker network rm github_network_845c5d11bcb84d0f82d3b1b3a1a17721
+2025-12-23T01:53:49.2497498Z github_network_845c5d11bcb84d0f82d3b1b3a1a17721

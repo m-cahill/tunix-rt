@@ -1,0 +1,21 @@
+﻿2025-12-23T01:52:20.1490006Z ##[group]Run actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b
+2025-12-23T01:52:20.1490368Z with:
+2025-12-23T01:52:20.1490549Z   name: frontend-coverage
+2025-12-23T01:52:20.1490766Z   path: frontend/coverage/
+2025-12-23T01:52:20.1490976Z   retention-days: 30
+2025-12-23T01:52:20.1491160Z   if-no-files-found: warn
+2025-12-23T01:52:20.1491360Z   compression-level: 6
+2025-12-23T01:52:20.1491545Z   overwrite: false
+2025-12-23T01:52:20.1491732Z   include-hidden-files: false
+2025-12-23T01:52:20.1491941Z ##[endgroup]
+2025-12-23T01:52:20.3686591Z With the provided path, there will be 15 files uploaded
+2025-12-23T01:52:20.3692253Z Artifact name is valid!
+2025-12-23T01:52:20.3692929Z Root directory input is valid!
+2025-12-23T01:52:20.6253961Z Beginning upload of artifact content to blob storage
+2025-12-23T01:52:21.0338016Z Uploaded bytes 59743
+2025-12-23T01:52:21.1109768Z Finished uploading artifact content to blob storage!
+2025-12-23T01:52:21.1114886Z SHA256 hash of uploaded artifact zip is 0242e85baaf72c09c42b2caa2d71bd0910520b072091ab86e1a989409e8b9a5b
+2025-12-23T01:52:21.1117335Z Finalizing artifact upload
+2025-12-23T01:52:21.2478590Z Artifact frontend-coverage.zip successfully finalized. Artifact ID 4949074810
+2025-12-23T01:52:21.2479829Z Artifact frontend-coverage has been successfully uploaded! Final size is 59743 bytes. Artifact ID is 4949074810
+2025-12-23T01:52:21.2486894Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20449012631/artifacts/4949074810

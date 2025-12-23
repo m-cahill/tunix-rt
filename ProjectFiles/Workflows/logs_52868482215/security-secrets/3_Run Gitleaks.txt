@@ -1,0 +1,66 @@
+﻿2025-12-23T01:52:06.3947818Z ##[group]Run gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7
+2025-12-23T01:52:06.3949511Z env:
+2025-12-23T01:52:06.3950811Z   GITHUB_TOKEN: ***
+2025-12-23T01:52:06.3951670Z ##[endgroup]
+2025-12-23T01:52:06.8984375Z [m-cahill] is an individual user. No license key is required.
+2025-12-23T01:52:06.8987668Z gitleaks version: 8.24.3
+2025-12-23T01:52:06.8990619Z Version to install: 8.24.3 (target directory: /tmp/gitleaks-8.24.3)
+2025-12-23T01:52:07.0623550Z Cache hit for: gitleaks-cache-8.24.3-linux-x64
+2025-12-23T01:52:07.6578442Z Received 5717456 of 5717456 (100.0%), 12.3 MBs/sec
+2025-12-23T01:52:07.6579949Z Cache Size: ~5 MB (5717456 B)
+2025-12-23T01:52:07.6628967Z [command]/usr/bin/tar -xf /home/runner/work/_temp/31e2d452-33f7-47d2-9ce4-98f9476cc075/cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --use-compress-program unzstd
+2025-12-23T01:52:07.7040106Z Cache restored successfully
+2025-12-23T01:52:07.7055200Z Gitleaks restored from cache
+2025-12-23T01:52:07.7057999Z event type: push
+2025-12-23T01:52:07.7060292Z gitleaks cmd: gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=-1
+2025-12-23T01:52:07.7080300Z [command]/tmp/gitleaks-8.24.3/gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=-1
+2025-12-23T01:52:08.0144543Z
+2025-12-23T01:52:08.0145154Z     ○
+2025-12-23T01:52:08.0145599Z     │╲
+2025-12-23T01:52:08.0145910Z     │ ○
+2025-12-23T01:52:08.0146217Z     ○ ░
+2025-12-23T01:52:08.0146553Z     ░    gitleaks
+2025-12-23T01:52:08.0146752Z
+2025-12-23T01:52:08.0147751Z [90m1:52AM[0m DBG using github.com/wasilibs/go-re2 regex engine
+2025-12-23T01:52:08.0149021Z [90m1:52AM[0m DBG no gitleaks config found in path .gitleaks.toml, using default gitleaks config
+2025-12-23T01:52:08.1553919Z [90m1:52AM[0m DBG executing: /usr/bin/git -C . log -p -U0 -1
+2025-12-23T01:52:08.1609621Z [90m1:52AM[0m DBG SCM platform parsed from host [36mhost=[0mgithub.com [36mplatform=[0mgithub
+2025-12-23T01:52:08.1913572Z Finding:     -d '{"dataset_key": "[1;3;mREDACTED[0m", "model_id": "googl...
+2025-12-23T01:52:08.1914554Z Secret:      [1;3;mREDACTED[0m
+2025-12-23T01:52:08.1915106Z RuleID:      generic-api-key
+2025-12-23T01:52:08.1916155Z Entropy:     3.584963
+2025-12-23T01:52:08.1917023Z File:        tunix-rt.md
+2025-12-23T01:52:08.1939050Z Line:        494
+2025-12-23T01:52:08.1939606Z Commit:      4b62485e8d4e2e7fd39de41edd36ae27cc297168
+2025-12-23T01:52:08.1940080Z Author:      m-cahill
+2025-12-23T01:52:08.1940428Z Email:       michael.cahill@ymail.com
+2025-12-23T01:52:08.1940855Z Date:        2025-12-23T01:51:26Z
+2025-12-23T01:52:08.1941505Z Fingerprint: 4b62485e8d4e2e7fd39de41edd36ae27cc297168:tunix-rt.md:generic-api-key:494
+2025-12-23T01:52:08.1943026Z Link:        https://github.com/m-cahill/tunix-rt/blob/4b62485e8d4e2e7fd39de41edd36ae27cc297168/tunix-rt.md?plain=1#L494
+2025-12-23T01:52:08.1943790Z
+2025-12-23T01:52:08.1944242Z Finding:     -d '{"dataset_key": "[1;3;mREDACTED[0m", "model_id": "googl...
+2025-12-23T01:52:08.1944866Z Secret:      [1;3;mREDACTED[0m
+2025-12-23T01:52:08.1945252Z RuleID:      generic-api-key
+2025-12-23T01:52:08.1945606Z Entropy:     3.584963
+2025-12-23T01:52:08.1945920Z File:        tunix-rt.md
+2025-12-23T01:52:08.1946242Z Line:        502
+2025-12-23T01:52:08.1946601Z Commit:      4b62485e8d4e2e7fd39de41edd36ae27cc297168
+2025-12-23T01:52:08.1947045Z Author:      m-cahill
+2025-12-23T01:52:08.1949709Z Email:       michael.cahill@ymail.com
+2025-12-23T01:52:08.1950160Z Date:        2025-12-23T01:51:26Z
+2025-12-23T01:52:08.1950828Z Fingerprint: 4b62485e8d4e2e7fd39de41edd36ae27cc297168:tunix-rt.md:generic-api-key:502
+2025-12-23T01:52:08.1952019Z Link:        https://github.com/m-cahill/tunix-rt/blob/4b62485e8d4e2e7fd39de41edd36ae27cc297168/tunix-rt.md?plain=1#L502
+2025-12-23T01:52:08.1952755Z
+2025-12-23T01:52:08.1982667Z [90m1:52AM[0m [32mINF[0m [1m1 commits scanned.[0m
+2025-12-23T01:52:08.1985166Z [90m1:52AM[0m DBG Note: this number might be smaller than expected due to commits with no additions
+2025-12-23T01:52:08.1991332Z [90m1:52AM[0m [32mINF[0m [1mscanned ~117525 bytes (117.53 KB) in 184ms[0m
+2025-12-23T01:52:08.1994540Z [90m1:52AM[0m [33mWRN[0m [1mleaks found: 2[0m
+2025-12-23T01:52:08.2020686Z Artifact name is valid!
+2025-12-23T01:52:08.2022683Z Root directory input is valid!
+2025-12-23T01:52:08.3187902Z Beginning upload of artifact content to blob storage
+2025-12-23T01:52:08.4660950Z Uploaded bytes 7622
+2025-12-23T01:52:08.5049405Z Finished uploading artifact content to blob storage!
+2025-12-23T01:52:08.5053113Z SHA256 digest of uploaded artifact zip is 8dc8dc22f74c60c0e2901ff19e65c7f49b75910908c851a49cd87f137f87d485
+2025-12-23T01:52:08.5055950Z Finalizing artifact upload
+2025-12-23T01:52:08.6810663Z Artifact gitleaks-results.sarif.zip successfully finalized. Artifact ID 4949073811
+2025-12-23T01:52:08.6854425Z ##[warning]🛑 Leaks detected, see job summary for details

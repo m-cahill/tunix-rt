@@ -1,0 +1,16 @@
+﻿2025-12-23T01:52:29.9482030Z ##[group]Run # Validate dataset schemas can be imported
+2025-12-23T01:52:29.9482466Z [36;1m# Validate dataset schemas can be imported[0m
+2025-12-23T01:52:29.9483060Z [36;1mpython -c "from tunix_rt_backend.schemas.dataset import DatasetManifest, DatasetBuildRequest; print('✅ Dataset schemas valid')"[0m
+2025-12-23T01:52:29.9483614Z [36;1m# Validate renderer works[0m
+2025-12-23T01:52:29.9484451Z [36;1mpython -c "from tunix_rt_backend.training.renderers import render_tunix_sft_prompt; trace={'prompt':'test','trace_steps':['step'],'final_answer':'answer'}; result=render_tunix_sft_prompt(trace); assert '<start_of_turn>' in result; print('✅ Renderer works')"[0m
+2025-12-23T01:52:29.9517749Z shell: /usr/bin/bash -e {0}
+2025-12-23T01:52:29.9517969Z env:
+2025-12-23T01:52:29.9518204Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T01:52:29.9518853Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T01:52:29.9519264Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T01:52:29.9519638Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T01:52:29.9520011Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T01:52:29.9520348Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T01:52:29.9520634Z ##[endgroup]
+2025-12-23T01:52:30.3679900Z ✅ Dataset schemas valid
+2025-12-23T01:52:30.4169526Z ✅ Renderer works
