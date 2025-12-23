@@ -1,0 +1,214 @@
+﻿2025-12-23T05:53:58.3225416Z Current runner version: '2.330.0'
+2025-12-23T05:53:58.3299150Z ##[group]Runner Image Provisioner
+2025-12-23T05:53:58.3300282Z Hosted Compute Agent
+2025-12-23T05:53:58.3301217Z Version: 20251211.462
+2025-12-23T05:53:58.3302319Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-23T05:53:58.3303718Z Build Date: 2025-12-11T16:28:49Z
+2025-12-23T05:53:58.3304836Z Worker ID: {176391ed-0cb2-45c8-a6d7-cbed9b3122c9}
+2025-12-23T05:53:58.3306196Z ##[endgroup]
+2025-12-23T05:53:58.3307018Z ##[group]Operating System
+2025-12-23T05:53:58.3307997Z Ubuntu
+2025-12-23T05:53:58.3308934Z 24.04.3
+2025-12-23T05:53:58.3309659Z LTS
+2025-12-23T05:53:58.3310414Z ##[endgroup]
+2025-12-23T05:53:58.3311401Z ##[group]Runner Image
+2025-12-23T05:53:58.3312412Z Image: ubuntu-24.04
+2025-12-23T05:53:58.3333689Z Version: 20251215.174.1
+2025-12-23T05:53:58.3335657Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-23T05:53:58.3338323Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-23T05:53:58.3340099Z ##[endgroup]
+2025-12-23T05:53:58.3341811Z ##[group]GITHUB_TOKEN Permissions
+2025-12-23T05:53:58.3344716Z Contents: read
+2025-12-23T05:53:58.3345614Z Metadata: read
+2025-12-23T05:53:58.3346355Z ##[endgroup]
+2025-12-23T05:53:58.3349432Z Secret source: Actions
+2025-12-23T05:53:58.3350676Z Prepare workflow directory
+2025-12-23T05:53:58.4315384Z Prepare all required actions
+2025-12-23T05:53:58.4369117Z Getting action download info
+2025-12-23T05:53:58.7053394Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2025-12-23T05:53:59.2815645Z Download action repository 'actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af' (SHA:39370e3970a6d050c480ffad4ff0ed4d3fdee5af)
+2025-12-23T05:53:59.4677323Z Download action repository 'actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b' (SHA:6f51ac03b9356f520e9adb1b1b7802705f340c2b)
+2025-12-23T05:53:59.8461063Z Complete job name: security-frontend
+2025-12-23T05:53:59.9236160Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2025-12-23T05:53:59.9237888Z with:
+2025-12-23T05:53:59.9238639Z   repository: m-cahill/tunix-rt
+2025-12-23T05:53:59.9239846Z   token: ***
+2025-12-23T05:53:59.9240590Z   ssh-strict: true
+2025-12-23T05:53:59.9241346Z   ssh-user: git
+2025-12-23T05:53:59.9242124Z   persist-credentials: true
+2025-12-23T05:53:59.9243184Z   clean: true
+2025-12-23T05:53:59.9243987Z   sparse-checkout-cone-mode: true
+2025-12-23T05:53:59.9244946Z   fetch-depth: 1
+2025-12-23T05:53:59.9245700Z   fetch-tags: false
+2025-12-23T05:53:59.9246501Z   show-progress: true
+2025-12-23T05:53:59.9247313Z   lfs: false
+2025-12-23T05:53:59.9248053Z   submodules: false
+2025-12-23T05:53:59.9248870Z   set-safe-directory: true
+2025-12-23T05:53:59.9250036Z ##[endgroup]
+2025-12-23T05:54:00.0422332Z Syncing repository: m-cahill/tunix-rt
+2025-12-23T05:54:00.0428634Z ##[group]Getting Git version info
+2025-12-23T05:54:00.0430099Z Working directory is '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-23T05:54:00.0431976Z [command]/usr/bin/git version
+2025-12-23T05:54:00.1914745Z git version 2.52.0
+2025-12-23T05:54:00.1953493Z ##[endgroup]
+2025-12-23T05:54:00.1967842Z Temporarily overriding HOME='/home/runner/work/_temp/47621be1-d51a-46ec-a281-79f45464121d' before making global git config changes
+2025-12-23T05:54:00.1973784Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-23T05:54:00.1988230Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T05:54:00.2092003Z Deleting the contents of '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-23T05:54:00.2098307Z ##[group]Initializing the repository
+2025-12-23T05:54:00.2106825Z [command]/usr/bin/git init /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T05:54:00.3299744Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-23T05:54:00.3303246Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-23T05:54:00.3305399Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-23T05:54:00.3307175Z hint: call:
+2025-12-23T05:54:00.3308198Z hint:
+2025-12-23T05:54:00.3309417Z hint: 	git config --global init.defaultBranch <name>
+2025-12-23T05:54:00.3310867Z hint:
+2025-12-23T05:54:00.3312239Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-23T05:54:00.3314632Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-23T05:54:00.3316324Z hint:
+2025-12-23T05:54:00.3317371Z hint: 	git branch -m <name>
+2025-12-23T05:54:00.3318535Z hint:
+2025-12-23T05:54:00.3320045Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-23T05:54:00.3322941Z Initialized empty Git repository in /home/runner/work/tunix-rt/tunix-rt/.git/
+2025-12-23T05:54:00.3330702Z [command]/usr/bin/git remote add origin https://github.com/m-cahill/tunix-rt
+2025-12-23T05:54:00.3407527Z ##[endgroup]
+2025-12-23T05:54:00.3410375Z ##[group]Disabling automatic garbage collection
+2025-12-23T05:54:00.3412437Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-23T05:54:00.3441089Z ##[endgroup]
+2025-12-23T05:54:00.3443454Z ##[group]Setting up auth
+2025-12-23T05:54:00.3449360Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-23T05:54:00.3580656Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-23T05:54:00.5566334Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-23T05:54:00.5605439Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-23T05:54:00.5854534Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-23T05:54:00.5896259Z ##[endgroup]
+2025-12-23T05:54:00.5900914Z ##[group]Fetching the repository
+2025-12-23T05:54:00.5918903Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b280eb4db823db62993c4c4b0b49f404c2ed21b8:refs/remotes/origin/main
+2025-12-23T05:54:01.3824969Z From https://github.com/m-cahill/tunix-rt
+2025-12-23T05:54:01.3826245Z  * [new ref]         b280eb4db823db62993c4c4b0b49f404c2ed21b8 -> origin/main
+2025-12-23T05:54:01.3929745Z ##[endgroup]
+2025-12-23T05:54:01.3931116Z ##[group]Determining the checkout info
+2025-12-23T05:54:01.3933316Z ##[endgroup]
+2025-12-23T05:54:01.3936457Z [command]/usr/bin/git sparse-checkout disable
+2025-12-23T05:54:01.4034801Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-23T05:54:01.4067206Z ##[group]Checking out the ref
+2025-12-23T05:54:01.4070203Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-23T05:54:01.5728996Z Switched to a new branch 'main'
+2025-12-23T05:54:01.5733460Z branch 'main' set up to track 'origin/main'.
+2025-12-23T05:54:01.5745414Z ##[endgroup]
+2025-12-23T05:54:01.5788392Z [command]/usr/bin/git log -1 --format=%H
+2025-12-23T05:54:01.5813548Z b280eb4db823db62993c4c4b0b49f404c2ed21b8
+2025-12-23T05:54:01.6044603Z ##[group]Run actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
+2025-12-23T05:54:01.6045065Z with:
+2025-12-23T05:54:01.6045273Z   node-version: 18
+2025-12-23T05:54:01.6045498Z   cache: npm
+2025-12-23T05:54:01.6045766Z   cache-dependency-path: frontend/package-lock.json
+2025-12-23T05:54:01.6046200Z   always-auth: false
+2025-12-23T05:54:01.6046528Z   check-latest: false
+2025-12-23T05:54:01.6046967Z   token: ***
+2025-12-23T05:54:01.6047189Z ##[endgroup]
+2025-12-23T05:54:01.8368193Z Attempting to download 18...
+2025-12-23T05:54:02.2224851Z Acquiring 18.20.8 - x64 from https://github.com/actions/node-versions/releases/download/18.20.8-14110393767/node-18.20.8-linux-x64.tar.gz
+2025-12-23T05:54:02.7264623Z Extracting ...
+2025-12-23T05:54:02.7365109Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/6c042e1e-ae84-4939-b400-6460be793f28 -f /home/runner/work/_temp/6b26cbd4-782d-42d9-b890-6b891f8d5b64
+2025-12-23T05:54:03.8105650Z Adding to the cache ...
+2025-12-23T05:54:05.7621398Z ##[group]Environment details
+2025-12-23T05:54:06.1268177Z node: v18.20.8
+2025-12-23T05:54:06.1272487Z npm: 10.8.2
+2025-12-23T05:54:06.1277138Z yarn: 1.22.22
+2025-12-23T05:54:06.1281927Z ##[endgroup]
+2025-12-23T05:54:06.1297367Z [command]/opt/hostedtoolcache/node/18.20.8/x64/bin/npm config get cache
+2025-12-23T05:54:06.2486764Z /home/runner/.npm
+2025-12-23T05:54:06.3719262Z ##[warning]Failed to restore: Cache service responded with 400
+2025-12-23T05:54:06.3729770Z npm cache is not found
+2025-12-23T05:54:06.3886375Z ##[group]Run npm ci
+2025-12-23T05:54:06.3886647Z [36;1mnpm ci[0m
+2025-12-23T05:54:06.3924065Z shell: /usr/bin/bash -e {0}
+2025-12-23T05:54:06.3924329Z ##[endgroup]
+2025-12-23T05:54:08.7586236Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-12-23T05:54:09.3295226Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-12-23T05:54:09.3706778Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-12-23T05:54:09.9917006Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-12-23T05:54:10.0084187Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+2025-12-23T05:54:12.2064802Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-12-23T05:54:12.5354607Z
+2025-12-23T05:54:12.5364131Z added 406 packages, and audited 407 packages in 6s
+2025-12-23T05:54:12.5364986Z
+2025-12-23T05:54:12.5366282Z 117 packages are looking for funding
+2025-12-23T05:54:12.5367043Z   run `npm fund` for details
+2025-12-23T05:54:12.5561965Z
+2025-12-23T05:54:12.5583576Z 5 moderate severity vulnerabilities
+2025-12-23T05:54:12.5584008Z
+2025-12-23T05:54:12.5584528Z To address all issues (including breaking changes), run:
+2025-12-23T05:54:12.5585078Z   npm audit fix --force
+2025-12-23T05:54:12.5585363Z
+2025-12-23T05:54:12.5585577Z Run `npm audit` for details.
+2025-12-23T05:54:12.5936502Z ##[group]Run npm audit --json > npm-audit-report.json || true
+2025-12-23T05:54:12.5937053Z [36;1mnpm audit --json > npm-audit-report.json || true[0m
+2025-12-23T05:54:12.5937360Z [36;1mnpm audit || true[0m
+2025-12-23T05:54:12.5971206Z shell: /usr/bin/bash -e {0}
+2025-12-23T05:54:12.5971441Z ##[endgroup]
+2025-12-23T05:54:14.5154745Z # npm audit report
+2025-12-23T05:54:14.5157490Z
+2025-12-23T05:54:14.5159130Z esbuild  <=0.24.2
+2025-12-23T05:54:14.5160011Z Severity: moderate
+2025-12-23T05:54:14.5170728Z esbuild enables any website to send any requests to the development server and read the response - https://github.com/advisories/GHSA-67mh-4wv8-2f99
+2025-12-23T05:54:14.5171935Z fix available via `npm audit fix --force`
+2025-12-23T05:54:14.5172539Z Will install vite@6.4.1, which is a breaking change
+2025-12-23T05:54:14.5173253Z node_modules/esbuild
+2025-12-23T05:54:14.5173582Z   vite  0.11.0 - 6.1.6
+2025-12-23T05:54:14.5173982Z   Depends on vulnerable versions of esbuild
+2025-12-23T05:54:14.5174569Z   node_modules/vite
+2025-12-23T05:54:14.5174884Z     vite-node  <=2.2.0-beta.2
+2025-12-23T05:54:14.5175337Z     Depends on vulnerable versions of vite
+2025-12-23T05:54:14.5175746Z     node_modules/vite-node
+2025-12-23T05:54:14.5176279Z       vitest  0.0.1 - 0.0.12 || 0.0.29 - 0.0.122 || 0.3.3 - 2.2.0-beta.2
+2025-12-23T05:54:14.5176909Z       Depends on vulnerable versions of vite
+2025-12-23T05:54:14.5177950Z       Depends on vulnerable versions of vite-node
+2025-12-23T05:54:14.5178424Z       node_modules/vitest
+2025-12-23T05:54:14.5178833Z         @vitest/coverage-v8  <=2.2.0-beta.2
+2025-12-23T05:54:14.5179339Z         Depends on vulnerable versions of vitest
+2025-12-23T05:54:14.5181051Z         node_modules/@vitest/coverage-v8
+2025-12-23T05:54:14.5181343Z
+2025-12-23T05:54:14.5181587Z 5 moderate severity vulnerabilities
+2025-12-23T05:54:14.5181834Z
+2025-12-23T05:54:14.5182153Z To address all issues (including breaking changes), run:
+2025-12-23T05:54:14.5182592Z   npm audit fix --force
+2025-12-23T05:54:14.5345917Z ##[group]Run actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b
+2025-12-23T05:54:14.5346292Z with:
+2025-12-23T05:54:14.5346468Z   name: npm-audit-report
+2025-12-23T05:54:14.5346685Z   path: frontend/npm-audit-report.json
+2025-12-23T05:54:14.5346927Z   retention-days: 30
+2025-12-23T05:54:14.5347122Z   if-no-files-found: warn
+2025-12-23T05:54:14.5347318Z   compression-level: 6
+2025-12-23T05:54:14.5347517Z   overwrite: false
+2025-12-23T05:54:14.5347697Z   include-hidden-files: false
+2025-12-23T05:54:14.5347902Z ##[endgroup]
+2025-12-23T05:54:14.7572383Z With the provided path, there will be 1 file uploaded
+2025-12-23T05:54:14.7576453Z Artifact name is valid!
+2025-12-23T05:54:14.7578245Z Root directory input is valid!
+2025-12-23T05:54:14.8543596Z Beginning upload of artifact content to blob storage
+2025-12-23T05:54:14.9246798Z Uploaded bytes 903
+2025-12-23T05:54:14.9462123Z Finished uploading artifact content to blob storage!
+2025-12-23T05:54:14.9480010Z SHA256 hash of uploaded artifact zip is c077e46526242976e9c69dd184710ffb4cd39450c450b4fdc0a8d2e8c3b654b8
+2025-12-23T05:54:14.9480914Z Finalizing artifact upload
+2025-12-23T05:54:15.0511884Z Artifact npm-audit-report.zip successfully finalized. Artifact ID 4950235018
+2025-12-23T05:54:15.0514403Z Artifact npm-audit-report has been successfully uploaded! Final size is 903 bytes. Artifact ID is 4950235018
+2025-12-23T05:54:15.0521019Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20452717741/artifacts/4950235018
+2025-12-23T05:54:15.0646648Z Post job cleanup.
+2025-12-23T05:54:15.2365582Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --files-from manifest.txt --use-compress-program zstdmt
+2025-12-23T05:54:15.4727460Z ##[warning]Failed to save: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>0hy5KaQAAAACFF1QJWXtRR75zaI0mjkJ9UEhMMzBFREdFMDQxMQBFZGdl
+2025-12-23T05:54:15.5003320Z Post job cleanup.
+2025-12-23T05:54:15.6568209Z [command]/usr/bin/git version
+2025-12-23T05:54:15.6641169Z git version 2.52.0
+2025-12-23T05:54:15.6718365Z Temporarily overriding HOME='/home/runner/work/_temp/63e53a65-316a-49a9-b523-ca6f3879528c' before making global git config changes
+2025-12-23T05:54:15.6721829Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-23T05:54:15.6732897Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T05:54:15.6807350Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-23T05:54:15.6861687Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-23T05:54:15.7288680Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-23T05:54:15.7333150Z http.https://github.com/.extraheader
+2025-12-23T05:54:15.7356743Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-12-23T05:54:15.7415390Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-23T05:54:15.7929607Z Cleaning up orphan processes

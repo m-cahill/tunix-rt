@@ -1,0 +1,11 @@
+﻿2025-12-23T05:54:20.3091080Z ##[group]Run npm run build
+2025-12-23T05:54:20.3091327Z [36;1mnpm run build[0m
+2025-12-23T05:54:20.3123511Z shell: /usr/bin/bash -e {0}
+2025-12-23T05:54:20.3123726Z ##[endgroup]
+2025-12-23T05:54:20.4405172Z
+2025-12-23T05:54:20.4406060Z > tunix-rt-frontend@0.1.0 build
+2025-12-23T05:54:20.4407059Z > tsc && vite build
+2025-12-23T05:54:20.4407378Z
+2025-12-23T05:54:23.0600511Z ##[error]src/App.tsx(25,8): error TS6133: 'TunixRunListItem' is declared but its value is never read.
+2025-12-23T05:54:23.0603347Z ##[error]src/App.tsx(67,27): error TS6133: 'setTunixRunLoading' is declared but its value is never read.
+2025-12-23T05:54:23.0843673Z ##[error]Process completed with exit code 2.

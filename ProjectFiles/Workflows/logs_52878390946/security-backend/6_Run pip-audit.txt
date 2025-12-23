@@ -1,0 +1,96 @@
+﻿2025-12-23T05:54:21.2536187Z ##[group]Run pip install pip-audit
+2025-12-23T05:54:21.2536702Z [36;1mpip install pip-audit[0m
+2025-12-23T05:54:21.2537318Z [36;1mpip-audit --desc --format json --output pip-audit-report.json || true[0m
+2025-12-23T05:54:21.2537970Z [36;1mpip-audit --desc || true[0m
+2025-12-23T05:54:21.2573479Z shell: /usr/bin/bash -e {0}
+2025-12-23T05:54:21.2573710Z env:
+2025-12-23T05:54:21.2573959Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T05:54:21.2574388Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T05:54:21.2574786Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T05:54:21.2575130Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T05:54:21.2575484Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T05:54:21.2575850Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T05:54:21.2576148Z ##[endgroup]
+2025-12-23T05:54:22.1437209Z Collecting pip-audit
+2025-12-23T05:54:22.1453337Z   Using cached pip_audit-2.10.0-py3-none-any.whl.metadata (28 kB)
+2025-12-23T05:54:22.1695289Z Collecting CacheControl>=0.13.0 (from CacheControl[filecache]>=0.13.0->pip-audit)
+2025-12-23T05:54:22.1710023Z   Using cached cachecontrol-0.14.4-py3-none-any.whl.metadata (3.1 kB)
+2025-12-23T05:54:22.2143283Z Collecting cyclonedx-python-lib<12,>=5 (from pip-audit)
+2025-12-23T05:54:22.2157842Z   Using cached cyclonedx_python_lib-11.6.0-py3-none-any.whl.metadata (6.8 kB)
+2025-12-23T05:54:22.2186116Z Requirement already satisfied: packaging>=23.0.0 in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (from pip-audit) (25.0)
+2025-12-23T05:54:22.2364125Z Collecting pip-api>=0.0.28 (from pip-audit)
+2025-12-23T05:54:22.2378541Z   Using cached pip_api-0.0.34-py3-none-any.whl.metadata (6.6 kB)
+2025-12-23T05:54:22.2535984Z Collecting pip-requirements-parser>=32.0.0 (from pip-audit)
+2025-12-23T05:54:22.2549406Z   Using cached pip_requirements_parser-32.0.1-py3-none-any.whl.metadata (9.3 kB)
+2025-12-23T05:54:22.2935717Z Collecting requests>=2.31.0 (from pip-audit)
+2025-12-23T05:54:22.2949540Z   Using cached requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+2025-12-23T05:54:22.3367138Z Collecting rich>=12.4 (from pip-audit)
+2025-12-23T05:54:22.3380480Z   Using cached rich-14.2.0-py3-none-any.whl.metadata (18 kB)
+2025-12-23T05:54:22.3599531Z Collecting tomli>=2.2.1 (from pip-audit)
+2025-12-23T05:54:22.3613976Z   Using cached tomli-2.3.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (10 kB)
+2025-12-23T05:54:22.3792251Z Collecting tomli-w>=1.2.0 (from pip-audit)
+2025-12-23T05:54:22.3805731Z   Using cached tomli_w-1.2.0-py3-none-any.whl.metadata (5.7 kB)
+2025-12-23T05:54:22.4021934Z Collecting platformdirs>=4.2.0 (from pip-audit)
+2025-12-23T05:54:22.4033413Z   Using cached platformdirs-4.5.1-py3-none-any.whl.metadata (12 kB)
+2025-12-23T05:54:22.4272697Z Collecting license-expression<31,>=30 (from cyclonedx-python-lib<12,>=5->pip-audit)
+2025-12-23T05:54:22.4286232Z   Using cached license_expression-30.4.4-py3-none-any.whl.metadata (11 kB)
+2025-12-23T05:54:22.4580377Z Collecting packageurl-python<2,>=0.11 (from cyclonedx-python-lib<12,>=5->pip-audit)
+2025-12-23T05:54:22.4593974Z   Using cached packageurl_python-0.17.6-py3-none-any.whl.metadata (5.1 kB)
+2025-12-23T05:54:22.4837460Z Collecting py-serializable<3.0.0,>=2.1.0 (from cyclonedx-python-lib<12,>=5->pip-audit)
+2025-12-23T05:54:22.4851056Z   Using cached py_serializable-2.1.0-py3-none-any.whl.metadata (4.3 kB)
+2025-12-23T05:54:22.5028878Z Collecting sortedcontainers<3.0.0,>=2.4.0 (from cyclonedx-python-lib<12,>=5->pip-audit)
+2025-12-23T05:54:22.5042485Z   Using cached sortedcontainers-2.4.0-py2.py3-none-any.whl.metadata (10 kB)
+2025-12-23T05:54:22.5065095Z Requirement already satisfied: typing_extensions<5.0,>=4.6 in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (from cyclonedx-python-lib<12,>=5->pip-audit) (4.15.0)
+2025-12-23T05:54:22.5261268Z Collecting boolean.py>=4.0 (from license-expression<31,>=30->cyclonedx-python-lib<12,>=5->pip-audit)
+2025-12-23T05:54:22.5275015Z   Using cached boolean_py-5.0-py3-none-any.whl.metadata (2.3 kB)
+2025-12-23T05:54:22.5459045Z Collecting defusedxml<0.8.0,>=0.7.1 (from py-serializable<3.0.0,>=2.1.0->cyclonedx-python-lib<12,>=5->pip-audit)
+2025-12-23T05:54:22.5472649Z   Using cached defusedxml-0.7.1-py2.py3-none-any.whl.metadata (32 kB)
+2025-12-23T05:54:22.6248201Z Collecting msgpack<2.0.0,>=0.5.2 (from CacheControl>=0.13.0->CacheControl[filecache]>=0.13.0->pip-audit)
+2025-12-23T05:54:22.6263026Z   Using cached msgpack-1.1.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (8.1 kB)
+2025-12-23T05:54:22.6529886Z Collecting filelock>=3.8.0 (from CacheControl[filecache]>=0.13.0->pip-audit)
+2025-12-23T05:54:22.6542512Z   Using cached filelock-3.20.1-py3-none-any.whl.metadata (2.1 kB)
+2025-12-23T05:54:22.6574768Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (from pip-api>=0.0.28->pip-audit) (25.3)
+2025-12-23T05:54:22.6972113Z Collecting pyparsing (from pip-requirements-parser>=32.0.0->pip-audit)
+2025-12-23T05:54:22.7734457Z   Downloading pyparsing-3.3.1-py3-none-any.whl.metadata (5.6 kB)
+2025-12-23T05:54:22.8630250Z Collecting charset_normalizer<4,>=2 (from requests>=2.31.0->pip-audit)
+2025-12-23T05:54:22.8647117Z   Using cached charset_normalizer-3.4.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (37 kB)
+2025-12-23T05:54:22.8685987Z Requirement already satisfied: idna<4,>=2.5 in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (from requests>=2.31.0->pip-audit) (3.11)
+2025-12-23T05:54:22.9002232Z Collecting urllib3<3,>=1.21.1 (from requests>=2.31.0->pip-audit)
+2025-12-23T05:54:22.9015758Z   Using cached urllib3-2.6.2-py3-none-any.whl.metadata (6.6 kB)
+2025-12-23T05:54:22.9058695Z Requirement already satisfied: certifi>=2017.4.17 in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (from requests>=2.31.0->pip-audit) (2025.11.12)
+2025-12-23T05:54:22.9308165Z Collecting markdown-it-py>=2.2.0 (from rich>=12.4->pip-audit)
+2025-12-23T05:54:22.9323871Z   Using cached markdown_it_py-4.0.0-py3-none-any.whl.metadata (7.3 kB)
+2025-12-23T05:54:22.9372095Z Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (from rich>=12.4->pip-audit) (2.19.2)
+2025-12-23T05:54:22.9523382Z Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=12.4->pip-audit)
+2025-12-23T05:54:22.9537409Z   Using cached mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+2025-12-23T05:54:22.9608905Z Using cached pip_audit-2.10.0-py3-none-any.whl (61 kB)
+2025-12-23T05:54:22.9623243Z Using cached cyclonedx_python_lib-11.6.0-py3-none-any.whl (511 kB)
+2025-12-23T05:54:22.9640763Z Using cached license_expression-30.4.4-py3-none-any.whl (120 kB)
+2025-12-23T05:54:22.9655267Z Using cached packageurl_python-0.17.6-py3-none-any.whl (36 kB)
+2025-12-23T05:54:22.9668697Z Using cached py_serializable-2.1.0-py3-none-any.whl (23 kB)
+2025-12-23T05:54:22.9682088Z Using cached defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+2025-12-23T05:54:22.9695555Z Using cached sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
+2025-12-23T05:54:22.9708998Z Using cached boolean_py-5.0-py3-none-any.whl (26 kB)
+2025-12-23T05:54:22.9722136Z Using cached cachecontrol-0.14.4-py3-none-any.whl (22 kB)
+2025-12-23T05:54:22.9736175Z Using cached msgpack-1.1.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (426 kB)
+2025-12-23T05:54:22.9752434Z Using cached filelock-3.20.1-py3-none-any.whl (16 kB)
+2025-12-23T05:54:22.9765532Z Using cached pip_api-0.0.34-py3-none-any.whl (120 kB)
+2025-12-23T05:54:22.9779443Z Using cached pip_requirements_parser-32.0.1-py3-none-any.whl (35 kB)
+2025-12-23T05:54:22.9792940Z Using cached platformdirs-4.5.1-py3-none-any.whl (18 kB)
+2025-12-23T05:54:22.9806115Z Using cached requests-2.32.5-py3-none-any.whl (64 kB)
+2025-12-23T05:54:22.9820254Z Using cached charset_normalizer-3.4.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (151 kB)
+2025-12-23T05:54:22.9835506Z Using cached urllib3-2.6.2-py3-none-any.whl (131 kB)
+2025-12-23T05:54:22.9849173Z Using cached rich-14.2.0-py3-none-any.whl (243 kB)
+2025-12-23T05:54:22.9863609Z Using cached markdown_it_py-4.0.0-py3-none-any.whl (87 kB)
+2025-12-23T05:54:22.9876947Z Using cached mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+2025-12-23T05:54:22.9890551Z Using cached tomli-2.3.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (242 kB)
+2025-12-23T05:54:22.9905906Z Using cached tomli_w-1.2.0-py3-none-any.whl (6.7 kB)
+2025-12-23T05:54:23.0010941Z Downloading pyparsing-3.3.1-py3-none-any.whl (121 kB)
+2025-12-23T05:54:23.1181667Z Installing collected packages: sortedcontainers, boolean.py, urllib3, tomli-w, tomli, pyparsing, platformdirs, pip-api, packageurl-python, msgpack, mdurl, license-expression, filelock, defusedxml, charset_normalizer, requests, py-serializable, pip-requirements-parser, markdown-it-py, rich, cyclonedx-python-lib, CacheControl, pip-audit
+2025-12-23T05:54:23.9349801Z
+2025-12-23T05:54:23.9384176Z Successfully installed CacheControl-0.14.4 boolean.py-5.0 charset_normalizer-3.4.4 cyclonedx-python-lib-11.6.0 defusedxml-0.7.1 filelock-3.20.1 license-expression-30.4.4 markdown-it-py-4.0.0 mdurl-0.1.2 msgpack-1.1.2 packageurl-python-0.17.6 pip-api-0.0.34 pip-audit-2.10.0 pip-requirements-parser-32.0.1 platformdirs-4.5.1 py-serializable-2.1.0 pyparsing-3.3.1 requests-2.32.5 rich-14.2.0 sortedcontainers-2.4.0 tomli-2.3.0 tomli-w-1.2.0 urllib3-2.6.2
+2025-12-23T05:54:25.8856141Z No known vulnerabilities found
+2025-12-23T05:54:26.6631159Z No known vulnerabilities found
+2025-12-23T05:54:26.6638232Z Name             Skip Reason
+2025-12-23T05:54:26.6640106Z ---------------- -------------------------------------------------------------------------------
+2025-12-23T05:54:26.6641955Z tunix-rt-backend Dependency not found on PyPI and could not be audited: tunix-rt-backend (0.1.0)

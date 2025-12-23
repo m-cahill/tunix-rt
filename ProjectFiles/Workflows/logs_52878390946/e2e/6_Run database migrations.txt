@@ -1,0 +1,19 @@
+﻿2025-12-23T05:54:39.2735728Z ##[group]Run cd ../backend && alembic upgrade head
+2025-12-23T05:54:39.2736149Z [36;1mcd ../backend && alembic upgrade head[0m
+2025-12-23T05:54:39.2769246Z shell: /usr/bin/bash -e {0}
+2025-12-23T05:54:39.2769485Z env:
+2025-12-23T05:54:39.2769648Z   REDIAI_MODE: mock
+2025-12-23T05:54:39.2770224Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T05:54:39.2770568Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T05:54:39.2770965Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T05:54:39.2771354Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T05:54:39.2771694Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T05:54:39.2772038Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T05:54:39.2772369Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T05:54:39.2772655Z ##[endgroup]
+2025-12-23T05:54:39.9063073Z INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+2025-12-23T05:54:39.9067811Z INFO  [alembic.runtime.migration] Will assume transactional DDL.
+2025-12-23T05:54:39.9327058Z INFO  [alembic.runtime.migration] Running upgrade  -> 001, create_traces_table
+2025-12-23T05:54:39.9442758Z INFO  [alembic.runtime.migration] Running upgrade 001 -> f8f1393630e4, add traces created_at index
+2025-12-23T05:54:39.9518522Z INFO  [alembic.runtime.migration] Running upgrade f8f1393630e4 -> f3cc010ca8a6, add_scores_table
+2025-12-23T05:54:39.9632065Z INFO  [alembic.runtime.migration] Running upgrade f3cc010ca8a6 -> 4bf76cdb97da, add_tunix_runs_table
