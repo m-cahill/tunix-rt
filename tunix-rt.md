@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M12 Complete** ✅  
-**Coverage:** 92% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Mock-First Tunix Integration (artifact-based, no runtime dependency) | **Testing:** 160 backend + 21 frontend tests
+**Milestone M13 Complete** ✅  
+**Coverage:** 92% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Tunix Runtime Execution (optional, gated) | **Testing:** 168 backend + 25 frontend tests
 
 ## Overview
 
@@ -302,28 +302,39 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 
 ---
 
-### Tunix Integration Endpoints (M12)
+### Tunix Integration Endpoints (M12/M13)
 
-**M12 Design:** Mock-first, artifact-based integration (no Tunix runtime required)
+**M12 Design:** Mock-first, artifact-based integration (no Tunix runtime required)  
+**M13 Enhancement:** Optional runtime execution with graceful degradation
 
 #### `GET /api/tunix/status`
 
 **Description:** Check Tunix integration status
 
-**Response:**
+**Response (M13 with Tunix installed):**
+```json
+{
+  "available": true,
+  "version": "0.1.0",
+  "runtime_required": true,
+  "message": "Tunix runtime is available for execution."
+}
+```
+
+**Response (M13 without Tunix):**
 ```json
 {
   "available": false,
   "version": null,
   "runtime_required": false,
-  "message": "Tunix artifacts (JSONL + manifests) can be generated without Tunix runtime."
+  "message": "Tunix runtime not available. Install with `pip install -e '.[tunix]'` for local execution."
 }
 ```
 
 **Status Codes:**
 - `200 OK`: Status retrieved successfully
 
-**M12 Note:** Always returns `runtime_required: false` - artifacts can be generated without Tunix installed.
+**M13 Note:** `runtime_required` is now `true` if Tunix is available, enabling local execution mode.
 
 ---
 
@@ -416,6 +427,82 @@ curl -X POST http://localhost:8000/api/tunix/sft/manifest \
 ```
 
 **See also:** `docs/M12_TUNIX_INTEGRATION.md` for complete documentation.
+
+---
+
+#### `POST /api/tunix/run` (M13)
+
+**Description:** Execute a Tunix training run (dry-run or local mode)
+
+**Request Body:**
+```json
+{
+  "dataset_key": "my_dataset-v1",
+  "model_id": "google/gemma-2b-it",
+  "output_dir": "./output/run_001",
+  "dry_run": true,
+  "learning_rate": 2e-5,
+  "num_epochs": 3,
+  "batch_size": 8,
+  "max_seq_length": 2048
+}
+```
+
+**Parameters:**
+- `dataset_key` (required): Dataset identifier
+- `model_id` (required): Model identifier
+- `output_dir` (optional, auto-generated if not provided): Output directory
+- `dry_run` (optional, default `true`): If true, validate only; if false, execute training
+- `learning_rate` (optional, default 2e-5): Learning rate
+- `num_epochs` (optional, default 3): Number of epochs
+- `batch_size` (optional, default 8): Batch size
+- `max_seq_length` (optional, default 2048): Maximum sequence length
+
+**Response (202 Accepted):**
+```json
+{
+  "run_id": "550e8400-e29b-41d4-a716-446655440000",
+  "status": "completed",
+  "mode": "dry-run",
+  "dataset_key": "my_dataset-v1",
+  "model_id": "google/gemma-2b-it",
+  "output_dir": "./output/run_001",
+  "exit_code": 0,
+  "stdout": "Dry-run validation passed",
+  "stderr": "",
+  "duration_seconds": 0.05,
+  "started_at": "2025-12-22T10:00:00.000Z",
+  "completed_at": "2025-12-22T10:00:00.050Z",
+  "message": "Dry-run completed successfully. Configuration is valid."
+}
+```
+
+**Status Codes:**
+- `202 Accepted`: Run initiated/completed successfully
+- `400 Bad Request`: Invalid request parameters
+- `404 Not Found`: Dataset not found
+- `501 Not Implemented`: Tunix not available and `dry_run=false`
+
+**Execution Modes:**
+- **Dry-run mode (`dry_run=true`, default):** Validates configuration without executing
+- **Local mode (`dry_run=false`):** Executes training locally (requires Tunix installation)
+
+**Example (Dry-run):**
+```bash
+curl -X POST http://localhost:8000/api/tunix/run \
+  -H "Content-Type: application/json" \
+  -d '{"dataset_key": "ungar_hcd-v1", "model_id": "google/gemma-2b-it", "dry_run": true}'
+```
+
+**Example (Local execution):**
+```bash
+# Requires: pip install -e "backend[tunix]"
+curl -X POST http://localhost:8000/api/tunix/run \
+  -H "Content-Type: application/json" \
+  -d '{"dataset_key": "ungar_hcd-v1", "model_id": "google/gemma-2b-it", "dry_run": false, "num_epochs": 1}'
+```
+
+**See also:** `docs/M13_TUNIX_EXECUTION.md` for complete execution guide.
 
 ---
 
@@ -976,12 +1063,26 @@ docs: update README
 - **Optional CI workflow:** tunix-integration.yml (non-blocking, nightly)
 - **Complete documentation:** M12_BASELINE.md, M12_TUNIX_INTEGRATION.md
 
-## Next Steps (M12+)
+### M13: Tunix Runtime Execution (Phase 2) ✅
+- **Optional, gated execution:** Requires `backend[tunix]` installation for local runs
+- **Dry-run mode (default):** Validates configuration without executing
+- **Local execution mode:** Runs `tunix train` via subprocess, captures output
+- **Graceful degradation:** Returns 501 if Tunix unavailable and `dry_run=false`
+- **No TPU assumptions:** CPU/GPU only for M13
+- **New endpoint:** POST /api/tunix/run (dry_run param, 202 response)
+- **Execution metadata:** run_id, status, timestamps, stdout/stderr, exit_code
+- **Frontend UI:** "Run with Tunix" buttons with results display (collapsible logs)
+- **CI workflow:** Separate `tunix-runtime.yml` (manual, never blocks merge)
+- **Test growth:** 168 backend tests (+8), 25 frontend tests (+4)
+- **Coverage maintained:** 92% backend line, 77% frontend line
+- **Complete documentation:** M13_BASELINE.md, M13_TUNIX_EXECUTION.md
 
-1. **M13**: Real Tunix execution hooks (optional runtime integration)
-2. **M14**: Training result ingestion + run registry
-3. **M15**: Evaluation loop closure (trace → train → compare)
-4. **M16**: Multi-game UNGAR support + RL pipelines (GRPO/PPO/DPO)
+## Next Steps (M13+)
+
+1. **M14**: Training result ingestion + run registry (database persistence)
+2. **M15**: Evaluation loop closure (trace → train → evaluate)
+3. **M16**: Multi-game UNGAR support + RL pipelines (GRPO/PPO/DPO)
+4. **M17**: TPU integration + distributed training
 
 ## Architecture Decisions
 
@@ -1002,9 +1103,9 @@ Apache-2.0
 
 ---
 
-**Last Updated:** M12 Complete  
-**Version:** 0.5.0  
+**Last Updated:** M13 Complete  
+**Version:** 0.6.0  
 **Coverage:** Backend 92% Line, Frontend 77% Line  
 **Security:** SHA-Pinned CI + SBOM + Pre-commit Hooks  
-**Architecture:** Mock-First Tunix Integration + Complete Service Extraction  
-**Tests:** 181 total (160 backend + 21 frontend)
+**Architecture:** Tunix Runtime Execution (Optional) + Complete Service Extraction  
+**Tests:** 193 total (168 backend + 25 frontend)

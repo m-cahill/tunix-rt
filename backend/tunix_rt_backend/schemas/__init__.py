@@ -24,9 +24,13 @@ from tunix_rt_backend.schemas.trace import (
     TraceStep,
 )
 from tunix_rt_backend.schemas.tunix import (
+    ExecutionMode,
+    ExecutionStatus,
     TunixExportRequest,
     TunixManifestRequest,
     TunixManifestResponse,
+    TunixRunRequest,
+    TunixRunResponse,
     TunixStatusResponse,
 )
 from tunix_rt_backend.schemas.ungar import (
@@ -60,4 +64,8 @@ __all__ = [
     "TunixExportRequest",
     "TunixManifestRequest",
     "TunixManifestResponse",
+    "TunixRunRequest",
+    "TunixRunResponse",
+    "ExecutionMode",
+    "ExecutionStatus",
 ]

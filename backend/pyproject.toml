@@ -42,6 +42,13 @@ training = [
     # Tunix library (if/when available on PyPI)
     # "tunix>=0.1.0",
 ]
+tunix = [
+    # M13: Optional Tunix runtime for local execution
+    # Note: Tunix installation instructions may vary
+    # Placeholder for when Tunix becomes publicly available
+    # As of Dec 2025, Tunix may need manual installation
+    # "tunix>=0.1.0",  # Placeholder - update when available
+]
 
 [tool.setuptools.packages.find]
 where = ["."]
@@ -88,6 +95,7 @@ markers = [
     "integration: Integration tests (may require external services)",
     "ungar: UNGAR integration tests (requires backend[ungar] installed)",
     "training: Training smoke tests (requires backend[training] installed)",
+    "tunix: Tunix execution tests (requires backend[tunix] installed)",
 ]
 
 # Coverage configuration moved to .coveragerc for better control

@@ -10,6 +10,7 @@ import {
   getTunixStatus,
   exportTunixSft,
   generateTunixManifest,
+  executeTunixRun,
   type HealthResponse,
   type RediHealthResponse,
   type TraceDetail,
@@ -18,6 +19,7 @@ import {
   type UngarGenerateResponse,
   type TunixStatusResponse,
   type TunixManifestResponse,
+  type TunixRunResponse,
   ApiError,
 } from './api/client'
 import { EXAMPLE_TRACE } from './exampleTrace'
@@ -55,8 +57,10 @@ function App() {
   const [tunixModelId, setTunixModelId] = useState('google/gemma-2b-it')
   const [tunixOutputDir, setTunixOutputDir] = useState('./output/tunix_run')
   const [tunixManifestResult, setTunixManifestResult] = useState<TunixManifestResponse | null>(null)
+  const [tunixRunResult, setTunixRunResult] = useState<TunixRunResponse | null>(null)
   const [tunixError, setTunixError] = useState<string | null>(null)
   const [tunixLoading, setTunixLoading] = useState(false)
+  const [tunixRunLoading, setTunixRunLoading] = useState(false)
 
   useEffect(() => {
     const fetchHealth = async () => {
@@ -278,6 +282,37 @@ function App() {
         setTunixError('Manifest generation failed: Unknown error')
       }
       setTunixManifestResult(null)
+    } finally {
+      setTunixLoading(false)
+    }
+  }
+
+  const handleTunixRun = async (dryRun: boolean) => {
+    if (!tunixDatasetKey) {
+      setTunixError('Dataset key is required')
+      return
+    }
+
+    setTunixError(null)
+    setTunixLoading(true)
+    setTunixRunResult(null)
+
+    try {
+      const result = await executeTunixRun({
+        dataset_key: tunixDatasetKey,
+        model_id: tunixModelId,
+        output_dir: tunixOutputDir || undefined,
+        dry_run: dryRun,
+      })
+      setTunixRunResult(result)
+      setTunixError(null)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setTunixError(`Run failed: ${error.message} (${error.status})`)
+      } else {
+        setTunixError('Run failed: Unknown error')
+      }
+      setTunixRunResult(null)
     } finally {
       setTunixLoading(false)
     }
@@ -616,12 +651,61 @@ function App() {
             >
               Generate Manifest
             </button>
+
+            <button
+              data-testid="tunix:run-dry-btn"
+              onClick={() => handleTunixRun(true)}
+              disabled={tunixLoading || tunixRunLoading || !tunixDatasetKey}
+            >
+              Run (Dry-run)
+            </button>
+
+            <button
+              data-testid="tunix:run-local-btn"
+              onClick={() => handleTunixRun(false)}
+              disabled={tunixLoading || tunixRunLoading || !tunixDatasetKey}
+              title={tunixStatus?.runtime_required ? 'Requires Tunix installation' : 'Run with Tunix (Local)'}
+            >
+              Run with Tunix (Local)
+            </button>
           </div>
         </div>
+
+        {tunixRunLoading && (
+          <p data-testid="tunix:run-loading">Executing Tunix run...</p>
+        )}
 
         {tunixError && (
           <div className="trace-error" data-testid="tunix:error">
             <strong>Error:</strong> {tunixError}
+          </div>
+        )}
+
+        {tunixRunResult && (
+          <div className="tunix-run-result" data-testid="tunix:run-result">
+            <h3>Run {tunixRunResult.status === 'completed' ? 'Completed' : 'Failed'}</h3>
+            <div className="run-info">
+              <p data-testid="tunix:run-id"><strong>Run ID:</strong> {tunixRunResult.run_id}</p>
+              <p data-testid="tunix:run-status"><strong>Status:</strong> {tunixRunResult.status}</p>
+              <p data-testid="tunix:run-mode"><strong>Mode:</strong> {tunixRunResult.mode}</p>
+              <p data-testid="tunix:run-duration"><strong>Duration:</strong> {tunixRunResult.duration_seconds?.toFixed(2)}s</p>
+              {tunixRunResult.exit_code !== null && (
+                <p data-testid="tunix:run-exit-code"><strong>Exit Code:</strong> {tunixRunResult.exit_code}</p>
+              )}
+              <p data-testid="tunix:run-message"><strong>Message:</strong> {tunixRunResult.message}</p>
+            </div>
+            {tunixRunResult.stdout && (
+              <details>
+                <summary>Standard Output</summary>
+                <pre data-testid="tunix:run-stdout">{tunixRunResult.stdout}</pre>
+              </details>
+            )}
+            {tunixRunResult.stderr && (
+              <details>
+                <summary>Standard Error</summary>
+                <pre data-testid="tunix:run-stderr">{tunixRunResult.stderr}</pre>
+              </details>
+            )}
           </div>
         )}
 

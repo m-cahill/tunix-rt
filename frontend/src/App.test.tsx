@@ -652,4 +652,160 @@ describe('App', () => {
       expect(errorElement).toHaveTextContent('Export failed')
     }, { timeout: 3000 })
   })
+
+  // Tunix Run Tests (M13)
+  it('executes dry-run successfully', async () => {
+    const user = userEvent.setup()
+    mockAllHealthFetches()
+
+    render(<App />)
+
+    // Wait for health fetches to complete
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
+    })
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
+    })
+
+    // Mock run response
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        run_id: '123e4567-e89b-12d3-a456-426614174000',
+        status: 'completed',
+        mode: 'dry-run',
+        dataset_key: 'test-v1',
+        model_id: 'google/gemma-2b-it',
+        output_dir: './output/tunix_run',
+        exit_code: 0,
+        stdout: 'Dry-run validation passed',
+        stderr: '',
+        duration_seconds: 0.5,
+        started_at: '2025-12-22T10:00:00Z',
+        completed_at: '2025-12-22T10:00:01Z',
+        message: 'Dry-run completed successfully',
+      }),
+    })
+
+    // Fill in dataset key and click dry-run button
+    const datasetInput = screen.getByTestId('tunix:dataset-key') as HTMLInputElement
+    await user.type(datasetInput, 'test-v1')
+
+    const dryRunButton = screen.getByTestId('tunix:run-dry-btn')
+    await user.click(dryRunButton)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:run-result')).toBeInTheDocument()
+      expect(screen.getByTestId('tunix:run-status')).toHaveTextContent('Status:')
+      expect(screen.getByTestId('tunix:run-status')).toHaveTextContent('completed')
+      expect(screen.getByTestId('tunix:run-mode')).toHaveTextContent('Mode:')
+      expect(screen.getByTestId('tunix:run-mode')).toHaveTextContent('dry-run')
+      expect(screen.getByTestId('tunix:run-message')).toHaveTextContent('Dry-run completed successfully')
+    }, { timeout: 3000 })
+  })
+
+  it('displays error when Tunix run fails with 501', async () => {
+    const user = userEvent.setup()
+    mockAllHealthFetches()
+
+    render(<App />)
+
+    // Wait for health fetches to complete
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
+    })
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
+    })
+
+    // Mock 501 response
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: false,
+      status: 501,
+      statusText: 'Not Implemented',
+    })
+
+    // Fill in dataset key and click local run button
+    const datasetInput = screen.getByTestId('tunix:dataset-key') as HTMLInputElement
+    await user.type(datasetInput, 'test-v1')
+
+    const localRunButton = screen.getByTestId('tunix:run-local-btn')
+    await user.click(localRunButton)
+
+    await waitFor(() => {
+      const errorElement = screen.getByTestId('tunix:error')
+      expect(errorElement).toHaveTextContent('Error:')
+      expect(errorElement).toHaveTextContent('Run failed')
+      expect(errorElement).toHaveTextContent('501')
+    }, { timeout: 3000 })
+  })
+
+  it('executes local run and displays output', async () => {
+    const user = userEvent.setup()
+    mockAllHealthFetches()
+
+    render(<App />)
+
+    // Wait for health fetches to complete
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
+    })
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
+    })
+
+    // Mock run response
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        run_id: '123e4567-e89b-12d3-a456-426614174000',
+        status: 'completed',
+        mode: 'local',
+        dataset_key: 'test-v1',
+        model_id: 'google/gemma-2b-it',
+        output_dir: './output/tunix_run',
+        exit_code: 0,
+        stdout: 'Training completed\nLoss: 0.05',
+        stderr: '',
+        duration_seconds: 15.3,
+        started_at: '2025-12-22T10:00:00Z',
+        completed_at: '2025-12-22T10:00:15Z',
+        message: 'Local execution completed successfully',
+      }),
+    })
+
+    // Fill in dataset key and click local run button
+    const datasetInput = screen.getByTestId('tunix:dataset-key') as HTMLInputElement
+    await user.type(datasetInput, 'test-v1')
+
+    const localRunButton = screen.getByTestId('tunix:run-local-btn')
+    await user.click(localRunButton)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:run-result')).toBeInTheDocument()
+      expect(screen.getByTestId('tunix:run-status')).toHaveTextContent('Status:')
+      expect(screen.getByTestId('tunix:run-status')).toHaveTextContent('completed')
+      expect(screen.getByTestId('tunix:run-mode')).toHaveTextContent('Mode:')
+      expect(screen.getByTestId('tunix:run-mode')).toHaveTextContent('local')
+      expect(screen.getByTestId('tunix:run-exit-code')).toHaveTextContent('Exit Code:')
+      expect(screen.getByTestId('tunix:run-exit-code')).toHaveTextContent('0')
+      expect(screen.getByTestId('tunix:run-stdout')).toHaveTextContent('Training completed')
+    }, { timeout: 3000 })
+  })
+
+  it('disables run buttons when dataset key is empty', () => {
+    mockAllHealthFetches()
+
+    render(<App />)
+
+    const dryRunButton = screen.getByTestId('tunix:run-dry-btn') as HTMLButtonElement
+    const localRunButton = screen.getByTestId('tunix:run-local-btn') as HTMLButtonElement
+
+    expect(dryRunButton.disabled).toBe(true)
+    expect(localRunButton.disabled).toBe(true)
+  })
 })

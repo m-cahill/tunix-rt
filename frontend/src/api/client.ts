@@ -348,6 +348,39 @@ export interface TunixManifestResponse {
 }
 
 /**
+ * Request parameters for Tunix run execution (M13)
+ */
+export interface TunixRunRequest {
+  dataset_key: string
+  model_id: string
+  output_dir?: string | null
+  dry_run?: boolean
+  learning_rate?: number
+  num_epochs?: number
+  batch_size?: number
+  max_seq_length?: number
+}
+
+/**
+ * Response from Tunix run execution (M13)
+ */
+export interface TunixRunResponse {
+  run_id: string
+  status: 'pending' | 'running' | 'completed' | 'failed' | 'timeout'
+  mode: 'dry-run' | 'local'
+  dataset_key: string
+  model_id: string
+  output_dir: string
+  exit_code: number | null
+  stdout: string
+  stderr: string
+  duration_seconds: number | null
+  started_at: string
+  completed_at: string | null
+  message: string
+}
+
+/**
  * Get Tunix availability status
  * @returns Promise resolving to Tunix status (always succeeds, check fields)
  */
@@ -389,6 +422,22 @@ export async function exportTunixSft(request: TunixExportRequest): Promise<Blob>
  */
 export async function generateTunixManifest(request: TunixManifestRequest): Promise<TunixManifestResponse> {
   return fetchJSON<TunixManifestResponse>('/api/tunix/sft/manifest', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(request),
+  })
+}
+
+/**
+ * Execute a Tunix training run (M13)
+ * @param request - Run parameters (dataset_key, model_id, hyperparameters, dry_run flag)
+ * @returns Promise resolving to run execution results
+ * @throws {ApiError} on HTTP error (including 501 if Tunix not available and dry_run=false)
+ */
+export async function executeTunixRun(request: TunixRunRequest): Promise<TunixRunResponse> {
+  return fetchJSON<TunixRunResponse>('/api/tunix/run', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

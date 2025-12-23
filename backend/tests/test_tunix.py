@@ -151,11 +151,13 @@ def test_tunix_version_returns_none():
     assert tunix_version() is None
 
 
-def test_tunix_runtime_required_returns_false():
-    """Test that tunix_runtime_required returns False (M12 artifact-based)."""
-    from tunix_rt_backend.integrations.tunix.availability import tunix_runtime_required
+def test_tunix_availability_m13():
+    """Test that tunix_available checks actual Tunix installation (M13)."""
+    from tunix_rt_backend.integrations.tunix.availability import tunix_available
 
-    assert tunix_runtime_required() is False
+    # M13: Should check real Tunix availability (both package and CLI)
+    # Without Tunix installed, returns False
+    assert tunix_available() is False
 
 
 # ================================================================================
@@ -167,7 +169,7 @@ def test_tunix_runtime_required_returns_false():
 async def test_tunix_status_endpoint(client: AsyncClient):
     """Test /api/tunix/status endpoint returns correct status.
 
-    M12: Should show available=False, runtime_required=False
+    M13: Should show available=False (no Tunix installed), runtime_required=True
     """
     response = await client.get("/api/tunix/status")
 
@@ -176,8 +178,8 @@ async def test_tunix_status_endpoint(client: AsyncClient):
     data = response.json()
     assert data["available"] is False
     assert data["version"] is None
-    assert data["runtime_required"] is False
-    assert "artifact" in data["message"].lower() or "compatible" in data["message"].lower()
+    assert data["runtime_required"] is True  # M13: True when not available
+    assert "dry-run" in data["message"].lower() or "install" in data["message"].lower()
 
 
 # ================================================================================
@@ -427,7 +429,8 @@ async def test_tunix_workflow_end_to_end(client: AsyncClient, sample_dataset: st
     # 1. Check status
     status_response = await client.get("/api/tunix/status")
     assert status_response.status_code == status.HTTP_200_OK
-    assert status_response.json()["runtime_required"] is False
+    # M13: runtime_required is True when Tunix is not installed
+    assert status_response.json()["runtime_required"] is True
 
     # 2. Export dataset
     export_response = await client.post(

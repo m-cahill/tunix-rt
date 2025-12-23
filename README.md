@@ -2,7 +2,7 @@
 
 **Tunix Reasoning-Trace Framework for AI-Native Development**
 
-**Status:** M9 Complete ✅ | Coverage: 79% Line, 58% Branch | Features: Reproducible Training Loop, Batch Import, Eval Harness | Database: PostgreSQL + Alembic
+**Status:** M13 Complete ✅ | Coverage: 92% Line, 68% Branch | Features: Tunix Runtime Execution (optional), Batch Import, Eval Harness | Database: PostgreSQL + Alembic
 
 A full-stack application for managing reasoning traces and integrating with the RediAI framework for the Tunix Hackathon.
 
@@ -533,6 +533,64 @@ lsof -i :5432                   # Mac/Linux
 docker ps
 docker stop <container_name>
 ```
+
+## Tunix Integration (M12/M13)
+
+tunix-rt provides optional integration with Tunix for training reasoning trace models.
+
+### Installation
+
+**For artifact generation only (M12):**
+```bash
+cd backend
+pip install -e ".[dev]"
+```
+
+**For local execution (M13):**
+```bash
+cd backend
+pip install -e ".[dev,tunix]"
+```
+
+### Quick Start
+
+**Export traces in Tunix SFT format:**
+```bash
+curl -X POST http://localhost:8000/api/tunix/sft/export \
+  -H "Content-Type: application/json" \
+  -d '{"dataset_key": "my_dataset-v1"}' > export.jsonl
+```
+
+**Generate training manifest:**
+```bash
+curl -X POST http://localhost:8000/api/tunix/sft/manifest \
+  -H "Content-Type: application/json" \
+  -d '{
+    "dataset_key": "my_dataset-v1",
+    "model_id": "google/gemma-2b-it",
+    "output_dir": "./output/run_001"
+  }' | jq -r '.manifest_yaml' > config.yaml
+```
+
+**Execute training run (dry-run):**
+```bash
+curl -X POST http://localhost:8000/api/tunix/run \
+  -H "Content-Type: application/json" \
+  -d '{"dataset_key": "my_dataset-v1", "model_id": "google/gemma-2b-it", "dry_run": true}'
+```
+
+**Execute training run (local, requires Tunix):**
+```bash
+# First install: pip install -e ".[tunix]"
+curl -X POST http://localhost:8000/api/tunix/run \
+  -H "Content-Type: application/json" \
+  -d '{"dataset_key": "my_dataset-v1", "model_id": "google/gemma-2b-it", "dry_run": false}'
+```
+
+### Documentation
+
+- **M12 Integration:** `docs/M12_TUNIX_INTEGRATION.md` - Artifact generation (JSONL + manifests)
+- **M13 Execution:** `docs/M13_TUNIX_EXECUTION.md` - Runtime execution guide
 
 ## License
 

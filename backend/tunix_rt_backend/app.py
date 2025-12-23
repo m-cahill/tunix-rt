@@ -31,6 +31,8 @@ from tunix_rt_backend.schemas import (
     TunixExportRequest,
     TunixManifestRequest,
     TunixManifestResponse,
+    TunixRunRequest,
+    TunixRunResponse,
     UngarGenerateRequest,
     UngarGenerateResponse,
     UngarStatusResponse,
@@ -610,28 +612,40 @@ async def export_dataset(
 async def tunix_status() -> dict[str, str | bool | None]:
     """Check Tunix integration status.
 
-    Returns Tunix availability and configuration information. M12 implementation
-    is mock-first: Tunix runtime is NOT required for export/manifest generation.
+    Returns Tunix availability and configuration information. M13 adds
+    optional runtime execution capability (dry-run + local modes).
 
     Returns:
         Status information including availability, version, and runtime requirements
 
     Note:
-        M12: Returns available=False, runtime_required=False (artifacts only)
-        Future milestones may add real Tunix runtime integration
+        M13: Returns available=True/False based on actual Tunix installation
+        Dry-run mode always works (no Tunix required)
+        Local execution requires Tunix to be installed
     """
     from tunix_rt_backend.integrations.tunix.availability import (
         tunix_available,
-        tunix_runtime_required,
         tunix_version,
     )
 
+    available = tunix_available()
+
+    if available:
+        message = (
+            "Tunix runtime is available. Supports dry-run validation and local execution. "
+            "Use POST /api/tunix/run with dry_run=false to execute training runs locally."
+        )
+    else:
+        message = (
+            "Tunix runtime not installed. Dry-run mode available for validation. "
+            "Install Tunix for local execution: pip install -e '.[tunix]'"
+        )
+
     return {
-        "available": tunix_available(),
+        "available": available,
         "version": tunix_version(),
-        "runtime_required": tunix_runtime_required(),
-        "message": "Tunix artifacts (JSONL + manifests) can be generated without Tunix runtime. "
-        "Compatible with Tunix SFT workflows.",
+        "runtime_required": not available,  # Runtime required only if not available
+        "message": message,
     }
 
 
@@ -744,3 +758,65 @@ async def tunix_generate_manifest(
         message=f"Manifest generated for dataset {request.dataset_key}. "
         f"Save as YAML and execute with Tunix CLI.",
     )
+
+
+@app.post("/api/tunix/run", status_code=status.HTTP_200_OK)
+async def tunix_run(
+    request: TunixRunRequest,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> TunixRunResponse:
+    """Execute a Tunix training run (M13).
+
+    This endpoint supports two execution modes:
+    - **dry-run** (default): Validates manifest + dataset without executing
+    - **local**: Executes tunix CLI via subprocess with 30s timeout
+
+    Args:
+        request: Run configuration (dataset_key, model_id, hyperparameters, dry_run flag)
+        db: Database session
+
+    Returns:
+        Run response with execution status, logs, and metadata
+
+    Raises:
+        HTTPException: 501 if Tunix not available and dry_run=False
+
+    Note:
+        - Dry-run mode always works (no Tunix required)
+        - Local mode requires Tunix to be installed (backend[tunix] extra)
+        - M13 does NOT persist run metadata to database (deferred to M14)
+        - Execution is synchronous (blocking) with 30s timeout
+
+    Example (dry-run):
+        ```
+        POST /api/tunix/run
+        {
+          "dataset_key": "my_dataset-v1",
+          "model_id": "google/gemma-2b-it",
+          "dry_run": true
+        }
+        ```
+
+    Example (local execution):
+        ```
+        POST /api/tunix/run
+        {
+          "dataset_key": "my_dataset-v1",
+          "model_id": "google/gemma-2b-it",
+          "dry_run": false
+        }
+        ```
+    """
+    from tunix_rt_backend.integrations.tunix.availability import tunix_available
+    from tunix_rt_backend.services.tunix_execution import execute_tunix_run
+
+    # Check Tunix availability for local execution
+    if not request.dry_run and not tunix_available():
+        raise HTTPException(
+            status_code=status.HTTP_501_NOT_IMPLEMENTED,
+            detail="Tunix runtime not available. Install with: pip install -e '.[tunix]' "
+            "or set dry_run=true to validate without executing.",
+        )
+
+    # Execute run (dry-run or local)
+    return await execute_tunix_run(request, db)

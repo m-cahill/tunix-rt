@@ -1,9 +1,11 @@
 """Tunix integration schemas.
 
 This module defines request/response schemas for Tunix integration endpoints.
-M12 provides artifact generation (JSONL export + YAML manifests) without
-requiring Tunix runtime to be installed.
+M12: Artifact generation (JSONL export + YAML manifests) without runtime
+M13: Optional runtime execution (dry-run + local modes)
 """
+
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -126,3 +128,106 @@ class TunixManifestResponse(BaseModel):
     model_id: str = Field(..., description="Model identifier")
     format: str = Field(default="tunix_sft", description="Dataset export format")
     message: str = Field(..., description="Confirmation message")
+
+
+# M13: Execution schemas
+
+ExecutionMode = Literal["dry-run", "local"]
+ExecutionStatus = Literal["pending", "running", "completed", "failed", "timeout"]
+
+
+class TunixRunRequest(BaseModel):
+    """Request to execute a Tunix training run (M13).
+
+    Attributes:
+        dataset_key: Dataset identifier for training data
+        model_id: Model identifier (e.g., 'google/gemma-2b-it')
+        output_dir: Output directory for training artifacts
+            (optional, auto-generated if not provided)
+        dry_run: If True, validate but don't execute (default: True)
+        learning_rate: Learning rate (default: 2e-5)
+        num_epochs: Number of training epochs (default: 3)
+        batch_size: Batch size (default: 8)
+        max_seq_length: Maximum sequence length (default: 2048)
+    """
+
+    dataset_key: str = Field(
+        ...,
+        min_length=1,
+        max_length=256,
+        description="Dataset key (name-version)",
+    )
+    model_id: str = Field(
+        ...,
+        min_length=1,
+        max_length=256,
+        description="Model identifier (e.g., 'google/gemma-2b-it')",
+    )
+    output_dir: str | None = Field(
+        None,
+        min_length=1,
+        max_length=512,
+        description="Output directory path (auto-generated if not provided)",
+    )
+    dry_run: bool = Field(
+        default=True,
+        description="Dry-run mode: validate without executing",
+    )
+    learning_rate: float = Field(
+        default=2e-5,
+        gt=0,
+        le=1.0,
+        description="Learning rate",
+    )
+    num_epochs: int = Field(
+        default=3,
+        ge=1,
+        le=100,
+        description="Number of epochs",
+    )
+    batch_size: int = Field(
+        default=8,
+        ge=1,
+        le=512,
+        description="Batch size",
+    )
+    max_seq_length: int = Field(
+        default=2048,
+        ge=128,
+        le=32768,
+        description="Maximum sequence length",
+    )
+
+
+class TunixRunResponse(BaseModel):
+    """Response from Tunix run execution (M13).
+
+    Attributes:
+        run_id: Unique identifier for this run
+        status: Execution status
+        mode: Execution mode used (dry-run or local)
+        dataset_key: Dataset identifier
+        model_id: Model identifier
+        output_dir: Output directory path
+        exit_code: Process exit code (None for dry-run)
+        stdout: Standard output (truncated to 10KB)
+        stderr: Standard error (truncated to 10KB)
+        duration_seconds: Execution duration in seconds
+        started_at: ISO-8601 timestamp when execution started
+        completed_at: ISO-8601 timestamp when execution completed (None if still running)
+        message: Human-readable status message
+    """
+
+    run_id: str = Field(..., description="Unique run identifier (UUID)")
+    status: ExecutionStatus = Field(..., description="Execution status")
+    mode: ExecutionMode = Field(..., description="Execution mode (dry-run or local)")
+    dataset_key: str = Field(..., description="Dataset identifier")
+    model_id: str = Field(..., description="Model identifier")
+    output_dir: str = Field(..., description="Output directory path")
+    exit_code: int | None = Field(None, description="Process exit code")
+    stdout: str = Field(default="", description="Standard output (truncated)")
+    stderr: str = Field(default="", description="Standard error (truncated)")
+    duration_seconds: float | None = Field(None, description="Execution duration")
+    started_at: str = Field(..., description="Start timestamp (ISO-8601)")
+    completed_at: str | None = Field(None, description="Completion timestamp (ISO-8601)")
+    message: str = Field(..., description="Status message")

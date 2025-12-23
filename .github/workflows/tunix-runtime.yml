@@ -1,0 +1,57 @@
+name: Tunix Runtime Execution (Optional, M13)
+
+on:
+  workflow_dispatch:  # Manual trigger only
+  # Note: This workflow is NEVER required for CI passing
+  # It tests Tunix execution capabilities when Tunix is available
+
+permissions:
+  contents: read
+
+jobs:
+  tunix-runtime-dry-run:
+    runs-on: ubuntu-latest
+    continue-on-error: true  # Non-blocking, never blocks merge
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b  # v5.3.0
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'backend/pyproject.toml'
+
+      - name: Install dependencies without Tunix (dry-run tests only)
+        working-directory: backend
+        run: python -m pip install -e ".[dev]"
+
+      - name: Run Tunix execution tests (dry-run mode, no Tunix required)
+        working-directory: backend
+        run: |
+          echo "Running M13 Tunix execution tests (dry-run mode)..."
+          pytest -v tests/test_tunix_execution.py -k "not tunix" --cov=tunix_rt_backend --cov-branch --cov-report=term --cov-report=xml
+          echo "Dry-run test coverage:"
+          coverage report
+
+      - name: Verify 501 responses without Tunix installed
+        working-directory: backend
+        run: |
+          echo "Verifying graceful degradation without Tunix..."
+          pytest -v tests/test_tunix_execution.py::test_local_execution_without_tunix_returns_501
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b  # v4.5.0
+        with:
+          name: tunix-runtime-dry-run-coverage
+          path: backend/coverage.xml
+          retention-days: 30
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b  # v4.5.0
+        with:
+          name: tunix-runtime-test-results
+          path: backend/test-results/
+          retention-days: 7
