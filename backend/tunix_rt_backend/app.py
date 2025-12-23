@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
-from fastapi import Depends, FastAPI, HTTPException, Request, Response, status
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -31,6 +31,8 @@ from tunix_rt_backend.schemas import (
     TunixExportRequest,
     TunixManifestRequest,
     TunixManifestResponse,
+    TunixRunListItem,
+    TunixRunListResponse,
     TunixRunRequest,
     TunixRunResponse,
     UngarGenerateRequest,
@@ -820,3 +822,179 @@ async def tunix_run(
 
     # Execute run (dry-run or local)
     return await execute_tunix_run(request, db)
+
+
+# ================================================================================
+# M14: Tunix Run Registry Endpoints
+# ================================================================================
+
+
+@app.get("/api/tunix/runs", response_model=TunixRunListResponse)
+async def list_tunix_runs(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    limit: int = 20,
+    offset: int = 0,
+    status_filter: Annotated[str | None, Query(alias="status")] = None,
+    dataset_key: str | None = None,
+    mode: str | None = None,
+) -> TunixRunListResponse:
+    """List Tunix training runs with pagination and filtering (M14).
+
+    Returns a paginated list of Tunix run history with optional filtering by
+    status, dataset_key, and execution mode.
+
+    Args:
+        limit: Maximum number of runs to return (1-100, default 20)
+        offset: Pagination offset (default 0)
+        status_filter: Filter by execution status (optional, query param: status)
+        dataset_key: Filter by dataset identifier (optional)
+        mode: Filter by execution mode (dry-run or local, optional)
+        db: Database session
+
+    Returns:
+        TunixRunListResponse with run summaries and pagination info
+
+    Raises:
+        HTTPException: 422 if limit > 100 or offset < 0
+
+    Note:
+        - All filters use AND logic (status AND dataset_key AND mode)
+        - Runs are sorted by created_at DESC (most recent first)
+        - Use GET /api/tunix/runs/{run_id} for full run details including stdout/stderr
+    """
+    from sqlalchemy import select
+
+    from tunix_rt_backend.db.models import TunixRun
+
+    # Validate pagination parameters
+    if limit < 1 or limit > 100:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail="limit must be between 1 and 100",
+        )
+
+    if offset < 0:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail="offset must be non-negative",
+        )
+
+    # Build query with filters (AND logic)
+    query = select(TunixRun)
+
+    if status_filter:
+        query = query.where(TunixRun.status == status_filter)
+    if dataset_key:
+        query = query.where(TunixRun.dataset_key == dataset_key)
+    if mode:
+        query = query.where(TunixRun.mode == mode)
+
+    # Order by created_at DESC and apply pagination
+    query = query.order_by(TunixRun.created_at.desc()).limit(limit + 1).offset(offset)
+
+    # Execute query
+    result = await db.execute(query)
+    db_runs = result.scalars().all()
+
+    # Check if there are more results
+    has_more = len(db_runs) > limit
+    runs_to_return = db_runs[:limit]
+
+    # Build response
+    data = [
+        TunixRunListItem(
+            run_id=str(run.run_id),
+            dataset_key=run.dataset_key,
+            model_id=run.model_id,
+            mode=run.mode,  # type: ignore[arg-type]
+            status=run.status,  # type: ignore[arg-type]
+            started_at=run.started_at.isoformat(),
+            duration_seconds=run.duration_seconds,
+        )
+        for run in runs_to_return
+    ]
+
+    next_offset = offset + limit if has_more else None
+
+    return TunixRunListResponse(
+        data=data,
+        pagination={
+            "limit": limit,
+            "offset": offset,
+            "next_offset": next_offset,
+        },
+    )
+
+
+@app.get("/api/tunix/runs/{run_id}", response_model=TunixRunResponse)
+async def get_tunix_run(
+    run_id: uuid.UUID,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> TunixRunResponse:
+    """Get full details of a Tunix training run by ID (M14).
+
+    Returns complete run information including stdout, stderr, and all metadata.
+
+    Args:
+        run_id: UUID of the run to retrieve
+        db: Database session
+
+    Returns:
+        TunixRunResponse with full run details
+
+    Raises:
+        HTTPException: 404 if run not found
+
+    Note:
+        - Returns the same schema as POST /api/tunix/run for consistency
+        - Includes full stdout/stderr (truncated to 10KB at capture time)
+        - message field is reconstructed based on final status
+    """
+    from sqlalchemy import select
+
+    from tunix_rt_backend.db.models import TunixRun
+
+    # Fetch run from database
+    result = await db.execute(select(TunixRun).where(TunixRun.run_id == run_id))
+    db_run = result.scalar_one_or_none()
+
+    if db_run is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Tunix run not found: {run_id}",
+        )
+
+    # Reconstruct message based on status
+    if db_run.status == "completed":
+        message = (
+            f"{db_run.mode.capitalize()} execution completed successfully"
+            if db_run.mode == "local"
+            else "Dry-run validation successful"
+        )
+    elif db_run.status == "failed":
+        message = f"{db_run.mode.capitalize()} execution failed"
+        if db_run.exit_code is not None:
+            message += f" with exit code {db_run.exit_code}"
+    elif db_run.status == "timeout":
+        message = f"{db_run.mode.capitalize()} execution timed out after 30 seconds"
+    elif db_run.status == "running":
+        message = f"{db_run.mode.capitalize()} execution in progress"
+    else:  # pending
+        message = f"{db_run.mode.capitalize()} execution pending"
+
+    # Build response (reuse TunixRunResponse schema per M14 decision)
+    return TunixRunResponse(
+        run_id=str(db_run.run_id),
+        status=db_run.status,  # type: ignore[arg-type]
+        mode=db_run.mode,  # type: ignore[arg-type]
+        dataset_key=db_run.dataset_key,
+        model_id=db_run.model_id,
+        output_dir="",  # Not stored in M14, would require additional schema field
+        exit_code=db_run.exit_code,
+        stdout=db_run.stdout,
+        stderr=db_run.stderr,
+        duration_seconds=db_run.duration_seconds,
+        started_at=db_run.started_at.isoformat(),
+        completed_at=db_run.completed_at.isoformat() if db_run.completed_at else None,
+        message=message,
+    )

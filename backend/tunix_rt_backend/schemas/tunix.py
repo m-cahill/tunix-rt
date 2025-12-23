@@ -231,3 +231,40 @@ class TunixRunResponse(BaseModel):
     started_at: str = Field(..., description="Start timestamp (ISO-8601)")
     completed_at: str | None = Field(None, description="Completion timestamp (ISO-8601)")
     message: str = Field(..., description="Status message")
+
+
+# M14: Run registry schemas
+
+
+class TunixRunListItem(BaseModel):
+    """List item for Tunix run history (M14).
+
+    Attributes:
+        run_id: Unique identifier for this run
+        dataset_key: Dataset identifier
+        model_id: Model identifier
+        mode: Execution mode (dry-run or local)
+        status: Execution status
+        started_at: ISO-8601 timestamp when execution started
+        duration_seconds: Execution duration in seconds (None if not completed)
+    """
+
+    run_id: str = Field(..., description="Unique run identifier (UUID)")
+    dataset_key: str = Field(..., description="Dataset identifier")
+    model_id: str = Field(..., description="Model identifier")
+    mode: ExecutionMode = Field(..., description="Execution mode")
+    status: ExecutionStatus = Field(..., description="Execution status")
+    started_at: str = Field(..., description="Start timestamp (ISO-8601)")
+    duration_seconds: float | None = Field(None, description="Execution duration")
+
+
+class TunixRunListResponse(BaseModel):
+    """Response from listing Tunix runs (M14).
+
+    Attributes:
+        data: List of run summary items
+        pagination: Pagination metadata
+    """
+
+    data: list[TunixRunListItem] = Field(..., description="List of runs")
+    pagination: dict[str, int | None] = Field(..., description="Pagination info")

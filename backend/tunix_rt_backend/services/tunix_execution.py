@@ -1,13 +1,16 @@
-"""Tunix execution service (M13).
+"""Tunix execution service (M13/M14).
 
 This module provides business logic for executing Tunix training runs:
 - Dry-run mode: Validate manifest + dataset without executing
 - Local mode: Execute tunix CLI via subprocess with timeout
 
+M14 Enhancement: Persist all runs to database for audit trail and history.
+
 The service handles optional Tunix dependency gracefully via lazy imports.
 """
 
 import json
+import logging
 import os
 import subprocess
 import tempfile
@@ -17,18 +20,21 @@ from pathlib import Path
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from tunix_rt_backend.db.models import TunixRun
 from tunix_rt_backend.helpers.datasets import load_manifest
 from tunix_rt_backend.integrations.tunix.availability import check_tunix_cli
 from tunix_rt_backend.integrations.tunix.manifest import build_sft_manifest
 from tunix_rt_backend.schemas import TunixRunRequest, TunixRunResponse
 from tunix_rt_backend.services.tunix_export import export_tunix_sft_jsonl
 
+logger = logging.getLogger(__name__)
+
 
 async def execute_tunix_run(
     request: TunixRunRequest,
     db: AsyncSession,
 ) -> TunixRunResponse:
-    """Execute a Tunix training run (dry-run or local mode).
+    """Execute a Tunix training run (dry-run or local mode) with persistence (M14).
 
     Args:
         request: Run configuration (dataset_key, model_id, hyperparameters, dry_run flag)
@@ -43,17 +49,53 @@ async def execute_tunix_run(
     Note:
         - Dry-run mode: Validates manifest + dataset, does NOT execute
         - Local mode: Executes tunix CLI via subprocess with 30s timeout
-        - M13 does NOT persist run metadata to database (deferred to M14)
+        - M14: Persists all runs to database (status=running → completed/failed/timeout)
+        - M14: DB failure does NOT fail the user request (execution success > persistence)
     """
-    run_id = str(uuid.uuid4())
-    started_at = datetime.now(timezone.utc).isoformat()
+    run_id_uuid = uuid.uuid4()
+    run_id = str(run_id_uuid)
+    started_at_dt = datetime.now(timezone.utc)
+    started_at = started_at_dt.isoformat()
+    mode = "dry-run" if request.dry_run else "local"
 
     # Generate output_dir if not provided
     output_dir = request.output_dir or f"./output/tunix_run_{run_id[:8]}"
 
-    # Dry-run mode: validate without executing
+    # M14: Create run record immediately with status='running'
+    db_run = TunixRun(
+        run_id=run_id_uuid,
+        dataset_key=request.dataset_key,
+        model_id=request.model_id,
+        mode=mode,
+        status="running",
+        exit_code=None,
+        started_at=started_at_dt,
+        completed_at=None,
+        duration_seconds=None,
+        stdout="",
+        stderr="",
+    )
+
+    try:
+        db.add(db_run)
+        await db.commit()
+        await db.refresh(db_run)
+    except Exception as e:
+        # M14 Decision: DB failure does not fail user request
+        logger.error(f"Failed to create run record {run_id}: {e}")
+        # Continue with execution despite persistence failure
+
+    # Execute run (dry-run or local)
     if request.dry_run:
-        return await _execute_dry_run(
+        response = await _execute_dry_run(
+            run_id=run_id,
+            request=request,
+            output_dir=output_dir,
+            started_at=started_at,
+            db=db,
+        )
+    else:
+        response = await _execute_local(
             run_id=run_id,
             request=request,
             output_dir=output_dir,
@@ -61,14 +103,23 @@ async def execute_tunix_run(
             db=db,
         )
 
-    # Local mode: execute tunix CLI
-    return await _execute_local(
-        run_id=run_id,
-        request=request,
-        output_dir=output_dir,
-        started_at=started_at,
-        db=db,
-    )
+    # M14: Update run record with final results
+    try:
+        db_run.status = response.status
+        db_run.exit_code = response.exit_code
+        db_run.completed_at = (
+            datetime.fromisoformat(response.completed_at) if response.completed_at else None
+        )
+        db_run.duration_seconds = response.duration_seconds
+        db_run.stdout = response.stdout
+        db_run.stderr = response.stderr
+        await db.commit()
+    except Exception as e:
+        # M14 Decision: DB failure does not fail user request
+        logger.error(f"Failed to update run record {run_id}: {e}")
+        # Return response to user despite persistence failure
+
+    return response
 
 
 async def _execute_dry_run(

@@ -445,3 +445,71 @@ export async function executeTunixRun(request: TunixRunRequest): Promise<TunixRu
     body: JSON.stringify(request),
   })
 }
+
+/**
+ * M14: Run registry types and functions
+ */
+
+/**
+ * Tunix run list item (summary without full logs)
+ */
+export interface TunixRunListItem {
+  run_id: string
+  dataset_key: string
+  model_id: string
+  mode: 'dry-run' | 'local'
+  status: 'pending' | 'running' | 'completed' | 'failed' | 'timeout'
+  started_at: string
+  duration_seconds: number | null
+}
+
+/**
+ * Response from listing Tunix runs
+ */
+export interface TunixRunListResponse {
+  data: TunixRunListItem[]
+  pagination: {
+    limit: number
+    offset: number
+    next_offset: number | null
+  }
+}
+
+/**
+ * Parameters for filtering Tunix runs
+ */
+export interface ListTunixRunsParams {
+  limit?: number
+  offset?: number
+  status?: string
+  dataset_key?: string
+  mode?: string
+}
+
+/**
+ * List Tunix training runs with pagination and filtering (M14)
+ * @param params - Pagination and filter parameters
+ * @returns Promise resolving to paginated list of run summaries
+ * @throws {ApiError} on HTTP error
+ */
+export async function listTunixRuns(params?: ListTunixRunsParams): Promise<TunixRunListResponse> {
+  const searchParams = new URLSearchParams()
+  if (params?.limit) searchParams.set('limit', params.limit.toString())
+  if (params?.offset) searchParams.set('offset', params.offset.toString())
+  if (params?.status) searchParams.set('status', params.status)
+  if (params?.dataset_key) searchParams.set('dataset_key', params.dataset_key)
+  if (params?.mode) searchParams.set('mode', params.mode)
+
+  const url = `/api/tunix/runs${searchParams.toString() ? `?${searchParams.toString()}` : ''}`
+  return fetchJSON<TunixRunListResponse>(url)
+}
+
+/**
+ * Get full details of a Tunix training run by ID (M14)
+ * @param runId - UUID of the run
+ * @returns Promise resolving to full run details (reuses TunixRunResponse schema)
+ * @throws {ApiError} on HTTP error (including 404 if run not found)
+ */
+export async function getTunixRun(runId: string): Promise<TunixRunResponse> {
+  return fetchJSON<TunixRunResponse>(`/api/tunix/runs/${runId}`)
+}

@@ -11,6 +11,8 @@ import {
   exportTunixSft,
   generateTunixManifest,
   executeTunixRun,
+  listTunixRuns,
+  getTunixRun,
   type HealthResponse,
   type RediHealthResponse,
   type TraceDetail,
@@ -20,6 +22,8 @@ import {
   type TunixStatusResponse,
   type TunixManifestResponse,
   type TunixRunResponse,
+  type TunixRunListItem,
+  type TunixRunListResponse,
   ApiError,
 } from './api/client'
 import { EXAMPLE_TRACE } from './exampleTrace'
@@ -61,6 +65,14 @@ function App() {
   const [tunixError, setTunixError] = useState<string | null>(null)
   const [tunixLoading, setTunixLoading] = useState(false)
   const [tunixRunLoading, setTunixRunLoading] = useState(false)
+
+  // M14: Run history state
+  const [runHistoryExpanded, setRunHistoryExpanded] = useState(false)
+  const [runHistory, setRunHistory] = useState<TunixRunListResponse | null>(null)
+  const [runHistoryLoading, setRunHistoryLoading] = useState(false)
+  const [runHistoryError, setRunHistoryError] = useState<string | null>(null)
+  const [selectedRunId, setSelectedRunId] = useState<string | null>(null)
+  const [selectedRunDetail, setSelectedRunDetail] = useState<TunixRunResponse | null>(null)
 
   useEffect(() => {
     const fetchHealth = async () => {
@@ -306,6 +318,11 @@ function App() {
       })
       setTunixRunResult(result)
       setTunixError(null)
+
+      // M14: Refresh run history if expanded
+      if (runHistoryExpanded) {
+        await handleRefreshRunHistory()
+      }
     } catch (error) {
       if (error instanceof ApiError) {
         setTunixError(`Run failed: ${error.message} (${error.status})`)
@@ -315,6 +332,61 @@ function App() {
       setTunixRunResult(null)
     } finally {
       setTunixLoading(false)
+    }
+  }
+
+  // M14: Run history handlers
+  const handleRefreshRunHistory = async () => {
+    setRunHistoryLoading(true)
+    setRunHistoryError(null)
+
+    try {
+      const result = await listTunixRuns({ limit: 20, offset: 0 })
+      setRunHistory(result)
+      setRunHistoryError(null)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setRunHistoryError(error.message)
+      } else {
+        setRunHistoryError('Unknown error occurred')
+      }
+    } finally {
+      setRunHistoryLoading(false)
+    }
+  }
+
+  const handleViewRunDetail = async (runId: string) => {
+    if (selectedRunId === runId) {
+      // Toggle collapse
+      setSelectedRunId(null)
+      setSelectedRunDetail(null)
+      return
+    }
+
+    setSelectedRunId(runId)
+    setSelectedRunDetail(null)
+    setRunHistoryError(null)
+
+    try {
+      const result = await getTunixRun(runId)
+      setSelectedRunDetail(result)
+      setRunHistoryError(null)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setRunHistoryError(error.message)
+      } else {
+        setRunHistoryError('Unknown error occurred')
+      }
+    }
+  }
+
+  const handleToggleRunHistory = () => {
+    const newExpanded = !runHistoryExpanded
+    setRunHistoryExpanded(newExpanded)
+
+    // Fetch run history when expanding
+    if (newExpanded && !runHistory) {
+      handleRefreshRunHistory()
     }
   }
 
@@ -719,6 +791,137 @@ function App() {
             </details>
           </div>
         )}
+
+        {/* M14: Run History Section */}
+        <div className="run-history-section" data-testid="tunix:run-history-section">
+          <h3>
+            <button
+              data-testid="tunix:toggle-history-btn"
+              onClick={handleToggleRunHistory}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '1.2em',
+                padding: '0.5em',
+                textDecoration: 'underline',
+              }}
+            >
+              {runHistoryExpanded ? '▼' : '▶'} Run History
+            </button>
+            {runHistoryExpanded && (
+              <button
+                data-testid="tunix:refresh-history-btn"
+                onClick={handleRefreshRunHistory}
+                disabled={runHistoryLoading}
+                style={{ marginLeft: '1em' }}
+              >
+                {runHistoryLoading ? 'Refreshing...' : 'Refresh'}
+              </button>
+            )}
+          </h3>
+
+          {runHistoryExpanded && (
+            <div className="run-history-content" data-testid="tunix:run-history-content">
+              {runHistoryLoading && <p>Loading run history...</p>}
+
+              {runHistoryError && (
+                <div className="trace-error" data-testid="tunix:history-error">
+                  <strong>Error:</strong> {runHistoryError}
+                </div>
+              )}
+
+              {runHistory && runHistory.data.length === 0 && (
+                <p data-testid="tunix:history-empty">No runs found. Execute a run to see history.</p>
+              )}
+
+              {runHistory && runHistory.data.length > 0 && (
+                <div className="run-history-list" data-testid="tunix:history-list">
+                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                    <thead>
+                      <tr>
+                        <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Status</th>
+                        <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Mode</th>
+                        <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Dataset</th>
+                        <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Model</th>
+                        <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Duration</th>
+                        <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Started</th>
+                        <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {runHistory.data.map((run) => (
+                        <>
+                          <tr key={run.run_id} data-testid={`tunix:history-row-${run.run_id}`}>
+                            <td style={{ padding: '0.5em', borderBottom: '1px solid #eee' }}>
+                              <span className={`status-badge status-${run.status}`} data-testid={`tunix:history-status-${run.run_id}`}>
+                                {run.status}
+                              </span>
+                            </td>
+                            <td style={{ padding: '0.5em', borderBottom: '1px solid #eee' }} data-testid={`tunix:history-mode-${run.run_id}`}>
+                              {run.mode}
+                            </td>
+                            <td style={{ padding: '0.5em', borderBottom: '1px solid #eee', fontSize: '0.9em' }} data-testid={`tunix:history-dataset-${run.run_id}`}>
+                              {run.dataset_key}
+                            </td>
+                            <td style={{ padding: '0.5em', borderBottom: '1px solid #eee', fontSize: '0.9em' }} data-testid={`tunix:history-model-${run.run_id}`}>
+                              {run.model_id}
+                            </td>
+                            <td style={{ padding: '0.5em', borderBottom: '1px solid #eee' }} data-testid={`tunix:history-duration-${run.run_id}`}>
+                              {run.duration_seconds ? `${run.duration_seconds.toFixed(2)}s` : 'N/A'}
+                            </td>
+                            <td style={{ padding: '0.5em', borderBottom: '1px solid #eee', fontSize: '0.9em' }} data-testid={`tunix:history-started-${run.run_id}`}>
+                              {new Date(run.started_at).toLocaleString()}
+                            </td>
+                            <td style={{ padding: '0.5em', borderBottom: '1px solid #eee' }}>
+                              <button
+                                data-testid={`tunix:view-detail-btn-${run.run_id}`}
+                                onClick={() => handleViewRunDetail(run.run_id)}
+                                style={{ fontSize: '0.9em' }}
+                              >
+                                {selectedRunId === run.run_id ? 'Hide' : 'View'}
+                              </button>
+                            </td>
+                          </tr>
+                          {selectedRunId === run.run_id && selectedRunDetail && (
+                            <tr key={`${run.run_id}-detail`}>
+                              <td colSpan={7} style={{ padding: '1em', backgroundColor: '#f9f9f9' }}>
+                                <div className="run-detail" data-testid={`tunix:run-detail-${run.run_id}`}>
+                                  <h4>Run Details</h4>
+                                  <p><strong>Run ID:</strong> {selectedRunDetail.run_id}</p>
+                                  <p><strong>Message:</strong> {selectedRunDetail.message}</p>
+                                  {selectedRunDetail.exit_code !== null && (
+                                    <p><strong>Exit Code:</strong> {selectedRunDetail.exit_code}</p>
+                                  )}
+                                  {selectedRunDetail.stdout && (
+                                    <details>
+                                      <summary>Standard Output</summary>
+                                      <pre style={{ maxHeight: '300px', overflow: 'auto' }} data-testid={`tunix:detail-stdout-${run.run_id}`}>
+                                        {selectedRunDetail.stdout}
+                                      </pre>
+                                    </details>
+                                  )}
+                                  {selectedRunDetail.stderr && (
+                                    <details>
+                                      <summary>Standard Error</summary>
+                                      <pre style={{ maxHeight: '300px', overflow: 'auto' }} data-testid={`tunix:detail-stderr-${run.run_id}`}>
+                                        {selectedRunDetail.stderr}
+                                      </pre>
+                                    </details>
+                                  )}
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                        </>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

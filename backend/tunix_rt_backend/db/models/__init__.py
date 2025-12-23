@@ -2,5 +2,6 @@
 
 from tunix_rt_backend.db.models.score import Score
 from tunix_rt_backend.db.models.trace import Trace
+from tunix_rt_backend.db.models.tunix_run import TunixRun
 
-__all__ = ["Trace", "Score"]
+__all__ = ["Trace", "Score", "TunixRun"]

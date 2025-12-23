@@ -2,7 +2,7 @@
 
 **Tunix Reasoning-Trace Framework for AI-Native Development**
 
-**Status:** M13 Complete ✅ | Coverage: 92% Line, 68% Branch | Features: Tunix Runtime Execution (optional), Batch Import, Eval Harness | Database: PostgreSQL + Alembic
+**Status:** M14 Complete ✅ | Coverage: 82% Line | Features: Tunix Run Registry (persistent storage + API), Runtime Execution (optional), Batch Import, Eval Harness | Database: PostgreSQL + Alembic
 
 A full-stack application for managing reasoning traces and integrating with the RediAI framework for the Tunix Hackathon.
 
@@ -534,9 +534,9 @@ docker ps
 docker stop <container_name>
 ```
 
-## Tunix Integration (M12/M13)
+## Tunix Integration (M12/M13/M14)
 
-tunix-rt provides optional integration with Tunix for training reasoning trace models.
+tunix-rt provides optional integration with Tunix for training reasoning trace models with persistent run tracking.
 
 ### Installation
 
@@ -546,7 +546,7 @@ cd backend
 pip install -e ".[dev]"
 ```
 
-**For local execution (M13):**
+**For local execution + run history (M13/M14):**
 ```bash
 cd backend
 pip install -e ".[dev,tunix]"
@@ -587,10 +587,28 @@ curl -X POST http://localhost:8000/api/tunix/run \
   -d '{"dataset_key": "my_dataset-v1", "model_id": "google/gemma-2b-it", "dry_run": false}'
 ```
 
+**List run history (M14):**
+```bash
+# All runs
+curl http://localhost:8000/api/tunix/runs
+
+# Filter by dataset and status
+curl "http://localhost:8000/api/tunix/runs?dataset_key=my_dataset-v1&status=completed"
+
+# Paginate
+curl "http://localhost:8000/api/tunix/runs?limit=50&offset=50"
+```
+
+**Get run details (M14):**
+```bash
+curl http://localhost:8000/api/tunix/runs/123e4567-e89b-12d3-a456-426614174000
+```
+
 ### Documentation
 
 - **M12 Integration:** `docs/M12_TUNIX_INTEGRATION.md` - Artifact generation (JSONL + manifests)
 - **M13 Execution:** `docs/M13_TUNIX_EXECUTION.md` - Runtime execution guide
+- **M14 Run Registry:** `docs/M14_RUN_REGISTRY.md` - Persistent storage + query API
 
 ## License
 

@@ -808,4 +808,301 @@ describe('App', () => {
     expect(dryRunButton.disabled).toBe(true)
     expect(localRunButton.disabled).toBe(true)
   })
+
+  // M14: Run History tests
+  it('displays Run History section collapsed by default', async () => {
+    mockAllHealthFetches()
+
+    render(<App />)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
+    })
+
+    const historySection = screen.getByTestId('tunix:run-history-section')
+    expect(historySection).toBeInTheDocument()
+
+    const toggleButton = screen.getByTestId('tunix:toggle-history-btn')
+    expect(toggleButton).toHaveTextContent('▶ Run History')
+
+    // Content should not be visible
+    expect(screen.queryByTestId('tunix:run-history-content')).not.toBeInTheDocument()
+  })
+
+  it('expands Run History and fetches runs when clicked', async () => {
+    const user = userEvent.setup()
+    mockAllHealthFetches()
+
+    render(<App />)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
+    })
+
+    // Mock the run history list response
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        data: [
+          {
+            run_id: 'run-001',
+            dataset_key: 'test-v1',
+            model_id: 'google/gemma-2b-it',
+            mode: 'dry-run',
+            status: 'completed',
+            started_at: '2025-12-22T10:00:00Z',
+            duration_seconds: 5.2,
+          },
+          {
+            run_id: 'run-002',
+            dataset_key: 'test-v2',
+            model_id: 'meta-llama/Llama-2-7b',
+            mode: 'local',
+            status: 'failed',
+            started_at: '2025-12-22T11:00:00Z',
+            duration_seconds: 2.5,
+          },
+        ],
+        pagination: {
+          limit: 20,
+          offset: 0,
+          next_offset: null,
+        },
+      }),
+    })
+
+    const toggleButton = screen.getByTestId('tunix:toggle-history-btn')
+    await user.click(toggleButton)
+
+    // Should expand and show content
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:run-history-content')).toBeInTheDocument()
+      expect(toggleButton).toHaveTextContent('▼ Run History')
+    })
+
+    // Should display the run list
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:history-list')).toBeInTheDocument()
+      expect(screen.getByTestId('tunix:history-row-run-001')).toBeInTheDocument()
+      expect(screen.getByTestId('tunix:history-row-run-002')).toBeInTheDocument()
+      expect(screen.getByTestId('tunix:history-status-run-001')).toHaveTextContent('completed')
+      expect(screen.getByTestId('tunix:history-mode-run-002')).toHaveTextContent('local')
+      expect(screen.getByTestId('tunix:history-dataset-run-001')).toHaveTextContent('test-v1')
+    })
+  })
+
+  it('displays empty message when no runs exist', async () => {
+    const user = userEvent.setup()
+    mockAllHealthFetches()
+
+    render(<App />)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
+    })
+
+    // Mock empty run history
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        data: [],
+        pagination: {
+          limit: 20,
+          offset: 0,
+          next_offset: null,
+        },
+      }),
+    })
+
+    const toggleButton = screen.getByTestId('tunix:toggle-history-btn')
+    await user.click(toggleButton)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:history-empty')).toBeInTheDocument()
+      expect(screen.getByTestId('tunix:history-empty')).toHaveTextContent('No runs found')
+    })
+  })
+
+  it('refreshes run history when refresh button is clicked', async () => {
+    const user = userEvent.setup()
+    mockAllHealthFetches()
+
+    render(<App />)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
+    })
+
+    // Mock initial run history
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        data: [
+          {
+            run_id: 'run-001',
+            dataset_key: 'test-v1',
+            model_id: 'google/gemma-2b-it',
+            mode: 'dry-run',
+            status: 'completed',
+            started_at: '2025-12-22T10:00:00Z',
+            duration_seconds: 5.2,
+          },
+        ],
+        pagination: {
+          limit: 20,
+          offset: 0,
+          next_offset: null,
+        },
+      }),
+    })
+
+    const toggleButton = screen.getByTestId('tunix:toggle-history-btn')
+    await user.click(toggleButton)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:history-row-run-001')).toBeInTheDocument()
+    })
+
+    // Mock refreshed run history with new run
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        data: [
+          {
+            run_id: 'run-003',
+            dataset_key: 'new-v1',
+            model_id: 'google/gemma-2b-it',
+            mode: 'local',
+            status: 'completed',
+            started_at: '2025-12-22T12:00:00Z',
+            duration_seconds: 10.5,
+          },
+          {
+            run_id: 'run-001',
+            dataset_key: 'test-v1',
+            model_id: 'google/gemma-2b-it',
+            mode: 'dry-run',
+            status: 'completed',
+            started_at: '2025-12-22T10:00:00Z',
+            duration_seconds: 5.2,
+          },
+        ],
+        pagination: {
+          limit: 20,
+          offset: 0,
+          next_offset: null,
+        },
+      }),
+    })
+
+    const refreshButton = screen.getByTestId('tunix:refresh-history-btn')
+    await user.click(refreshButton)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:history-row-run-003')).toBeInTheDocument()
+      expect(screen.getByTestId('tunix:history-dataset-run-003')).toHaveTextContent('new-v1')
+    })
+  })
+
+  it('displays run details when View button is clicked', async () => {
+    const user = userEvent.setup()
+    mockAllHealthFetches()
+
+    render(<App />)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
+    })
+
+    // Mock run history list
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        data: [
+          {
+            run_id: 'run-001',
+            dataset_key: 'test-v1',
+            model_id: 'google/gemma-2b-it',
+            mode: 'dry-run',
+            status: 'completed',
+            started_at: '2025-12-22T10:00:00Z',
+            duration_seconds: 5.2,
+          },
+        ],
+        pagination: {
+          limit: 20,
+          offset: 0,
+          next_offset: null,
+        },
+      }),
+    })
+
+    const toggleButton = screen.getByTestId('tunix:toggle-history-btn')
+    await user.click(toggleButton)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:history-row-run-001')).toBeInTheDocument()
+    })
+
+    // Mock run detail response
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        run_id: 'run-001',
+        status: 'completed',
+        mode: 'dry-run',
+        dataset_key: 'test-v1',
+        model_id: 'google/gemma-2b-it',
+        output_dir: './output',
+        exit_code: 0,
+        stdout: 'Dry-run completed successfully',
+        stderr: '',
+        duration_seconds: 5.2,
+        started_at: '2025-12-22T10:00:00Z',
+        completed_at: '2025-12-22T10:00:05Z',
+        message: 'Success',
+      }),
+    })
+
+    const viewButton = screen.getByTestId('tunix:view-detail-btn-run-001')
+    await user.click(viewButton)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:run-detail-run-001')).toBeInTheDocument()
+      expect(screen.getByTestId('tunix:detail-stdout-run-001')).toHaveTextContent('Dry-run completed successfully')
+    })
+
+    // Click again to hide
+    await user.click(viewButton)
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('tunix:run-detail-run-001')).not.toBeInTheDocument()
+    })
+  })
+
+  it('displays error when run history fetch fails', async () => {
+    const user = userEvent.setup()
+    mockAllHealthFetches()
+
+    render(<App />)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
+    })
+
+    // Mock error response
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: false,
+      status: 500,
+      statusText: 'Internal Server Error',
+    })
+
+    const toggleButton = screen.getByTestId('tunix:toggle-history-btn')
+    await user.click(toggleButton)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('tunix:history-error')).toBeInTheDocument()
+      expect(screen.getByTestId('tunix:history-error')).toHaveTextContent('Error:')
+    })
+  })
 })

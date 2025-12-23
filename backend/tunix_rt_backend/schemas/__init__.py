@@ -29,6 +29,8 @@ from tunix_rt_backend.schemas.tunix import (
     TunixExportRequest,
     TunixManifestRequest,
     TunixManifestResponse,
+    TunixRunListItem,
+    TunixRunListResponse,
     TunixRunRequest,
     TunixRunResponse,
     TunixStatusResponse,
@@ -66,6 +68,8 @@ __all__ = [
     "TunixManifestResponse",
     "TunixRunRequest",
     "TunixRunResponse",
+    "TunixRunListItem",
+    "TunixRunListResponse",
     "ExecutionMode",
     "ExecutionStatus",
 ]

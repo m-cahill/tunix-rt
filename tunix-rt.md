@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M13 Complete** ✅  
-**Coverage:** 92% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Tunix Runtime Execution (optional, gated) | **Testing:** 168 backend + 25 frontend tests
+**Milestone M14 Complete** ✅  
+**Coverage:** 82% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Tunix Run Registry (persistent storage + API) | **Testing:** 192 backend + 28 frontend tests
 
 ## Overview
 
@@ -12,6 +12,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M2 Enhancements:** Database integration (async SQLAlchemy + PostgreSQL), Alembic migrations, trace CRUD API (create/retrieve/list), frontend trace UI, comprehensive validation, and payload size limits.
 
 **M3 Enhancements:** Trace system hardening - DB connection pool settings applied, created_at index for list performance, frontend trace UI unit tests (8 total), frontend coverage artifact generation confirmed, Alembic auto-ID migration policy documented, curl API examples, and DB troubleshooting guide.
+
+**M14 Enhancements:** Tunix Run Registry - persistent storage with `tunix_runs` table (UUID PK, indexed columns), Alembic migration, immediate run persistence (create with status="running", update on completion), graceful DB failure handling, `GET /api/tunix/runs` with pagination/filtering, `GET /api/tunix/runs/{run_id}` for details, frontend Run History panel (collapsible, manual refresh), stdout/stderr truncation (10KB), 12 new backend tests + 7 frontend tests (all dry-run, no Tunix dependency).
 
 ## System Architecture
 
@@ -506,6 +508,100 @@ curl -X POST http://localhost:8000/api/tunix/run \
 
 ---
 
+#### `GET /api/tunix/runs` (M14)
+
+**Description:** List Tunix training runs with pagination and filtering
+
+**Query Parameters:**
+- `limit` (optional, default 20, max 100): Number of runs to return
+- `offset` (optional, default 0): Number of runs to skip
+- `status` (optional): Filter by status (`completed`, `failed`, `running`, `timeout`, `pending`)
+- `dataset_key` (optional): Filter by dataset key
+- `mode` (optional): Filter by mode (`dry-run`, `local`)
+
+**Response (200 OK):**
+```json
+{
+  "data": [
+    {
+      "run_id": "123e4567-e89b-12d3-a456-426614174000",
+      "dataset_key": "test-v1",
+      "model_id": "google/gemma-2b-it",
+      "mode": "dry-run",
+      "status": "completed",
+      "started_at": "2025-12-22T14:30:00Z",
+      "duration_seconds": 5.2
+    }
+  ],
+  "pagination": {
+    "limit": 20,
+    "offset": 0,
+    "next_offset": null
+  }
+}
+```
+
+**Status Codes:**
+- `200 OK`: Request succeeded
+- `422 Unprocessable Entity`: Invalid pagination parameters (e.g., limit > 100)
+
+**Example (List all runs):**
+```bash
+curl http://localhost:8000/api/tunix/runs
+```
+
+**Example (Filter by dataset and status):**
+```bash
+curl "http://localhost:8000/api/tunix/runs?dataset_key=test-v1&status=completed"
+```
+
+**Example (Paginate with larger page size):**
+```bash
+curl "http://localhost:8000/api/tunix/runs?limit=50&offset=50"
+```
+
+---
+
+#### `GET /api/tunix/runs/{run_id}` (M14)
+
+**Description:** Get full details for a specific Tunix run
+
+**Path Parameters:**
+- `run_id` (required): Run identifier (UUID)
+
+**Response (200 OK):**
+```json
+{
+  "run_id": "123e4567-e89b-12d3-a456-426614174000",
+  "status": "completed",
+  "mode": "dry-run",
+  "dataset_key": "test-v1",
+  "model_id": "google/gemma-2b-it",
+  "output_dir": "./datasets/test-v1",
+  "exit_code": 0,
+  "stdout": "Dry-run validation successful\nDataset: test-v1 (100 examples)\n",
+  "stderr": "",
+  "duration_seconds": 5.2,
+  "started_at": "2025-12-22T14:30:00Z",
+  "completed_at": "2025-12-22T14:30:05Z",
+  "message": "Dry-run completed successfully"
+}
+```
+
+**Status Codes:**
+- `200 OK`: Run found
+- `404 Not Found`: Run ID does not exist
+- `422 Unprocessable Entity`: Invalid UUID format
+
+**Example:**
+```bash
+curl http://localhost:8000/api/tunix/runs/123e4567-e89b-12d3-a456-426614174000
+```
+
+**See also:** `docs/M14_RUN_REGISTRY.md` for complete run registry guide.
+
+---
+
 ## Database Schema
 
 ### M2 Schema
@@ -557,6 +653,44 @@ curl -X POST http://localhost:8000/api/tunix/run \
 
 **M5 Migrations:**
 - `f3cc010ca8a6_add_scores_table.py` - Creates scores table with FK to traces
+
+### M14 Schema
+
+**Table: `tunix_runs`**
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| `run_id` | UUID | PRIMARY KEY | Run unique identifier |
+| `dataset_key` | VARCHAR(256) | NOT NULL | Dataset identifier |
+| `model_id` | VARCHAR(256) | NOT NULL | Hugging Face model identifier |
+| `mode` | VARCHAR(64) | NOT NULL | Execution mode (`dry-run` or `local`) |
+| `status` | VARCHAR(64) | NOT NULL | Run status (`pending`, `running`, `completed`, `failed`, `timeout`) |
+| `exit_code` | INTEGER | NULLABLE | Process exit code (NULL for dry-run/timeout) |
+| `started_at` | TIMESTAMPTZ | NOT NULL | Execution start time (UTC) |
+| `completed_at` | TIMESTAMPTZ | NULLABLE | Execution completion time (UTC, NULL only if crash) |
+| `duration_seconds` | FLOAT | NULLABLE | Execution duration (calculated if completed) |
+| `stdout` | TEXT | NOT NULL DEFAULT '' | Standard output (truncated to 10KB) |
+| `stderr` | TEXT | NOT NULL DEFAULT '' | Standard error (truncated to 10KB) |
+| `created_at` | TIMESTAMPTZ | NOT NULL | Record creation time (UTC) |
+
+**Indexes:**
+- Primary key on `run_id` (automatic)
+- Index `ix_tunix_runs_dataset_key` on `dataset_key` for dataset filtering
+- Index `ix_tunix_runs_started_at` on `started_at` for time-based queries
+
+**Status State Machine:**
+```
+pending ──► running ──► completed
+                │
+                ├──────► failed
+                │
+                └──────► timeout
+```
+
+**Note:** In M14, runs are created with `status="running"` directly. The `pending` state is reserved for future background job processing (M15+).
+
+**M14 Migrations:**
+- `4bf76cdb97da_add_tunix_runs_table.py` - Creates tunix_runs table with indexes
 
 ## Configuration
 
@@ -1077,12 +1211,26 @@ docs: update README
 - **Coverage maintained:** 92% backend line, 77% frontend line
 - **Complete documentation:** M13_BASELINE.md, M13_TUNIX_EXECUTION.md
 
-## Next Steps (M13+)
+### M14: Tunix Run Registry (Phase 3) ✅
+- **Persistent storage:** `tunix_runs` table with UUID primary key, indexed columns
+- **Alembic migration:** Reversible schema changes (upgrade + downgrade)
+- **Immediate persistence:** Create run record with status="running", update on completion
+- **Graceful DB failures:** Log errors, don't fail user requests (execution is primary)
+- **No execution changes:** M13 execution logic remains identical (black box)
+- **New endpoints:** GET /api/tunix/runs (pagination + filtering), GET /api/tunix/runs/{run_id}
+- **Filtering:** By status, dataset_key, mode (AND logic)
+- **Stdout/stderr truncation:** 10KB per field (prevents DB bloat)
+- **Frontend Run History panel:** Collapsible section with manual refresh, expandable details
+- **Test growth:** 192 backend tests (+12 dry-run), 28 frontend tests (+7 mocked)
+- **Coverage maintained:** 82% backend line, 77% frontend line
+- **Complete documentation:** M14_BASELINE.md, M14_RUN_REGISTRY.md, M14_SUMMARY.md
 
-1. **M14**: Training result ingestion + run registry (database persistence)
-2. **M15**: Evaluation loop closure (trace → train → evaluate)
-3. **M16**: Multi-game UNGAR support + RL pipelines (GRPO/PPO/DPO)
-4. **M17**: TPU integration + distributed training
+## Next Steps (M14+)
+
+1. **M15**: Async execution + run management (Celery/Ray, deletion, retry, cancellation)
+2. **M16**: Checkpoint management + metrics extraction (parse logs, advanced filtering)
+3. **M17**: Evaluation loop + hyperparameter tuning (Ray Tune, leaderboard)
+4. **M18**: Production MLOps (model registry, deployment, monitoring)
 
 ## Architecture Decisions
 
