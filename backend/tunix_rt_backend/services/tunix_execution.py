@@ -380,12 +380,13 @@ async def execute_dry_run(
 
     # Step 3: Validate dataset export (ensures traces exist)
     try:
-        # Export first 5 traces as validation (don't need full dataset)
-        export_request = type(
-            "ExportRequest",
-            (),
-            {"dataset_key": request.dataset_key, "trace_ids": None, "limit": 5},
-        )()
+        from tunix_rt_backend.schemas.tunix import TunixExportRequest
+
+        # Use real Pydantic model for export request
+        export_request = TunixExportRequest(
+            dataset_key=request.dataset_key, trace_ids=None, limit=5
+        )
+
         jsonl_lines = await export_tunix_sft_jsonl(export_request, db)
         trace_count = len(list(jsonl_lines))
 
@@ -507,6 +508,7 @@ async def execute_local(
     # Step 1: Prepare temporary files (manifest + dataset)
     try:
         from tunix_rt_backend.schemas import TunixManifestRequest
+        from tunix_rt_backend.schemas.tunix import TunixExportRequest
 
         temp_dir = Path(tempfile.mkdtemp(prefix=f"tunix_run_{run_id[:8]}_"))
 
@@ -526,21 +528,21 @@ async def execute_local(
         manifest_path.write_text(manifest_yaml, encoding="utf-8")
 
         # Export dataset JSONL
-        export_request = type(
-            "ExportRequest",
-            (),
-            {
-                "dataset_key": request.dataset_key,
-                "trace_ids": None,
-                "limit": request.num_epochs * request.batch_size * 10,
-            },  # noqa: E501
-        )()
+        export_request = TunixExportRequest(
+            dataset_key=request.dataset_key,
+            trace_ids=None,
+            limit=request.num_epochs * request.batch_size * 10,
+        )
+
         jsonl_lines = await export_tunix_sft_jsonl(export_request, db)
 
         dataset_path_str = str(temp_dir / f"{request.dataset_key}.jsonl")
         with open(dataset_path_str, "w", encoding="utf-8") as f:
-            for line in jsonl_lines:
-                f.write(json.dumps(line) + "\n")
+            if isinstance(jsonl_lines, str):
+                f.write(jsonl_lines)
+            else:
+                for line in jsonl_lines:
+                    f.write(json.dumps(line) + "\n")
 
     except Exception as e:
         return TunixRunResponse(
