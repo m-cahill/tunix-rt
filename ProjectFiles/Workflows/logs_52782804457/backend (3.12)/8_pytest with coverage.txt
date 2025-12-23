@@ -16,21 +16,21 @@
 2025-12-21T22:39:42.7504150Z tests/test_scoring.py::TestCompareEndpoint::test_compare_with_invalid_uuid_format
 2025-12-21T22:39:42.7506554Z   /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/asyncio/events.py:88: DeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
 2025-12-21T22:39:42.7508651Z     self._context.run(self._callback, *self._args)
-2025-12-21T22:39:42.7510116Z 
+2025-12-21T22:39:42.7510116Z
 2025-12-21T22:39:42.7511385Z tests/test_traces.py::test_create_trace_oversized_payload
 2025-12-21T22:39:42.7513676Z   /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/fastapi/dependencies/utils.py:676: DeprecationWarning: 'HTTP_413_REQUEST_ENTITY_TOO_LARGE' is deprecated. Use 'HTTP_413_CONTENT_TOO_LARGE' instead.
 2025-12-21T22:39:42.7516131Z     solved = await call(**solved_result.values)
-2025-12-21T22:39:42.7516417Z 
+2025-12-21T22:39:42.7516417Z
 2025-12-21T22:39:42.7516609Z tests/test_traces.py::test_list_traces_invalid_limit
 2025-12-21T22:39:42.7517137Z tests/test_traces.py::test_list_traces_negative_offset
 2025-12-21T22:39:42.7517627Z tests/test_traces.py::test_list_traces_with_zero_limit
 2025-12-21T22:39:42.7518874Z   /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/fastapi/routing.py:312: DeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
 2025-12-21T22:39:42.7520354Z     return await dependant.call(**values)
-2025-12-21T22:39:42.7520621Z 
+2025-12-21T22:39:42.7520621Z
 2025-12-21T22:39:42.7520899Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 2025-12-21T22:39:42.7521517Z ================================ tests coverage ================================
 2025-12-21T22:39:42.7522091Z _______________ coverage: platform linux, python 3.12.12-final-0 _______________
-2025-12-21T22:39:42.7522472Z 
+2025-12-21T22:39:42.7522472Z
 2025-12-21T22:39:42.7522662Z Name                                                    Stmts   Miss Branch BrPart  Cover
 2025-12-21T22:39:42.7523197Z -----------------------------------------------------------------------------------------
 2025-12-21T22:39:42.7524175Z tunix_rt_backend/__init__.py                                1      0      0      0   100%

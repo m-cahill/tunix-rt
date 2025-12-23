@@ -25,14 +25,14 @@ async def build_dataset_manifest(
     db: AsyncSession,
 ) -> tuple[str, uuid.UUID, int, Path]:
     """Build a dataset manifest from traces in the database.
-    
+
     Args:
         request: Dataset build parameters (filters, selection strategy, etc.)
         db: Database session
-    
+
     Returns:
         Tuple of (dataset_key, build_id, trace_count, manifest_path)
-    
+
     Raises:
         ValueError: If random strategy is used without a seed
     """
@@ -111,4 +111,3 @@ async def build_dataset_manifest(
     manifest_path = save_manifest(manifest)
 
     return dataset_key, build_id, len(trace_ids), manifest_path
-

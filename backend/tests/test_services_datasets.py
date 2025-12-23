@@ -62,7 +62,7 @@ class TestDatasetBuilderService:
             selection_strategy="random",
             seed=None,  # Missing seed
         )
-        
+
         with pytest.raises(ValueError, match="requires a seed"):
             await build_dataset_manifest(request, test_db)
 
@@ -85,9 +85,9 @@ class TestDatasetBuilderService:
             )
             test_db.add(db_trace)
             traces.append(db_trace)
-        
+
         await test_db.commit()
-        
+
         # Build dataset with latest strategy
         request = DatasetBuildRequest(
             dataset_name="test",
@@ -96,11 +96,11 @@ class TestDatasetBuilderService:
             limit=3,
             selection_strategy="latest",
         )
-        
+
         dataset_key, build_id, trace_count, manifest_path = await build_dataset_manifest(
             request, test_db
         )
-        
+
         # Should return expected values
         assert dataset_key == "test-v1"
         assert trace_count == 3  # Limited to 3
@@ -123,9 +123,9 @@ class TestDatasetBuilderService:
                 payload=trace.model_dump(),
             )
             test_db.add(db_trace)
-        
+
         await test_db.commit()
-        
+
         # Build dataset twice with same seed
         request = DatasetBuildRequest(
             dataset_name="random_test",
@@ -135,10 +135,10 @@ class TestDatasetBuilderService:
             selection_strategy="random",
             seed=42,
         )
-        
+
         _, _, count1, _ = await build_dataset_manifest(request, test_db)
         _, _, count2, _ = await build_dataset_manifest(request, test_db)
-        
+
         # Both should select 5 traces
         assert count1 == 5
         assert count2 == 5
@@ -166,9 +166,9 @@ class TestDatasetBuilderService:
             )
             test_db.add(Trace(trace_version="1.0", payload=trace_a.model_dump()))
             test_db.add(Trace(trace_version="1.0", payload=trace_b.model_dump()))
-        
+
         await test_db.commit()
-        
+
         # Build dataset filtering for source_a
         request = DatasetBuildRequest(
             dataset_name="filtered",
@@ -177,9 +177,9 @@ class TestDatasetBuilderService:
             limit=10,
             selection_strategy="latest",
         )
-        
+
         _, _, trace_count, _ = await build_dataset_manifest(request, test_db)
-        
+
         # Should only get source_a traces
         assert trace_count == 3
 
@@ -193,12 +193,11 @@ class TestDatasetBuilderService:
             limit=10,
             selection_strategy="latest",
         )
-        
+
         dataset_key, build_id, trace_count, manifest_path = await build_dataset_manifest(
             request, test_db
         )
-        
+
         # Should create manifest even with 0 traces
         assert trace_count == 0
         assert manifest_path.exists()
-

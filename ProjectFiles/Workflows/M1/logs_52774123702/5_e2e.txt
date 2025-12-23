@@ -384,7 +384,7 @@
 2025-12-21T17:14:55.9129579Z   Stored in directory: /tmp/pip-ephem-wheel-cache-wbs_a_rm/wheels/6c/ee/47/0b2814d300ad026845dfa3996505f4a0f855be918f2df7eb34
 2025-12-21T17:14:55.9142946Z Successfully built tunix-rt-backend
 2025-12-21T17:14:55.9832119Z Installing collected packages: websockets, uvloop, typing-extensions, ruff, pyyaml, python-dotenv, pygments, pluggy, pathspec, packaging, mypy_extensions, MarkupSafe, librt, iniconfig, idna, httptools, h11, greenlet, coverage, click, certifi, asyncpg, annotated-types, annotated-doc, aiosqlite, uvicorn, typing-inspection, sqlalchemy, pytest, pydantic-core, mypy, Mako, httpcore, anyio, watchfiles, starlette, pytest-cov, pytest-asyncio, pydantic, httpx, alembic, pydantic-settings, fastapi, tunix-rt-backend
-2025-12-21T17:15:00.9965257Z 
+2025-12-21T17:15:00.9965257Z
 2025-12-21T17:15:00.9993572Z Successfully installed Mako-1.3.10 MarkupSafe-3.0.3 aiosqlite-0.22.0 alembic-1.17.2 annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.0 asyncpg-0.31.0 certifi-2025.11.12 click-8.3.1 coverage-7.13.0 fastapi-0.127.0 greenlet-3.3.0 h11-0.16.0 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 idna-3.11 iniconfig-2.3.0 librt-0.7.4 mypy-1.19.1 mypy_extensions-1.1.0 packaging-25.0 pathspec-0.12.1 pluggy-1.6.0 pydantic-2.12.5 pydantic-core-2.41.5 pydantic-settings-2.12.0 pygments-2.19.2 pytest-9.0.2 pytest-asyncio-1.3.0 pytest-cov-7.0.0 python-dotenv-1.2.1 pyyaml-6.0.3 ruff-0.14.10 sqlalchemy-2.0.45 starlette-0.50.0 tunix-rt-backend-0.1.0 typing-extensions-4.15.0 typing-inspection-0.4.2 uvicorn-0.40.0 uvloop-0.22.1 watchfiles-1.1.1 websockets-15.0.1
 2025-12-21T17:15:01.4416324Z ##[group]Run cd ../backend && alembic upgrade head
 2025-12-21T17:15:01.4416696Z [36;1mcd ../backend && alembic upgrade head[0m
@@ -531,13 +531,13 @@
 2025-12-21T17:15:10.2916184Z  2025-12-21 17:14:43.383 UTC [64] FATAL:  role "root" does not exist
 2025-12-21T17:15:10.2916967Z  2025-12-21 17:14:53.440 UTC [71] FATAL:  role "root" does not exist
 2025-12-21T17:15:10.2917537Z  2025-12-21 17:15:03.502 UTC [79] FATAL:  role "root" does not exist
-2025-12-21T17:15:10.2918011Z  
+2025-12-21T17:15:10.2918011Z
 2025-12-21T17:15:10.2918440Z  The database cluster will be initialized with locale "en_US.utf8".
 2025-12-21T17:15:10.2919116Z  The default database encoding has accordingly been set to "UTF8".
 2025-12-21T17:15:10.2919769Z  The default text search configuration will be set to "english".
-2025-12-21T17:15:10.2920266Z  
+2025-12-21T17:15:10.2920266Z
 2025-12-21T17:15:10.2920549Z  Data page checksums are disabled.
-2025-12-21T17:15:10.2920898Z  
+2025-12-21T17:15:10.2920898Z
 2025-12-21T17:15:10.2921326Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
 2025-12-21T17:15:10.2921770Z  creating subdirectories ... ok
 2025-12-21T17:15:10.2922069Z  selecting dynamic shared memory implementation ... posix
@@ -548,21 +548,21 @@
 2025-12-21T17:15:10.2923413Z  running bootstrap script ... ok
 2025-12-21T17:15:10.2923696Z  performing post-bootstrap initialization ... ok
 2025-12-21T17:15:10.2923982Z  syncing data to disk ... ok
-2025-12-21T17:15:10.2924188Z  
-2025-12-21T17:15:10.2924332Z  
+2025-12-21T17:15:10.2924188Z
+2025-12-21T17:15:10.2924332Z
 2025-12-21T17:15:10.2924544Z  Success. You can now start the database server using:
-2025-12-21T17:15:10.2924810Z  
+2025-12-21T17:15:10.2924810Z
 2025-12-21T17:15:10.2925024Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
-2025-12-21T17:15:10.2925296Z  
+2025-12-21T17:15:10.2925296Z
 2025-12-21T17:15:10.2925775Z  waiting for server to start....2025-12-21 17:14:34.409 UTC [40] LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
 2025-12-21T17:15:10.2926444Z  2025-12-21 17:14:34.410 UTC [40] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
 2025-12-21T17:15:10.2926934Z  2025-12-21 17:14:34.413 UTC [43] LOG:  database system was shut down at 2025-12-21 17:14:34 UTC
 2025-12-21T17:15:10.2927368Z  2025-12-21 17:14:34.417 UTC [40] LOG:  database system is ready to accept connections
 2025-12-21T17:15:10.2927677Z   done
 2025-12-21T17:15:10.2928071Z  server started
-2025-12-21T17:15:10.2928245Z  
+2025-12-21T17:15:10.2928245Z
 2025-12-21T17:15:10.2928701Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
-2025-12-21T17:15:10.2929057Z  
+2025-12-21T17:15:10.2929057Z
 2025-12-21T17:15:10.2929362Z  waiting for server to shut down...2025-12-21 17:14:34.508 UTC [40] LOG:  received fast shutdown request
 2025-12-21T17:15:10.2929813Z  .2025-12-21 17:14:34.510 UTC [40] LOG:  aborting any active transactions
 2025-12-21T17:15:10.2930312Z  2025-12-21 17:14:34.515 UTC [40] LOG:  background worker "logical replication launcher" (PID 46) exited with exit code 1
@@ -572,9 +572,9 @@
 2025-12-21T17:15:10.2933103Z  2025-12-21 17:14:34.524 UTC [40] LOG:  database system is shut down
 2025-12-21T17:15:10.2933386Z   done
 2025-12-21T17:15:10.2933549Z  server stopped
-2025-12-21T17:15:10.2933721Z  
+2025-12-21T17:15:10.2933721Z
 2025-12-21T17:15:10.2933938Z  PostgreSQL init process complete; ready for start up.
-2025-12-21T17:15:10.2934212Z  
+2025-12-21T17:15:10.2934212Z
 2025-12-21T17:15:10.2939424Z Stop and remove container: c677025dfbd847db99a84eeee51addea_postgres15alpine_8be137
 2025-12-21T17:15:10.2944955Z ##[command]/usr/bin/docker rm --force b0f6eb76aa516f779db45b68923f06029f85d1d8e68cdd7fc03d962c77e9af5a
 2025-12-21T17:15:11.9023926Z b0f6eb76aa516f779db45b68923f06029f85d1d8e68cdd7fc03d962c77e9af5a

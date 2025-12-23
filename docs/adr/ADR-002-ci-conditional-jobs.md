@@ -140,4 +140,3 @@ This strategy should be reviewed if:
 - dorny/paths-filter: https://github.com/dorny/paths-filter
 - GitHub Actions conditional jobs: https://docs.github.com/en/actions/using-jobs/using-conditions-to-control-job-execution
 - GitHub issue on path filtering: https://github.com/actions/runner/issues/491
-

@@ -184,4 +184,3 @@ Once you answer these questions, I'll:
 ---
 
 **Please respond with your preferences for each question (can be just "1A, 2A, 3-yes, 4B..." format).**
-

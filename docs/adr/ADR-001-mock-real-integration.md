@@ -92,4 +92,3 @@ This pattern should be reviewed if:
 - Mock drift becomes a significant problem (requires frequent sync with real API)
 - RediAI integration becomes more complex (multiple endpoints, state management)
 - We add caching/circuit breakers (may want to extract to separate layer)
-

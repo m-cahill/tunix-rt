@@ -1,0 +1,28 @@
+﻿2025-12-22T03:42:47.8688513Z ##[group]Run actions/upload-artifact@v4
+2025-12-22T03:42:47.8688994Z with:
+2025-12-22T03:42:47.8689476Z   name: pip-audit-report
+2025-12-22T03:42:47.8689892Z   path: backend/pip-audit-report.json
+2025-12-22T03:42:47.8690347Z   retention-days: 30
+2025-12-22T03:42:47.8690713Z   if-no-files-found: warn
+2025-12-22T03:42:47.8691112Z   compression-level: 6
+2025-12-22T03:42:47.8691488Z   overwrite: false
+2025-12-22T03:42:47.8691850Z   include-hidden-files: false
+2025-12-22T03:42:47.8692250Z env:
+2025-12-22T03:42:47.8692668Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T03:42:47.8693425Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-22T03:42:47.8694142Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T03:42:47.8694816Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T03:42:47.8695483Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T03:42:47.8696152Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-22T03:42:47.8696751Z ##[endgroup]
+2025-12-22T03:42:48.0890005Z With the provided path, there will be 1 file uploaded
+2025-12-22T03:42:48.0891084Z Artifact name is valid!
+2025-12-22T03:42:48.0891614Z Root directory input is valid!
+2025-12-22T03:42:48.3412561Z Beginning upload of artifact content to blob storage
+2025-12-22T03:42:48.5299582Z Uploaded bytes 1032
+2025-12-22T03:42:48.5813914Z Finished uploading artifact content to blob storage!
+2025-12-22T03:42:48.5816827Z SHA256 digest of uploaded artifact zip is 3c10fde6c62ec0e7238b631424e04b17ed7bfcb62e90f4921a409df9fad7f4d7
+2025-12-22T03:42:48.5819657Z Finalizing artifact upload
+2025-12-22T03:42:48.7161563Z Artifact pip-audit-report.zip successfully finalized. Artifact ID 4939634683
+2025-12-22T03:42:48.7163137Z Artifact pip-audit-report has been successfully uploaded! Final size is 1032 bytes. Artifact ID is 4939634683
+2025-12-22T03:42:48.7170264Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20421039454/artifacts/4939634683

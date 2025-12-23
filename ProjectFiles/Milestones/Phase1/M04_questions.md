@@ -357,4 +357,3 @@ Based on the questions above, here's my recommended approach:
 **Please confirm or adjust these recommendations before I proceed with implementation.**
 
 **KEY DECISION REQUIRED:** Should we use Vite dev mode (Option A) or add API base URL env var (Option B) for E2E?
-

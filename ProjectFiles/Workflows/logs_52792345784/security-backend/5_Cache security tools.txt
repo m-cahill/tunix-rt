@@ -1,0 +1,24 @@
+﻿2025-12-22T03:42:40.6995851Z ##[group]Run actions/cache@v4
+2025-12-22T03:42:40.6996100Z with:
+2025-12-22T03:42:40.6996277Z   path: ~/.cache/pip
+2025-12-22T03:42:40.6996674Z   key: security-tools-Linux-d6b02fc59ca5dcb638981079f0f08bfb35ebf7ccbdea839cf22f8f7e8eed0ba8
+2025-12-22T03:42:40.6997128Z   restore-keys: security-tools-Linux-
+
+2025-12-22T03:42:40.6997385Z   enableCrossOsArchive: false
+2025-12-22T03:42:40.6997604Z   fail-on-cache-miss: false
+2025-12-22T03:42:40.6997800Z   lookup-only: false
+2025-12-22T03:42:40.6997979Z   save-always: false
+2025-12-22T03:42:40.6998154Z env:
+2025-12-22T03:42:40.6998373Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T03:42:40.6998776Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-22T03:42:40.6999588Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T03:42:40.7000039Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T03:42:40.7000373Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T03:42:40.7000776Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-22T03:42:40.7001049Z ##[endgroup]
+2025-12-22T03:42:41.0371015Z Cache hit for: security-tools-Linux-d6b02fc59ca5dcb638981079f0f08bfb35ebf7ccbdea839cf22f8f7e8eed0ba8
+2025-12-22T03:42:42.2360010Z Received 56302464 of 56302464 (100.0%), 56.0 MBs/sec
+2025-12-22T03:42:42.2361017Z Cache Size: ~54 MB (56302464 B)
+2025-12-22T03:42:42.2391926Z [command]/usr/bin/tar -xf /home/runner/work/_temp/ab85b3ed-ad4d-4b55-bc6b-f814d6860045/cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --use-compress-program unzstd
+2025-12-22T03:42:42.3374142Z Cache restored successfully
+2025-12-22T03:42:42.3517387Z Cache restored from key: security-tools-Linux-d6b02fc59ca5dcb638981079f0f08bfb35ebf7ccbdea839cf22f8f7e8eed0ba8

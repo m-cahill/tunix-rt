@@ -98,22 +98,22 @@
 2025-12-21T04:19:58.7541066Z ##[group]Checking out the ref
 2025-12-21T04:19:58.7544595Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/1/merge
 2025-12-21T04:19:58.7857675Z Note: switching to 'refs/remotes/pull/1/merge'.
-2025-12-21T04:19:58.7860373Z 
+2025-12-21T04:19:58.7860373Z
 2025-12-21T04:19:58.7861239Z You are in 'detached HEAD' state. You can look around, make experimental
 2025-12-21T04:19:58.7862718Z changes and commit them, and you can discard any commits you make in this
 2025-12-21T04:19:58.7864223Z state without impacting any branches by switching back to a branch.
-2025-12-21T04:19:58.7865216Z 
+2025-12-21T04:19:58.7865216Z
 2025-12-21T04:19:58.7865888Z If you want to create a new branch to retain commits you create, you may
 2025-12-21T04:19:58.7867885Z do so (now or later) by using -c with the switch command. Example:
-2025-12-21T04:19:58.7868818Z 
+2025-12-21T04:19:58.7868818Z
 2025-12-21T04:19:58.7869202Z   git switch -c <new-branch-name>
-2025-12-21T04:19:58.7870085Z 
+2025-12-21T04:19:58.7870085Z
 2025-12-21T04:19:58.7870436Z Or undo this operation with:
-2025-12-21T04:19:58.7871325Z 
+2025-12-21T04:19:58.7871325Z
 2025-12-21T04:19:58.7871649Z   git switch -
-2025-12-21T04:19:58.7872087Z 
+2025-12-21T04:19:58.7872087Z
 2025-12-21T04:19:58.7872777Z Turn off this advice by setting config variable advice.detachedHead to false
-2025-12-21T04:19:58.7874197Z 
+2025-12-21T04:19:58.7874197Z
 2025-12-21T04:19:58.7874903Z HEAD is now at 6810650 Merge 465ffbfc42d55624426e0a9a27f939d32b6567ea into 6e183af9da9b0cab21f355524a27b353e6cce2f3
 2025-12-21T04:19:58.7879302Z ##[endgroup]
 2025-12-21T04:19:58.7911169Z [command]/usr/bin/git log -1 --format=%H
@@ -139,7 +139,7 @@ workflow:
 2025-12-21T04:19:58.9221722Z Github token is not available - changes will be detected from PRs merge commit
 2025-12-21T04:19:58.9223767Z ##[group]Change detection in last commit
 2025-12-21T04:19:58.9231929Z [command]/usr/bin/git log --format= --no-renames --name-status -z -n 1
-2025-12-21T04:19:58.9298720Z 
+2025-12-21T04:19:58.9298720Z
 2025-12-21T04:19:58.9301910Z ##[endgroup]
 2025-12-21T04:19:58.9304686Z Detected 0 changed files
 2025-12-21T04:19:58.9307602Z Results:

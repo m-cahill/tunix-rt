@@ -1,0 +1,21 @@
+﻿2025-12-22T20:52:02.1169065Z ##[group]Run npx playwright test
+2025-12-22T20:52:02.1169797Z [36;1mnpx playwright test[0m
+2025-12-22T20:52:02.1212334Z shell: /usr/bin/bash -e {0}
+2025-12-22T20:52:02.1212561Z env:
+2025-12-22T20:52:02.1212722Z   REDIAI_MODE: mock
+2025-12-22T20:52:02.1213362Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-22T20:52:02.1213938Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T20:52:02.1214647Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-22T20:52:02.1215346Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T20:52:02.1216148Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T20:52:02.1216778Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T20:52:02.1217417Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-22T20:52:02.1217906Z ##[endgroup]
+2025-12-22T20:52:04.4410111Z [WebServer] INFO:     Started server process [3403]
+2025-12-22T20:52:04.4415968Z [WebServer] INFO:     Waiting for application startup.
+2025-12-22T20:52:04.4428447Z [WebServer] INFO:     Application startup complete.
+2025-12-22T20:52:04.4429396Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2025-12-22T20:52:06.0026583Z
+2025-12-22T20:52:06.0027518Z Running 7 tests using 1 worker
+2025-12-22T20:52:12.5628277Z ·······
+2025-12-22T20:52:12.5639277Z   7 passed (9.1s)

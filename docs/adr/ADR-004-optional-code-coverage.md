@@ -105,4 +105,3 @@ If optional integrations grow significantly:
 - **Pytest-cov config:** https://pytest-cov.readthedocs.io/en/latest/config.html
 - **M07 Plan:** `ProjectFiles/Milestones/Phase1/M07_plan.md`
 - **Workflow Analysis:** `ProjectFiles/Workflows/context_52782804457.md`
-

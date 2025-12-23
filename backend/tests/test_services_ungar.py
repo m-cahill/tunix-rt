@@ -57,12 +57,12 @@ class TestUngarStatusService:
     def test_check_status_without_ungar(self):
         """Status check should work even without UNGAR installed."""
         status = check_ungar_status()
-        
+
         # Should return a response (not raise error)
         assert status is not None
         assert hasattr(status, "available")
         assert isinstance(status.available, bool)
-        
+
         # Version is None or a string
         assert status.version is None or isinstance(status.version, str)
 
@@ -74,7 +74,7 @@ class TestUngarGeneratorService:
     async def test_generate_without_ungar_raises_error(self, test_db: AsyncSession):
         """Generating traces without UNGAR should raise ValueError."""
         request = UngarGenerateRequest(count=5, seed=42, persist=False)
-        
+
         with pytest.raises(ValueError, match="UNGAR is not installed"):
             await generate_high_card_duel_traces(request, test_db)
 
@@ -83,14 +83,14 @@ class TestUngarGeneratorService:
     async def test_generate_traces_no_persist(self, test_db: AsyncSession):
         """Generate traces without persisting should return placeholder IDs."""
         from tunix_rt_backend.integrations.ungar.availability import ungar_available
-        
+
         if not ungar_available():
             pytest.skip("UNGAR not installed; use: pip install -e '.[ungar]'")
-        
+
         request = UngarGenerateRequest(count=3, seed=42, persist=False)
-        
+
         trace_ids, preview = await generate_high_card_duel_traces(request, test_db)
-        
+
         # Should return requested number of traces
         assert len(trace_ids) == 3
         # Preview should have max 3 items
@@ -106,14 +106,14 @@ class TestUngarGeneratorService:
     async def test_generate_traces_with_persist(self, test_db: AsyncSession):
         """Generate traces with persist should save to database."""
         from tunix_rt_backend.integrations.ungar.availability import ungar_available
-        
+
         if not ungar_available():
             pytest.skip("UNGAR not installed; use: pip install -e '.[ungar]'")
-        
+
         request = UngarGenerateRequest(count=2, seed=42, persist=True)
-        
+
         trace_ids, preview = await generate_high_card_duel_traces(request, test_db)
-        
+
         # Should return 2 trace IDs
         assert len(trace_ids) == 2
         # Preview should have 2 items (min of count and 3)
@@ -130,7 +130,7 @@ class TestUngarExportService:
     async def test_export_empty_database(self, test_db: AsyncSession):
         """Exporting from empty database should return empty string."""
         result = await export_high_card_duel_jsonl(test_db, limit=10, trace_ids_str=None)
-        
+
         # Should return empty JSONL (just empty string or newline)
         assert result in ("", "\n")
 
@@ -140,13 +140,8 @@ class TestUngarExportService:
         # This tests the ID parsing logic even if traces don't exist
         # (will just return empty since no traces match)
         fake_ids = f"{uuid.uuid4()},{uuid.uuid4()}"
-        
-        result = await export_high_card_duel_jsonl(
-            test_db, 
-            limit=10, 
-            trace_ids_str=fake_ids
-        )
-        
+
+        result = await export_high_card_duel_jsonl(test_db, limit=10, trace_ids_str=fake_ids)
+
         # Should not error on parsing, just return empty
         assert isinstance(result, str)
-

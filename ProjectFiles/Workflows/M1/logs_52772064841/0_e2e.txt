@@ -286,7 +286,7 @@
 2025-12-21T16:01:53.7550496Z   Stored in directory: /tmp/pip-ephem-wheel-cache-m8nzhdl_/wheels/6c/ee/47/0b2814d300ad026845dfa3996505f4a0f855be918f2df7eb34
 2025-12-21T16:01:53.7563503Z Successfully built tunix-rt-backend
 2025-12-21T16:01:53.8243256Z Installing collected packages: websockets, uvloop, typing-extensions, ruff, pyyaml, python-dotenv, pygments, pluggy, pathspec, packaging, mypy_extensions, MarkupSafe, librt, iniconfig, idna, httptools, h11, greenlet, coverage, click, certifi, asyncpg, annotated-types, annotated-doc, aiosqlite, uvicorn, typing-inspection, sqlalchemy, pytest, pydantic-core, mypy, Mako, httpcore, anyio, watchfiles, starlette, pytest-cov, pytest-asyncio, pydantic, httpx, alembic, pydantic-settings, fastapi, tunix-rt-backend
-2025-12-21T16:01:58.7854765Z 
+2025-12-21T16:01:58.7854765Z
 2025-12-21T16:01:58.7882970Z Successfully installed Mako-1.3.10 MarkupSafe-3.0.3 aiosqlite-0.22.0 alembic-1.17.2 annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.0 asyncpg-0.31.0 certifi-2025.11.12 click-8.3.1 coverage-7.13.0 fastapi-0.126.0 greenlet-3.3.0 h11-0.16.0 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 idna-3.11 iniconfig-2.3.0 librt-0.7.4 mypy-1.19.1 mypy_extensions-1.1.0 packaging-25.0 pathspec-0.12.1 pluggy-1.6.0 pydantic-2.12.5 pydantic-core-2.41.5 pydantic-settings-2.12.0 pygments-2.19.2 pytest-9.0.2 pytest-asyncio-1.3.0 pytest-cov-7.0.0 python-dotenv-1.2.1 pyyaml-6.0.3 ruff-0.14.10 sqlalchemy-2.0.45 starlette-0.50.0 tunix-rt-backend-0.1.0 typing-extensions-4.15.0 typing-inspection-0.4.2 uvicorn-0.40.0 uvloop-0.22.1 watchfiles-1.1.1 websockets-15.0.1
 2025-12-21T16:01:59.2210259Z ##[group]Run actions/setup-node@v4
 2025-12-21T16:01:59.2210543Z with:
@@ -331,17 +331,17 @@
 2025-12-21T16:02:08.1244261Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
 2025-12-21T16:02:08.1396541Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
 2025-12-21T16:02:10.1315126Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
-2025-12-21T16:02:10.4568906Z 
+2025-12-21T16:02:10.4568906Z
 2025-12-21T16:02:10.4571280Z added 392 packages, and audited 393 packages in 6s
-2025-12-21T16:02:10.4572085Z 
+2025-12-21T16:02:10.4572085Z
 2025-12-21T16:02:10.4573382Z 115 packages are looking for funding
 2025-12-21T16:02:10.4574171Z   run `npm fund` for details
-2025-12-21T16:02:10.4762912Z 
+2025-12-21T16:02:10.4762912Z
 2025-12-21T16:02:10.4763647Z 4 moderate severity vulnerabilities
-2025-12-21T16:02:10.4764354Z 
+2025-12-21T16:02:10.4764354Z
 2025-12-21T16:02:10.4765090Z To address all issues (including breaking changes), run:
 2025-12-21T16:02:10.4765920Z   npm audit fix --force
-2025-12-21T16:02:10.4766611Z 
+2025-12-21T16:02:10.4766611Z
 2025-12-21T16:02:10.4767791Z Run `npm audit` for details.
 2025-12-21T16:02:10.5025502Z ##[group]Run npm ci
 2025-12-21T16:02:10.5025741Z [36;1mnpm ci[0m
@@ -355,9 +355,9 @@
 2025-12-21T16:02:10.5063745Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
 2025-12-21T16:02:10.5064287Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
 2025-12-21T16:02:10.5064594Z ##[endgroup]
-2025-12-21T16:02:11.4611309Z 
+2025-12-21T16:02:11.4611309Z
 2025-12-21T16:02:11.4612067Z added 5 packages, and audited 6 packages in 879ms
-2025-12-21T16:02:11.4623421Z 
+2025-12-21T16:02:11.4623421Z
 2025-12-21T16:02:11.4623971Z found 0 vulnerabilities
 2025-12-21T16:02:11.4755276Z ##[group]Run npx playwright install chromium --with-deps
 2025-12-21T16:02:11.4755806Z [36;1mnpx playwright install chromium --with-deps[0m
@@ -498,7 +498,7 @@
 2025-12-21T16:02:25.5051921Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
 2025-12-21T16:02:25.7667356Z Fetched 23.0 MB in 1s (17.0 MB/s)
 2025-12-21T16:02:25.7937505Z Selecting previously unselected package fonts-ipafont-gothic.
-2025-12-21T16:02:25.8258149Z (Reading database ... 
+2025-12-21T16:02:25.8258149Z (Reading database ...
 2025-12-21T16:02:25.8259105Z (Reading database ... 5%
 2025-12-21T16:02:25.8259542Z (Reading database ... 10%
 2025-12-21T16:02:25.8259945Z (Reading database ... 15%
@@ -572,20 +572,20 @@
 2025-12-21T16:02:34.9585924Z Processing triggers for man-db (2.12.0-4build2) ...
 2025-12-21T16:02:34.9633953Z Not building database; man-db/auto-update is not 'true'.
 2025-12-21T16:02:34.9659414Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
-2025-12-21T16:02:35.7779498Z 
+2025-12-21T16:02:35.7779498Z
 2025-12-21T16:02:35.7780465Z Running kernel seems to be up-to-date.
-2025-12-21T16:02:35.7781172Z 
+2025-12-21T16:02:35.7781172Z
 2025-12-21T16:02:35.7781942Z Restarting services...
 2025-12-21T16:02:35.8220334Z  systemctl restart packagekit.service php8.3-fpm.service polkit.service udisks2.service
-2025-12-21T16:02:36.0133887Z 
+2025-12-21T16:02:36.0133887Z
 2025-12-21T16:02:36.0137456Z Service restarts being deferred:
 2025-12-21T16:02:36.0138645Z  systemctl restart ModemManager.service
 2025-12-21T16:02:36.0141542Z  systemctl restart networkd-dispatcher.service
-2025-12-21T16:02:36.0145671Z 
+2025-12-21T16:02:36.0145671Z
 2025-12-21T16:02:36.0153328Z No containers need to be restarted.
-2025-12-21T16:02:36.0153626Z 
+2025-12-21T16:02:36.0153626Z
 2025-12-21T16:02:36.0153921Z No user sessions are running outdated binaries.
-2025-12-21T16:02:36.0154255Z 
+2025-12-21T16:02:36.0154255Z
 2025-12-21T16:02:36.0154723Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
 2025-12-21T16:02:36.9491440Z Downloading Chromium 143.0.7499.4 (playwright build v1200) from https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1200/chromium-linux.zip
 2025-12-21T16:02:37.2490890Z |                                                                                |   0% of 164.7 MiB
@@ -642,7 +642,7 @@
 2025-12-21T16:02:50.6337359Z [WebServer] INFO:     Waiting for application startup.
 2025-12-21T16:02:50.6338506Z [WebServer] INFO:     Application startup complete.
 2025-12-21T16:02:50.6339447Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-2025-12-21T16:02:51.5974975Z 
+2025-12-21T16:02:51.5974975Z
 2025-12-21T16:02:51.6001703Z Running 5 tests using 1 worker
 2025-12-21T16:02:53.0127521Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
 2025-12-21T16:02:53.0150894Z [WebServer] Error: connect ECONNREFUSED ::1:8000
@@ -738,92 +738,92 @@
 2025-12-21T16:03:07.7568513Z [WebServer] Error: connect ECONNREFUSED ::1:8000
 2025-12-21T16:03:07.7579948Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
 2025-12-21T16:03:12.8715767Z ····××F
-2025-12-21T16:03:12.8724525Z 
-2025-12-21T16:03:12.8750485Z   1) [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace 
-2025-12-21T16:03:12.8751314Z 
+2025-12-21T16:03:12.8724525Z
+2025-12-21T16:03:12.8750485Z   1) [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace
+2025-12-21T16:03:12.8751314Z
 2025-12-21T16:03:12.8752026Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
-2025-12-21T16:03:12.8752539Z 
+2025-12-21T16:03:12.8752539Z
 2025-12-21T16:03:12.8752763Z     Locator: locator('.trace-success')
 2025-12-21T16:03:12.8753245Z     Expected: visible
 2025-12-21T16:03:12.8753621Z     Timeout: 5000ms
 2025-12-21T16:03:12.8754058Z     Error: element(s) not found
-2025-12-21T16:03:12.8754331Z 
+2025-12-21T16:03:12.8754331Z
 2025-12-21T16:03:12.8754470Z     Call log:
 2025-12-21T16:03:12.8755174Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
 2025-12-21T16:03:12.8755903Z     [2m  - waiting for locator('.trace-success')[22m
-2025-12-21T16:03:12.8756531Z 
-2025-12-21T16:03:12.8756542Z 
+2025-12-21T16:03:12.8756531Z
+2025-12-21T16:03:12.8756542Z
 2025-12-21T16:03:12.8756828Z       67 |     // Wait for success message with trace ID
 2025-12-21T16:03:12.8757517Z       68 |     const successMessage = page.locator('.trace-success');
 2025-12-21T16:03:12.8758653Z     > 69 |     await expect(successMessage).toBeVisible({ timeout: 5000 });
 2025-12-21T16:03:12.8759382Z          |                                  ^
 2025-12-21T16:03:12.8760113Z       70 |     await expect(successMessage).toContainText('Trace uploaded with ID:');
-2025-12-21T16:03:12.8760748Z       71 |     
+2025-12-21T16:03:12.8760748Z       71 |
 2025-12-21T16:03:12.8761144Z       72 |     // Click fetch button
 2025-12-21T16:03:12.8761851Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:69:34
-2025-12-21T16:03:12.8762361Z 
+2025-12-21T16:03:12.8762361Z
 2025-12-21T16:03:12.8763152Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium/error-context.md
-2025-12-21T16:03:12.8764004Z 
+2025-12-21T16:03:12.8764004Z
 2025-12-21T16:03:12.8764678Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T16:03:12.8765134Z 
+2025-12-21T16:03:12.8765134Z
 2025-12-21T16:03:12.8765784Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
-2025-12-21T16:03:12.8766600Z 
+2025-12-21T16:03:12.8766600Z
 2025-12-21T16:03:12.8766836Z     Locator: locator('.trace-success')
 2025-12-21T16:03:12.8767304Z     Expected: visible
 2025-12-21T16:03:12.8767661Z     Timeout: 5000ms
 2025-12-21T16:03:12.8768065Z     Error: element(s) not found
-2025-12-21T16:03:12.8768340Z 
+2025-12-21T16:03:12.8768340Z
 2025-12-21T16:03:12.8768475Z     Call log:
 2025-12-21T16:03:12.8769097Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
 2025-12-21T16:03:12.8769848Z     [2m  - waiting for locator('.trace-success')[22m
-2025-12-21T16:03:12.8770573Z 
-2025-12-21T16:03:12.8770584Z 
+2025-12-21T16:03:12.8770573Z
+2025-12-21T16:03:12.8770584Z
 2025-12-21T16:03:12.8770852Z       67 |     // Wait for success message with trace ID
 2025-12-21T16:03:12.8771529Z       68 |     const successMessage = page.locator('.trace-success');
 2025-12-21T16:03:12.8772328Z     > 69 |     await expect(successMessage).toBeVisible({ timeout: 5000 });
 2025-12-21T16:03:12.8772991Z          |                                  ^
 2025-12-21T16:03:12.8773713Z       70 |     await expect(successMessage).toContainText('Trace uploaded with ID:');
-2025-12-21T16:03:12.8774347Z       71 |     
+2025-12-21T16:03:12.8774347Z       71 |
 2025-12-21T16:03:12.8774741Z       72 |     // Click fetch button
 2025-12-21T16:03:12.8775437Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:69:34
-2025-12-21T16:03:12.8775935Z 
+2025-12-21T16:03:12.8775935Z
 2025-12-21T16:03:12.8777032Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/error-context.md
-2025-12-21T16:03:12.8777923Z 
+2025-12-21T16:03:12.8777923Z
 2025-12-21T16:03:12.8778690Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
 2025-12-21T16:03:12.8779960Z     test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
 2025-12-21T16:03:12.8780759Z     Usage:
-2025-12-21T16:03:12.8780903Z 
+2025-12-21T16:03:12.8780903Z
 2025-12-21T16:03:12.8781711Z         npx playwright show-trace test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
-2025-12-21T16:03:12.8782557Z 
+2025-12-21T16:03:12.8782557Z
 2025-12-21T16:03:12.8783122Z     ────────────────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T16:03:12.8783498Z 
+2025-12-21T16:03:12.8783498Z
 2025-12-21T16:03:12.8784068Z     Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T16:03:12.8784460Z 
+2025-12-21T16:03:12.8784460Z
 2025-12-21T16:03:12.8785002Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
-2025-12-21T16:03:12.8785483Z 
+2025-12-21T16:03:12.8785483Z
 2025-12-21T16:03:12.8785686Z     Locator: locator('.trace-success')
 2025-12-21T16:03:12.8786316Z     Expected: visible
 2025-12-21T16:03:12.8786676Z     Timeout: 5000ms
 2025-12-21T16:03:12.8787076Z     Error: element(s) not found
-2025-12-21T16:03:12.8787342Z 
+2025-12-21T16:03:12.8787342Z
 2025-12-21T16:03:12.8787476Z     Call log:
 2025-12-21T16:03:12.8788100Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
 2025-12-21T16:03:12.8788898Z     [2m  - waiting for locator('.trace-success')[22m
-2025-12-21T16:03:12.8789279Z 
-2025-12-21T16:03:12.8789290Z 
+2025-12-21T16:03:12.8789279Z
+2025-12-21T16:03:12.8789290Z
 2025-12-21T16:03:12.8789586Z       67 |     // Wait for success message with trace ID
 2025-12-21T16:03:12.8790557Z       68 |     const successMessage = page.locator('.trace-success');
 2025-12-21T16:03:12.8791365Z     > 69 |     await expect(successMessage).toBeVisible({ timeout: 5000 });
 2025-12-21T16:03:12.8792004Z          |                                  ^
 2025-12-21T16:03:12.8792746Z       70 |     await expect(successMessage).toContainText('Trace uploaded with ID:');
-2025-12-21T16:03:12.8793382Z       71 |     
+2025-12-21T16:03:12.8793382Z       71 |
 2025-12-21T16:03:12.8793769Z       72 |     // Click fetch button
 2025-12-21T16:03:12.8794886Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:69:34
-2025-12-21T16:03:12.8795370Z 
+2025-12-21T16:03:12.8795370Z
 2025-12-21T16:03:12.8796570Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry2/error-context.md
-2025-12-21T16:03:12.8797467Z 
+2025-12-21T16:03:12.8797467Z
 2025-12-21T16:03:12.8797612Z   1 failed
-2025-12-21T16:03:12.8798664Z     [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace 
+2025-12-21T16:03:12.8798664Z     [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace
 2025-12-21T16:03:12.8799548Z   4 passed (23.7s)
 2025-12-21T16:03:12.9210766Z ##[error]Process completed with exit code 1.
 2025-12-21T16:03:12.9271188Z ##[group]Run actions/upload-artifact@v4

@@ -174,4 +174,3 @@ Once `npm ci` succeeds, the E2E job will:
 
 **Status:** Fixes pushed, awaiting CI results
 **Confidence:** HIGH - M4 infrastructure already proven working
-

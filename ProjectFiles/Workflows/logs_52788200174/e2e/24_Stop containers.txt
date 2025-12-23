@@ -20,13 +20,13 @@
 2025-12-22T01:43:05.2298072Z  2025-12-22 01:42:45.137 UTC [106] FATAL:  role "root" does not exist
 2025-12-22T01:43:05.2298671Z  2025-12-22 01:42:55.207 UTC [112] FATAL:  role "root" does not exist
 2025-12-22T01:43:05.2299217Z  This user must also own the server process.
-2025-12-22T01:43:05.2299725Z  
+2025-12-22T01:43:05.2299725Z
 2025-12-22T01:43:05.2300153Z  The database cluster will be initialized with locale "en_US.utf8".
 2025-12-22T01:43:05.2300857Z  The default database encoding has accordingly been set to "UTF8".
 2025-12-22T01:43:05.2301514Z  The default text search configuration will be set to "english".
-2025-12-22T01:43:05.2302028Z  
+2025-12-22T01:43:05.2302028Z
 2025-12-22T01:43:05.2302570Z  Data page checksums are disabled.
-2025-12-22T01:43:05.2302959Z  
+2025-12-22T01:43:05.2302959Z
 2025-12-22T01:43:05.2303428Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
 2025-12-22T01:43:05.2304057Z  creating subdirectories ... ok
 2025-12-22T01:43:05.2304551Z  selecting dynamic shared memory implementation ... posix
@@ -37,21 +37,21 @@
 2025-12-22T01:43:05.2307225Z  running bootstrap script ... ok
 2025-12-22T01:43:05.2307686Z  performing post-bootstrap initialization ... ok
 2025-12-22T01:43:05.2308178Z  syncing data to disk ... ok
-2025-12-22T01:43:05.2308543Z  
-2025-12-22T01:43:05.2308801Z  
+2025-12-22T01:43:05.2308543Z
+2025-12-22T01:43:05.2308801Z
 2025-12-22T01:43:05.2309148Z  Success. You can now start the database server using:
-2025-12-22T01:43:05.2309618Z  
+2025-12-22T01:43:05.2309618Z
 2025-12-22T01:43:05.2309969Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
-2025-12-22T01:43:05.2310452Z  
+2025-12-22T01:43:05.2310452Z
 2025-12-22T01:43:05.2311260Z  waiting for server to start....2025-12-22 01:41:35.779 UTC [39] LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
 2025-12-22T01:43:05.2312486Z  2025-12-22 01:41:35.779 UTC [39] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
 2025-12-22T01:43:05.2313680Z  2025-12-22 01:41:35.784 UTC [42] LOG:  database system was shut down at 2025-12-22 01:41:35 UTC
 2025-12-22T01:43:05.2314466Z  2025-12-22 01:41:35.788 UTC [39] LOG:  database system is ready to accept connections
 2025-12-22T01:43:05.2318175Z   done
 2025-12-22T01:43:05.2320533Z  server started
-2025-12-22T01:43:05.2320841Z  
+2025-12-22T01:43:05.2320841Z
 2025-12-22T01:43:05.2321369Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
-2025-12-22T01:43:05.2322015Z  
+2025-12-22T01:43:05.2322015Z
 2025-12-22T01:43:05.2322597Z  waiting for server to shut down....2025-12-22 01:41:35.878 UTC [39] LOG:  received fast shutdown request
 2025-12-22T01:43:05.2323466Z  2025-12-22 01:41:35.879 UTC [39] LOG:  aborting any active transactions
 2025-12-22T01:43:05.2324360Z  2025-12-22 01:41:35.884 UTC [39] LOG:  background worker "logical replication launcher" (PID 45) exited with exit code 1
@@ -61,9 +61,9 @@
 2025-12-22T01:43:05.2329657Z  2025-12-22 01:41:35.893 UTC [39] LOG:  database system is shut down
 2025-12-22T01:43:05.2330188Z   done
 2025-12-22T01:43:05.2330491Z  server stopped
-2025-12-22T01:43:05.2330806Z  
+2025-12-22T01:43:05.2330806Z
 2025-12-22T01:43:05.2331224Z  PostgreSQL init process complete; ready for start up.
-2025-12-22T01:43:05.2331748Z  
+2025-12-22T01:43:05.2331748Z
 2025-12-22T01:43:05.2340443Z Stop and remove container: 62644b7691134694a3efbf15f2503e49_postgres15alpine_846280
 2025-12-22T01:43:05.2346420Z ##[command]/usr/bin/docker rm --force 93fd38e413354a1b2cb6d17b8cb4162122a344bb8ecc6547ffd2626e0ba4bd4f
 2025-12-22T01:43:07.7413727Z 93fd38e413354a1b2cb6d17b8cb4162122a344bb8ecc6547ffd2626e0ba4bd4f

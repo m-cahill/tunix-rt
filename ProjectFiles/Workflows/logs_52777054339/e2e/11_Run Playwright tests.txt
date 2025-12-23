@@ -15,113 +15,113 @@
 2025-12-21T19:04:23.3341222Z [WebServer] INFO:     Waiting for application startup.
 2025-12-21T19:04:23.3342775Z [WebServer] INFO:     Application startup complete.
 2025-12-21T19:04:23.3343692Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-2025-12-21T19:04:24.0497230Z 
+2025-12-21T19:04:24.0497230Z
 2025-12-21T19:04:24.0497794Z Running 6 tests using 1 worker
 2025-12-21T19:04:33.8341584Z ····×F×F
-2025-12-21T19:04:33.8357433Z 
-2025-12-21T19:04:33.8360438Z   1) [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace 
-2025-12-21T19:04:33.8362132Z 
+2025-12-21T19:04:33.8357433Z
+2025-12-21T19:04:33.8360438Z   1) [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace
+2025-12-21T19:04:33.8362132Z
 2025-12-21T19:04:33.8362907Z     Error: locator.click: Error: strict mode violation: locator('button').filter({ hasText: 'Fetch' }) resolved to 2 elements:
 2025-12-21T19:04:33.8364582Z         1) <button>Fetch</button> aka getByRole('button', { name: 'Fetch', exact: true })
 2025-12-21T19:04:33.8365694Z         2) <button disabled>Fetch & Compare</button> aka getByRole('button', { name: 'Fetch & Compare' })
-2025-12-21T19:04:33.8366311Z 
+2025-12-21T19:04:33.8366311Z
 2025-12-21T19:04:33.8366509Z     Call log:
 2025-12-21T19:04:33.8367234Z     [2m  - waiting for locator('button').filter({ hasText: 'Fetch' })[22m
-2025-12-21T19:04:33.8367697Z 
-2025-12-21T19:04:33.8367711Z 
+2025-12-21T19:04:33.8367697Z
+2025-12-21T19:04:33.8367711Z
 2025-12-21T19:04:33.8371201Z       72 |     // Click fetch button
 2025-12-21T19:04:33.8371969Z       73 |     const fetchBtn = page.locator('button', { hasText: 'Fetch' });
 2025-12-21T19:04:33.8372634Z     > 74 |     await fetchBtn.click();
 2025-12-21T19:04:33.8373121Z          |                    ^
-2025-12-21T19:04:33.8373508Z       75 |     
+2025-12-21T19:04:33.8373508Z       75 |
 2025-12-21T19:04:33.8373929Z       76 |     // Wait for fetched trace to appear
 2025-12-21T19:04:33.8374519Z       77 |     const traceResult = page.locator('.trace-result');
 2025-12-21T19:04:33.8375333Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:74:20
-2025-12-21T19:04:33.8375818Z 
+2025-12-21T19:04:33.8375818Z
 2025-12-21T19:04:33.8376611Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium/error-context.md
-2025-12-21T19:04:33.8377444Z 
+2025-12-21T19:04:33.8377444Z
 2025-12-21T19:04:33.8378322Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T19:04:33.8378756Z 
+2025-12-21T19:04:33.8378756Z
 2025-12-21T19:04:33.8379467Z     Error: locator.click: Error: strict mode violation: locator('button').filter({ hasText: 'Fetch' }) resolved to 2 elements:
 2025-12-21T19:04:33.8380690Z         1) <button>Fetch</button> aka getByRole('button', { name: 'Fetch', exact: true })
 2025-12-21T19:04:33.8381757Z         2) <button disabled>Fetch & Compare</button> aka getByRole('button', { name: 'Fetch & Compare' })
-2025-12-21T19:04:33.8382378Z 
+2025-12-21T19:04:33.8382378Z
 2025-12-21T19:04:33.8382527Z     Call log:
 2025-12-21T19:04:33.8383245Z     [2m  - waiting for locator('button').filter({ hasText: 'Fetch' })[22m
-2025-12-21T19:04:33.8383703Z 
-2025-12-21T19:04:33.8383717Z 
+2025-12-21T19:04:33.8383703Z
+2025-12-21T19:04:33.8383717Z
 2025-12-21T19:04:33.8383927Z       72 |     // Click fetch button
 2025-12-21T19:04:33.8384600Z       73 |     const fetchBtn = page.locator('button', { hasText: 'Fetch' });
 2025-12-21T19:04:33.8385262Z     > 74 |     await fetchBtn.click();
 2025-12-21T19:04:33.8386199Z          |                    ^
-2025-12-21T19:04:33.8386588Z       75 |     
+2025-12-21T19:04:33.8386588Z       75 |
 2025-12-21T19:04:33.8387026Z       76 |     // Wait for fetched trace to appear
 2025-12-21T19:04:33.8388326Z       77 |     const traceResult = page.locator('.trace-result');
 2025-12-21T19:04:33.8389170Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:74:20
-2025-12-21T19:04:33.8389661Z 
+2025-12-21T19:04:33.8389661Z
 2025-12-21T19:04:33.8390502Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/error-context.md
-2025-12-21T19:04:33.8391399Z 
+2025-12-21T19:04:33.8391399Z
 2025-12-21T19:04:33.8392171Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
 2025-12-21T19:04:33.8393449Z     test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
 2025-12-21T19:04:33.8394329Z     Usage:
-2025-12-21T19:04:33.8394510Z 
+2025-12-21T19:04:33.8394510Z
 2025-12-21T19:04:33.8395395Z         npx playwright show-trace test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
-2025-12-21T19:04:33.8396307Z 
+2025-12-21T19:04:33.8396307Z
 2025-12-21T19:04:33.8396940Z     ────────────────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T19:04:33.8397386Z 
-2025-12-21T19:04:33.8399259Z   2) [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them 
-2025-12-21T19:04:33.8399962Z 
+2025-12-21T19:04:33.8397386Z
+2025-12-21T19:04:33.8399259Z   2) [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them
+2025-12-21T19:04:33.8399962Z
 2025-12-21T19:04:33.8400897Z     Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
-2025-12-21T19:04:33.8401562Z 
+2025-12-21T19:04:33.8401562Z
 2025-12-21T19:04:33.8402055Z     Expected: not [32m"634540ec-4ba5-496f-837c-c36a442deb29"[39m
-2025-12-21T19:04:33.8402471Z 
+2025-12-21T19:04:33.8402471Z
 2025-12-21T19:04:33.8403121Z       140 |     const secondTraceId = secondSuccessText?.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?.[0];
 2025-12-21T19:04:33.8404039Z       141 |     expect(secondTraceId).toBeTruthy();
 2025-12-21T19:04:33.8404675Z     > 142 |     expect(secondTraceId).not.toBe(firstTraceId);
 2025-12-21T19:04:33.8405251Z           |                               ^
-2025-12-21T19:04:33.8405666Z       143 |     
+2025-12-21T19:04:33.8405666Z       143 |
 2025-12-21T19:04:33.8406077Z       144 |     // Now perform comparison
 2025-12-21T19:04:33.8406739Z       145 |     const baseTraceInput = page.locator('#base-trace-id');
 2025-12-21T19:04:33.8407597Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:142:31
-2025-12-21T19:04:33.8408282Z 
+2025-12-21T19:04:33.8408282Z
 2025-12-21T19:04:33.8409092Z     Error Context: test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium/error-context.md
-2025-12-21T19:04:33.8409918Z 
+2025-12-21T19:04:33.8409918Z
 2025-12-21T19:04:33.8410584Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T19:04:33.8411029Z 
+2025-12-21T19:04:33.8411029Z
 2025-12-21T19:04:33.8411670Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
-2025-12-21T19:04:33.8412194Z 
+2025-12-21T19:04:33.8412194Z
 2025-12-21T19:04:33.8412435Z     Locator: locator('text=Base Trace')
 2025-12-21T19:04:33.8412869Z     Expected: visible
 2025-12-21T19:04:33.8413520Z     Error: strict mode violation: locator('text=Base Trace') resolved to 2 elements:
 2025-12-21T19:04:33.8414863Z         1) <label for="base-trace-id">Base Trace ID:</label> aka getByText('Base Trace ID:')
 2025-12-21T19:04:33.8415836Z         2) <h3>Base Trace</h3> aka getByRole('heading', { name: 'Base Trace' })
-2025-12-21T19:04:33.8416257Z 
+2025-12-21T19:04:33.8416257Z
 2025-12-21T19:04:33.8416392Z     Call log:
 2025-12-21T19:04:33.8416937Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
 2025-12-21T19:04:33.8417512Z     [2m  - waiting for locator('text=Base Trace')[22m
-2025-12-21T19:04:33.8417804Z 
-2025-12-21T19:04:33.8417814Z 
-2025-12-21T19:04:33.8418243Z       161 |     
+2025-12-21T19:04:33.8417804Z
+2025-12-21T19:04:33.8417814Z
+2025-12-21T19:04:33.8418243Z       161 |
 2025-12-21T19:04:33.8418709Z       162 |     // Verify both traces are displayed
 2025-12-21T19:04:33.8419411Z     > 163 |     await expect(page.locator('text=Base Trace')).toBeVisible();
 2025-12-21T19:04:33.8420067Z           |                                                   ^
 2025-12-21T19:04:33.8420941Z       164 |     await expect(page.locator('text=Other Trace')).toBeVisible();
-2025-12-21T19:04:33.8421538Z       165 |     
+2025-12-21T19:04:33.8421538Z       165 |
 2025-12-21T19:04:33.8421965Z       166 |     // Verify scores are displayed
 2025-12-21T19:04:33.8422672Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:163:51
-2025-12-21T19:04:33.8423137Z 
+2025-12-21T19:04:33.8423137Z
 2025-12-21T19:04:33.8423978Z     Error Context: test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/error-context.md
-2025-12-21T19:04:33.8424892Z 
+2025-12-21T19:04:33.8424892Z
 2025-12-21T19:04:33.8425638Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
 2025-12-21T19:04:33.8426729Z     test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/trace.zip
 2025-12-21T19:04:33.8431115Z     Usage:
-2025-12-21T19:04:33.8431303Z 
+2025-12-21T19:04:33.8431303Z
 2025-12-21T19:04:33.8432134Z         npx playwright show-trace test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/trace.zip
-2025-12-21T19:04:33.8432922Z 
+2025-12-21T19:04:33.8432922Z
 2025-12-21T19:04:33.8433579Z     ────────────────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T19:04:33.8434041Z 
+2025-12-21T19:04:33.8434041Z
 2025-12-21T19:04:33.8434190Z   2 failed
-2025-12-21T19:04:33.8435188Z     [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace 
-2025-12-21T19:04:33.8437533Z     [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them 
+2025-12-21T19:04:33.8435188Z     [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace
+2025-12-21T19:04:33.8437533Z     [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them
 2025-12-21T19:04:33.8438859Z   4 passed (11.3s)
 2025-12-21T19:04:33.8879629Z ##[error]Process completed with exit code 1.

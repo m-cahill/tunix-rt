@@ -465,4 +465,3 @@ if not traces:
 ---
 
 **Next Review:** After M7 (or when patterns evolve significantly)
-

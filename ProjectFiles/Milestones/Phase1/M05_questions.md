@@ -326,4 +326,3 @@ def baseline_score(trace: ReasoningTrace) -> float:
 
 **Prepared by:** AI Assistant (Claude Sonnet 4.5)  
 **Status:** READY FOR REVIEW
-

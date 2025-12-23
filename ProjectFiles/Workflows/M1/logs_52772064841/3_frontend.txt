@@ -138,28 +138,28 @@
 2025-12-21T16:01:56.0399036Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
 2025-12-21T16:01:56.0495414Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
 2025-12-21T16:01:57.4869654Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
-2025-12-21T16:01:57.7613735Z 
+2025-12-21T16:01:57.7613735Z
 2025-12-21T16:01:57.7614892Z added 392 packages, and audited 393 packages in 4s
-2025-12-21T16:01:57.7625172Z 
+2025-12-21T16:01:57.7625172Z
 2025-12-21T16:01:57.7626574Z 115 packages are looking for funding
 2025-12-21T16:01:57.7627369Z   run `npm fund` for details
-2025-12-21T16:01:57.7854225Z 
+2025-12-21T16:01:57.7854225Z
 2025-12-21T16:01:57.7854758Z 4 moderate severity vulnerabilities
-2025-12-21T16:01:57.7855363Z 
+2025-12-21T16:01:57.7855363Z
 2025-12-21T16:01:57.7855995Z To address all issues (including breaking changes), run:
 2025-12-21T16:01:57.7856841Z   npm audit fix --force
-2025-12-21T16:01:57.7857527Z 
+2025-12-21T16:01:57.7857527Z
 2025-12-21T16:01:57.7857940Z Run `npm audit` for details.
 2025-12-21T16:01:57.8136478Z ##[group]Run npm run test -- --coverage
 2025-12-21T16:01:57.8136819Z [36;1mnpm run test -- --coverage[0m
 2025-12-21T16:01:57.8170476Z shell: /usr/bin/bash -e {0}
 2025-12-21T16:01:57.8170722Z ##[endgroup]
-2025-12-21T16:01:57.9484834Z 
+2025-12-21T16:01:57.9484834Z
 2025-12-21T16:01:57.9485646Z > tunix-rt-frontend@0.1.0 test
 2025-12-21T16:01:57.9486203Z > vitest --run --coverage
-2025-12-21T16:01:57.9486468Z 
+2025-12-21T16:01:57.9486468Z
 2025-12-21T16:01:58.4149334Z [31m[7m[31m MISSING DEPENDENCY [31m[27m Cannot find dependency '@vitest/coverage-v8'
-2025-12-21T16:01:58.4149947Z 
+2025-12-21T16:01:58.4149947Z
 2025-12-21T16:01:58.4353440Z [39m
 2025-12-21T16:01:58.4368445Z ##[error]Process completed with exit code 1.
 2025-12-21T16:01:58.4475242Z Post job cleanup.

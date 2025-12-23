@@ -217,4 +217,3 @@ head -1 my_data.jsonl | jq '.prompts' | grep '<start_of_turn>'
 - `docs/M09_EVAL_LOOP.md` - Evaluation workflow details
 - `docs/M09_DATASET_FORMAT.md` - Dataset format specification
 - `training/README.md` - Training scripts reference
-

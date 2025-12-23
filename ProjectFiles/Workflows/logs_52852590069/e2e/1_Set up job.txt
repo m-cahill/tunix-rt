@@ -1,0 +1,30 @@
+﻿2025-12-22T20:21:07.5342892Z Current runner version: '2.330.0'
+2025-12-22T20:21:07.5376276Z ##[group]Runner Image Provisioner
+2025-12-22T20:21:07.5377460Z Hosted Compute Agent
+2025-12-22T20:21:07.5378270Z Version: 20251211.462
+2025-12-22T20:21:07.5379231Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-22T20:21:07.5380400Z Build Date: 2025-12-11T16:28:49Z
+2025-12-22T20:21:07.5381647Z Worker ID: {ba5895a8-ad05-49d5-a5b3-5d9d38352d46}
+2025-12-22T20:21:07.5382759Z ##[endgroup]
+2025-12-22T20:21:07.5383649Z ##[group]Operating System
+2025-12-22T20:21:07.5384768Z Ubuntu
+2025-12-22T20:21:07.5385882Z 24.04.3
+2025-12-22T20:21:07.5386579Z LTS
+2025-12-22T20:21:07.5387344Z ##[endgroup]
+2025-12-22T20:21:07.5388134Z ##[group]Runner Image
+2025-12-22T20:21:07.5388984Z Image: ubuntu-24.04
+2025-12-22T20:21:07.5389973Z Version: 20251215.174.1
+2025-12-22T20:21:07.5391751Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-22T20:21:07.5394267Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-22T20:21:07.5396556Z ##[endgroup]
+2025-12-22T20:21:07.5398429Z ##[group]GITHUB_TOKEN Permissions
+2025-12-22T20:21:07.5401633Z Contents: read
+2025-12-22T20:21:07.5402445Z Metadata: read
+2025-12-22T20:21:07.5403834Z ##[endgroup]
+2025-12-22T20:21:07.5427175Z Secret source: Actions
+2025-12-22T20:21:07.5428593Z Prepare workflow directory
+2025-12-22T20:21:07.6502010Z Prepare all required actions
+2025-12-22T20:21:07.6619540Z Getting action download info
+2025-12-22T20:21:08.1163658Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2025-12-22T20:21:09.7878181Z Download action repository 'actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a20' (SHA:0b93645e9fea7318ecaed2b359559ac225c90a20)
+2025-12-22T20:21:10.1087025Z ##[error]An action could not be found at the URI 'https://api.github.com/repos/actions/setup-python/tarball/0b93645e9fea7318ecaed2b359559ac225c90a20' (1018:183090:67193:8BC5D:6949A836)

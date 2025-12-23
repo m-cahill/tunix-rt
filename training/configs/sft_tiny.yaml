@@ -7,7 +7,7 @@ model:
   # Base model to fine-tune
   # For actual training, use a small Gemma variant
   name: "google/gemma-2b-it"
-  
+
   # Tokenizer settings
   max_length: 512  # Maximum sequence length
   padding: "max_length"
@@ -17,26 +17,26 @@ model:
 training:
   # Very small number of steps for testing
   num_steps: 50
-  
+
   # Learning rate
   learning_rate: 1.0e-5
-  
+
   # Batch configuration
   per_device_batch_size: 1
   gradient_accumulation_steps: 1
-  
+
   # Optimizer
   optimizer: "adamw"
   weight_decay: 0.01
-  
+
   # Learning rate schedule
   lr_scheduler: "linear"
   warmup_steps: 5
-  
+
   # Logging
   logging_steps: 10
   save_steps: 50
-  
+
   # Random seed for reproducibility
   seed: 42
 
@@ -47,7 +47,7 @@ system_instruction: "You are a helpful assistant. Show your reasoning step by st
 data:
   # Training data format
   format: "tunix_sft"
-  
+
   # Shuffle
   shuffle: true
   shuffle_seed: 42
@@ -56,11 +56,11 @@ data:
 output:
   # Where to save checkpoints (relative to artifacts/training_runs/<run_id>/)
   checkpoint_dir: "checkpoint-final"
-  
+
   # Whether to save metrics
   save_metrics: true
   metrics_file: "metrics.jsonl"
-  
+
   # Whether to save run manifest
   save_manifest: true
   manifest_file: "run_manifest.json"
@@ -70,4 +70,3 @@ output:
 # - For real training, increase num_steps to 1000-10000
 # - For real training, increase batch_size and use gradient accumulation
 # - For GPU training, adjust per_device_batch_size based on available VRAM
-

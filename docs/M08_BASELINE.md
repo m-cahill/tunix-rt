@@ -185,4 +185,3 @@ M08 will proceed with:
 
 **Baseline Established:** ✅ M07 is stable and ready for M08 work  
 **Baseline Commit:** `89bcddf69f80d2243c304409a8b90d867955792d`
-

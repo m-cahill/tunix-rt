@@ -233,4 +233,3 @@ The protocol pattern provides the **minimum viable abstraction** to decouple tra
 
 **Approved:** 2025-12-21  
 **Next Review:** M12 (when implementing real Tunix client)
-

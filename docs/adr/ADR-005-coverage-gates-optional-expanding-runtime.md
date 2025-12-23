@@ -233,4 +233,3 @@ This ADR should be reviewed when:
 **Status:** Implemented in `tools/coverage_gate.py`  
 **Author:** M09 Implementation Team  
 **Reviewers:** Project maintainers
-

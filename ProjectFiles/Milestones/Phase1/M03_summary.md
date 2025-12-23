@@ -199,4 +199,3 @@ This is a **pre-existing test infrastructure issue**, not a regression from M3 c
 **Prepared by:** AI Assistant (Claude Sonnet 4.5)  
 **Review Status:** Ready for human audit  
 **Merge Status:** Awaiting CI verification (commit `0aca423`)
-

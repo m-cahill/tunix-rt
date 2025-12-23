@@ -382,5 +382,3 @@ Success = Balanced excellence _across all categories_ — not just highest accur
 > “We didn’t just train a model — we built an AI-native reasoning factory. Every trace is evidence, every result is reproducible, and every artifact tells a story. Within the Kaggle constraints, we engineered a pipeline that is professional, rigorous, and designed to maximize judgment scores. This is what _next-gen AI engineering_ looks like.”
 
 This is not **hackathon code** — this is an **engineering manifesto.**
-
-

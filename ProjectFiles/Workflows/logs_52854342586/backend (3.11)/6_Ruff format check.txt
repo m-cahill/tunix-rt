@@ -1,0 +1,18 @@
+﻿2025-12-22T20:50:57.0512628Z ##[group]Run ruff format --check .
+2025-12-22T20:50:57.0512912Z [36;1mruff format --check .[0m
+2025-12-22T20:50:57.0544421Z shell: /usr/bin/bash -e {0}
+2025-12-22T20:50:57.0544648Z env:
+2025-12-22T20:50:57.0544896Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T20:50:57.0545299Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-22T20:50:57.0545695Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T20:50:57.0546029Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T20:50:57.0546368Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T20:50:57.0546700Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-22T20:50:57.0546983Z ##[endgroup]
+2025-12-22T20:50:57.0795503Z Would reformat: tests/test_services_datasets.py
+2025-12-22T20:50:57.0797781Z Would reformat: tests/test_services_ungar.py
+2025-12-22T20:50:57.0798302Z Would reformat: tests/test_training_scripts_smoke.py
+2025-12-22T20:50:57.0798941Z Would reformat: tunix_rt_backend/services/datasets_builder.py
+2025-12-22T20:50:57.0799570Z Would reformat: tunix_rt_backend/services/ungar_generator.py
+2025-12-22T20:50:57.0800153Z 5 files would be reformatted, 54 files already formatted
+2025-12-22T20:50:57.0812196Z ##[error]Process completed with exit code 1.

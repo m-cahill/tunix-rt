@@ -160,4 +160,3 @@ For security concerns or to report vulnerabilities, please:
 - [Gitleaks documentation](https://github.com/gitleaks/gitleaks)
 - [CycloneDX SBOM specification](https://cyclonedx.org/)
 - [Dependabot documentation](https://docs.github.com/en/code-security/dependabot)
-

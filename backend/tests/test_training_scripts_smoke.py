@@ -28,6 +28,7 @@ def jax_available() -> bool:
     """Check if JAX is installed (required for training tests)."""
     try:
         import jax  # noqa: F401
+
         return True
     except ImportError:
         return False
@@ -67,29 +68,29 @@ class TestTrainingScriptSmoke:
 
         assert result.returncode != 0, "Script should fail without required args"
         # Should show usage or error message
-        assert ("required" in result.stderr.lower() or 
-                "usage" in result.stdout.lower())
+        assert "required" in result.stderr.lower() or "usage" in result.stdout.lower()
 
     @pytest.mark.training
     def test_train_script_dry_run_exits_zero(self, tmp_path):
         """Test that --dry-run validates config and exits 0."""
         if not jax_available():
             pytest.skip("JAX not installed; use: pip install -e '.[training]'")
-        
+
         # Create a minimal test dataset
         test_data = tmp_path / "test_data.jsonl"
-        test_data.write_text(
-            '{"prompts": "Test prompt", "response": "Test response"}\n'
-        )
+        test_data.write_text('{"prompts": "Test prompt", "response": "Test response"}\n')
 
         # Run with --dry-run
         result = subprocess.run(
             [
                 sys.executable,
                 str(TRAIN_SCRIPT),
-                "--config", str(CONFIG_FILE),
-                "--data", str(test_data),
-                "--output", str(tmp_path / "output"),
+                "--config",
+                str(CONFIG_FILE),
+                "--data",
+                str(test_data),
+                "--output",
+                str(tmp_path / "output"),
                 "--dry-run",
             ],
             capture_output=True,
@@ -118,9 +119,12 @@ class TestTrainingScriptSmoke:
             [
                 sys.executable,
                 str(TRAIN_SCRIPT),
-                "--config", "nonexistent.yaml",
-                "--data", "fake.jsonl",
-                "--output", "/tmp/output",
+                "--config",
+                "nonexistent.yaml",
+                "--data",
+                "fake.jsonl",
+                "--output",
+                "/tmp/output",
                 "--dry-run",
             ],
             capture_output=True,
@@ -140,9 +144,12 @@ class TestTrainingScriptSmoke:
             [
                 sys.executable,
                 str(TRAIN_SCRIPT),
-                "--config", str(CONFIG_FILE),
-                "--data", "nonexistent.jsonl",
-                "--output", str(tmp_path / "output"),
+                "--config",
+                str(CONFIG_FILE),
+                "--data",
+                "nonexistent.jsonl",
+                "--output",
+                str(tmp_path / "output"),
                 "--dry-run",
             ],
             capture_output=True,
@@ -160,14 +167,12 @@ class TestTrainingScriptSmoke:
         """Test that --dry-run completes quickly (<10 seconds)."""
         if not jax_available():
             pytest.skip("JAX not installed; use: pip install -e '.[training]'")
-        
+
         import time
 
         # Create test dataset
         test_data = tmp_path / "test_data.jsonl"
-        test_data.write_text(
-            '{"prompts": "Test", "response": "Response"}\n' * 100
-        )
+        test_data.write_text('{"prompts": "Test", "response": "Response"}\n' * 100)
 
         start_time = time.time()
 
@@ -175,9 +180,12 @@ class TestTrainingScriptSmoke:
             [
                 sys.executable,
                 str(TRAIN_SCRIPT),
-                "--config", str(CONFIG_FILE),
-                "--data", str(test_data),
-                "--output", str(tmp_path / "output"),
+                "--config",
+                str(CONFIG_FILE),
+                "--data",
+                str(test_data),
+                "--output",
+                str(tmp_path / "output"),
                 "--dry-run",
             ],
             capture_output=True,
@@ -190,4 +198,3 @@ class TestTrainingScriptSmoke:
 
         assert result.returncode == 0
         assert duration < 10, f"Dry-run took {duration:.2f}s, should be <10s"
-

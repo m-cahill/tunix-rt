@@ -228,4 +228,3 @@ cat dataset.jsonl | jq 'select(.id == null or .prompts == null or .metadata == n
 - `docs/M09_TRAINING_QUICKSTART.md` - Using datasets for training
 - `docs/M08_SUMMARY.md` - Dataset build API
 - `training/README.md` - Training scripts overview
-

@@ -1,0 +1,30 @@
+﻿2025-12-22T20:20:59.4543475Z Current runner version: '2.330.0'
+2025-12-22T20:20:59.4577143Z ##[group]Runner Image Provisioner
+2025-12-22T20:20:59.4578541Z Hosted Compute Agent
+2025-12-22T20:20:59.4579460Z Version: 20251211.462
+2025-12-22T20:20:59.4580407Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-22T20:20:59.4581655Z Build Date: 2025-12-11T16:28:49Z
+2025-12-22T20:20:59.4583021Z Worker ID: {b1ed4251-dd88-418a-869e-91b26a7b9083}
+2025-12-22T20:20:59.4584213Z ##[endgroup]
+2025-12-22T20:20:59.4585236Z ##[group]Operating System
+2025-12-22T20:20:59.4586209Z Ubuntu
+2025-12-22T20:20:59.4586979Z 24.04.3
+2025-12-22T20:20:59.4587649Z LTS
+2025-12-22T20:20:59.4588527Z ##[endgroup]
+2025-12-22T20:20:59.4589371Z ##[group]Runner Image
+2025-12-22T20:20:59.4590363Z Image: ubuntu-24.04
+2025-12-22T20:20:59.4591505Z Version: 20251215.174.1
+2025-12-22T20:20:59.4593579Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-22T20:20:59.4596174Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-22T20:20:59.4598329Z ##[endgroup]
+2025-12-22T20:20:59.4600178Z ##[group]GITHUB_TOKEN Permissions
+2025-12-22T20:20:59.4602660Z Contents: read
+2025-12-22T20:20:59.4603757Z Metadata: read
+2025-12-22T20:20:59.4604752Z ##[endgroup]
+2025-12-22T20:20:59.4607595Z Secret source: Actions
+2025-12-22T20:20:59.4608799Z Prepare workflow directory
+2025-12-22T20:20:59.5081150Z Prepare all required actions
+2025-12-22T20:20:59.5138333Z Getting action download info
+2025-12-22T20:21:00.0753049Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2025-12-22T20:21:00.2067224Z Download action repository 'gitleaks/gitleaks-action@4fdcabac87045668f219f3edb08d5cbb3aac3eca' (SHA:4fdcabac87045668f219f3edb08d5cbb3aac3eca)
+2025-12-22T20:21:00.6555061Z ##[error]An action could not be found at the URI 'https://api.github.com/repos/gitleaks/gitleaks-action/tarball/4fdcabac87045668f219f3edb08d5cbb3aac3eca' (C3C0:36E598:8A655:A41D8:6949A82C)

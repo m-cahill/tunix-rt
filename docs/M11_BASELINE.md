@@ -256,4 +256,3 @@ If M11 introduces regressions:
 ---
 
 **Next Step:** Proceed to **Phase 1 — Fix-First & Stabilize** (SBOM, SHA pinning, pre-commit).
-

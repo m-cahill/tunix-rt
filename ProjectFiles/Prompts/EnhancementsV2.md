@@ -160,5 +160,3 @@ This prompt is **tight, modular, and AI-ready**: an agent can drop it into a new
 * * *
 
 Would you like me to also create a **ready-to-use repo skeleton** (backend/, frontend/, ops/, config files, CI workflow) that matches this prompt, so you can hand it straight to Cursor AI for implementation?
-
-

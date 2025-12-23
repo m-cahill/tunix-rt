@@ -4,7 +4,7 @@
 2025-12-21T19:03:12.6655422Z shell: /usr/bin/bash -e {0}
 2025-12-21T19:03:12.6655689Z ##[endgroup]
 2025-12-21T19:03:14.4524891Z # npm audit report
-2025-12-21T19:03:14.4531811Z 
+2025-12-21T19:03:14.4531811Z
 2025-12-21T19:03:14.4532269Z esbuild  <=0.24.2
 2025-12-21T19:03:14.4532657Z Severity: moderate
 2025-12-21T19:03:14.4533747Z esbuild enables any website to send any requests to the development server and read the response - https://github.com/advisories/GHSA-67mh-4wv8-2f99
@@ -24,8 +24,8 @@
 2025-12-21T19:03:14.4542451Z         @vitest/coverage-v8  <=2.2.0-beta.2
 2025-12-21T19:03:14.4542854Z         Depends on vulnerable versions of vitest
 2025-12-21T19:03:14.4543258Z         node_modules/@vitest/coverage-v8
-2025-12-21T19:03:14.4543507Z 
+2025-12-21T19:03:14.4543507Z
 2025-12-21T19:03:14.4543696Z 5 moderate severity vulnerabilities
-2025-12-21T19:03:14.4543962Z 
+2025-12-21T19:03:14.4543962Z
 2025-12-21T19:03:14.4544381Z To address all issues (including breaking changes), run:
 2025-12-21T19:03:14.4544898Z   npm audit fix --force

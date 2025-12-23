@@ -489,4 +489,3 @@ db_trace = await get_trace_or_404(db, trace_id)
 ---
 
 **Status:** ✅ **M6.1 Complete - Validation refactor successful and exceeding expectations**
-

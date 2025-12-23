@@ -367,4 +367,3 @@ We achieved:
 **Document Version:** 1.0  
 **Last Updated:** 2025-12-21  
 **Next Review:** After M6.4 (CI Guardrails)
-

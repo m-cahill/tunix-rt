@@ -246,4 +246,3 @@ artifacts/training_runs/<run_id>/
 - `training/evalsets/eval_v1.jsonl` - Evaluation set
 - `training/eval_generate.py` - Generation script
 - `training/eval_report.py` - Report script
-

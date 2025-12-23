@@ -6,6 +6,59 @@ import App from './App'
 // Mock fetch globally
 global.fetch = vi.fn()
 
+// Shared helper to mock all 4 health fetches (API, Redi, UNGAR, Tunix)
+// M12: Updated to include Tunix health fetch
+const mockAllHealthFetches = () => {
+  (global.fetch as any)
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ status: 'healthy' }),
+    }) // API health
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ status: 'healthy' }),
+    }) // Redi health
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ available: false, version: null }),
+    }) // UNGAR status
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        available: false,
+        version: null,
+        runtime_required: false,
+        message: 'Tunix artifacts ready',
+      }),
+    }) // Tunix status (M12)
+}
+
+// Helper for tests where UNGAR is available
+const mockHealthFetchesWithUngarAvailable = () => {
+  (global.fetch as any)
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ status: 'healthy' }),
+    })
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ status: 'healthy' }),
+    })
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ available: true, version: '0.1.0' }),
+    })
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        available: false,
+        version: null,
+        runtime_required: false,
+        message: 'Ready',
+      }),
+    })
+}
+
 describe('App', () => {
   beforeEach(() => {
     vi.clearAllMocks()
@@ -17,20 +70,7 @@ describe('App', () => {
   })
 
   it('displays API healthy status', async () => {
-    // Mock all three health fetch calls (API, RediAI, UNGAR)
-    (global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
+    mockAllHealthFetches()
 
     render(<App />)
 
@@ -40,19 +80,7 @@ describe('App', () => {
   })
 
   it('displays RediAI healthy status', async () => {
-    (global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
+    mockAllHealthFetches()
 
     render(<App />)
 
@@ -75,6 +103,15 @@ describe('App', () => {
         ok: true,
         json: async () => ({ available: false, version: null }),
       })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          available: false,
+          version: null,
+          runtime_required: false,
+          message: 'Ready',
+        }),
+      })
 
     render(<App />)
 
@@ -90,6 +127,7 @@ describe('App', () => {
       .mockRejectedValueOnce(new Error('Network error'))
       .mockRejectedValueOnce(new Error('Network error'))
       .mockRejectedValueOnce(new Error('Network error'))
+      .mockRejectedValueOnce(new Error('Network error'))
 
     render(<App />)
 
@@ -102,20 +140,7 @@ describe('App', () => {
   it('populates textarea when Load Example is clicked', async () => {
     const user = userEvent.setup()
 
-    // Mock health checks (API, RediAI, UNGAR)
-    ;(global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
+    mockAllHealthFetches()
 
     render(<App />)
 
@@ -131,29 +156,18 @@ describe('App', () => {
     const user = userEvent.setup()
     const mockTraceId = '550e8400-e29b-41d4-a716-446655440000'
 
-    // Mock health checks (API, RediAI, UNGAR) + upload
-    ;(global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        status: 201,
-        json: async () => ({
-          id: mockTraceId,
-          created_at: '2025-12-21T10:30:00Z',
-          trace_version: '1.0',
-        }),
-      })
+    mockAllHealthFetches()
+
+    // Mock upload
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      status: 201,
+      json: async () => ({
+        id: mockTraceId,
+        created_at: '2025-12-21T10:30:00Z',
+        trace_version: '1.0',
+      }),
+    })
 
     render(<App />)
 
@@ -189,20 +203,10 @@ describe('App', () => {
       },
     }
 
-    // Mock health checks (API, RediAI, UNGAR) + upload + fetch
+    mockAllHealthFetches()
+
+    // Mock upload + fetch
     ;(global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
       .mockResolvedValueOnce({
         ok: true,
         status: 201,
@@ -281,24 +285,13 @@ describe('App', () => {
       },
     }
 
-    // Mock health checks (API, RediAI, UNGAR) + compare
-    ;(global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockCompareResponse,
-      })
+    mockAllHealthFetches()
+
+    // Mock compare
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockCompareResponse,
+    })
 
     render(<App />)
 
@@ -337,26 +330,15 @@ describe('App', () => {
     const baseTraceId = '550e8400-e29b-41d4-a716-446655440000'
     const otherTraceId = 'invalid-uuid'
 
-    // Mock health checks (API, RediAI, UNGAR) + failed compare
-    ;(global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
-      .mockResolvedValueOnce({
-        ok: false,
-        status: 404,
-        statusText: 'Not Found',
-        json: async () => ({ detail: 'Base trace not found' }),
-      })
+    mockAllHealthFetches()
+
+    // Mock failed compare
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: false,
+      status: 404,
+      statusText: 'Not Found',
+      json: async () => ({ detail: 'Base trace not found' }),
+    })
 
     render(<App />)
 
@@ -375,20 +357,7 @@ describe('App', () => {
   })
 
   it('disables compare button when trace IDs are missing', () => {
-    // Mock health checks (API, RediAI, UNGAR)
-    ;(global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
+    mockAllHealthFetches()
 
     render(<App />)
 
@@ -397,20 +366,7 @@ describe('App', () => {
   })
 
   it('displays UNGAR available status', async () => {
-    // Mock health checks with UNGAR available
-    ;(global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: true, version: '0.1.0' }),
-      })
+    mockHealthFetchesWithUngarAvailable()
 
     render(<App />)
 
@@ -432,25 +388,14 @@ describe('App', () => {
       ],
     }
 
-    // Mock health checks (API, RediAI, UNGAR available) + generate
-    ;(global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: true, version: '0.1.0' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        status: 201,
-        json: async () => mockGenerateResponse,
-      })
+    mockHealthFetchesWithUngarAvailable()
+
+    // Mock generate
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      status: 201,
+      json: async () => mockGenerateResponse,
+    })
 
     render(<App />)
 
@@ -471,26 +416,14 @@ describe('App', () => {
   it('displays error when UNGAR generation fails', async () => {
     const user = userEvent.setup()
 
-    // Mock health checks (API, RediAI, UNGAR available) + failed generate
-    ;(global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: true, version: '0.1.0' }),
-      })
-      .mockResolvedValueOnce({
-        ok: false,
-        status: 501,
-        statusText: 'Not Implemented',
-        json: async () => ({ detail: 'UNGAR not installed' }),
-      })
+    mockHealthFetchesWithUngarAvailable()
+
+    // Mock failed generate
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: false,
+      status: 501,
+      statusText: 'Not Implemented',
+    })
 
     render(<App />)
 
@@ -512,26 +445,14 @@ describe('App', () => {
   it('displays error when trace upload fails', async () => {
     const user = userEvent.setup()
 
-    // Mock health checks (API, RediAI, UNGAR) + failed upload
-    ;(global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
-      .mockResolvedValueOnce({
-        ok: false,
-        status: 422,
-        statusText: 'Unprocessable Entity',
-        json: async () => ({ detail: 'Invalid trace format' }),
-      })
+    mockAllHealthFetches()
+
+    // Mock failed upload
+    ;(global.fetch as any).mockResolvedValueOnce({
+      ok: false,
+      status: 422,
+      statusText: 'Unprocessable Entity',
+    })
 
     render(<App />)
 
@@ -553,20 +474,10 @@ describe('App', () => {
     const user = userEvent.setup()
     const mockTraceId = '550e8400-e29b-41d4-a716-446655440000'
 
-    // Mock health checks (API, RediAI, UNGAR) + upload success + fetch failure
+    mockAllHealthFetches()
+
+    // Mock upload success + fetch failure
     ;(global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
       .mockResolvedValueOnce({
         ok: true,
         status: 201,
@@ -580,7 +491,6 @@ describe('App', () => {
         ok: false,
         status: 404,
         statusText: 'Not Found',
-        json: async () => ({ detail: 'Trace not found' }),
       })
 
     render(<App />)
@@ -608,29 +518,7 @@ describe('App', () => {
 
   // Tunix Integration Tests (M12)
   it('displays Tunix status message', async () => {
-    // Mock all health calls including Tunix
-    (global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          available: false,
-          version: null,
-          runtime_required: false,
-          message: 'Tunix artifacts can be generated without Tunix runtime.',
-        }),
-      })
+    mockAllHealthFetches()
 
     render(<App />)
 
@@ -641,28 +529,7 @@ describe('App', () => {
   })
 
   it('displays runtime not required for Tunix', async () => {
-    (global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          available: false,
-          version: null,
-          runtime_required: false,
-          message: 'Tunix artifacts can be generated.',
-        }),
-      })
+    mockAllHealthFetches()
 
     render(<App />)
 
@@ -673,31 +540,15 @@ describe('App', () => {
   })
 
   it('exports Tunix JSONL when dataset key provided', async () => {
-    // Mock initial health calls (API, Redi, UNGAR, Tunix)
-    (global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          available: false,
-          version: null,
-          runtime_required: false,
-          message: 'Tunix artifacts ready',
-        }),
-      })
+    const user = userEvent.setup()
+    mockAllHealthFetches()
 
     render(<App />)
+
+    // Wait for health fetches to complete
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
+    })
 
     await waitFor(() => {
       expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
@@ -715,10 +566,10 @@ describe('App', () => {
 
     // Fill in dataset key and click export
     const datasetInput = screen.getByTestId('tunix:dataset-key') as HTMLInputElement
-    datasetInput.value = 'test-v1'
+    await user.type(datasetInput, 'test-v1')
 
     const exportButton = screen.getByTestId('tunix:export-btn')
-    exportButton.click()
+    await user.click(exportButton)
 
     await waitFor(() => {
       expect(global.URL.createObjectURL).toHaveBeenCalled()
@@ -726,31 +577,15 @@ describe('App', () => {
   })
 
   it('generates Tunix manifest successfully', async () => {
-    // Mock initial health calls (API, Redi, UNGAR, Tunix)
-    (global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          available: false,
-          version: null,
-          runtime_required: false,
-          message: 'Ready',
-        }),
-      })
+    const user = userEvent.setup()
+    mockAllHealthFetches()
 
     render(<App />)
+
+    // Wait for health fetches to complete
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
+    })
 
     await waitFor(() => {
       expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
@@ -770,10 +605,10 @@ describe('App', () => {
 
     // Fill in dataset key and click manifest button
     const datasetInput = screen.getByTestId('tunix:dataset-key') as HTMLInputElement
-    datasetInput.value = 'test-v1'
+    await user.type(datasetInput, 'test-v1')
 
     const manifestButton = screen.getByTestId('tunix:manifest-btn')
-    manifestButton.click()
+    await user.click(manifestButton)
 
     await waitFor(() => {
       expect(screen.getByTestId('tunix:manifest-result')).toBeInTheDocument()
@@ -783,31 +618,15 @@ describe('App', () => {
   })
 
   it('displays error when Tunix export fails', async () => {
-    // Mock initial health calls (API, Redi, UNGAR, Tunix)
-    (global.fetch as any)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ status: 'healthy' }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ available: false, version: null }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          available: false,
-          version: null,
-          runtime_required: false,
-          message: 'Ready',
-        }),
-      })
+    const user = userEvent.setup()
+    mockAllHealthFetches()
 
     render(<App />)
+
+    // Wait for health fetches to complete
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
+    })
 
     await waitFor(() => {
       expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
@@ -822,10 +641,10 @@ describe('App', () => {
 
     // Fill in dataset key and click export
     const datasetInput = screen.getByTestId('tunix:dataset-key') as HTMLInputElement
-    datasetInput.value = 'nonexistent-v1'
+    await user.type(datasetInput, 'nonexistent-v1')
 
     const exportButton = screen.getByTestId('tunix:export-btn')
-    exportButton.click()
+    await user.click(exportButton)
 
     await waitFor(() => {
       const errorElement = screen.getByTestId('tunix:error')

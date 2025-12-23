@@ -14,7 +14,7 @@
 2025-12-21T16:02:50.6337345Z [WebServer] INFO:     Waiting for application startup.
 2025-12-21T16:02:50.6338429Z [WebServer] INFO:     Application startup complete.
 2025-12-21T16:02:50.6339443Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-2025-12-21T16:02:51.5974924Z 
+2025-12-21T16:02:51.5974924Z
 2025-12-21T16:02:51.6001683Z Running 5 tests using 1 worker
 2025-12-21T16:02:53.0127475Z [WebServer] [2m4:02:53 PM[22m [31m[1m[vite][22m[39m [31mhttp proxy error: /api/health[39m
 2025-12-21T16:02:53.0150866Z [WebServer] Error: connect ECONNREFUSED ::1:8000
@@ -110,91 +110,91 @@
 2025-12-21T16:03:07.7568498Z [WebServer] Error: connect ECONNREFUSED ::1:8000
 2025-12-21T16:03:07.7579923Z [WebServer]     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
 2025-12-21T16:03:12.8715718Z ····××F
-2025-12-21T16:03:12.8724510Z 
-2025-12-21T16:03:12.8744074Z   1) [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace 
-2025-12-21T16:03:12.8751306Z 
+2025-12-21T16:03:12.8724510Z
+2025-12-21T16:03:12.8744074Z   1) [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace
+2025-12-21T16:03:12.8751306Z
 2025-12-21T16:03:12.8752018Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
-2025-12-21T16:03:12.8752534Z 
+2025-12-21T16:03:12.8752534Z
 2025-12-21T16:03:12.8752758Z     Locator: locator('.trace-success')
 2025-12-21T16:03:12.8753239Z     Expected: visible
 2025-12-21T16:03:12.8753615Z     Timeout: 5000ms
 2025-12-21T16:03:12.8754053Z     Error: element(s) not found
-2025-12-21T16:03:12.8754326Z 
+2025-12-21T16:03:12.8754326Z
 2025-12-21T16:03:12.8754465Z     Call log:
 2025-12-21T16:03:12.8755169Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
 2025-12-21T16:03:12.8755898Z     [2m  - waiting for locator('.trace-success')[22m
-2025-12-21T16:03:12.8756525Z 
-2025-12-21T16:03:12.8756540Z 
+2025-12-21T16:03:12.8756525Z
+2025-12-21T16:03:12.8756540Z
 2025-12-21T16:03:12.8756824Z       67 |     // Wait for success message with trace ID
 2025-12-21T16:03:12.8757512Z       68 |     const successMessage = page.locator('.trace-success');
 2025-12-21T16:03:12.8758300Z     > 69 |     await expect(successMessage).toBeVisible({ timeout: 5000 });
 2025-12-21T16:03:12.8759375Z          |                                  ^
 2025-12-21T16:03:12.8760106Z       70 |     await expect(successMessage).toContainText('Trace uploaded with ID:');
-2025-12-21T16:03:12.8760742Z       71 |     
+2025-12-21T16:03:12.8760742Z       71 |
 2025-12-21T16:03:12.8761137Z       72 |     // Click fetch button
 2025-12-21T16:03:12.8761844Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:69:34
-2025-12-21T16:03:12.8762355Z 
+2025-12-21T16:03:12.8762355Z
 2025-12-21T16:03:12.8763144Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium/error-context.md
-2025-12-21T16:03:12.8763997Z 
+2025-12-21T16:03:12.8763997Z
 2025-12-21T16:03:12.8764669Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T16:03:12.8765129Z 
+2025-12-21T16:03:12.8765129Z
 2025-12-21T16:03:12.8765775Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
-2025-12-21T16:03:12.8766563Z 
+2025-12-21T16:03:12.8766563Z
 2025-12-21T16:03:12.8766832Z     Locator: locator('.trace-success')
 2025-12-21T16:03:12.8767299Z     Expected: visible
 2025-12-21T16:03:12.8767656Z     Timeout: 5000ms
 2025-12-21T16:03:12.8768061Z     Error: element(s) not found
-2025-12-21T16:03:12.8768334Z 
+2025-12-21T16:03:12.8768334Z
 2025-12-21T16:03:12.8768470Z     Call log:
 2025-12-21T16:03:12.8769090Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
 2025-12-21T16:03:12.8769840Z     [2m  - waiting for locator('.trace-success')[22m
-2025-12-21T16:03:12.8770567Z 
-2025-12-21T16:03:12.8770582Z 
+2025-12-21T16:03:12.8770567Z
+2025-12-21T16:03:12.8770582Z
 2025-12-21T16:03:12.8770846Z       67 |     // Wait for success message with trace ID
 2025-12-21T16:03:12.8771522Z       68 |     const successMessage = page.locator('.trace-success');
 2025-12-21T16:03:12.8772319Z     > 69 |     await expect(successMessage).toBeVisible({ timeout: 5000 });
 2025-12-21T16:03:12.8772984Z          |                                  ^
 2025-12-21T16:03:12.8773706Z       70 |     await expect(successMessage).toContainText('Trace uploaded with ID:');
-2025-12-21T16:03:12.8774328Z       71 |     
+2025-12-21T16:03:12.8774328Z       71 |
 2025-12-21T16:03:12.8774736Z       72 |     // Click fetch button
 2025-12-21T16:03:12.8775431Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:69:34
-2025-12-21T16:03:12.8775928Z 
+2025-12-21T16:03:12.8775928Z
 2025-12-21T16:03:12.8777024Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/error-context.md
-2025-12-21T16:03:12.8777916Z 
+2025-12-21T16:03:12.8777916Z
 2025-12-21T16:03:12.8778682Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
 2025-12-21T16:03:12.8779953Z     test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
 2025-12-21T16:03:12.8780753Z     Usage:
-2025-12-21T16:03:12.8780899Z 
+2025-12-21T16:03:12.8780899Z
 2025-12-21T16:03:12.8781706Z         npx playwright show-trace test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
-2025-12-21T16:03:12.8782553Z 
+2025-12-21T16:03:12.8782553Z
 2025-12-21T16:03:12.8783099Z     ────────────────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T16:03:12.8783495Z 
+2025-12-21T16:03:12.8783495Z
 2025-12-21T16:03:12.8784062Z     Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T16:03:12.8784457Z 
+2025-12-21T16:03:12.8784457Z
 2025-12-21T16:03:12.8784997Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
-2025-12-21T16:03:12.8785480Z 
+2025-12-21T16:03:12.8785480Z
 2025-12-21T16:03:12.8785682Z     Locator: locator('.trace-success')
 2025-12-21T16:03:12.8786309Z     Expected: visible
 2025-12-21T16:03:12.8786670Z     Timeout: 5000ms
 2025-12-21T16:03:12.8787072Z     Error: element(s) not found
-2025-12-21T16:03:12.8787337Z 
+2025-12-21T16:03:12.8787337Z
 2025-12-21T16:03:12.8787471Z     Call log:
 2025-12-21T16:03:12.8788092Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
 2025-12-21T16:03:12.8788882Z     [2m  - waiting for locator('.trace-success')[22m
-2025-12-21T16:03:12.8789274Z 
-2025-12-21T16:03:12.8789288Z 
+2025-12-21T16:03:12.8789274Z
+2025-12-21T16:03:12.8789288Z
 2025-12-21T16:03:12.8789581Z       67 |     // Wait for success message with trace ID
 2025-12-21T16:03:12.8790298Z       68 |     const successMessage = page.locator('.trace-success');
 2025-12-21T16:03:12.8791359Z     > 69 |     await expect(successMessage).toBeVisible({ timeout: 5000 });
 2025-12-21T16:03:12.8792000Z          |                                  ^
 2025-12-21T16:03:12.8792741Z       70 |     await expect(successMessage).toContainText('Trace uploaded with ID:');
-2025-12-21T16:03:12.8793378Z       71 |     
+2025-12-21T16:03:12.8793378Z       71 |
 2025-12-21T16:03:12.8793764Z       72 |     // Click fetch button
 2025-12-21T16:03:12.8794876Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:69:34
-2025-12-21T16:03:12.8795364Z 
+2025-12-21T16:03:12.8795364Z
 2025-12-21T16:03:12.8796557Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry2/error-context.md
-2025-12-21T16:03:12.8797462Z 
+2025-12-21T16:03:12.8797462Z
 2025-12-21T16:03:12.8797608Z   1 failed
-2025-12-21T16:03:12.8798645Z     [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace 
+2025-12-21T16:03:12.8798645Z     [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace
 2025-12-21T16:03:12.8799522Z   4 passed (23.7s)
 2025-12-21T16:03:12.9210741Z ##[error]Process completed with exit code 1.

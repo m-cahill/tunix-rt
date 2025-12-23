@@ -147,4 +147,3 @@ These thresholds should be reviewed if:
 - pytest-cov branch coverage: https://pytest-cov.readthedocs.io/en/latest/config.html
 - Coverage.py branch measurement: https://coverage.readthedocs.io/en/latest/branch.html
 - Google Testing Blog on branch coverage: https://testing.googleblog.com/2020/08/code-coverage-best-practices.html
-

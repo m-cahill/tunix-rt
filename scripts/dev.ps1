@@ -149,9 +149,8 @@ switch ($Target.ToLower()) {
     "build-frontend" { Build-Frontend }
     "clean" { Clear-Generated }
     "help" { Show-Help }
-    default { 
+    default {
         Write-Host "Unknown command: $Target" -ForegroundColor Red
         Show-Help
     }
 }
-

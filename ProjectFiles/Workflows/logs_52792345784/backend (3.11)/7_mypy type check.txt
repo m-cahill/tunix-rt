@@ -1,0 +1,16 @@
+﻿2025-12-22T03:42:50.8164095Z ##[group]Run mypy tunix_rt_backend
+2025-12-22T03:42:50.8164411Z [36;1mmypy tunix_rt_backend[0m
+2025-12-22T03:42:50.8199181Z shell: /usr/bin/bash -e {0}
+2025-12-22T03:42:50.8199417Z env:
+2025-12-22T03:42:50.8199659Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T03:42:50.8200098Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-22T03:42:50.8200492Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T03:42:50.8200832Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T03:42:50.8201176Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-22T03:42:50.8201514Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-22T03:42:50.8201799Z ##[endgroup]
+2025-12-22T03:42:59.5705456Z tunix_rt_backend/services/datasets_export.py:72: error: Missing type parameters for generic type "dict"  [type-arg]
+2025-12-22T03:42:59.5710356Z tunix_rt_backend/services/datasets_export.py:95: error: Missing type parameters for generic type "dict"  [type-arg]
+2025-12-22T03:42:59.5711708Z tunix_rt_backend/services/datasets_export.py:128: error: Missing type parameters for generic type "dict"  [type-arg]
+2025-12-22T03:42:59.6177528Z Found 3 errors in 1 file (checked 28 source files)
+2025-12-22T03:42:59.6627947Z ##[error]The operation was canceled.

@@ -14,16 +14,16 @@
 2025-12-21T19:03:30.0042370Z tests/test_traces.py::test_create_trace_oversized_payload
 2025-12-21T19:03:30.0043842Z   /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/fastapi/dependencies/utils.py:676: DeprecationWarning: 'HTTP_413_REQUEST_ENTITY_TOO_LARGE' is deprecated. Use 'HTTP_413_CONTENT_TOO_LARGE' instead.
 2025-12-21T19:03:30.0045413Z     solved = await call(**solved_result.values)
-2025-12-21T19:03:30.0045716Z 
+2025-12-21T19:03:30.0045716Z
 2025-12-21T19:03:30.0045940Z tests/test_traces.py::test_list_traces_invalid_limit
 2025-12-21T19:03:30.0046471Z tests/test_traces.py::test_list_traces_negative_offset
 2025-12-21T19:03:30.0047748Z   /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/fastapi/routing.py:312: DeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
 2025-12-21T19:03:30.0049005Z     return await dependant.call(**values)
-2025-12-21T19:03:30.0049281Z 
+2025-12-21T19:03:30.0049281Z
 2025-12-21T19:03:30.0049572Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 2025-12-21T19:03:30.0050180Z ================================ tests coverage ================================
 2025-12-21T19:03:30.0050759Z _______________ coverage: platform linux, python 3.11.14-final-0 _______________
-2025-12-21T19:03:30.0051159Z 
+2025-12-21T19:03:30.0051159Z
 2025-12-21T19:03:30.0051336Z Name                                     Stmts   Miss Branch BrPart  Cover
 2025-12-21T19:03:30.0051841Z --------------------------------------------------------------------------
 2025-12-21T19:03:30.0052412Z tunix_rt_backend/__init__.py                 1      0      0      0   100%

@@ -15,41 +15,41 @@
         }
     </style>
 </head>
-    
+
 <body>
 <div class='wrapper'>
     <div class='pad1'>
         <h1><a href="../index.html">All files</a> / <a href="index.html">src</a> App.tsx</h1>
         <div class='clearfix'>
-            
+
             <div class='fl pad1y space-right2'>
                 <span class="strong">71.85% </span>
                 <span class="quiet">Statements</span>
                 <span class='fraction'>143/199</span>
             </div>
-        
-            
+
+
             <div class='fl pad1y space-right2'>
                 <span class="strong">78.57% </span>
                 <span class="quiet">Branches</span>
                 <span class='fraction'>22/28</span>
             </div>
-        
-            
+
+
             <div class='fl pad1y space-right2'>
                 <span class="strong">42.85% </span>
                 <span class="quiet">Functions</span>
                 <span class='fraction'>3/7</span>
             </div>
-        
-            
+
+
             <div class='fl pad1y space-right2'>
                 <span class="strong">71.85% </span>
                 <span class="quiet">Lines</span>
                 <span class='fraction'>143/199</span>
             </div>
-        
-            
+
+
         </div>
         <p class="quiet">
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
@@ -464,12 +464,12 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect, useState } from 'react'
-import { 
-  getApiHealth, 
-  getRediHealth, 
+import {
+  getApiHealth,
+  getRediHealth,
   createTrace,
   getTrace,
-  type HealthResponse, 
+  type HealthResponse,
   type RediHealthResponse,
   type TraceDetail,
   ApiError,
@@ -480,7 +480,7 @@ function App() {
   const [apiHealth, setApiHealth] = useState&lt;HealthResponse | null&gt;(null)
   const [rediHealth, setRediHealth] = useState&lt;RediHealthResponse | null&gt;(null)
   const [loading, setLoading] = useState(true)
-  
+
   // Trace state
   const [traceInput, setTraceInput] = useState('')
   const [uploadedTraceId, setUploadedTraceId] = useState&lt;string | null&gt;(null)
@@ -491,7 +491,7 @@ function App() {
   useEffect(() =&gt; {
     const fetchHealth = async () =&gt; {
       setLoading(true)
-      
+
       try {
         // Fetch API health
         const apiData = await getApiHealth()
@@ -614,7 +614,7 @@ function App() {
 &nbsp;
       &lt;div className="trace-section"&gt;
         &lt;h2&gt;Reasoning Traces&lt;/h2&gt;
-        
+
         &lt;div className="trace-input"&gt;
           &lt;label htmlFor="trace-json"&gt;Trace JSON:&lt;/label&gt;
           &lt;textarea
@@ -624,7 +624,7 @@ function App() {
             placeholder="Enter trace JSON here or click 'Load Example'"
             rows={10}
           /&gt;
-          
+
           &lt;div className="trace-actions"&gt;
             &lt;button onClick={handleLoadExample} disabled={traceLoading}&gt;
               Load Example
@@ -682,4 +682,3 @@ export default App
         <script src="../block-navigation.js"></script>
     </body>
 </html>
-    

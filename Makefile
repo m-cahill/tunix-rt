@@ -101,4 +101,3 @@ clean:  ## Clean generated files
 	cd backend && rm -rf *.egg-info dist build coverage.json .coverage 2>/dev/null || true
 	cd frontend && rm -rf dist node_modules/.cache 2>/dev/null || true
 	cd e2e && rm -rf playwright-report test-results 2>/dev/null || true
-

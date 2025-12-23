@@ -279,7 +279,7 @@
 2025-12-21T19:27:25.4632795Z   Stored in directory: /tmp/pip-ephem-wheel-cache-lpknugzx/wheels/ca/82/26/1257064f2ccacab10a6c1673d369503c6cf47642032a94cd53
 2025-12-21T19:27:25.4652537Z Successfully built tunix-rt-backend
 2025-12-21T19:27:25.5402889Z Installing collected packages: websockets, uvloop, typing-extensions, ruff, pyyaml, python-dotenv, pygments, pluggy, pathspec, packaging, mypy_extensions, MarkupSafe, librt, iniconfig, idna, httptools, h11, greenlet, coverage, click, certifi, asyncpg, annotated-types, annotated-doc, aiosqlite, uvicorn, typing-inspection, sqlalchemy, pytest, pydantic-core, mypy, Mako, httpcore, anyio, watchfiles, starlette, pytest-cov, pytest-asyncio, pydantic, httpx, alembic, pydantic-settings, fastapi, tunix-rt-backend
-2025-12-21T19:27:31.4134006Z 
+2025-12-21T19:27:31.4134006Z
 2025-12-21T19:27:31.4181673Z Successfully installed Mako-1.3.10 MarkupSafe-3.0.3 aiosqlite-0.22.0 alembic-1.17.2 annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.0 asyncpg-0.31.0 certifi-2025.11.12 click-8.3.1 coverage-7.13.0 fastapi-0.127.0 greenlet-3.3.0 h11-0.16.0 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 idna-3.11 iniconfig-2.3.0 librt-0.7.4 mypy-1.19.1 mypy_extensions-1.1.0 packaging-25.0 pathspec-0.12.1 pluggy-1.6.0 pydantic-2.12.5 pydantic-core-2.41.5 pydantic-settings-2.12.0 pygments-2.19.2 pytest-9.0.2 pytest-asyncio-1.3.0 pytest-cov-7.0.0 python-dotenv-1.2.1 pyyaml-6.0.3 ruff-0.14.10 sqlalchemy-2.0.45 starlette-0.50.0 tunix-rt-backend-0.1.0 typing-extensions-4.15.0 typing-inspection-0.4.2 uvicorn-0.40.0 uvloop-0.22.1 watchfiles-1.1.1 websockets-15.0.1
 2025-12-21T19:27:31.9713322Z ##[group]Run ruff check .
 2025-12-21T19:27:31.9713587Z [36;1mruff check .[0m
@@ -333,21 +333,21 @@
 2025-12-21T19:27:46.5957425Z tests/test_scoring.py::TestCompareEndpoint::test_compare_with_invalid_uuid_format
 2025-12-21T19:27:46.5958765Z   /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/asyncio/events.py:88: DeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
 2025-12-21T19:27:46.5959922Z     self._context.run(self._callback, *self._args)
-2025-12-21T19:27:46.5960209Z 
+2025-12-21T19:27:46.5960209Z
 2025-12-21T19:27:46.5960431Z tests/test_traces.py::test_create_trace_oversized_payload
 2025-12-21T19:27:46.5961715Z   /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/fastapi/dependencies/utils.py:676: DeprecationWarning: 'HTTP_413_REQUEST_ENTITY_TOO_LARGE' is deprecated. Use 'HTTP_413_CONTENT_TOO_LARGE' instead.
 2025-12-21T19:27:46.5962962Z     solved = await call(**solved_result.values)
-2025-12-21T19:27:46.5963493Z 
+2025-12-21T19:27:46.5963493Z
 2025-12-21T19:27:46.5963884Z tests/test_traces.py::test_list_traces_invalid_limit
 2025-12-21T19:27:46.5964573Z tests/test_traces.py::test_list_traces_negative_offset
 2025-12-21T19:27:46.5969347Z tests/test_traces.py::test_list_traces_with_zero_limit
 2025-12-21T19:27:46.5971063Z   /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/fastapi/routing.py:312: DeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
 2025-12-21T19:27:46.5973794Z     return await dependant.call(**values)
-2025-12-21T19:27:46.5974064Z 
+2025-12-21T19:27:46.5974064Z
 2025-12-21T19:27:46.5974354Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 2025-12-21T19:27:46.5974977Z ================================ tests coverage ================================
 2025-12-21T19:27:46.5975525Z _______________ coverage: platform linux, python 3.12.12-final-0 _______________
-2025-12-21T19:27:46.5976129Z 
+2025-12-21T19:27:46.5976129Z
 2025-12-21T19:27:46.5976322Z Name                                     Stmts   Miss Branch BrPart  Cover
 2025-12-21T19:27:46.5976800Z --------------------------------------------------------------------------
 2025-12-21T19:27:46.5977369Z tunix_rt_backend/__init__.py                 1      0      0      0   100%

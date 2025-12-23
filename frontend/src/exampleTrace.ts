@@ -40,4 +40,3 @@ export const EXAMPLE_TRACE: ReasoningTrace = {
     tags: ['temperature', 'conversion', 'fahrenheit', 'celsius'],
   },
 }
-

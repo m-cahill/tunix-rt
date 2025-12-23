@@ -709,4 +709,3 @@ ls coverage/  # Should show coverage-summary.json, index.html, etc.
 ---
 
 **END OF M2 AUDIT**
-

@@ -15,71 +15,71 @@
 2025-12-21T20:04:21.3472223Z [WebServer] INFO:     Waiting for application startup.
 2025-12-21T20:04:21.3473264Z [WebServer] INFO:     Application startup complete.
 2025-12-21T20:04:21.3474185Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-2025-12-21T20:04:22.0516231Z 
+2025-12-21T20:04:22.0516231Z
 2025-12-21T20:04:22.0517225Z Running 6 tests using 1 worker
 2025-12-21T20:04:29.3606940Z ·····×F
-2025-12-21T20:04:29.3611426Z 
-2025-12-21T20:04:29.3612432Z   1) [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them 
-2025-12-21T20:04:29.3613181Z 
+2025-12-21T20:04:29.3611426Z
+2025-12-21T20:04:29.3612432Z   1) [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them
+2025-12-21T20:04:29.3613181Z
 2025-12-21T20:04:29.3613873Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
-2025-12-21T20:04:29.3614482Z 
+2025-12-21T20:04:29.3614482Z
 2025-12-21T20:04:29.3614987Z     Locator: locator('text=Explain the process of photosynthesis in plants')
 2025-12-21T20:04:29.3615947Z     Expected: visible
 2025-12-21T20:04:29.3616877Z     Error: strict mode violation: locator('text=Explain the process of photosynthesis in plants') resolved to 2 elements:
 2025-12-21T20:04:29.3621476Z         1) <textarea rows="10" id="trace-json" placeholder="Enter trace JSON here or click 'Load Example'">{"trace_version":"1.0","prompt":"Explain the proc…</textarea> aka getByRole('textbox', { name: 'Trace JSON:' })
 2025-12-21T20:04:29.3624269Z         2) <p>Explain the process of photosynthesis in plants</p> aka getByText('Explain the process of photosynthesis in plants', { exact: true })
-2025-12-21T20:04:29.3625148Z 
+2025-12-21T20:04:29.3625148Z
 2025-12-21T20:04:29.3625613Z     Call log:
 2025-12-21T20:04:29.3626279Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
 2025-12-21T20:04:29.3627257Z     [2m  - waiting for locator('text=Explain the process of photosynthesis in plants')[22m
-2025-12-21T20:04:29.3627835Z 
-2025-12-21T20:04:29.3627849Z 
+2025-12-21T20:04:29.3627835Z
+2025-12-21T20:04:29.3627849Z
 2025-12-21T20:04:29.3628124Z       187 |     // Verify trace content is displayed
 2025-12-21T20:04:29.3628871Z       188 |     await expect(page.locator('text=What is 2 + 2?')).toBeVisible();
 2025-12-21T20:04:29.3629986Z     > 189 |     await expect(page.locator('text=Explain the process of photosynthesis in plants')).toBeVisible();
 2025-12-21T20:04:29.3630964Z           |                                                                                        ^
-2025-12-21T20:04:29.3631486Z       190 |     
+2025-12-21T20:04:29.3631486Z       190 |
 2025-12-21T20:04:29.3631911Z       191 |     // Verify steps are listed
 2025-12-21T20:04:29.3632632Z       192 |     await expect(page.locator('text=Add 2 and 2')).toBeVisible();
 2025-12-21T20:04:29.3633531Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:189:88
-2025-12-21T20:04:29.3634061Z 
+2025-12-21T20:04:29.3634061Z
 2025-12-21T20:04:29.3634946Z     Error Context: test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium/error-context.md
-2025-12-21T20:04:29.3636089Z 
+2025-12-21T20:04:29.3636089Z
 2025-12-21T20:04:29.3636784Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T20:04:29.3637269Z 
+2025-12-21T20:04:29.3637269Z
 2025-12-21T20:04:29.3637938Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
-2025-12-21T20:04:29.3638888Z 
+2025-12-21T20:04:29.3638888Z
 2025-12-21T20:04:29.3639344Z     Locator: locator('text=Explain the process of photosynthesis in plants')
 2025-12-21T20:04:29.3640014Z     Expected: visible
 2025-12-21T20:04:29.3641493Z     Error: strict mode violation: locator('text=Explain the process of photosynthesis in plants') resolved to 2 elements:
 2025-12-21T20:04:29.3643842Z         1) <textarea rows="10" id="trace-json" placeholder="Enter trace JSON here or click 'Load Example'">{"trace_version":"1.0","prompt":"Explain the proc…</textarea> aka getByRole('textbox', { name: 'Trace JSON:' })
 2025-12-21T20:04:29.3646254Z         2) <p>Explain the process of photosynthesis in plants</p> aka getByText('Explain the process of photosynthesis in plants', { exact: true })
-2025-12-21T20:04:29.3647130Z 
+2025-12-21T20:04:29.3647130Z
 2025-12-21T20:04:29.3647272Z     Call log:
 2025-12-21T20:04:29.3647871Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
 2025-12-21T20:04:29.3648858Z     [2m  - waiting for locator('text=Explain the process of photosynthesis in plants')[22m
-2025-12-21T20:04:29.3649445Z 
-2025-12-21T20:04:29.3649459Z 
+2025-12-21T20:04:29.3649445Z
+2025-12-21T20:04:29.3649459Z
 2025-12-21T20:04:29.3649723Z       187 |     // Verify trace content is displayed
 2025-12-21T20:04:29.3650460Z       188 |     await expect(page.locator('text=What is 2 + 2?')).toBeVisible();
 2025-12-21T20:04:29.3651535Z     > 189 |     await expect(page.locator('text=Explain the process of photosynthesis in plants')).toBeVisible();
 2025-12-21T20:04:29.3652484Z           |                                                                                        ^
-2025-12-21T20:04:29.3652957Z       190 |     
+2025-12-21T20:04:29.3652957Z       190 |
 2025-12-21T20:04:29.3653348Z       191 |     // Verify steps are listed
 2025-12-21T20:04:29.3654019Z       192 |     await expect(page.locator('text=Add 2 and 2')).toBeVisible();
 2025-12-21T20:04:29.3654868Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:189:88
-2025-12-21T20:04:29.3655571Z 
+2025-12-21T20:04:29.3655571Z
 2025-12-21T20:04:29.3656523Z     Error Context: test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/error-context.md
-2025-12-21T20:04:29.3657548Z 
+2025-12-21T20:04:29.3657548Z
 2025-12-21T20:04:29.3658299Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
 2025-12-21T20:04:29.3659684Z     test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/trace.zip
 2025-12-21T20:04:29.3660675Z     Usage:
-2025-12-21T20:04:29.3660860Z 
+2025-12-21T20:04:29.3660860Z
 2025-12-21T20:04:29.3661855Z         npx playwright show-trace test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/trace.zip
-2025-12-21T20:04:29.3662877Z 
+2025-12-21T20:04:29.3662877Z
 2025-12-21T20:04:29.3663551Z     ────────────────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T20:04:29.3663990Z 
+2025-12-21T20:04:29.3663990Z
 2025-12-21T20:04:29.3664132Z   1 failed
-2025-12-21T20:04:29.3665174Z     [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them 
+2025-12-21T20:04:29.3665174Z     [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them
 2025-12-21T20:04:29.3666352Z   5 passed (8.8s)
 2025-12-21T20:04:29.4131851Z ##[error]Process completed with exit code 1.

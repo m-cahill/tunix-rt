@@ -238,4 +238,3 @@ Ensure you've built a dataset first using `POST /api/datasets/build`.
 - `docs/M09_EVAL_LOOP.md` - Evaluation workflow details
 - `docs/M09_DATASET_FORMAT.md` - Dataset format specification
 - `backend/training/` - Training library code (schemas, renderers)
-

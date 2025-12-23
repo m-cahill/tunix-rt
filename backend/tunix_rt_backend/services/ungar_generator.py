@@ -21,10 +21,10 @@ from tunix_rt_backend.schemas import ReasoningTrace, UngarGenerateRequest, Ungar
 
 def check_ungar_status() -> UngarStatusResponse:
     """Check UNGAR availability and version.
-    
+
     Returns:
         UngarStatusResponse with availability status and version (if available)
-    
+
     Note:
         This function uses lazy imports to avoid errors when UNGAR is not installed.
     """
@@ -44,16 +44,16 @@ async def generate_high_card_duel_traces(
     db: AsyncSession,
 ) -> tuple[list[uuid.UUID], list[dict[str, Any]]]:
     """Generate High Card Duel traces from UNGAR episodes.
-    
+
     Args:
         request: Generation parameters (count, seed, persist)
         db: Database session for persisting traces
-    
+
     Returns:
         Tuple of (trace_ids, preview) where:
         - trace_ids: List of created trace UUIDs
         - preview: List of preview dictionaries for first 3 traces
-    
+
     Raises:
         ValueError: If UNGAR is not installed
     """
@@ -107,15 +107,15 @@ async def export_high_card_duel_jsonl(
     trace_ids_str: str | None = None,
 ) -> str:
     """Export High Card Duel traces in JSONL format (Tunix-friendly).
-    
+
     Args:
         db: Database session
         limit: Maximum number of traces to export (default 100)
         trace_ids_str: Comma-separated list of trace IDs to export (optional)
-    
+
     Returns:
         JSONL string with one trace per line
-    
+
     Note:
         If trace_ids_str is provided, only those traces are exported.
         Otherwise, exports the most recent traces with source="ungar" up to limit.
@@ -163,4 +163,3 @@ async def export_high_card_duel_jsonl(
 
     # Return as NDJSON string
     return "\n".join(lines) + "\n" if lines else ""
-

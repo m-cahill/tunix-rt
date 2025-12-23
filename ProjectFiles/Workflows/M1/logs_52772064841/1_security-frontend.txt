@@ -138,17 +138,17 @@
 2025-12-21T16:01:55.3974033Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
 2025-12-21T16:01:55.4054363Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
 2025-12-21T16:01:56.9404733Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
-2025-12-21T16:01:57.2338376Z 
+2025-12-21T16:01:57.2338376Z
 2025-12-21T16:01:57.2339454Z added 392 packages, and audited 393 packages in 4s
-2025-12-21T16:01:57.2339958Z 
+2025-12-21T16:01:57.2339958Z
 2025-12-21T16:01:57.2340316Z 115 packages are looking for funding
 2025-12-21T16:01:57.2340866Z   run `npm fund` for details
-2025-12-21T16:01:57.2596565Z 
+2025-12-21T16:01:57.2596565Z
 2025-12-21T16:01:57.2601775Z 4 moderate severity vulnerabilities
-2025-12-21T16:01:57.2614570Z 
+2025-12-21T16:01:57.2614570Z
 2025-12-21T16:01:57.2615492Z To address all issues (including breaking changes), run:
 2025-12-21T16:01:57.2616441Z   npm audit fix --force
-2025-12-21T16:01:57.2616884Z 
+2025-12-21T16:01:57.2616884Z
 2025-12-21T16:01:57.2617094Z Run `npm audit` for details.
 2025-12-21T16:01:57.2969162Z ##[group]Run npm audit --json > npm-audit-report.json || true
 2025-12-21T16:01:57.2969677Z [36;1mnpm audit --json > npm-audit-report.json || true[0m
@@ -156,7 +156,7 @@
 2025-12-21T16:01:57.3003201Z shell: /usr/bin/bash -e {0}
 2025-12-21T16:01:57.3003450Z ##[endgroup]
 2025-12-21T16:01:59.2699530Z # npm audit report
-2025-12-21T16:01:59.2700379Z 
+2025-12-21T16:01:59.2700379Z
 2025-12-21T16:01:59.2700986Z esbuild  <=0.24.2
 2025-12-21T16:01:59.2701389Z Severity: moderate
 2025-12-21T16:01:59.2702484Z esbuild enables any website to send any requests to the development server and read the response - https://github.com/advisories/GHSA-67mh-4wv8-2f99
@@ -173,9 +173,9 @@
 2025-12-21T16:01:59.2709216Z       Depends on vulnerable versions of vite
 2025-12-21T16:01:59.2709781Z       Depends on vulnerable versions of vite-node
 2025-12-21T16:01:59.2710295Z       node_modules/vitest
-2025-12-21T16:01:59.2710551Z 
+2025-12-21T16:01:59.2710551Z
 2025-12-21T16:01:59.2710795Z 4 moderate severity vulnerabilities
-2025-12-21T16:01:59.2711097Z 
+2025-12-21T16:01:59.2711097Z
 2025-12-21T16:01:59.2711468Z To address all issues (including breaking changes), run:
 2025-12-21T16:01:59.2712053Z   npm audit fix --force
 2025-12-21T16:01:59.2911065Z ##[group]Run actions/upload-artifact@v4

@@ -14,13 +14,13 @@
 2025-12-21T16:01:39.6610538Z event type: push
 2025-12-21T16:01:39.6616192Z gitleaks cmd: gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=--no-merges --first-parent 7e4f996460421dc77e0243c61c15d5f65a3ba8b8^..c7c861aba359d55fc22ad483753fc6f173525424
 2025-12-21T16:01:39.6633257Z [command]/tmp/gitleaks-8.24.3/gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=--no-merges --first-parent 7e4f996460421dc77e0243c61c15d5f65a3ba8b8^..c7c861aba359d55fc22ad483753fc6f173525424
-2025-12-21T16:01:39.9412695Z 
+2025-12-21T16:01:39.9412695Z
 2025-12-21T16:01:39.9417683Z     ○
 2025-12-21T16:01:39.9418388Z     │╲
 2025-12-21T16:01:39.9419054Z     │ ○
 2025-12-21T16:01:39.9419560Z     ○ ░
 2025-12-21T16:01:39.9420045Z     ░    gitleaks
-2025-12-21T16:01:39.9420393Z 
+2025-12-21T16:01:39.9420393Z
 2025-12-21T16:01:39.9421130Z [90m4:01PM[0m DBG using github.com/wasilibs/go-re2 regex engine
 2025-12-21T16:01:39.9422249Z [90m4:01PM[0m DBG no gitleaks config found in path .gitleaks.toml, using default gitleaks config
 2025-12-21T16:01:40.0906834Z [90m4:01PM[0m DBG executing: /usr/bin/git -C . log -p -U0 --no-merges --first-parent 7e4f996460421dc77e0243c61c15d5f65a3ba8b8^..c7c861aba359d55fc22ad483753fc6f173525424

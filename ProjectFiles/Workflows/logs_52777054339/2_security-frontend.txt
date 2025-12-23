@@ -138,17 +138,17 @@
 2025-12-21T19:03:11.2138174Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
 2025-12-21T19:03:11.2196458Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
 2025-12-21T19:03:12.3903927Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
-2025-12-21T19:03:12.6203559Z 
+2025-12-21T19:03:12.6203559Z
 2025-12-21T19:03:12.6204638Z added 406 packages, and audited 407 packages in 3s
-2025-12-21T19:03:12.6212740Z 
+2025-12-21T19:03:12.6212740Z
 2025-12-21T19:03:12.6215948Z 117 packages are looking for funding
 2025-12-21T19:03:12.6216735Z   run `npm fund` for details
-2025-12-21T19:03:12.6438286Z 
+2025-12-21T19:03:12.6438286Z
 2025-12-21T19:03:12.6441050Z 5 moderate severity vulnerabilities
-2025-12-21T19:03:12.6445760Z 
+2025-12-21T19:03:12.6445760Z
 2025-12-21T19:03:12.6447131Z To address all issues (including breaking changes), run:
 2025-12-21T19:03:12.6448124Z   npm audit fix --force
-2025-12-21T19:03:12.6448524Z 
+2025-12-21T19:03:12.6448524Z
 2025-12-21T19:03:12.6448936Z Run `npm audit` for details.
 2025-12-21T19:03:12.6631309Z ##[group]Run npm audit --json > npm-audit-report.json || true
 2025-12-21T19:03:12.6632009Z [36;1mnpm audit --json > npm-audit-report.json || true[0m
@@ -156,7 +156,7 @@
 2025-12-21T19:03:12.6655432Z shell: /usr/bin/bash -e {0}
 2025-12-21T19:03:12.6655691Z ##[endgroup]
 2025-12-21T19:03:14.4524937Z # npm audit report
-2025-12-21T19:03:14.4531841Z 
+2025-12-21T19:03:14.4531841Z
 2025-12-21T19:03:14.4532276Z esbuild  <=0.24.2
 2025-12-21T19:03:14.4532661Z Severity: moderate
 2025-12-21T19:03:14.4533757Z esbuild enables any website to send any requests to the development server and read the response - https://github.com/advisories/GHSA-67mh-4wv8-2f99
@@ -176,9 +176,9 @@
 2025-12-21T19:03:14.4542456Z         @vitest/coverage-v8  <=2.2.0-beta.2
 2025-12-21T19:03:14.4542858Z         Depends on vulnerable versions of vitest
 2025-12-21T19:03:14.4543263Z         node_modules/@vitest/coverage-v8
-2025-12-21T19:03:14.4543511Z 
+2025-12-21T19:03:14.4543511Z
 2025-12-21T19:03:14.4543700Z 5 moderate severity vulnerabilities
-2025-12-21T19:03:14.4543966Z 
+2025-12-21T19:03:14.4543966Z
 2025-12-21T19:03:14.4544386Z To address all issues (including breaking changes), run:
 2025-12-21T19:03:14.4544901Z   npm audit fix --force
 2025-12-21T19:03:14.4660531Z ##[group]Run actions/upload-artifact@v4

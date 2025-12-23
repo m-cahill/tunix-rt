@@ -386,7 +386,7 @@
 2025-12-21T19:03:33.7076669Z   Stored in directory: /tmp/pip-ephem-wheel-cache-veaaf2jz/wheels/6c/ee/47/0b2814d300ad026845dfa3996505f4a0f855be918f2df7eb34
 2025-12-21T19:03:33.7078483Z Successfully built tunix-rt-backend
 2025-12-21T19:03:33.7843974Z Installing collected packages: websockets, uvloop, typing-extensions, ruff, pyyaml, python-dotenv, pygments, pluggy, pathspec, packaging, mypy_extensions, MarkupSafe, librt, iniconfig, idna, httptools, h11, greenlet, coverage, click, certifi, asyncpg, annotated-types, annotated-doc, aiosqlite, uvicorn, typing-inspection, sqlalchemy, pytest, pydantic-core, mypy, Mako, httpcore, anyio, watchfiles, starlette, pytest-cov, pytest-asyncio, pydantic, httpx, alembic, pydantic-settings, fastapi, tunix-rt-backend
-2025-12-21T19:03:38.8451124Z 
+2025-12-21T19:03:38.8451124Z
 2025-12-21T19:03:38.8481561Z Successfully installed Mako-1.3.10 MarkupSafe-3.0.3 aiosqlite-0.22.0 alembic-1.17.2 annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.0 asyncpg-0.31.0 certifi-2025.11.12 click-8.3.1 coverage-7.13.0 fastapi-0.127.0 greenlet-3.3.0 h11-0.16.0 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 idna-3.11 iniconfig-2.3.0 librt-0.7.4 mypy-1.19.1 mypy_extensions-1.1.0 packaging-25.0 pathspec-0.12.1 pluggy-1.6.0 pydantic-2.12.5 pydantic-core-2.41.5 pydantic-settings-2.12.0 pygments-2.19.2 pytest-9.0.2 pytest-asyncio-1.3.0 pytest-cov-7.0.0 python-dotenv-1.2.1 pyyaml-6.0.3 ruff-0.14.10 sqlalchemy-2.0.45 starlette-0.50.0 tunix-rt-backend-0.1.0 typing-extensions-4.15.0 typing-inspection-0.4.2 uvicorn-0.40.0 uvloop-0.22.1 watchfiles-1.1.1 websockets-15.0.1
 2025-12-21T19:03:39.3709467Z ##[group]Run cd ../backend && alembic upgrade head
 2025-12-21T19:03:39.3709838Z [36;1mcd ../backend && alembic upgrade head[0m
@@ -451,17 +451,17 @@
 2025-12-21T19:03:48.1684758Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
 2025-12-21T19:03:48.1686365Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
 2025-12-21T19:03:51.1425366Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
-2025-12-21T19:03:51.6218926Z 
+2025-12-21T19:03:51.6218926Z
 2025-12-21T19:03:51.6219838Z added 406 packages, and audited 407 packages in 7s
-2025-12-21T19:03:51.6220343Z 
+2025-12-21T19:03:51.6220343Z
 2025-12-21T19:03:51.6220700Z 117 packages are looking for funding
 2025-12-21T19:03:51.6232481Z   run `npm fund` for details
-2025-12-21T19:03:51.6559075Z 
+2025-12-21T19:03:51.6559075Z
 2025-12-21T19:03:51.6560158Z 5 moderate severity vulnerabilities
-2025-12-21T19:03:51.6560697Z 
+2025-12-21T19:03:51.6560697Z
 2025-12-21T19:03:51.6561236Z To address all issues (including breaking changes), run:
 2025-12-21T19:03:51.6562015Z   npm audit fix --force
-2025-12-21T19:03:51.6562402Z 
+2025-12-21T19:03:51.6562402Z
 2025-12-21T19:03:51.6562742Z Run `npm audit` for details.
 2025-12-21T19:03:51.7026939Z ##[group]Run npm ci
 2025-12-21T19:03:51.7027308Z [36;1mnpm ci[0m
@@ -476,9 +476,9 @@
 2025-12-21T19:03:51.7119263Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
 2025-12-21T19:03:51.7119836Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
 2025-12-21T19:03:51.7120314Z ##[endgroup]
-2025-12-21T19:03:52.9765933Z 
+2025-12-21T19:03:52.9765933Z
 2025-12-21T19:03:52.9766682Z added 5 packages, and audited 6 packages in 1s
-2025-12-21T19:03:52.9779622Z 
+2025-12-21T19:03:52.9779622Z
 2025-12-21T19:03:52.9780936Z found 0 vulnerabilities
 2025-12-21T19:03:52.9926026Z ##[group]Run npx playwright install chromium --with-deps
 2025-12-21T19:03:52.9926640Z [36;1mnpx playwright install chromium --with-deps[0m
@@ -620,7 +620,7 @@
 2025-12-21T19:04:06.1956632Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
 2025-12-21T19:04:06.4654502Z Fetched 23.0 MB in 0s (53.9 MB/s)
 2025-12-21T19:04:06.4931877Z Selecting previously unselected package fonts-ipafont-gothic.
-2025-12-21T19:04:06.5250712Z (Reading database ... 
+2025-12-21T19:04:06.5250712Z (Reading database ...
 2025-12-21T19:04:06.5251213Z (Reading database ... 5%
 2025-12-21T19:04:06.5251618Z (Reading database ... 10%
 2025-12-21T19:04:06.5252023Z (Reading database ... 15%
@@ -694,20 +694,20 @@
 2025-12-21T19:04:09.3580010Z Processing triggers for man-db (2.12.0-4build2) ...
 2025-12-21T19:04:09.3611495Z Not building database; man-db/auto-update is not 'true'.
 2025-12-21T19:04:09.3624563Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
-2025-12-21T19:04:10.0240368Z 
+2025-12-21T19:04:10.0240368Z
 2025-12-21T19:04:10.0244419Z Running kernel seems to be up-to-date.
-2025-12-21T19:04:10.0245205Z 
+2025-12-21T19:04:10.0245205Z
 2025-12-21T19:04:10.0245928Z Restarting services...
 2025-12-21T19:04:10.0695077Z  systemctl restart packagekit.service php8.3-fpm.service polkit.service udisks2.service
-2025-12-21T19:04:10.2750495Z 
+2025-12-21T19:04:10.2750495Z
 2025-12-21T19:04:10.2753370Z Service restarts being deferred:
 2025-12-21T19:04:10.2758942Z  systemctl restart ModemManager.service
 2025-12-21T19:04:10.2763319Z  systemctl restart networkd-dispatcher.service
-2025-12-21T19:04:10.2763824Z 
+2025-12-21T19:04:10.2763824Z
 2025-12-21T19:04:10.2764192Z No containers need to be restarted.
-2025-12-21T19:04:10.2764996Z 
+2025-12-21T19:04:10.2764996Z
 2025-12-21T19:04:10.2765300Z No user sessions are running outdated binaries.
-2025-12-21T19:04:10.2765634Z 
+2025-12-21T19:04:10.2765634Z
 2025-12-21T19:04:10.2774209Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
 2025-12-21T19:04:11.2717431Z Downloading Chromium 143.0.7499.4 (playwright build v1200) from https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1200/chromium-linux.zip
 2025-12-21T19:04:11.4692497Z |                                                                                |   0% of 164.7 MiB
@@ -765,114 +765,114 @@
 2025-12-21T19:04:23.3341313Z [WebServer] INFO:     Waiting for application startup.
 2025-12-21T19:04:23.3342786Z [WebServer] INFO:     Application startup complete.
 2025-12-21T19:04:23.3343697Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-2025-12-21T19:04:24.0497276Z 
+2025-12-21T19:04:24.0497276Z
 2025-12-21T19:04:24.0497805Z Running 6 tests using 1 worker
 2025-12-21T19:04:33.8341632Z ····×F×F
-2025-12-21T19:04:33.8357450Z 
-2025-12-21T19:04:33.8360454Z   1) [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace 
-2025-12-21T19:04:33.8362142Z 
+2025-12-21T19:04:33.8357450Z
+2025-12-21T19:04:33.8360454Z   1) [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace
+2025-12-21T19:04:33.8362142Z
 2025-12-21T19:04:33.8362914Z     Error: locator.click: Error: strict mode violation: locator('button').filter({ hasText: 'Fetch' }) resolved to 2 elements:
 2025-12-21T19:04:33.8364595Z         1) <button>Fetch</button> aka getByRole('button', { name: 'Fetch', exact: true })
 2025-12-21T19:04:33.8365704Z         2) <button disabled>Fetch & Compare</button> aka getByRole('button', { name: 'Fetch & Compare' })
-2025-12-21T19:04:33.8366359Z 
+2025-12-21T19:04:33.8366359Z
 2025-12-21T19:04:33.8366513Z     Call log:
 2025-12-21T19:04:33.8367243Z     [2m  - waiting for locator('button').filter({ hasText: 'Fetch' })[22m
-2025-12-21T19:04:33.8367703Z 
-2025-12-21T19:04:33.8367713Z 
+2025-12-21T19:04:33.8367703Z
+2025-12-21T19:04:33.8367713Z
 2025-12-21T19:04:33.8371218Z       72 |     // Click fetch button
 2025-12-21T19:04:33.8371976Z       73 |     const fetchBtn = page.locator('button', { hasText: 'Fetch' });
 2025-12-21T19:04:33.8372642Z     > 74 |     await fetchBtn.click();
 2025-12-21T19:04:33.8373127Z          |                    ^
-2025-12-21T19:04:33.8373512Z       75 |     
+2025-12-21T19:04:33.8373512Z       75 |
 2025-12-21T19:04:33.8373933Z       76 |     // Wait for fetched trace to appear
 2025-12-21T19:04:33.8374525Z       77 |     const traceResult = page.locator('.trace-result');
 2025-12-21T19:04:33.8375337Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:74:20
-2025-12-21T19:04:33.8375823Z 
+2025-12-21T19:04:33.8375823Z
 2025-12-21T19:04:33.8376620Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium/error-context.md
-2025-12-21T19:04:33.8377465Z 
+2025-12-21T19:04:33.8377465Z
 2025-12-21T19:04:33.8378332Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T19:04:33.8378763Z 
+2025-12-21T19:04:33.8378763Z
 2025-12-21T19:04:33.8379475Z     Error: locator.click: Error: strict mode violation: locator('button').filter({ hasText: 'Fetch' }) resolved to 2 elements:
 2025-12-21T19:04:33.8380697Z         1) <button>Fetch</button> aka getByRole('button', { name: 'Fetch', exact: true })
 2025-12-21T19:04:33.8381774Z         2) <button disabled>Fetch & Compare</button> aka getByRole('button', { name: 'Fetch & Compare' })
-2025-12-21T19:04:33.8382386Z 
+2025-12-21T19:04:33.8382386Z
 2025-12-21T19:04:33.8382531Z     Call log:
 2025-12-21T19:04:33.8383252Z     [2m  - waiting for locator('button').filter({ hasText: 'Fetch' })[22m
-2025-12-21T19:04:33.8383709Z 
-2025-12-21T19:04:33.8383720Z 
+2025-12-21T19:04:33.8383709Z
+2025-12-21T19:04:33.8383720Z
 2025-12-21T19:04:33.8383933Z       72 |     // Click fetch button
 2025-12-21T19:04:33.8384607Z       73 |     const fetchBtn = page.locator('button', { hasText: 'Fetch' });
 2025-12-21T19:04:33.8385687Z     > 74 |     await fetchBtn.click();
 2025-12-21T19:04:33.8386204Z          |                    ^
-2025-12-21T19:04:33.8386594Z       75 |     
+2025-12-21T19:04:33.8386594Z       75 |
 2025-12-21T19:04:33.8387035Z       76 |     // Wait for fetched trace to appear
 2025-12-21T19:04:33.8388339Z       77 |     const traceResult = page.locator('.trace-result');
 2025-12-21T19:04:33.8389178Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:74:20
-2025-12-21T19:04:33.8389667Z 
+2025-12-21T19:04:33.8389667Z
 2025-12-21T19:04:33.8390509Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/error-context.md
-2025-12-21T19:04:33.8391409Z 
+2025-12-21T19:04:33.8391409Z
 2025-12-21T19:04:33.8392179Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
 2025-12-21T19:04:33.8393456Z     test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
 2025-12-21T19:04:33.8394334Z     Usage:
-2025-12-21T19:04:33.8394514Z 
+2025-12-21T19:04:33.8394514Z
 2025-12-21T19:04:33.8395421Z         npx playwright show-trace test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
-2025-12-21T19:04:33.8396316Z 
+2025-12-21T19:04:33.8396316Z
 2025-12-21T19:04:33.8396949Z     ────────────────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T19:04:33.8397391Z 
-2025-12-21T19:04:33.8399271Z   2) [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them 
-2025-12-21T19:04:33.8399970Z 
+2025-12-21T19:04:33.8397391Z
+2025-12-21T19:04:33.8399271Z   2) [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them
+2025-12-21T19:04:33.8399970Z
 2025-12-21T19:04:33.8400906Z     Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
-2025-12-21T19:04:33.8401569Z 
+2025-12-21T19:04:33.8401569Z
 2025-12-21T19:04:33.8402061Z     Expected: not [32m"634540ec-4ba5-496f-837c-c36a442deb29"[39m
-2025-12-21T19:04:33.8402478Z 
+2025-12-21T19:04:33.8402478Z
 2025-12-21T19:04:33.8403133Z       140 |     const secondTraceId = secondSuccessText?.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?.[0];
 2025-12-21T19:04:33.8404068Z       141 |     expect(secondTraceId).toBeTruthy();
 2025-12-21T19:04:33.8404680Z     > 142 |     expect(secondTraceId).not.toBe(firstTraceId);
 2025-12-21T19:04:33.8405256Z           |                               ^
-2025-12-21T19:04:33.8405672Z       143 |     
+2025-12-21T19:04:33.8405672Z       143 |
 2025-12-21T19:04:33.8406082Z       144 |     // Now perform comparison
 2025-12-21T19:04:33.8406747Z       145 |     const baseTraceInput = page.locator('#base-trace-id');
 2025-12-21T19:04:33.8407606Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:142:31
-2025-12-21T19:04:33.8408291Z 
+2025-12-21T19:04:33.8408291Z
 2025-12-21T19:04:33.8409101Z     Error Context: test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium/error-context.md
-2025-12-21T19:04:33.8409924Z 
+2025-12-21T19:04:33.8409924Z
 2025-12-21T19:04:33.8410591Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T19:04:33.8411036Z 
+2025-12-21T19:04:33.8411036Z
 2025-12-21T19:04:33.8411678Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
-2025-12-21T19:04:33.8412217Z 
+2025-12-21T19:04:33.8412217Z
 2025-12-21T19:04:33.8412441Z     Locator: locator('text=Base Trace')
 2025-12-21T19:04:33.8412874Z     Expected: visible
 2025-12-21T19:04:33.8413524Z     Error: strict mode violation: locator('text=Base Trace') resolved to 2 elements:
 2025-12-21T19:04:33.8414873Z         1) <label for="base-trace-id">Base Trace ID:</label> aka getByText('Base Trace ID:')
 2025-12-21T19:04:33.8415846Z         2) <h3>Base Trace</h3> aka getByRole('heading', { name: 'Base Trace' })
-2025-12-21T19:04:33.8416262Z 
+2025-12-21T19:04:33.8416262Z
 2025-12-21T19:04:33.8416397Z     Call log:
 2025-12-21T19:04:33.8416941Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
 2025-12-21T19:04:33.8417516Z     [2m  - waiting for locator('text=Base Trace')[22m
-2025-12-21T19:04:33.8417807Z 
-2025-12-21T19:04:33.8417817Z 
-2025-12-21T19:04:33.8418251Z       161 |     
+2025-12-21T19:04:33.8417807Z
+2025-12-21T19:04:33.8417817Z
+2025-12-21T19:04:33.8418251Z       161 |
 2025-12-21T19:04:33.8418716Z       162 |     // Verify both traces are displayed
 2025-12-21T19:04:33.8419415Z     > 163 |     await expect(page.locator('text=Base Trace')).toBeVisible();
 2025-12-21T19:04:33.8420257Z           |                                                   ^
 2025-12-21T19:04:33.8420947Z       164 |     await expect(page.locator('text=Other Trace')).toBeVisible();
-2025-12-21T19:04:33.8421545Z       165 |     
+2025-12-21T19:04:33.8421545Z       165 |
 2025-12-21T19:04:33.8421970Z       166 |     // Verify scores are displayed
 2025-12-21T19:04:33.8422677Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:163:51
-2025-12-21T19:04:33.8423141Z 
+2025-12-21T19:04:33.8423141Z
 2025-12-21T19:04:33.8423985Z     Error Context: test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/error-context.md
-2025-12-21T19:04:33.8424900Z 
+2025-12-21T19:04:33.8424900Z
 2025-12-21T19:04:33.8425646Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
 2025-12-21T19:04:33.8426734Z     test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/trace.zip
 2025-12-21T19:04:33.8431128Z     Usage:
-2025-12-21T19:04:33.8431308Z 
+2025-12-21T19:04:33.8431308Z
 2025-12-21T19:04:33.8432159Z         npx playwright show-trace test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/trace.zip
-2025-12-21T19:04:33.8432927Z 
+2025-12-21T19:04:33.8432927Z
 2025-12-21T19:04:33.8433590Z     ────────────────────────────────────────────────────────────────────────────────────────────────
-2025-12-21T19:04:33.8434047Z 
+2025-12-21T19:04:33.8434047Z
 2025-12-21T19:04:33.8434194Z   2 failed
-2025-12-21T19:04:33.8435196Z     [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace 
-2025-12-21T19:04:33.8437545Z     [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them 
+2025-12-21T19:04:33.8435196Z     [chromium] › tests/smoke.spec.ts:47:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace
+2025-12-21T19:04:33.8437545Z     [chromium] › tests/smoke.spec.ts:90:7 › Trace Comparison and Evaluation › can create two traces and compare them
 2025-12-21T19:04:33.8438871Z   4 passed (11.3s)
 2025-12-21T19:04:33.8879656Z ##[error]Process completed with exit code 1.
 2025-12-21T19:04:33.8936117Z ##[group]Run actions/upload-artifact@v4
@@ -927,13 +927,13 @@
 2025-12-21T19:04:34.8400173Z  initdb: warning: enabling "trust" authentication for local connections
 2025-12-21T19:04:34.8401378Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
 2025-12-21T19:04:34.8403375Z  This user must also own the server process.
-2025-12-21T19:04:34.8403799Z  
+2025-12-21T19:04:34.8403799Z
 2025-12-21T19:04:34.8404208Z  The database cluster will be initialized with locale "en_US.utf8".
 2025-12-21T19:04:34.8404939Z  The default database encoding has accordingly been set to "UTF8".
 2025-12-21T19:04:34.8405595Z  The default text search configuration will be set to "english".
-2025-12-21T19:04:34.8406094Z  
+2025-12-21T19:04:34.8406094Z
 2025-12-21T19:04:34.8406402Z  Data page checksums are disabled.
-2025-12-21T19:04:34.8406774Z  
+2025-12-21T19:04:34.8406774Z
 2025-12-21T19:04:34.8407221Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
 2025-12-21T19:04:34.8407819Z  creating subdirectories ... ok
 2025-12-21T19:04:34.8408566Z  selecting dynamic shared memory implementation ... posix
@@ -944,21 +944,21 @@
 2025-12-21T19:04:34.8411016Z  running bootstrap script ... ok
 2025-12-21T19:04:34.8411483Z  performing post-bootstrap initialization ... ok
 2025-12-21T19:04:34.8411928Z  syncing data to disk ... ok
-2025-12-21T19:04:34.8412268Z  
-2025-12-21T19:04:34.8412503Z  
+2025-12-21T19:04:34.8412268Z
+2025-12-21T19:04:34.8412503Z
 2025-12-21T19:04:34.8412835Z  Success. You can now start the database server using:
-2025-12-21T19:04:34.8413285Z  
+2025-12-21T19:04:34.8413285Z
 2025-12-21T19:04:34.8413613Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
-2025-12-21T19:04:34.8414047Z  
+2025-12-21T19:04:34.8414047Z
 2025-12-21T19:04:34.8414835Z  waiting for server to start....2025-12-21 19:03:11.224 UTC [39] LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
 2025-12-21T19:04:34.8415979Z  2025-12-21 19:03:11.225 UTC [39] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
 2025-12-21T19:04:34.8416795Z  2025-12-21 19:03:11.228 UTC [42] LOG:  database system was shut down at 2025-12-21 19:03:11 UTC
 2025-12-21T19:04:34.8417529Z  2025-12-21 19:03:11.232 UTC [39] LOG:  database system is ready to accept connections
 2025-12-21T19:04:34.8418214Z   done
 2025-12-21T19:04:34.8418497Z  server started
-2025-12-21T19:04:34.8418777Z  
+2025-12-21T19:04:34.8418777Z
 2025-12-21T19:04:34.8419277Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
-2025-12-21T19:04:34.8419892Z  
+2025-12-21T19:04:34.8419892Z
 2025-12-21T19:04:34.8420403Z  waiting for server to shut down...2025-12-21 19:03:11.324 UTC [39] LOG:  received fast shutdown request
 2025-12-21T19:04:34.8421315Z  .2025-12-21 19:03:11.325 UTC [39] LOG:  aborting any active transactions
 2025-12-21T19:04:34.8422116Z  2025-12-21 19:03:11.327 UTC [39] LOG:  background worker "logical replication launcher" (PID 45) exited with exit code 1
@@ -968,7 +968,7 @@
 2025-12-21T19:04:34.8426295Z  2025-12-21 19:03:11.340 UTC [39] LOG:  database system is shut down
 2025-12-21T19:04:34.8426629Z   done
 2025-12-21T19:04:34.8426800Z  server stopped
-2025-12-21T19:04:34.8426972Z  
+2025-12-21T19:04:34.8426972Z
 2025-12-21T19:04:34.8427392Z  2025-12-21 19:03:11.444 UTC [1] LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
 2025-12-21T19:04:34.8428211Z  2025-12-21 19:03:11.444 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
 2025-12-21T19:04:34.8428631Z  2025-12-21 19:03:11.444 UTC [1] LOG:  listening on IPv6 address "::", port 5432
@@ -984,7 +984,7 @@
 2025-12-21T19:04:34.8432473Z  2025-12-21 19:04:20.586 UTC [105] FATAL:  role "root" does not exist
 2025-12-21T19:04:34.8432816Z  2025-12-21 19:04:30.657 UTC [113] FATAL:  role "root" does not exist
 2025-12-21T19:04:34.8433161Z  PostgreSQL init process complete; ready for start up.
-2025-12-21T19:04:34.8433588Z  
+2025-12-21T19:04:34.8433588Z
 2025-12-21T19:04:34.8439778Z Stop and remove container: e9100a20f4234123af8abb532988cfe6_postgres15alpine_48f07d
 2025-12-21T19:04:34.8444671Z ##[command]/usr/bin/docker rm --force a1dc1176851e61d6702c191d97d10b47021aff7d0ddd570e7ea1d3163afa4f07
 2025-12-21T19:04:37.5794304Z a1dc1176851e61d6702c191d97d10b47021aff7d0ddd570e7ea1d3163afa4f07

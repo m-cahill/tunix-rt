@@ -385,7 +385,7 @@
 2025-12-22T01:41:58.9441951Z   Stored in directory: /tmp/pip-ephem-wheel-cache-hthf04ve/wheels/6c/ee/47/0b2814d300ad026845dfa3996505f4a0f855be918f2df7eb34
 2025-12-22T01:41:58.9456506Z Successfully built tunix-rt-backend
 2025-12-22T01:41:59.0142702Z Installing collected packages: websockets, uvloop, typing-extensions, ruff, pyyaml, python-dotenv, pygments, pluggy, pathspec, packaging, mypy_extensions, MarkupSafe, librt, iniconfig, idna, httptools, h11, greenlet, coverage, click, certifi, asyncpg, annotated-types, annotated-doc, aiosqlite, uvicorn, typing-inspection, sqlalchemy, pytest, pydantic-core, mypy, Mako, httpcore, anyio, watchfiles, starlette, pytest-cov, pytest-asyncio, pydantic, httpx, alembic, pydantic-settings, fastapi, tunix-rt-backend
-2025-12-22T01:42:04.0511070Z 
+2025-12-22T01:42:04.0511070Z
 2025-12-22T01:42:04.0538671Z Successfully installed Mako-1.3.10 MarkupSafe-3.0.3 aiosqlite-0.22.0 alembic-1.17.2 annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.0 asyncpg-0.31.0 certifi-2025.11.12 click-8.3.1 coverage-7.13.0 fastapi-0.127.0 greenlet-3.3.0 h11-0.16.0 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 idna-3.11 iniconfig-2.3.0 librt-0.7.4 mypy-1.19.1 mypy_extensions-1.1.0 packaging-25.0 pathspec-0.12.1 pluggy-1.6.0 pydantic-2.12.5 pydantic-core-2.41.5 pydantic-settings-2.12.0 pygments-2.19.2 pytest-9.0.2 pytest-asyncio-1.3.0 pytest-cov-7.0.0 python-dotenv-1.2.1 pyyaml-6.0.3 ruff-0.14.10 sqlalchemy-2.0.45 starlette-0.50.0 tunix-rt-backend-0.1.0 typing-extensions-4.15.0 typing-inspection-0.4.2 uvicorn-0.40.0 uvloop-0.22.1 watchfiles-1.1.1 websockets-15.0.1
 2025-12-22T01:42:04.4904382Z ##[group]Run cd ../backend && alembic upgrade head
 2025-12-22T01:42:04.4904763Z [36;1mcd ../backend && alembic upgrade head[0m
@@ -450,17 +450,17 @@
 2025-12-22T01:42:14.6250904Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
 2025-12-22T01:42:14.6462878Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
 2025-12-22T01:42:17.2187354Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
-2025-12-22T01:42:17.5414605Z 
+2025-12-22T01:42:17.5414605Z
 2025-12-22T01:42:17.5417273Z added 406 packages, and audited 407 packages in 7s
-2025-12-22T01:42:17.5418044Z 
+2025-12-22T01:42:17.5418044Z
 2025-12-22T01:42:17.5420041Z 117 packages are looking for funding
 2025-12-22T01:42:17.5421659Z   run `npm fund` for details
-2025-12-22T01:42:17.5627730Z 
+2025-12-22T01:42:17.5627730Z
 2025-12-22T01:42:17.5647690Z 5 moderate severity vulnerabilities
-2025-12-22T01:42:17.5648042Z 
+2025-12-22T01:42:17.5648042Z
 2025-12-22T01:42:17.5648434Z To address all issues (including breaking changes), run:
 2025-12-22T01:42:17.5648990Z   npm audit fix --force
-2025-12-22T01:42:17.5649221Z 
+2025-12-22T01:42:17.5649221Z
 2025-12-22T01:42:17.5649406Z Run `npm audit` for details.
 2025-12-22T01:42:17.5947852Z ##[group]Run npm ci
 2025-12-22T01:42:17.5948268Z [36;1mnpm ci[0m
@@ -475,9 +475,9 @@
 2025-12-22T01:42:17.6001816Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
 2025-12-22T01:42:17.6002412Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
 2025-12-22T01:42:17.6002920Z ##[endgroup]
-2025-12-22T01:42:18.5216431Z 
+2025-12-22T01:42:18.5216431Z
 2025-12-22T01:42:18.5217720Z added 5 packages, and audited 6 packages in 847ms
-2025-12-22T01:42:18.5226171Z 
+2025-12-22T01:42:18.5226171Z
 2025-12-22T01:42:18.5226471Z found 0 vulnerabilities
 2025-12-22T01:42:18.5332074Z ##[group]Run npx playwright install chromium --with-deps
 2025-12-22T01:42:18.5332473Z [36;1mnpx playwright install chromium --with-deps[0m
@@ -619,7 +619,7 @@
 2025-12-22T01:42:35.1474332Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
 2025-12-22T01:42:35.4201142Z Fetched 23.0 MB in 1s (32.7 MB/s)
 2025-12-22T01:42:35.4872266Z Selecting previously unselected package fonts-ipafont-gothic.
-2025-12-22T01:42:35.5677265Z (Reading database ... 
+2025-12-22T01:42:35.5677265Z (Reading database ...
 2025-12-22T01:42:35.5678686Z (Reading database ... 5%
 2025-12-22T01:42:35.5679136Z (Reading database ... 10%
 2025-12-22T01:42:35.5679688Z (Reading database ... 15%
@@ -693,20 +693,20 @@
 2025-12-22T01:42:42.0938266Z Processing triggers for man-db (2.12.0-4build2) ...
 2025-12-22T01:42:42.1058528Z Not building database; man-db/auto-update is not 'true'.
 2025-12-22T01:42:42.1074603Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
-2025-12-22T01:42:43.3928155Z 
+2025-12-22T01:42:43.3928155Z
 2025-12-22T01:42:43.3929185Z Running kernel seems to be up-to-date.
-2025-12-22T01:42:43.3929747Z 
+2025-12-22T01:42:43.3929747Z
 2025-12-22T01:42:43.3930123Z Restarting services...
 2025-12-22T01:42:43.4367854Z  systemctl restart packagekit.service php8.3-fpm.service polkit.service udisks2.service
-2025-12-22T01:42:43.6836447Z 
+2025-12-22T01:42:43.6836447Z
 2025-12-22T01:42:43.6837170Z Service restarts being deferred:
 2025-12-22T01:42:43.6837729Z  systemctl restart ModemManager.service
 2025-12-22T01:42:43.6838278Z  systemctl restart networkd-dispatcher.service
-2025-12-22T01:42:43.6838615Z 
+2025-12-22T01:42:43.6838615Z
 2025-12-22T01:42:43.6838841Z No containers need to be restarted.
-2025-12-22T01:42:43.6839104Z 
+2025-12-22T01:42:43.6839104Z
 2025-12-22T01:42:43.6839366Z No user sessions are running outdated binaries.
-2025-12-22T01:42:43.6839686Z 
+2025-12-22T01:42:43.6839686Z
 2025-12-22T01:42:43.6840141Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
 2025-12-22T01:42:44.5830776Z Downloading Chromium 143.0.7499.4 (playwright build v1200) from https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1200/chromium-linux.zip
 2025-12-22T01:42:44.8497716Z |                                                                                |   0% of 164.7 MiB
@@ -764,7 +764,7 @@
 2025-12-22T01:42:56.8740254Z [WebServer] INFO:     Waiting for application startup.
 2025-12-22T01:42:56.8741056Z [WebServer] INFO:     Application startup complete.
 2025-12-22T01:42:56.8741807Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-2025-12-22T01:42:57.6354377Z 
+2025-12-22T01:42:57.6354377Z
 2025-12-22T01:42:57.6354898Z Running 7 tests using 1 worker
 2025-12-22T01:43:03.7767403Z ·······
 2025-12-22T01:43:03.7773115Z   7 passed (7.7s)
@@ -837,13 +837,13 @@
 2025-12-22T01:43:05.2298076Z  2025-12-22 01:42:45.137 UTC [106] FATAL:  role "root" does not exist
 2025-12-22T01:43:05.2298675Z  2025-12-22 01:42:55.207 UTC [112] FATAL:  role "root" does not exist
 2025-12-22T01:43:05.2299222Z  This user must also own the server process.
-2025-12-22T01:43:05.2299729Z  
+2025-12-22T01:43:05.2299729Z
 2025-12-22T01:43:05.2300157Z  The database cluster will be initialized with locale "en_US.utf8".
 2025-12-22T01:43:05.2300861Z  The default database encoding has accordingly been set to "UTF8".
 2025-12-22T01:43:05.2301518Z  The default text search configuration will be set to "english".
-2025-12-22T01:43:05.2302032Z  
+2025-12-22T01:43:05.2302032Z
 2025-12-22T01:43:05.2302575Z  Data page checksums are disabled.
-2025-12-22T01:43:05.2302963Z  
+2025-12-22T01:43:05.2302963Z
 2025-12-22T01:43:05.2303434Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
 2025-12-22T01:43:05.2304061Z  creating subdirectories ... ok
 2025-12-22T01:43:05.2304563Z  selecting dynamic shared memory implementation ... posix
@@ -854,21 +854,21 @@
 2025-12-22T01:43:05.2307229Z  running bootstrap script ... ok
 2025-12-22T01:43:05.2307690Z  performing post-bootstrap initialization ... ok
 2025-12-22T01:43:05.2308183Z  syncing data to disk ... ok
-2025-12-22T01:43:05.2308547Z  
-2025-12-22T01:43:05.2308805Z  
+2025-12-22T01:43:05.2308547Z
+2025-12-22T01:43:05.2308805Z
 2025-12-22T01:43:05.2309152Z  Success. You can now start the database server using:
-2025-12-22T01:43:05.2309622Z  
+2025-12-22T01:43:05.2309622Z
 2025-12-22T01:43:05.2309981Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
-2025-12-22T01:43:05.2310455Z  
+2025-12-22T01:43:05.2310455Z
 2025-12-22T01:43:05.2311267Z  waiting for server to start....2025-12-22 01:41:35.779 UTC [39] LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
 2025-12-22T01:43:05.2312783Z  2025-12-22 01:41:35.779 UTC [39] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
 2025-12-22T01:43:05.2313685Z  2025-12-22 01:41:35.784 UTC [42] LOG:  database system was shut down at 2025-12-22 01:41:35 UTC
 2025-12-22T01:43:05.2314470Z  2025-12-22 01:41:35.788 UTC [39] LOG:  database system is ready to accept connections
 2025-12-22T01:43:05.2320192Z   done
 2025-12-22T01:43:05.2320540Z  server started
-2025-12-22T01:43:05.2320846Z  
+2025-12-22T01:43:05.2320846Z
 2025-12-22T01:43:05.2321374Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
-2025-12-22T01:43:05.2322019Z  
+2025-12-22T01:43:05.2322019Z
 2025-12-22T01:43:05.2322602Z  waiting for server to shut down....2025-12-22 01:41:35.878 UTC [39] LOG:  received fast shutdown request
 2025-12-22T01:43:05.2323472Z  2025-12-22 01:41:35.879 UTC [39] LOG:  aborting any active transactions
 2025-12-22T01:43:05.2324365Z  2025-12-22 01:41:35.884 UTC [39] LOG:  background worker "logical replication launcher" (PID 45) exited with exit code 1
@@ -878,9 +878,9 @@
 2025-12-22T01:43:05.2329669Z  2025-12-22 01:41:35.893 UTC [39] LOG:  database system is shut down
 2025-12-22T01:43:05.2330194Z   done
 2025-12-22T01:43:05.2330496Z  server stopped
-2025-12-22T01:43:05.2330812Z  
+2025-12-22T01:43:05.2330812Z
 2025-12-22T01:43:05.2331230Z  PostgreSQL init process complete; ready for start up.
-2025-12-22T01:43:05.2331754Z  
+2025-12-22T01:43:05.2331754Z
 2025-12-22T01:43:05.2340465Z Stop and remove container: 62644b7691134694a3efbf15f2503e49_postgres15alpine_846280
 2025-12-22T01:43:05.2346437Z ##[command]/usr/bin/docker rm --force 93fd38e413354a1b2cb6d17b8cb4162122a344bb8ecc6547ffd2626e0ba4bd4f
 2025-12-22T01:43:07.7413796Z 93fd38e413354a1b2cb6d17b8cb4162122a344bb8ecc6547ffd2626e0ba4bd4f

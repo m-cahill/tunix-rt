@@ -31,4 +31,3 @@
 ## Next Steps
 
 Proceed with M07 Phase 1: Optional UNGAR dependency wiring.
-

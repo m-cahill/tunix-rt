@@ -15,7 +15,7 @@
 2025-12-21T04:20:01.9015829Z /home/runner/work/_actions/gitleaks/gitleaks-action/v2/dist/index.js:51503
 2025-12-21T04:20:01.9018917Z       const error = new requestError.RequestError(toErrorMessage(data), status, {
 2025-12-21T04:20:01.9019804Z                     ^
-2025-12-21T04:20:01.9020029Z 
+2025-12-21T04:20:01.9020029Z
 2025-12-21T04:20:01.9020311Z RequestError [HttpError]: Resource not accessible by integration
 2025-12-21T04:20:01.9021133Z     at /home/runner/work/_actions/gitleaks/gitleaks-action/v2/dist/index.js:51503:21
 2025-12-21T04:20:01.9022037Z     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
@@ -68,5 +68,5 @@
 2025-12-21T04:20:01.9051441Z     request: { hook: [Function: bound bound register] }
 2025-12-21T04:20:01.9051892Z   }
 2025-12-21T04:20:01.9052159Z }
-2025-12-21T04:20:01.9052307Z 
+2025-12-21T04:20:01.9052307Z
 2025-12-21T04:20:01.9052440Z Node.js v20.19.5

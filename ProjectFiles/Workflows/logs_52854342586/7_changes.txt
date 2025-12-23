@@ -1,0 +1,197 @@
+﻿2025-12-22T20:50:28.6695991Z Current runner version: '2.330.0'
+2025-12-22T20:50:28.6728821Z ##[group]Runner Image Provisioner
+2025-12-22T20:50:28.6730053Z Hosted Compute Agent
+2025-12-22T20:50:28.6730850Z Version: 20251211.462
+2025-12-22T20:50:28.6731697Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-22T20:50:28.6732743Z Build Date: 2025-12-11T16:28:49Z
+2025-12-22T20:50:28.6733651Z Worker ID: {03e3815f-14d7-4c45-98c7-36c735f0bb8b}
+2025-12-22T20:50:28.6734941Z ##[endgroup]
+2025-12-22T20:50:28.6735684Z ##[group]Operating System
+2025-12-22T20:50:28.6736474Z Ubuntu
+2025-12-22T20:50:28.6737068Z 24.04.3
+2025-12-22T20:50:28.6737790Z LTS
+2025-12-22T20:50:28.6738392Z ##[endgroup]
+2025-12-22T20:50:28.6739116Z ##[group]Runner Image
+2025-12-22T20:50:28.6739991Z Image: ubuntu-24.04
+2025-12-22T20:50:28.6740690Z Version: 20251215.174.1
+2025-12-22T20:50:28.6742259Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-22T20:50:28.6744890Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-22T20:50:28.6746402Z ##[endgroup]
+2025-12-22T20:50:28.6747979Z ##[group]GITHUB_TOKEN Permissions
+2025-12-22T20:50:28.6750361Z Contents: read
+2025-12-22T20:50:28.6751176Z Metadata: read
+2025-12-22T20:50:28.6751829Z ##[endgroup]
+2025-12-22T20:50:28.6754844Z Secret source: Actions
+2025-12-22T20:50:28.6755837Z Prepare workflow directory
+2025-12-22T20:50:28.7386902Z Prepare all required actions
+2025-12-22T20:50:28.7443206Z Getting action download info
+2025-12-22T20:50:29.1404034Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2025-12-22T20:50:29.2592776Z Download action repository 'dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36' (SHA:de90cc6fb38fc0963ad72b210f1f284cd68cea36)
+2025-12-22T20:50:30.0829841Z Complete job name: changes
+2025-12-22T20:50:30.1402126Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2025-12-22T20:50:30.1403155Z with:
+2025-12-22T20:50:30.1403552Z   fetch-depth: 0
+2025-12-22T20:50:30.1404043Z   repository: m-cahill/tunix-rt
+2025-12-22T20:50:30.1404857Z   token: ***
+2025-12-22T20:50:30.1405270Z   ssh-strict: true
+2025-12-22T20:50:30.1405709Z   ssh-user: git
+2025-12-22T20:50:30.1406116Z   persist-credentials: true
+2025-12-22T20:50:30.1406600Z   clean: true
+2025-12-22T20:50:30.1406995Z   sparse-checkout-cone-mode: true
+2025-12-22T20:50:30.1407559Z   fetch-tags: false
+2025-12-22T20:50:30.1407969Z   show-progress: true
+2025-12-22T20:50:30.1408402Z   lfs: false
+2025-12-22T20:50:30.1408838Z   submodules: false
+2025-12-22T20:50:30.1409249Z   set-safe-directory: true
+2025-12-22T20:50:30.1409947Z ##[endgroup]
+2025-12-22T20:50:30.2443509Z Syncing repository: m-cahill/tunix-rt
+2025-12-22T20:50:30.2445914Z ##[group]Getting Git version info
+2025-12-22T20:50:30.2447184Z Working directory is '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-22T20:50:30.2448691Z [command]/usr/bin/git version
+2025-12-22T20:50:30.3145340Z git version 2.52.0
+2025-12-22T20:50:30.3166956Z ##[endgroup]
+2025-12-22T20:50:30.3182198Z Temporarily overriding HOME='/home/runner/work/_temp/b9b37981-259a-48f2-b2ed-17be42c38eb8' before making global git config changes
+2025-12-22T20:50:30.3185821Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-22T20:50:30.3201053Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-22T20:50:30.3270030Z Deleting the contents of '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-22T20:50:30.3274474Z ##[group]Initializing the repository
+2025-12-22T20:50:30.3279049Z [command]/usr/bin/git init /home/runner/work/tunix-rt/tunix-rt
+2025-12-22T20:50:30.3728342Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-22T20:50:30.3731144Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-22T20:50:30.3732704Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-22T20:50:30.3734125Z hint: call:
+2025-12-22T20:50:30.3734955Z hint:
+2025-12-22T20:50:30.3735771Z hint: 	git config --global init.defaultBranch <name>
+2025-12-22T20:50:30.3737334Z hint:
+2025-12-22T20:50:30.3738247Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-22T20:50:30.3739785Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-22T20:50:30.3740993Z hint:
+2025-12-22T20:50:30.3741609Z hint: 	git branch -m <name>
+2025-12-22T20:50:30.3742384Z hint:
+2025-12-22T20:50:30.3743349Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-22T20:50:30.3745074Z Initialized empty Git repository in /home/runner/work/tunix-rt/tunix-rt/.git/
+2025-12-22T20:50:30.3748534Z [command]/usr/bin/git remote add origin https://github.com/m-cahill/tunix-rt
+2025-12-22T20:50:30.3814588Z ##[endgroup]
+2025-12-22T20:50:30.3815779Z ##[group]Disabling automatic garbage collection
+2025-12-22T20:50:30.3818962Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-22T20:50:30.3846242Z ##[endgroup]
+2025-12-22T20:50:30.3847460Z ##[group]Setting up auth
+2025-12-22T20:50:30.3853017Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-22T20:50:30.3881270Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-22T20:50:30.5062605Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-22T20:50:30.5089609Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-22T20:50:30.5370847Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-22T20:50:30.5412311Z ##[endgroup]
+2025-12-22T20:50:30.5415886Z ##[group]Fetching the repository
+2025-12-22T20:50:30.5423011Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2025-12-22T20:50:31.4118023Z From https://github.com/m-cahill/tunix-rt
+2025-12-22T20:50:31.4120118Z  * [new branch]      dependabot/github_actions/actions/cache-5.0.1 -> origin/dependabot/github_actions/actions/cache-5.0.1
+2025-12-22T20:50:31.4121922Z  * [new branch]      dependabot/github_actions/actions/checkout-6 -> origin/dependabot/github_actions/actions/checkout-6
+2025-12-22T20:50:31.4125387Z  * [new branch]      dependabot/github_actions/actions/setup-node-6.1.0 -> origin/dependabot/github_actions/actions/setup-node-6.1.0
+2025-12-22T20:50:31.4127147Z  * [new branch]      dependabot/github_actions/actions/setup-python-6 -> origin/dependabot/github_actions/actions/setup-python-6
+2025-12-22T20:50:31.4128823Z  * [new branch]      dependabot/github_actions/actions/upload-artifact-6 -> origin/dependabot/github_actions/actions/upload-artifact-6
+2025-12-22T20:50:31.4130550Z  * [new branch]      dependabot/npm_and_yarn/e2e/types/node-25.0.3 -> origin/dependabot/npm_and_yarn/e2e/types/node-25.0.3
+2025-12-22T20:50:31.4132134Z  * [new branch]      dependabot/npm_and_yarn/frontend/eslint-9.39.2 -> origin/dependabot/npm_and_yarn/frontend/eslint-9.39.2
+2025-12-22T20:50:31.4134022Z  * [new branch]      dependabot/npm_and_yarn/frontend/eslint-plugin-react-hooks-7.0.1 -> origin/dependabot/npm_and_yarn/frontend/eslint-plugin-react-hooks-7.0.1
+2025-12-22T20:50:31.4136283Z  * [new branch]      dependabot/npm_and_yarn/frontend/multi-92cd713b78 -> origin/dependabot/npm_and_yarn/frontend/multi-92cd713b78
+2025-12-22T20:50:31.4138177Z  * [new branch]      dependabot/npm_and_yarn/frontend/testing-library/react-16.3.1 -> origin/dependabot/npm_and_yarn/frontend/testing-library/react-16.3.1
+2025-12-22T20:50:31.4140317Z  * [new branch]      dependabot/npm_and_yarn/frontend/vitejs/plugin-react-5.1.2 -> origin/dependabot/npm_and_yarn/frontend/vitejs/plugin-react-5.1.2
+2025-12-22T20:50:31.4142018Z  * [new branch]      m10-refactor -> origin/m10-refactor
+2025-12-22T20:50:31.4142750Z  * [new branch]      main         -> origin/main
+2025-12-22T20:50:31.4226906Z [command]/usr/bin/git branch --list --remote origin/main
+2025-12-22T20:50:31.4258195Z   origin/main
+2025-12-22T20:50:31.4267930Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2025-12-22T20:50:31.4285578Z e2a7d8993dacd481d7be7ed8a46710f7c0286796
+2025-12-22T20:50:31.4292831Z ##[endgroup]
+2025-12-22T20:50:31.4293862Z ##[group]Determining the checkout info
+2025-12-22T20:50:31.4299602Z ##[endgroup]
+2025-12-22T20:50:31.4300367Z [command]/usr/bin/git sparse-checkout disable
+2025-12-22T20:50:31.4369365Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-22T20:50:31.4392220Z ##[group]Checking out the ref
+2025-12-22T20:50:31.4395688Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-22T20:50:31.5064594Z Switched to a new branch 'main'
+2025-12-22T20:50:31.5075582Z branch 'main' set up to track 'origin/main'.
+2025-12-22T20:50:31.5078882Z ##[endgroup]
+2025-12-22T20:50:31.5245373Z [command]/usr/bin/git log -1 --format=%H
+2025-12-22T20:50:31.5263249Z e2a7d8993dacd481d7be7ed8a46710f7c0286796
+2025-12-22T20:50:31.5408425Z ##[group]Run BASE="f99e1a37ac10d2091e78e8fea4b51dcf5e866d0b"
+2025-12-22T20:50:31.5409020Z [36;1mBASE="f99e1a37ac10d2091e78e8fea4b51dcf5e866d0b"[0m
+2025-12-22T20:50:31.5409505Z [36;1mREF="e2a7d8993dacd481d7be7ed8a46710f7c0286796"[0m
+2025-12-22T20:50:31.5409921Z [36;1mecho "Base SHA: $BASE"[0m
+2025-12-22T20:50:31.5410233Z [36;1mecho "Ref SHA: $REF"[0m
+2025-12-22T20:50:31.5410561Z [36;1mif [ -z "$BASE" ] || [ -z "$REF" ]; then[0m
+2025-12-22T20:50:31.5411048Z [36;1m  echo "::error::paths-filter base or ref SHA is empty — workflow misconfigured"[0m
+2025-12-22T20:50:31.5411478Z [36;1m  exit 1[0m
+2025-12-22T20:50:31.5411710Z [36;1mfi[0m
+2025-12-22T20:50:31.5433929Z shell: /usr/bin/bash -e {0}
+2025-12-22T20:50:31.5434463Z ##[endgroup]
+2025-12-22T20:50:31.5494177Z Base SHA: f99e1a37ac10d2091e78e8fea4b51dcf5e866d0b
+2025-12-22T20:50:31.5495669Z Ref SHA: e2a7d8993dacd481d7be7ed8a46710f7c0286796
+2025-12-22T20:50:31.5553036Z ##[group]Run dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36
+2025-12-22T20:50:31.5553464Z with:
+2025-12-22T20:50:31.5553746Z   base: f99e1a37ac10d2091e78e8fea4b51dcf5e866d0b
+2025-12-22T20:50:31.5554099Z   ref: e2a7d8993dacd481d7be7ed8a46710f7c0286796
+2025-12-22T20:50:31.5555112Z   filters: backend:
+  - 'backend/**'
+frontend:
+  - 'frontend/**'
+e2e:
+  - 'e2e/**'
+workflow:
+  - '.github/workflows/**'
+
+2025-12-22T20:50:31.5555627Z   list-files: none
+2025-12-22T20:50:31.5555887Z   initial-fetch-depth: 100
+2025-12-22T20:50:31.5556178Z ##[endgroup]
+2025-12-22T20:50:31.6411952Z ##[group]Get current git ref
+2025-12-22T20:50:31.6452560Z [command]/usr/bin/git branch --show-current
+2025-12-22T20:50:31.6488027Z main
+2025-12-22T20:50:31.6509237Z ##[endgroup]
+2025-12-22T20:50:31.6511376Z Changes will be detected between f99e1a37ac10d2091e78e8fea4b51dcf5e866d0b and e2a7d8993dacd481d7be7ed8a46710f7c0286796
+2025-12-22T20:50:31.6513135Z ##[group]Ensuring f99e1a37ac10d2091e78e8fea4b51dcf5e866d0b is fetched from origin
+2025-12-22T20:50:31.6524227Z [command]/usr/bin/git cat-file -e f99e1a37ac10d2091e78e8fea4b51dcf5e866d0b^{commit}
+2025-12-22T20:50:31.6548742Z ##[endgroup]
+2025-12-22T20:50:31.6550716Z ##[group]Ensuring e2a7d8993dacd481d7be7ed8a46710f7c0286796 is fetched from origin
+2025-12-22T20:50:31.6562107Z [command]/usr/bin/git cat-file -e e2a7d8993dacd481d7be7ed8a46710f7c0286796^{commit}
+2025-12-22T20:50:31.6586744Z ##[endgroup]
+2025-12-22T20:50:31.6589403Z ##[group]Change detection f99e1a37ac10d2091e78e8fea4b51dcf5e866d0b..e2a7d8993dacd481d7be7ed8a46710f7c0286796
+2025-12-22T20:50:31.6598233Z [command]/usr/bin/git diff --no-renames --name-status -z f99e1a37ac10d2091e78e8fea4b51dcf5e866d0b..e2a7d8993dacd481d7be7ed8a46710f7c0286796
+2025-12-22T20:50:31.6625294Z M .github/workflows/ci.yml M .github/workflows/training-smoke.yml M .github/workflows/tunix-integration.yml M .github/workflows/ungar-integration.yml 
+2025-12-22T20:50:31.6628462Z ##[endgroup]
+2025-12-22T20:50:31.6628954Z Detected 4 changed files
+2025-12-22T20:50:31.6633989Z Results:
+2025-12-22T20:50:31.6636239Z ##[group]Filter backend = false
+2025-12-22T20:50:31.6637199Z Matching files: none
+2025-12-22T20:50:31.6644169Z ##[endgroup]
+2025-12-22T20:50:31.6646298Z ##[group]Filter frontend = false
+2025-12-22T20:50:31.6647291Z Matching files: none
+2025-12-22T20:50:31.6648316Z ##[endgroup]
+2025-12-22T20:50:31.6650233Z ##[group]Filter e2e = false
+2025-12-22T20:50:31.6650720Z Matching files: none
+2025-12-22T20:50:31.6651443Z ##[endgroup]
+2025-12-22T20:50:31.6652075Z ##[group]Filter workflow = true
+2025-12-22T20:50:31.6652515Z Matching files:
+2025-12-22T20:50:31.6652959Z .github/workflows/ci.yml [modified]
+2025-12-22T20:50:31.6653593Z .github/workflows/training-smoke.yml [modified]
+2025-12-22T20:50:31.6654462Z .github/workflows/tunix-integration.yml [modified]
+2025-12-22T20:50:31.6655236Z .github/workflows/ungar-integration.yml [modified]
+2025-12-22T20:50:31.6656082Z ##[endgroup]
+2025-12-22T20:50:31.6656537Z Changes output set to ["workflow"]
+2025-12-22T20:50:31.6781345Z Post job cleanup.
+2025-12-22T20:50:31.7675780Z [command]/usr/bin/git version
+2025-12-22T20:50:31.7685445Z git version 2.52.0
+2025-12-22T20:50:31.7725620Z Temporarily overriding HOME='/home/runner/work/_temp/ba9ff260-d910-42de-a66e-c7a59e2afe12' before making global git config changes
+2025-12-22T20:50:31.7728189Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-22T20:50:31.7732169Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-22T20:50:31.7769936Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-22T20:50:31.7798868Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-22T20:50:31.8008380Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-22T20:50:31.8027246Z http.https://github.com/.extraheader
+2025-12-22T20:50:31.8038645Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-12-22T20:50:31.8066224Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-22T20:50:31.8321372Z Evaluate and set job outputs
+2025-12-22T20:50:31.8328615Z Set output 'backend'
+2025-12-22T20:50:31.8330668Z Set output 'frontend'
+2025-12-22T20:50:31.8331343Z Set output 'e2e'
+2025-12-22T20:50:31.8331727Z Set output 'workflow'
+2025-12-22T20:50:31.8332441Z Cleaning up orphan processes
