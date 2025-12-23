@@ -11,20 +11,20 @@ test('async run flow: enqueue, poll, complete', async ({ page }) => {
 
   // Fill form
   await page.getByTestId('tunix:dataset-key').fill('test-async-v1');
-  
+
   // Click Dry-run
   await page.getByTestId('tunix:run-dry-btn').click();
 
   // Verify status is displayed
   await expect(page.getByTestId('tunix:run-status')).toBeVisible();
-  
+
   // Status should eventually become 'completed'
   // Note: It goes pending -> running -> completed
   await expect(page.getByTestId('tunix:run-status')).toHaveText('completed', { timeout: 30000 });
-  
+
   // Check output
   await expect(page.getByTestId('tunix:run-message')).toHaveText('Dry-run validation successful');
-  
+
   // Check history
   await page.getByTestId('tunix:toggle-history-btn').click();
   await expect(page.getByTestId('tunix:history-row-test-async-v1')).toBeVisible(); // Need to verify if row-ID or similar
@@ -33,4 +33,3 @@ test('async run flow: enqueue, poll, complete', async ({ page }) => {
   await expect(page.getByTestId('tunix:history-list')).toContainText('test-async-v1');
   await expect(page.getByTestId('tunix:history-list')).toContainText('completed');
 });
-

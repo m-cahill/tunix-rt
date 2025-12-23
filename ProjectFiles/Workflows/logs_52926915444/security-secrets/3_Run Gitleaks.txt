@@ -14,13 +14,13 @@
 2025-12-23T18:56:27.9249837Z event type: push
 2025-12-23T18:56:27.9251968Z gitleaks cmd: gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=-1
 2025-12-23T18:56:27.9272524Z [command]/tmp/gitleaks-8.24.3/gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=-1
-2025-12-23T18:56:28.2043616Z 
+2025-12-23T18:56:28.2043616Z
 2025-12-23T18:56:28.2048154Z     ○
 2025-12-23T18:56:28.2052307Z     │╲
 2025-12-23T18:56:28.2056154Z     │ ○
 2025-12-23T18:56:28.2059860Z     ○ ░
 2025-12-23T18:56:28.2064331Z     ░    gitleaks
-2025-12-23T18:56:28.2066623Z 
+2025-12-23T18:56:28.2066623Z
 2025-12-23T18:56:28.2069347Z [90m6:56PM[0m DBG using github.com/wasilibs/go-re2 regex engine
 2025-12-23T18:56:28.2074037Z [90m6:56PM[0m DBG no gitleaks config found in path .gitleaks.toml, using default gitleaks config
 2025-12-23T18:56:28.3430530Z [90m6:56PM[0m DBG executing: /usr/bin/git -C . log -p -U0 -1

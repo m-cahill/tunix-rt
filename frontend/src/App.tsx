@@ -14,6 +14,8 @@ import {
   listTunixRuns,
   getTunixRun,
   getTunixRunStatus,
+  listArtifacts,
+  cancelRun,
   type HealthResponse,
   type RediHealthResponse,
   type TraceDetail,
@@ -25,9 +27,11 @@ import {
   type TunixRunResponse,
   type TunixRunListItem,
   type TunixRunListResponse,
+  type ArtifactListResponse,
   ApiError,
 } from './api/client'
 import { EXAMPLE_TRACE } from './exampleTrace'
+import { LiveLogs } from './components/LiveLogs'
 
 function App() {
   const [apiHealth, setApiHealth] = useState<HealthResponse | null>(null)
@@ -76,6 +80,10 @@ function App() {
   const [runHistoryError, setRunHistoryError] = useState<string | null>(null)
   const [selectedRunId, setSelectedRunId] = useState<string | null>(null)
   const [selectedRunDetail, setSelectedRunDetail] = useState<TunixRunResponse | null>(null)
+
+  // M16: Artifacts state
+  const [artifacts, setArtifacts] = useState<ArtifactListResponse | null>(null)
+  const [artifactsLoading, setArtifactsLoading] = useState(false)
 
   useEffect(() => {
     const fetchHealth = async () => {
@@ -416,11 +424,13 @@ function App() {
       // Toggle collapse
       setSelectedRunId(null)
       setSelectedRunDetail(null)
+      setArtifacts(null)
       return
     }
 
     setSelectedRunId(runId)
     setSelectedRunDetail(null)
+    setArtifacts(null)
     setRunHistoryError(null)
 
     try {
@@ -443,6 +453,31 @@ function App() {
     // Fetch run history when expanding
     if (newExpanded && !runHistory) {
       handleRefreshRunHistory()
+    }
+  }
+
+  const handleCancelRun = async (runId: string) => {
+    if (!confirm('Are you sure you want to cancel this run?')) return
+    try {
+        await cancelRun(runId)
+        // Refresh details to show update
+        handleViewRunDetail(runId)
+        // Refresh history status
+        handleRefreshRunHistory()
+    } catch (e) {
+        alert('Failed to cancel run')
+    }
+  }
+
+  const handleFetchArtifacts = async (runId: string) => {
+    setArtifactsLoading(true)
+    try {
+        const res = await listArtifacts(runId)
+        setArtifacts(res)
+    } catch (e) {
+        console.error(e)
+    } finally {
+        setArtifactsLoading(false)
     }
   }
 
@@ -956,28 +991,76 @@ function App() {
                             <tr key={`${run.run_id}-detail`}>
                               <td colSpan={7} style={{ padding: '1em', backgroundColor: '#f9f9f9' }}>
                                 <div className="run-detail" data-testid={`tunix:run-detail-${run.run_id}`}>
-                                  <h4>Run Details</h4>
+                                  <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                    <h4>Run Details</h4>
+                                    {['pending', 'running'].includes(selectedRunDetail.status) && (
+                                        <button
+                                            onClick={() => handleCancelRun(run.run_id)}
+                                            style={{backgroundColor: '#ff6b6b', color: 'white', border: 'none', padding: '0.5em 1em', cursor: 'pointer', borderRadius: '4px'}}
+                                        >
+                                            Cancel Run
+                                        </button>
+                                    )}
+                                  </div>
+
                                   <p><strong>Run ID:</strong> {selectedRunDetail.run_id}</p>
                                   <p><strong>Message:</strong> {selectedRunDetail.message}</p>
                                   {selectedRunDetail.exit_code !== null && (
                                     <p><strong>Exit Code:</strong> {selectedRunDetail.exit_code}</p>
                                   )}
-                                  {selectedRunDetail.stdout && (
-                                    <details>
-                                      <summary>Standard Output</summary>
-                                      <pre style={{ maxHeight: '300px', overflow: 'auto' }} data-testid={`tunix:detail-stdout-${run.run_id}`}>
-                                        {selectedRunDetail.stdout}
-                                      </pre>
-                                    </details>
+
+                                  {['pending', 'running'].includes(selectedRunDetail.status) ? (
+                                    <LiveLogs
+                                        runId={selectedRunDetail.run_id}
+                                        initialStatus={selectedRunDetail.status}
+                                        onStatusChange={(newStatus) => {
+                                            if (['completed', 'failed', 'timeout'].includes(newStatus)) {
+                                                handleViewRunDetail(run.run_id)
+                                                handleRefreshRunHistory()
+                                            }
+                                        }}
+                                    />
+                                  ) : (
+                                    <>
+                                      {selectedRunDetail.stdout && (
+                                        <details>
+                                          <summary>Standard Output</summary>
+                                          <pre style={{ maxHeight: '300px', overflow: 'auto' }} data-testid={`tunix:detail-stdout-${run.run_id}`}>
+                                            {selectedRunDetail.stdout}
+                                          </pre>
+                                        </details>
+                                      )}
+                                      {selectedRunDetail.stderr && (
+                                        <details>
+                                          <summary>Standard Error</summary>
+                                          <pre style={{ maxHeight: '300px', overflow: 'auto' }} data-testid={`tunix:detail-stderr-${run.run_id}`}>
+                                            {selectedRunDetail.stderr}
+                                          </pre>
+                                        </details>
+                                      )}
+                                    </>
                                   )}
-                                  {selectedRunDetail.stderr && (
-                                    <details>
-                                      <summary>Standard Error</summary>
-                                      <pre style={{ maxHeight: '300px', overflow: 'auto' }} data-testid={`tunix:detail-stderr-${run.run_id}`}>
-                                        {selectedRunDetail.stderr}
-                                      </pre>
-                                    </details>
-                                  )}
+
+                                  {/* Artifacts Section (M16) */}
+                                  <div className="artifacts-section" style={{marginTop: '20px', borderTop: '1px solid #ddd', paddingTop: '10px'}}>
+                                    <h4>Artifacts</h4>
+                                    <button onClick={() => handleFetchArtifacts(run.run_id)}>Load Artifacts</button>
+
+                                    {artifactsLoading && <span style={{marginLeft: '10px'}}>Loading...</span>}
+
+                                    {artifacts && (
+                                        <ul style={{marginTop: '10px'}}>
+                                            {artifacts.artifacts.length === 0 && <li>No artifacts found.</li>}
+                                            {artifacts.artifacts.map(art => (
+                                                <li key={art.name}>
+                                                    <a href={`/api/tunix/runs/${run.run_id}/artifacts/${art.name}/download`} target="_blank" rel="noreferrer">
+                                                        {art.name}
+                                                    </a> <span style={{fontSize: '0.8em', color: '#666'}}>({art.size} bytes)</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                  </div>
                                 </div>
                               </td>
                             </tr>

@@ -366,7 +366,7 @@ export interface TunixRunRequest {
  */
 export interface TunixRunResponse {
   run_id: string
-  status: 'pending' | 'running' | 'completed' | 'failed' | 'timeout'
+  status: 'pending' | 'running' | 'completed' | 'failed' | 'timeout' | 'cancel_requested' | 'cancelled'
   mode: 'dry-run' | 'local'
   dataset_key: string
   model_id: string
@@ -385,7 +385,7 @@ export interface TunixRunResponse {
  */
 export interface TunixRunStatusResponse {
   run_id: string
-  status: 'pending' | 'running' | 'completed' | 'failed' | 'timeout'
+  status: 'pending' | 'running' | 'completed' | 'failed' | 'timeout' | 'cancel_requested' | 'cancelled'
   queued_at: string
   started_at: string
   completed_at: string | null
@@ -481,7 +481,7 @@ export interface TunixRunListItem {
   dataset_key: string
   model_id: string
   mode: 'dry-run' | 'local'
-  status: 'pending' | 'running' | 'completed' | 'failed' | 'timeout'
+  status: 'pending' | 'running' | 'completed' | 'failed' | 'timeout' | 'cancel_requested' | 'cancelled'
   started_at: string
   duration_seconds: number | null
 }
@@ -535,4 +535,38 @@ export async function listTunixRuns(params?: ListTunixRunsParams): Promise<Tunix
  */
 export async function getTunixRun(runId: string): Promise<TunixRunResponse> {
   return fetchJSON<TunixRunResponse>(`/api/tunix/runs/${runId}`)
+}
+
+/**
+ * M16: Artifacts and Cancellation
+ */
+
+export interface Artifact {
+  name: string
+  size: number
+  path: string
+}
+
+export interface ArtifactListResponse {
+  artifacts: Artifact[]
+}
+
+/**
+ * List artifacts for a Tunix run
+ * @param runId - UUID of the run
+ * @returns Promise resolving to list of artifacts
+ */
+export async function listArtifacts(runId: string): Promise<ArtifactListResponse> {
+  return fetchJSON<ArtifactListResponse>(`/api/tunix/runs/${runId}/artifacts`)
+}
+
+/**
+ * Cancel a pending or running Tunix run
+ * @param runId - UUID of the run
+ * @returns Promise resolving to status message
+ */
+export async function cancelRun(runId: string): Promise<{ message: string }> {
+  return fetchJSON<{ message: string }>(`/api/tunix/runs/${runId}/cancel`, {
+    method: 'POST'
+  })
 }

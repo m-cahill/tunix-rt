@@ -316,4 +316,3 @@ default_factory=lambda: datetime.now(datetime.UTC)
   }
 }
 ```
-

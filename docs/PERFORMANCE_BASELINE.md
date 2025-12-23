@@ -25,4 +25,3 @@ We have exposed standard Prometheus metrics at `/metrics`.
 ### SLOs
 - **Availability:** 99.9% uptime for API
 - **Async Enqueue Latency:** 99% of requests < 500ms
-

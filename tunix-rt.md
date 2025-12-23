@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M15 Complete** ✅  
-**Coverage:** 81.38% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Async Execution (Postgres Queue + Worker), Prometheus Metrics | **Testing:** 196 backend + 28 frontend tests
+**Milestone M16 Complete** ✅  
+**Coverage:** 82% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Async Execution + Live Logs (SSE) + Cancellation | **Testing:** 197 backend + 28 frontend tests
 
 ## Overview
 
@@ -16,6 +16,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M14 Enhancements:** Tunix Run Registry - persistent storage with `tunix_runs` table (UUID PK, indexed columns), Alembic migration, immediate run persistence (create with status="running", update on completion), graceful DB failure handling, `GET /api/tunix/runs` with pagination/filtering, `GET /api/tunix/runs/{run_id}` for details, frontend Run History panel (collapsible, manual refresh), stdout/stderr truncation (10KB), 12 new backend tests + 7 frontend tests (all dry-run, no Tunix dependency).
 
 **M15 Enhancements:** Async Execution Engine - `POST /api/tunix/run?mode=async` for non-blocking enqueue, dedicated worker process (`worker.py`) using Postgres `SKIP LOCKED` for robust job claiming, status polling endpoint, frontend "Run Async" toggle with auto-refresh, Prometheus metrics (`/metrics`) for run counts/duration/latency, `config` column migration for deferred execution parameters.
+
+**M16 Enhancements:** Operational UX - Real-time log streaming via SSE (`/api/tunix/runs/{id}/logs`), Run cancellation (`POST /cancel`) with worker termination, Artifacts/Checkpoints management (`/artifacts` list + download), Hardening (pinned dependencies, optimized trace batch insertion), `tunix_run_log_chunks` table for streaming persistence.
 
 ## System Architecture
 
@@ -306,10 +308,11 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 
 ---
 
-### Tunix Integration Endpoints (M12/M13)
+### Tunix Integration Endpoints (M12/M13/M16)
 
 **M12 Design:** Mock-first, artifact-based integration (no Tunix runtime required)  
-**M13 Enhancement:** Optional runtime execution with graceful degradation
+**M13 Enhancement:** Optional runtime execution with graceful degradation  
+**M16 Enhancement:** Live logs via SSE, cancellation, artifacts
 
 #### `GET /api/tunix/status`
 
@@ -517,7 +520,7 @@ curl -X POST http://localhost:8000/api/tunix/run \
 **Query Parameters:**
 - `limit` (optional, default 20, max 100): Number of runs to return
 - `offset` (optional, default 0): Number of runs to skip
-- `status` (optional): Filter by status (`completed`, `failed`, `running`, `timeout`, `pending`)
+- `status` (optional): Filter by status (`completed`, `failed`, `running`, `timeout`, `pending`, `cancelled`)
 - `dataset_key` (optional): Filter by dataset key
 - `mode` (optional): Filter by mode (`dry-run`, `local`)
 
@@ -604,6 +607,31 @@ curl http://localhost:8000/api/tunix/runs/123e4567-e89b-12d3-a456-426614174000
 
 ---
 
+### M16 Log Streaming & Artifacts
+
+#### `GET /api/tunix/runs/{id}/logs`
+
+**Description:** Stream real-time logs via Server-Sent Events (SSE).
+
+**Parameters:**
+- `since_seq` (int): Start streaming from this sequence number (resume).
+
+**Response:** `text/event-stream` with events `log`, `status`, `heartbeat`.
+
+#### `POST /api/tunix/runs/{id}/cancel`
+
+**Description:** Cancel a pending or running job.
+
+#### `GET /api/tunix/runs/{id}/artifacts`
+
+**Description:** List output files (checkpoints, configs).
+
+#### `GET /api/tunix/runs/{id}/artifacts/{filename}/download`
+
+**Description:** Download a specific artifact file.
+
+---
+
 ## Database Schema
 
 ### M2 Schema
@@ -666,7 +694,7 @@ curl http://localhost:8000/api/tunix/runs/123e4567-e89b-12d3-a456-426614174000
 | `dataset_key` | VARCHAR(256) | NOT NULL | Dataset identifier |
 | `model_id` | VARCHAR(256) | NOT NULL | Hugging Face model identifier |
 | `mode` | VARCHAR(64) | NOT NULL | Execution mode (`dry-run` or `local`) |
-| `status` | VARCHAR(64) | NOT NULL | Run status (`pending`, `running`, `completed`, `failed`, `timeout`) |
+| `status` | VARCHAR(64) | NOT NULL | Run status (`pending`, `running`, `completed`, `failed`, `timeout`, `cancelled`) |
 | `exit_code` | INTEGER | NULLABLE | Process exit code (NULL for dry-run/timeout) |
 | `started_at` | TIMESTAMPTZ | NOT NULL | Execution start time (UTC) |
 | `completed_at` | TIMESTAMPTZ | NULLABLE | Execution completion time (UTC, NULL only if crash) |
@@ -686,13 +714,31 @@ pending ──► running ──► completed
                 │
                 ├──────► failed
                 │
-                └──────► timeout
+                ├──────► timeout
+                │
+                └──────► cancelled
 ```
 
 **Note:** In M14, runs are created with `status="running"` directly. The `pending` state is reserved for future background job processing (M15+).
 
 **M14 Migrations:**
 - `4bf76cdb97da_add_tunix_runs_table.py` - Creates tunix_runs table with indexes
+
+### M16 Schema
+
+**Table: `tunix_run_log_chunks`**
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| `id` | INTEGER | PRIMARY KEY | Auto-increment ID |
+| `run_id` | UUID | FK → tunix_runs.run_id (CASCADE) | Associated run |
+| `seq` | INTEGER | NOT NULL | Monotonic sequence number per run |
+| `stream` | VARCHAR(16) | NOT NULL | Stream name ('stdout' or 'stderr') |
+| `chunk` | TEXT | NOT NULL | Log text content |
+| `created_at` | TIMESTAMPTZ | NOT NULL | Creation timestamp (UTC) |
+
+**Indexes:**
+- `ix_tunix_run_log_chunks_run_id_seq` on `(run_id, seq)` for efficient streaming.
 
 ## Configuration
 
@@ -927,6 +973,7 @@ tunix-rt/
 │   │   │   ├── datasets_export.py      # Dataset export formatting
 │   │   │   ├── datasets_builder.py     # Dataset manifest creation (M11)
 │   │   │   └── ungar_generator.py      # UNGAR trace generation (M11)
+│   │   │   └── tunix_execution.py      # Run execution & cancellation (M16)
 │   │   ├── helpers/            # Utilities
 │   │   │   ├── datasets.py
 │   │   │   └── traces.py
@@ -947,7 +994,9 @@ tunix-rt/
 │   │   ├── App.tsx             # Main component
 │   │   ├── App.test.tsx        # Unit tests
 │   │   ├── main.tsx            # Entry point
-│   │   └── index.css           # Styles
+│   │   ├── index.css           # Styles
+│   │   ├── components/         # React Components (M16)
+│   │   │   └── LiveLogs.tsx    # Live log streaming
 │   ├── package.json
 │   ├── tsconfig.json
 │   └── vite.config.ts
@@ -1263,9 +1312,9 @@ Apache-2.0
 
 ---
 
-**Last Updated:** M15 Complete  
-**Version:** 0.7.0  
-**Coverage:** Backend 81% Line, Frontend 77% Line  
+**Last Updated:** M16 Complete  
+**Version:** 0.8.0  
+**Coverage:** Backend 82% Line, Frontend 77% Line  
 **Security:** SHA-Pinned CI + SBOM + Pre-commit Hooks  
-**Architecture:** Tunix Async Execution (Worker Pattern) + Observability  
-**Tests:** 224 total (196 backend + 28 frontend)
+**Architecture:** Tunix Async Execution + Live Logs (SSE) + Cancellation  
+**Tests:** 225 total (197 backend + 28 frontend)

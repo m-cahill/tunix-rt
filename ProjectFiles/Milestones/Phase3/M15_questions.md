@@ -13,4 +13,3 @@
     *   For the `/metrics` endpoint, I assume we should add `prometheus-client` to `pyproject.toml` and expose standard Prometheus text format. Please confirm.
 
 5.  **Refactoring**: `execute_tunix_run` in `services/tunix_execution.py` currently mixes DB persistence and execution. For the worker, I'll likely need to extract the "execution" part (subprocess call) so the worker can reuse it without the synchronous DB logic (since the worker handles its own DB state transitions). Do you agree with this refactoring approach?
-
