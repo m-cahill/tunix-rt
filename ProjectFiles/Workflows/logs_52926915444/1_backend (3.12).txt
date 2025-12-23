@@ -1,0 +1,187 @@
+﻿2025-12-23T18:56:31.0004700Z Current runner version: '2.330.0'
+2025-12-23T18:56:31.0038749Z ##[group]Runner Image Provisioner
+2025-12-23T18:56:31.0040126Z Hosted Compute Agent
+2025-12-23T18:56:31.0041143Z Version: 20251211.462
+2025-12-23T18:56:31.0042163Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-23T18:56:31.0043468Z Build Date: 2025-12-11T16:28:49Z
+2025-12-23T18:56:31.0044535Z Worker ID: {3be011d3-6188-4e43-882d-c186aa6a8734}
+2025-12-23T18:56:31.0045726Z ##[endgroup]
+2025-12-23T18:56:31.0046741Z ##[group]Operating System
+2025-12-23T18:56:31.0047712Z Ubuntu
+2025-12-23T18:56:31.0048832Z 24.04.3
+2025-12-23T18:56:31.0049523Z LTS
+2025-12-23T18:56:31.0050402Z ##[endgroup]
+2025-12-23T18:56:31.0051236Z ##[group]Runner Image
+2025-12-23T18:56:31.0052117Z Image: ubuntu-24.04
+2025-12-23T18:56:31.0053088Z Version: 20251215.174.1
+2025-12-23T18:56:31.0054958Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-23T18:56:31.0057854Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-23T18:56:31.0059846Z ##[endgroup]
+2025-12-23T18:56:31.0061634Z ##[group]GITHUB_TOKEN Permissions
+2025-12-23T18:56:31.0064265Z Contents: read
+2025-12-23T18:56:31.0065160Z Metadata: read
+2025-12-23T18:56:31.0066109Z ##[endgroup]
+2025-12-23T18:56:31.0069522Z Secret source: Actions
+2025-12-23T18:56:31.0070755Z Prepare workflow directory
+2025-12-23T18:56:31.0907700Z Prepare all required actions
+2025-12-23T18:56:31.0965238Z Getting action download info
+2025-12-23T18:56:31.5876300Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2025-12-23T18:56:32.2850416Z Download action repository 'actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b' (SHA:0b93645e9fea7318ecaed2b359559ac225c90a2b)
+2025-12-23T18:56:32.6684668Z Download action repository 'actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b' (SHA:6f51ac03b9356f520e9adb1b1b7802705f340c2b)
+2025-12-23T18:56:32.9305321Z Complete job name: backend (3.12)
+2025-12-23T18:56:33.0073444Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2025-12-23T18:56:33.0074773Z with:
+2025-12-23T18:56:33.0075156Z   repository: m-cahill/tunix-rt
+2025-12-23T18:56:33.0075964Z   token: ***
+2025-12-23T18:56:33.0076343Z   ssh-strict: true
+2025-12-23T18:56:33.0076840Z   ssh-user: git
+2025-12-23T18:56:33.0077344Z   persist-credentials: true
+2025-12-23T18:56:33.0077869Z   clean: true
+2025-12-23T18:56:33.0078561Z   sparse-checkout-cone-mode: true
+2025-12-23T18:56:33.0079175Z   fetch-depth: 1
+2025-12-23T18:56:33.0079587Z   fetch-tags: false
+2025-12-23T18:56:33.0080062Z   show-progress: true
+2025-12-23T18:56:33.0080502Z   lfs: false
+2025-12-23T18:56:33.0080870Z   submodules: false
+2025-12-23T18:56:33.0081311Z   set-safe-directory: true
+2025-12-23T18:56:33.0082145Z ##[endgroup]
+2025-12-23T18:56:33.1240582Z Syncing repository: m-cahill/tunix-rt
+2025-12-23T18:56:33.1243612Z ##[group]Getting Git version info
+2025-12-23T18:56:33.1245092Z Working directory is '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-23T18:56:33.1247222Z [command]/usr/bin/git version
+2025-12-23T18:56:33.1381868Z git version 2.52.0
+2025-12-23T18:56:33.1411565Z ##[endgroup]
+2025-12-23T18:56:33.1428989Z Temporarily overriding HOME='/home/runner/work/_temp/9fbafa7b-03ea-4319-94b5-4a38415da9a9' before making global git config changes
+2025-12-23T18:56:33.1434274Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-23T18:56:33.1453194Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T18:56:33.1499766Z Deleting the contents of '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-23T18:56:33.1504396Z ##[group]Initializing the repository
+2025-12-23T18:56:33.1510145Z [command]/usr/bin/git init /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T18:56:33.1627819Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-23T18:56:33.1630512Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-23T18:56:33.1632887Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-23T18:56:33.1634846Z hint: call:
+2025-12-23T18:56:33.1636700Z hint:
+2025-12-23T18:56:33.1638823Z hint: 	git config --global init.defaultBranch <name>
+2025-12-23T18:56:33.1640136Z hint:
+2025-12-23T18:56:33.1641336Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-23T18:56:33.1643844Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-23T18:56:33.1645640Z hint:
+2025-12-23T18:56:33.1646222Z hint: 	git branch -m <name>
+2025-12-23T18:56:33.1646997Z hint:
+2025-12-23T18:56:33.1648557Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-23T18:56:33.1652576Z Initialized empty Git repository in /home/runner/work/tunix-rt/tunix-rt/.git/
+2025-12-23T18:56:33.1656271Z [command]/usr/bin/git remote add origin https://github.com/m-cahill/tunix-rt
+2025-12-23T18:56:33.1692567Z ##[endgroup]
+2025-12-23T18:56:33.1693915Z ##[group]Disabling automatic garbage collection
+2025-12-23T18:56:33.1697026Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-23T18:56:33.1728965Z ##[endgroup]
+2025-12-23T18:56:33.1730263Z ##[group]Setting up auth
+2025-12-23T18:56:33.1736232Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-23T18:56:33.1770277Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-23T18:56:33.2156415Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-23T18:56:33.2191770Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-23T18:56:33.2429552Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-23T18:56:33.2469070Z ##[endgroup]
+2025-12-23T18:56:33.2471520Z ##[group]Fetching the repository
+2025-12-23T18:56:33.2491367Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +4bc7954e3f4f052eaae5af5173990f3e0765b1f4:refs/remotes/origin/main
+2025-12-23T18:56:34.2787597Z From https://github.com/m-cahill/tunix-rt
+2025-12-23T18:56:34.2789137Z  * [new ref]         4bc7954e3f4f052eaae5af5173990f3e0765b1f4 -> origin/main
+2025-12-23T18:56:34.2830246Z ##[endgroup]
+2025-12-23T18:56:34.2830921Z ##[group]Determining the checkout info
+2025-12-23T18:56:34.2835083Z ##[endgroup]
+2025-12-23T18:56:34.2841130Z [command]/usr/bin/git sparse-checkout disable
+2025-12-23T18:56:34.2886087Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-23T18:56:34.2916637Z ##[group]Checking out the ref
+2025-12-23T18:56:34.2920395Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-23T18:56:34.4164583Z Switched to a new branch 'main'
+2025-12-23T18:56:34.4168965Z branch 'main' set up to track 'origin/main'.
+2025-12-23T18:56:34.4179077Z ##[endgroup]
+2025-12-23T18:56:34.4222258Z [command]/usr/bin/git log -1 --format=%H
+2025-12-23T18:56:34.4246335Z 4bc7954e3f4f052eaae5af5173990f3e0765b1f4
+2025-12-23T18:56:34.4472657Z ##[group]Run actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+2025-12-23T18:56:34.4473206Z with:
+2025-12-23T18:56:34.4473394Z   python-version: 3.12
+2025-12-23T18:56:34.4473599Z   cache: pip
+2025-12-23T18:56:34.4473828Z   cache-dependency-path: backend/pyproject.toml
+2025-12-23T18:56:34.4474133Z   check-latest: false
+2025-12-23T18:56:34.4474454Z   token: ***
+2025-12-23T18:56:34.4474654Z   update-environment: true
+2025-12-23T18:56:34.4474881Z   allow-prereleases: false
+2025-12-23T18:56:34.4475096Z ##[endgroup]
+2025-12-23T18:56:34.6411963Z ##[group]Installed versions
+2025-12-23T18:56:34.6653348Z Successfully set up CPython (3.12.12)
+2025-12-23T18:56:34.6669133Z ##[endgroup]
+2025-12-23T18:56:34.7159193Z [command]/opt/hostedtoolcache/Python/3.12.12/x64/bin/pip cache dir
+2025-12-23T18:56:35.1936008Z /home/runner/.cache/pip
+2025-12-23T18:56:35.3238259Z ##[warning]Failed to restore: Cache service responded with 400
+2025-12-23T18:56:35.3260781Z pip cache is not found
+2025-12-23T18:56:35.3392155Z ##[group]Run python -m pip install -e ".[dev]"
+2025-12-23T18:56:35.3392551Z [36;1mpython -m pip install -e ".[dev]"[0m
+2025-12-23T18:56:35.3430349Z shell: /usr/bin/bash -e {0}
+2025-12-23T18:56:35.3430599Z env:
+2025-12-23T18:56:35.3430859Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-23T18:56:35.3431286Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib/pkgconfig
+2025-12-23T18:56:35.3431720Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-23T18:56:35.3432069Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-23T18:56:35.3432404Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-23T18:56:35.3432762Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib
+2025-12-23T18:56:35.3433058Z ##[endgroup]
+2025-12-23T18:56:36.0115105Z Obtaining file:///home/runner/work/tunix-rt/tunix-rt/backend
+2025-12-23T18:56:36.0138440Z   Installing build dependencies: started
+2025-12-23T18:56:37.1057078Z   Installing build dependencies: finished with status 'done'
+2025-12-23T18:56:37.1064177Z   Checking if build backend supports build_editable: started
+2025-12-23T18:56:37.4124573Z   Checking if build backend supports build_editable: finished with status 'done'
+2025-12-23T18:56:37.4133180Z   Getting requirements to build editable: started
+2025-12-23T18:56:37.7567505Z   Getting requirements to build editable: finished with status 'done'
+2025-12-23T18:56:37.7578684Z   Preparing editable metadata (pyproject.toml): started
+2025-12-23T18:56:37.9650110Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+2025-12-23T18:56:38.1155852Z Collecting fastapi>=0.104.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:38.1898567Z   Downloading fastapi-0.127.0-py3-none-any.whl.metadata (30 kB)
+2025-12-23T18:56:38.2473022Z Collecting uvicorn>=0.24.0 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-23T18:56:38.2577179Z   Downloading uvicorn-0.40.0-py3-none-any.whl.metadata (6.7 kB)
+2025-12-23T18:56:38.2954063Z Collecting httpx>=0.25.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:38.2987444Z   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+2025-12-23T18:56:38.4678326Z Collecting pydantic>=2.4.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:38.4785006Z   Downloading pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)
+2025-12-23T18:56:38.5348753Z Collecting pydantic-settings>=2.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:38.5440023Z   Downloading pydantic_settings-2.12.0-py3-none-any.whl.metadata (3.4 kB)
+2025-12-23T18:56:38.8695267Z Collecting sqlalchemy>=2.0.0 (from sqlalchemy[asyncio]>=2.0.0->tunix-rt-backend==0.1.0)
+2025-12-23T18:56:38.8831529Z   Downloading sqlalchemy-2.0.45-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+2025-12-23T18:56:38.9429271Z Collecting alembic>=1.12.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:38.9534835Z   Downloading alembic-1.17.2-py3-none-any.whl.metadata (7.2 kB)
+2025-12-23T18:56:39.0080833Z Collecting asyncpg>=0.29.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:39.0242482Z   Downloading asyncpg-0.31.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (4.4 kB)
+2025-12-23T18:56:39.0722112Z Collecting pyyaml>=6.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:39.0827186Z   Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2025-12-23T18:56:39.1065623Z Collecting prometheus-client>=0.19.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:39.1165246Z   Downloading prometheus_client-0.23.1-py3-none-any.whl.metadata (1.9 kB)
+2025-12-23T18:56:39.1624984Z Collecting pytest>=7.4.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:39.1726246Z   Downloading pytest-9.0.2-py3-none-any.whl.metadata (7.6 kB)
+2025-12-23T18:56:39.1984225Z Collecting pytest-cov>=4.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:39.2088867Z   Downloading pytest_cov-7.0.0-py3-none-any.whl.metadata (31 kB)
+2025-12-23T18:56:39.2425345Z Collecting pytest-asyncio>=0.21.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:39.2528295Z   Downloading pytest_asyncio-1.3.0-py3-none-any.whl.metadata (4.1 kB)
+2025-12-23T18:56:39.6763544Z Collecting ruff>=0.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:39.6867769Z   Downloading ruff-0.14.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (26 kB)
+2025-12-23T18:56:39.8066181Z Collecting mypy>=1.6.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:39.8172637Z   Downloading mypy-1.19.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.2 kB)
+2025-12-23T18:56:39.8461347Z Collecting types-PyYAML>=6.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:39.8564462Z   Downloading types_pyyaml-6.0.12.20250915-py3-none-any.whl.metadata (1.7 kB)
+2025-12-23T18:56:40.0670196Z INFO: pip is looking at multiple versions of tunix-rt-backend[dev] to determine which version is compatible with other requirements. This could take a while.
+2025-12-23T18:56:40.0759463Z ERROR: Could not find a version that satisfies the requirement types-prometheus-client>=0.19.0; extra == "dev" (from tunix-rt-backend[dev]) (from versions: none)
+2025-12-23T18:56:40.2014002Z ERROR: No matching distribution found for types-prometheus-client>=0.19.0; extra == "dev"
+2025-12-23T18:56:40.3771304Z ##[error]Process completed with exit code 1.
+2025-12-23T18:56:40.3883196Z Post job cleanup.
+2025-12-23T18:56:40.4861125Z [command]/usr/bin/git version
+2025-12-23T18:56:40.4904452Z git version 2.52.0
+2025-12-23T18:56:40.4954221Z Temporarily overriding HOME='/home/runner/work/_temp/6a557025-2b67-4bd8-9e77-c1c29925579e' before making global git config changes
+2025-12-23T18:56:40.4956062Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-23T18:56:40.4960844Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T18:56:40.5012169Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-23T18:56:40.5047633Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-23T18:56:40.5297129Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-23T18:56:40.5322300Z http.https://github.com/.extraheader
+2025-12-23T18:56:40.5337953Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-12-23T18:56:40.5378464Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-23T18:56:40.5728718Z Cleaning up orphan processes

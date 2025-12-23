@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import {
   getApiHealth,
   getRediHealth,
@@ -13,6 +13,7 @@ import {
   executeTunixRun,
   listTunixRuns,
   getTunixRun,
+  getTunixRunStatus,
   type HealthResponse,
   type RediHealthResponse,
   type TraceDetail,
@@ -65,6 +66,8 @@ function App() {
   const [tunixError, setTunixError] = useState<string | null>(null)
   const [tunixLoading, setTunixLoading] = useState(false)
   const [tunixRunLoading, setTunixRunLoading] = useState(false)
+  const [tunixAsyncMode, setTunixAsyncMode] = useState(false)
+  const pollingIntervalRef = useRef<number | null>(null)
 
   // M14: Run history state
   const [runHistoryExpanded, setRunHistoryExpanded] = useState(false)
@@ -122,8 +125,48 @@ function App() {
     // Cleanup on unmount
     return () => {
       clearInterval(intervalId)
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current)
+      }
     }
   }, [])
+
+  const startPollingRun = (runId: string) => {
+    if (pollingIntervalRef.current) clearInterval(pollingIntervalRef.current)
+
+    pollingIntervalRef.current = window.setInterval(async () => {
+      try {
+        const status = await getTunixRunStatus(runId)
+
+        // Update local result state with status
+        setTunixRunResult((prev) => {
+          if (!prev) return null
+          return {
+            ...prev,
+            status: status.status,
+            message: `Async execution: ${status.status}`,
+          }
+        })
+
+        if (['completed', 'failed', 'timeout'].includes(status.status)) {
+          if (pollingIntervalRef.current) clearInterval(pollingIntervalRef.current)
+          pollingIntervalRef.current = null
+
+          // Fetch full details
+          const result = await getTunixRun(runId)
+          setTunixRunResult(result)
+
+          // Refresh list if expanded
+          if (runHistoryExpanded) {
+            handleRefreshRunHistory()
+          }
+        }
+      } catch (error) {
+        // Stop polling on error to avoid spam
+        if (pollingIntervalRef.current) clearInterval(pollingIntervalRef.current)
+      }
+    }, 4000)
+  }
 
   const getStatusClass = (status: string | undefined) => {
     if (!status) return 'status-loading'
@@ -309,19 +352,32 @@ function App() {
     setTunixLoading(true)
     setTunixRunResult(null)
 
+    // Clear previous polling
+    if (pollingIntervalRef.current) {
+      clearInterval(pollingIntervalRef.current)
+      pollingIntervalRef.current = null
+    }
+
     try {
-      const result = await executeTunixRun({
-        dataset_key: tunixDatasetKey,
-        model_id: tunixModelId,
-        output_dir: tunixOutputDir || undefined,
-        dry_run: dryRun,
-      })
+      const result = await executeTunixRun(
+        {
+          dataset_key: tunixDatasetKey,
+          model_id: tunixModelId,
+          output_dir: tunixOutputDir || undefined,
+          dry_run: dryRun,
+        },
+        tunixAsyncMode ? { mode: 'async' } : undefined
+      )
       setTunixRunResult(result)
       setTunixError(null)
 
-      // M14: Refresh run history if expanded
-      if (runHistoryExpanded) {
-        await handleRefreshRunHistory()
+      if (tunixAsyncMode && result.status === 'pending') {
+        startPollingRun(result.run_id)
+      } else {
+        // Sync mode finished immediately, refresh history if expanded
+        if (runHistoryExpanded) {
+          await handleRefreshRunHistory()
+        }
       }
     } catch (error) {
       if (error instanceof ApiError) {
@@ -708,6 +764,19 @@ function App() {
           </div>
 
           <div className="button-group">
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <input
+                type="checkbox"
+                id="tunix-async-mode"
+                checked={tunixAsyncMode}
+                onChange={(e) => setTunixAsyncMode(e.target.checked)}
+                disabled={tunixLoading || tunixRunLoading}
+              />
+              <label htmlFor="tunix-async-mode" style={{ marginLeft: '8px' }}>
+                Run Async (Non-blocking)
+              </label>
+            </div>
+
             <button
               data-testid="tunix:export-btn"
               onClick={handleTunixExport}

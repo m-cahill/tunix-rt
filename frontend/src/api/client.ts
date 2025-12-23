@@ -381,6 +381,18 @@ export interface TunixRunResponse {
 }
 
 /**
+ * Response from checking Tunix run status (M15)
+ */
+export interface TunixRunStatusResponse {
+  run_id: string
+  status: 'pending' | 'running' | 'completed' | 'failed' | 'timeout'
+  queued_at: string
+  started_at: string
+  completed_at: string | null
+  exit_code: number | null
+}
+
+/**
  * Get Tunix availability status
  * @returns Promise resolving to Tunix status (always succeeds, check fields)
  */
@@ -431,19 +443,30 @@ export async function generateTunixManifest(request: TunixManifestRequest): Prom
 }
 
 /**
- * Execute a Tunix training run (M13)
+ * Execute a Tunix training run (M13/M15)
  * @param request - Run parameters (dataset_key, model_id, hyperparameters, dry_run flag)
+ * @param options - Execution options (mode='async' for non-blocking)
  * @returns Promise resolving to run execution results
  * @throws {ApiError} on HTTP error (including 501 if Tunix not available and dry_run=false)
  */
-export async function executeTunixRun(request: TunixRunRequest): Promise<TunixRunResponse> {
-  return fetchJSON<TunixRunResponse>('/api/tunix/run', {
+export async function executeTunixRun(request: TunixRunRequest, options?: { mode?: 'async' }): Promise<TunixRunResponse> {
+  const url = options?.mode === 'async' ? '/api/tunix/run?mode=async' : '/api/tunix/run'
+  return fetchJSON<TunixRunResponse>(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(request),
   })
+}
+
+/**
+ * Get status of a Tunix training run (M15)
+ * @param runId - UUID of the run
+ * @returns Promise resolving to run status
+ */
+export async function getTunixRunStatus(runId: string): Promise<TunixRunStatusResponse> {
+  return fetchJSON<TunixRunStatusResponse>(`/api/tunix/runs/${runId}/status`)
 }
 
 /**

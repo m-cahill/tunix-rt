@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M14 Complete** ✅  
-**Coverage:** 82% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Tunix Run Registry (persistent storage + API) | **Testing:** 192 backend + 28 frontend tests
+**Milestone M15 Complete** ✅  
+**Coverage:** 81.38% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Async Execution (Postgres Queue + Worker), Prometheus Metrics | **Testing:** 196 backend + 28 frontend tests
 
 ## Overview
 
@@ -14,6 +14,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M3 Enhancements:** Trace system hardening - DB connection pool settings applied, created_at index for list performance, frontend trace UI unit tests (8 total), frontend coverage artifact generation confirmed, Alembic auto-ID migration policy documented, curl API examples, and DB troubleshooting guide.
 
 **M14 Enhancements:** Tunix Run Registry - persistent storage with `tunix_runs` table (UUID PK, indexed columns), Alembic migration, immediate run persistence (create with status="running", update on completion), graceful DB failure handling, `GET /api/tunix/runs` with pagination/filtering, `GET /api/tunix/runs/{run_id}` for details, frontend Run History panel (collapsible, manual refresh), stdout/stderr truncation (10KB), 12 new backend tests + 7 frontend tests (all dry-run, no Tunix dependency).
+
+**M15 Enhancements:** Async Execution Engine - `POST /api/tunix/run?mode=async` for non-blocking enqueue, dedicated worker process (`worker.py`) using Postgres `SKIP LOCKED` for robust job claiming, status polling endpoint, frontend "Run Async" toggle with auto-refresh, Prometheus metrics (`/metrics`) for run counts/duration/latency, `config` column migration for deferred execution parameters.
 
 ## System Architecture
 
@@ -1225,12 +1227,22 @@ docs: update README
 - **Coverage maintained:** 82% backend line, 77% frontend line
 - **Complete documentation:** M14_BASELINE.md, M14_RUN_REGISTRY.md, M14_SUMMARY.md
 
-## Next Steps (M14+)
+### M15: Async Execution & Run Registry (Phase 4) ✅
+- **Async API:** `POST /api/tunix/run?mode=async` returns `200 OK` + `status="pending"` immediately.
+- **Worker Process:** `worker.py` consumes pending runs using `SKIP LOCKED` for atomic claiming.
+- **Status Endpoint:** `GET /api/tunix/runs/{id}/status` for lightweight polling.
+- **Observability:** `/metrics` endpoint exposing Prometheus counters and histograms.
+- **Frontend Updates:** "Run Async" toggle, auto-polling for pending runs, status badges.
+- **Schema:** Added `config` JSON column to `tunix_runs` for persisting run parameters.
+- **Refactoring:** Decoupled execution logic from API request lifecycle.
+- **Tests:** Backend unit tests for async flow + worker logic; E2E test for async UI flow.
+- **Documentation:** Updated README with worker info; new PERFORMANCE_BASELINE.md.
 
-1. **M15**: Async execution + run management (Celery/Ray, deletion, retry, cancellation)
-2. **M16**: Checkpoint management + metrics extraction (parse logs, advanced filtering)
-3. **M17**: Evaluation loop + hyperparameter tuning (Ray Tune, leaderboard)
-4. **M18**: Production MLOps (model registry, deployment, monitoring)
+## Next Steps (M15+)
+
+1. **M16**: Log streaming (SSE/WebSockets) + Checkpoint management + Run cancellation
+2. **M17**: Evaluation loop + hyperparameter tuning (Ray Tune, leaderboard)
+3. **M18**: Production MLOps (model registry, deployment, monitoring)
 
 ## Architecture Decisions
 
@@ -1251,9 +1263,9 @@ Apache-2.0
 
 ---
 
-**Last Updated:** M13 Complete  
-**Version:** 0.6.0  
-**Coverage:** Backend 92% Line, Frontend 77% Line  
+**Last Updated:** M15 Complete  
+**Version:** 0.7.0  
+**Coverage:** Backend 81% Line, Frontend 77% Line  
 **Security:** SHA-Pinned CI + SBOM + Pre-commit Hooks  
-**Architecture:** Tunix Runtime Execution (Optional) + Complete Service Extraction  
-**Tests:** 193 total (168 backend + 25 frontend)
+**Architecture:** Tunix Async Execution (Worker Pattern) + Observability  
+**Tests:** 224 total (196 backend + 28 frontend)

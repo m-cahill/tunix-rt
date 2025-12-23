@@ -1,0 +1,30 @@
+﻿2025-12-23T18:57:01.3500352Z ##[group]Run actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b
+2025-12-23T18:57:01.3500869Z with:
+2025-12-23T18:57:01.3501059Z   name: playwright-report
+2025-12-23T18:57:01.3501289Z   path: e2e/playwright-report/
+2025-12-23T18:57:01.3501518Z   retention-days: 7
+2025-12-23T18:57:01.3501699Z   if-no-files-found: warn
+2025-12-23T18:57:01.3501900Z   compression-level: 6
+2025-12-23T18:57:01.3502102Z   overwrite: false
+2025-12-23T18:57:01.3502284Z   include-hidden-files: false
+2025-12-23T18:57:01.3502479Z env:
+2025-12-23T18:57:01.3502623Z   REDIAI_MODE: mock
+2025-12-23T18:57:01.3503164Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T18:57:01.3503478Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:57:01.3503883Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T18:57:01.3504265Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:57:01.3504598Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:57:01.3504959Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:57:01.3505299Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T18:57:01.3505587Z ##[endgroup]
+2025-12-23T18:57:01.5861586Z With the provided path, there will be 3 files uploaded
+2025-12-23T18:57:01.5862377Z Artifact name is valid!
+2025-12-23T18:57:01.5862747Z Root directory input is valid!
+2025-12-23T18:57:01.7318392Z Beginning upload of artifact content to blob storage
+2025-12-23T18:57:01.9516277Z Uploaded bytes 201232
+2025-12-23T18:57:01.9849906Z Finished uploading artifact content to blob storage!
+2025-12-23T18:57:01.9854214Z SHA256 hash of uploaded artifact zip is c225dc561b3b37ce9c4aae84ff1552f914003b9982704505ddb0cf6b9cf2a26d
+2025-12-23T18:57:01.9868642Z Finalizing artifact upload
+2025-12-23T18:57:02.1225676Z Artifact playwright-report.zip successfully finalized. Artifact ID 4955965876
+2025-12-23T18:57:02.1227874Z Artifact playwright-report has been successfully uploaded! Final size is 201232 bytes. Artifact ID is 4955965876
+2025-12-23T18:57:02.1235099Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20469108971/artifacts/4955965876

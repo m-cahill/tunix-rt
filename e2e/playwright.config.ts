@@ -69,5 +69,14 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
       timeout: 120000,
     },
+    {
+      command: `cd ../backend && python -m tunix_rt_backend.worker`,
+      stdout: /Tunix worker started/,
+      reuseExistingServer: !process.env.CI,
+      timeout: 30000,
+      env: {
+        DATABASE_URL,
+      },
+    },
   ],
 });

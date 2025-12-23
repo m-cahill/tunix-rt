@@ -64,9 +64,14 @@ describe('App', () => {
     vi.clearAllMocks()
   })
 
-  it('renders heading', () => {
+  it('renders heading', async () => {
+    mockAllHealthFetches()
     render(<App />)
     expect(screen.getByText('Tunix RT')).toBeInTheDocument()
+    // Wait for initial health check to prevent act warnings
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toBeInTheDocument()
+    })
   })
 
   it('displays API healthy status', async () => {
@@ -356,10 +361,15 @@ describe('App', () => {
     })
   })
 
-  it('disables compare button when trace IDs are missing', () => {
+  it('disables compare button when trace IDs are missing', async () => {
     mockAllHealthFetches()
 
     render(<App />)
+
+    // Wait for initial health check
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toBeInTheDocument()
+    })
 
     const compareButton = screen.getByText('Fetch & Compare') as HTMLButtonElement
     expect(compareButton.disabled).toBe(true)
@@ -797,10 +807,15 @@ describe('App', () => {
     }, { timeout: 3000 })
   })
 
-  it('disables run buttons when dataset key is empty', () => {
+  it('disables run buttons when dataset key is empty', async () => {
     mockAllHealthFetches()
 
     render(<App />)
+
+    // Wait for initial health check
+    await waitFor(() => {
+      expect(screen.getByTestId('sys:api-status')).toBeInTheDocument()
+    })
 
     const dryRunButton = screen.getByTestId('tunix:run-dry-btn') as HTMLButtonElement
     const localRunButton = screen.getByTestId('tunix:run-local-btn') as HTMLButtonElement

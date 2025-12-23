@@ -1,0 +1,58 @@
+﻿2025-12-23T18:56:55.9409819Z ##[group]Run cd ../backend && python -m pip install -e ".[dev]"
+2025-12-23T18:56:55.9410445Z [36;1mcd ../backend && python -m pip install -e ".[dev]"[0m
+2025-12-23T18:56:55.9448864Z shell: /usr/bin/bash -e {0}
+2025-12-23T18:56:55.9449106Z env:
+2025-12-23T18:56:55.9449261Z   REDIAI_MODE: mock
+2025-12-23T18:56:55.9449800Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T18:56:55.9450288Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:56:55.9450706Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T18:56:55.9451092Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:56:55.9451439Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:56:55.9451804Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:56:55.9452151Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T18:56:55.9452453Z ##[endgroup]
+2025-12-23T18:56:57.1419941Z Obtaining file:///home/runner/work/tunix-rt/tunix-rt/backend
+2025-12-23T18:56:57.1442742Z   Installing build dependencies: started
+2025-12-23T18:56:58.6008330Z   Installing build dependencies: finished with status 'done'
+2025-12-23T18:56:58.6026021Z   Checking if build backend supports build_editable: started
+2025-12-23T18:56:58.9220456Z   Checking if build backend supports build_editable: finished with status 'done'
+2025-12-23T18:56:58.9228345Z   Getting requirements to build editable: started
+2025-12-23T18:56:59.2287464Z   Getting requirements to build editable: finished with status 'done'
+2025-12-23T18:56:59.2298727Z   Preparing editable metadata (pyproject.toml): started
+2025-12-23T18:56:59.4034769Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+2025-12-23T18:56:59.5408615Z Collecting fastapi>=0.104.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:59.6267589Z   Downloading fastapi-0.127.0-py3-none-any.whl.metadata (30 kB)
+2025-12-23T18:56:59.6732343Z Collecting uvicorn>=0.24.0 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-23T18:56:59.6877201Z   Downloading uvicorn-0.40.0-py3-none-any.whl.metadata (6.7 kB)
+2025-12-23T18:56:59.7188949Z Collecting httpx>=0.25.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:59.7333728Z   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+2025-12-23T18:56:59.8509233Z Collecting pydantic>=2.4.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:59.8657280Z   Downloading pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)
+2025-12-23T18:56:59.8982148Z Collecting pydantic-settings>=2.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:59.9131094Z   Downloading pydantic_settings-2.12.0-py3-none-any.whl.metadata (3.4 kB)
+2025-12-23T18:57:00.1777722Z Collecting sqlalchemy>=2.0.0 (from sqlalchemy[asyncio]>=2.0.0->tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.1926188Z   Downloading sqlalchemy-2.0.45-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+2025-12-23T18:57:00.2229290Z Collecting alembic>=1.12.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.2377857Z   Downloading alembic-1.17.2-py3-none-any.whl.metadata (7.2 kB)
+2025-12-23T18:57:00.2976873Z Collecting asyncpg>=0.29.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.3118854Z   Downloading asyncpg-0.31.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.4 kB)
+2025-12-23T18:57:00.3501681Z Collecting pyyaml>=6.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.3647014Z   Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2025-12-23T18:57:00.3802976Z Collecting prometheus-client>=0.19.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.3943366Z   Downloading prometheus_client-0.23.1-py3-none-any.whl.metadata (1.9 kB)
+2025-12-23T18:57:00.4306319Z Collecting pytest>=7.4.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.4448239Z   Downloading pytest-9.0.2-py3-none-any.whl.metadata (7.6 kB)
+2025-12-23T18:57:00.4685333Z Collecting pytest-cov>=4.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.4824074Z   Downloading pytest_cov-7.0.0-py3-none-any.whl.metadata (31 kB)
+2025-12-23T18:57:00.5121617Z Collecting pytest-asyncio>=0.21.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.5281873Z   Downloading pytest_asyncio-1.3.0-py3-none-any.whl.metadata (4.1 kB)
+2025-12-23T18:57:00.8930037Z Collecting ruff>=0.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.9076129Z   Downloading ruff-0.14.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (26 kB)
+2025-12-23T18:57:01.0100495Z Collecting mypy>=1.6.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:01.0245306Z   Downloading mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.2 kB)
+2025-12-23T18:57:01.0453059Z Collecting types-PyYAML>=6.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:01.0593822Z   Downloading types_pyyaml-6.0.12.20250915-py3-none-any.whl.metadata (1.7 kB)
+2025-12-23T18:57:01.0889398Z INFO: pip is looking at multiple versions of tunix-rt-backend[dev] to determine which version is compatible with other requirements. This could take a while.
+2025-12-23T18:57:01.0984719Z ERROR: Could not find a version that satisfies the requirement types-prometheus-client>=0.19.0; extra == "dev" (from tunix-rt-backend[dev]) (from versions: none)
+2025-12-23T18:57:01.1904967Z ERROR: No matching distribution found for types-prometheus-client>=0.19.0; extra == "dev"
+2025-12-23T18:57:01.3438972Z ##[error]Process completed with exit code 1.

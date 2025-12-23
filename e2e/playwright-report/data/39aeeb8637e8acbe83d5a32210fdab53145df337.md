@@ -1,0 +1,78 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - heading "Tunix RT" [level=1] [ref=e4]
+  - paragraph [ref=e5]: Reasoning-Trace Framework with RediAI Integration
+  - generic [ref=e6]:
+    - heading "API Status" [level=2] [ref=e7]
+    - paragraph [ref=e8]: "API: healthy"
+  - generic [ref=e9]:
+    - heading "RediAI Integration" [level=2] [ref=e10]
+    - paragraph [ref=e11]: "RediAI: healthy"
+  - generic [ref=e12]:
+    - heading "Reasoning Traces" [level=2] [ref=e13]
+    - generic [ref=e14]:
+      - generic [ref=e15]: "Trace JSON:"
+      - textbox "Trace JSON:" [ref=e16]:
+        - /placeholder: Enter trace JSON here or click 'Load Example'
+      - generic [ref=e17]:
+        - button "Load Example" [ref=e18] [cursor=pointer]
+        - button "Upload" [disabled] [ref=e19]
+        - button "Fetch" [disabled] [ref=e20]
+  - generic [ref=e21]:
+    - heading "Evaluate Traces" [level=2] [ref=e22]
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - generic [ref=e25]: "Base Trace ID:"
+        - textbox "Base Trace ID:" [ref=e26]:
+          - /placeholder: Enter base trace UUID
+      - generic [ref=e27]:
+        - generic [ref=e28]: "Other Trace ID:"
+        - textbox "Other Trace ID:" [ref=e29]:
+          - /placeholder: Enter other trace UUID
+      - button "Fetch & Compare" [disabled] [ref=e30]
+  - generic [ref=e31]:
+    - heading "UNGAR Generator (Optional)" [level=2] [ref=e32]
+    - paragraph [ref=e34]:
+      - strong [ref=e35]: "Status:"
+      - text: ❌ Not Installed
+  - generic [ref=e36]:
+    - heading "Tunix Integration (M12)" [level=2] [ref=e37]
+    - generic [ref=e38]:
+      - paragraph [ref=e39]:
+        - strong [ref=e40]: "Status:"
+        - text: Failed to fetch status
+      - paragraph [ref=e41]:
+        - strong [ref=e42]: "Runtime Required:"
+        - text: No (Artifact-based)
+    - generic [ref=e43]:
+      - generic [ref=e44]:
+        - generic [ref=e45]: "Dataset Key (e.g., ungar_hcd-v1):"
+        - textbox "Dataset Key (e.g., ungar_hcd-v1):" [ref=e46]:
+          - /placeholder: my_dataset-v1
+          - text: test-async-v1
+      - generic [ref=e47]:
+        - generic [ref=e48]: "Model ID:"
+        - textbox "Model ID:" [ref=e49]:
+          - /placeholder: google/gemma-2b-it
+          - text: google/gemma-2b-it
+      - generic [ref=e50]:
+        - generic [ref=e51]: "Output Directory:"
+        - textbox "Output Directory:" [ref=e52]:
+          - /placeholder: ./output/tunix_run
+          - text: ./output/tunix_run
+      - generic [ref=e53]:
+        - generic [ref=e54]:
+          - checkbox "Run Async (Non-blocking)" [checked] [ref=e55]
+          - generic [ref=e56]: Run Async (Non-blocking)
+        - button "Export JSONL" [ref=e57]
+        - button "Generate Manifest" [ref=e58]
+        - button "Run (Dry-run)" [ref=e59]
+        - button "Run with Tunix (Local)" [ref=e60]
+    - generic [ref=e61]:
+      - strong [ref=e62]: "Error:"
+      - text: "Run failed: HTTP error: Not Found (404)"
+    - heading "▶ Run History" [level=3] [ref=e64]:
+      - button "▶ Run History" [ref=e65] [cursor=pointer]
+```

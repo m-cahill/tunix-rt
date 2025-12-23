@@ -198,6 +198,19 @@ make db-revision msg="description"
 - `make db-history` - Show migration history
 - `make db-revision msg="..."` - Create new migration
 
+**Rollback Example:**
+
+If a migration causes issues, you can rollback to the previous version:
+
+```bash
+# Rollback one revision
+make db-downgrade
+
+# Or manually via alembic
+cd backend
+alembic downgrade -1
+```
+
 ## API Endpoints
 
 ### Health Endpoints

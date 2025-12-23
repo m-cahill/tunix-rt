@@ -1,0 +1,388 @@
+﻿2025-12-23T18:56:30.4895102Z Current runner version: '2.330.0'
+2025-12-23T18:56:30.4950019Z ##[group]Runner Image Provisioner
+2025-12-23T18:56:30.4971578Z Hosted Compute Agent
+2025-12-23T18:56:30.4972480Z Version: 20251211.462
+2025-12-23T18:56:30.4973519Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-23T18:56:30.4974595Z Build Date: 2025-12-11T16:28:49Z
+2025-12-23T18:56:30.4975685Z Worker ID: {d12e442d-3087-4a90-9841-42e9d43b8992}
+2025-12-23T18:56:30.4976709Z ##[endgroup]
+2025-12-23T18:56:30.4977512Z ##[group]Operating System
+2025-12-23T18:56:30.4978478Z Ubuntu
+2025-12-23T18:56:30.4979234Z 24.04.3
+2025-12-23T18:56:30.4979957Z LTS
+2025-12-23T18:56:30.5001260Z ##[endgroup]
+2025-12-23T18:56:30.5002125Z ##[group]Runner Image
+2025-12-23T18:56:30.5003092Z Image: ubuntu-24.04
+2025-12-23T18:56:30.5004183Z Version: 20251215.174.1
+2025-12-23T18:56:30.5005968Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-23T18:56:30.5008862Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-23T18:56:30.5011025Z ##[endgroup]
+2025-12-23T18:56:30.5013259Z ##[group]GITHUB_TOKEN Permissions
+2025-12-23T18:56:30.5016011Z Contents: read
+2025-12-23T18:56:30.5016817Z Metadata: read
+2025-12-23T18:56:30.5017776Z ##[endgroup]
+2025-12-23T18:56:30.5041397Z Secret source: Actions
+2025-12-23T18:56:30.5042689Z Prepare workflow directory
+2025-12-23T18:56:30.6305929Z Prepare all required actions
+2025-12-23T18:56:30.6429859Z Getting action download info
+2025-12-23T18:56:31.0031834Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2025-12-23T18:56:31.1317904Z Download action repository 'actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b' (SHA:0b93645e9fea7318ecaed2b359559ac225c90a2b)
+2025-12-23T18:56:31.3089950Z Download action repository 'actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af' (SHA:39370e3970a6d050c480ffad4ff0ed4d3fdee5af)
+2025-12-23T18:56:31.5358553Z Download action repository 'actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b' (SHA:6f51ac03b9356f520e9adb1b1b7802705f340c2b)
+2025-12-23T18:56:31.9465497Z Complete job name: e2e
+2025-12-23T18:56:31.9986006Z ##[group]Checking docker version
+2025-12-23T18:56:31.9998911Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2025-12-23T18:56:32.1168316Z '1.48'
+2025-12-23T18:56:32.1183524Z Docker daemon API version: '1.48'
+2025-12-23T18:56:32.1184579Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2025-12-23T18:56:32.1354435Z '1.48'
+2025-12-23T18:56:32.1369180Z Docker client API version: '1.48'
+2025-12-23T18:56:32.1374544Z ##[endgroup]
+2025-12-23T18:56:32.1378111Z ##[group]Clean up resources from previous jobs
+2025-12-23T18:56:32.1384390Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=5339ec"
+2025-12-23T18:56:32.1537922Z ##[command]/usr/bin/docker network prune --force --filter "label=5339ec"
+2025-12-23T18:56:32.1695844Z ##[endgroup]
+2025-12-23T18:56:32.1696423Z ##[group]Create local container network
+2025-12-23T18:56:32.1707327Z ##[command]/usr/bin/docker network create --label 5339ec github_network_1fe13b5e1883476dbcaeba5f99b02e9e
+2025-12-23T18:56:32.2381288Z 824219709a75a3b7a82a14340d933c4364b1c8fd9e7d99e6c0a30fbe520e2c26
+2025-12-23T18:56:32.2402439Z ##[endgroup]
+2025-12-23T18:56:32.2427656Z ##[group]Starting postgres service container
+2025-12-23T18:56:32.2448330Z ##[command]/usr/bin/docker pull postgres:15-alpine
+2025-12-23T18:56:32.6838132Z 15-alpine: Pulling from library/postgres
+2025-12-23T18:56:32.8685828Z 1074353eec0d: Pulling fs layer
+2025-12-23T18:56:32.8686635Z d2e5feb410e8: Pulling fs layer
+2025-12-23T18:56:32.8687543Z ff7ac73e977d: Pulling fs layer
+2025-12-23T18:56:32.8688216Z 25fbe13bb576: Pulling fs layer
+2025-12-23T18:56:32.8688932Z 060e3656c186: Pulling fs layer
+2025-12-23T18:56:32.8689711Z 9fa3a17171bc: Pulling fs layer
+2025-12-23T18:56:32.8690931Z 1de01a2b564f: Pulling fs layer
+2025-12-23T18:56:32.8691946Z 141979064465: Pulling fs layer
+2025-12-23T18:56:32.8692966Z 86a96880bc80: Pulling fs layer
+2025-12-23T18:56:32.8693646Z c5fd49a04d70: Pulling fs layer
+2025-12-23T18:56:32.8694587Z 9bb1b164157a: Pulling fs layer
+2025-12-23T18:56:32.8695436Z 060e3656c186: Waiting
+2025-12-23T18:56:32.8696255Z 9fa3a17171bc: Waiting
+2025-12-23T18:56:32.8697139Z 1de01a2b564f: Waiting
+2025-12-23T18:56:32.8697949Z 141979064465: Waiting
+2025-12-23T18:56:32.8699121Z 86a96880bc80: Waiting
+2025-12-23T18:56:32.8700472Z c5fd49a04d70: Waiting
+2025-12-23T18:56:32.8701258Z 9bb1b164157a: Waiting
+2025-12-23T18:56:32.8702062Z 25fbe13bb576: Waiting
+2025-12-23T18:56:32.9393353Z d2e5feb410e8: Download complete
+2025-12-23T18:56:32.9425133Z ff7ac73e977d: Download complete
+2025-12-23T18:56:32.9743051Z 1074353eec0d: Verifying Checksum
+2025-12-23T18:56:32.9747001Z 1074353eec0d: Download complete
+2025-12-23T18:56:33.0796679Z 060e3656c186: Verifying Checksum
+2025-12-23T18:56:33.0798789Z 060e3656c186: Download complete
+2025-12-23T18:56:33.0829591Z 25fbe13bb576: Verifying Checksum
+2025-12-23T18:56:33.0833367Z 25fbe13bb576: Download complete
+2025-12-23T18:56:33.1427743Z 1074353eec0d: Pull complete
+2025-12-23T18:56:33.2043610Z 141979064465: Verifying Checksum
+2025-12-23T18:56:33.2055836Z 141979064465: Download complete
+2025-12-23T18:56:33.2697732Z 1de01a2b564f: Verifying Checksum
+2025-12-23T18:56:33.2730850Z 1de01a2b564f: Download complete
+2025-12-23T18:56:33.2756245Z d2e5feb410e8: Pull complete
+2025-12-23T18:56:33.3375180Z 86a96880bc80: Verifying Checksum
+2025-12-23T18:56:33.3377541Z 86a96880bc80: Download complete
+2025-12-23T18:56:33.3940975Z c5fd49a04d70: Verifying Checksum
+2025-12-23T18:56:33.3944607Z c5fd49a04d70: Download complete
+2025-12-23T18:56:33.4762306Z 9bb1b164157a: Verifying Checksum
+2025-12-23T18:56:33.4796324Z 9bb1b164157a: Download complete
+2025-12-23T18:56:34.4945261Z 9fa3a17171bc: Verifying Checksum
+2025-12-23T18:56:34.4947112Z 9fa3a17171bc: Download complete
+2025-12-23T18:56:34.8153065Z ff7ac73e977d: Pull complete
+2025-12-23T18:56:34.8363540Z 25fbe13bb576: Pull complete
+2025-12-23T18:56:34.8806139Z 060e3656c186: Pull complete
+2025-12-23T18:56:38.0790967Z 9fa3a17171bc: Pull complete
+2025-12-23T18:56:38.0989062Z 1de01a2b564f: Pull complete
+2025-12-23T18:56:38.1151514Z 141979064465: Pull complete
+2025-12-23T18:56:38.1305469Z 86a96880bc80: Pull complete
+2025-12-23T18:56:38.1430038Z c5fd49a04d70: Pull complete
+2025-12-23T18:56:38.1590791Z 9bb1b164157a: Pull complete
+2025-12-23T18:56:38.1699839Z Digest: sha256:b3968e348b48f1198cc6de6611d055dbad91cd561b7990c406c3fc28d7095b21
+2025-12-23T18:56:38.1714050Z Status: Downloaded newer image for postgres:15-alpine
+2025-12-23T18:56:38.1726872Z docker.io/library/postgres:15-alpine
+2025-12-23T18:56:38.1792635Z ##[command]/usr/bin/docker create --name 72b5ecbb8a2b475c8d7a83fb174c9c5e_postgres15alpine_675b3a --label 5339ec --network github_network_1fe13b5e1883476dbcaeba5f99b02e9e --network-alias postgres -p 5432:5432 --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5 -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres" -e "POSTGRES_DB=postgres" -e GITHUB_ACTIONS=true -e CI=true postgres:15-alpine
+2025-12-23T18:56:38.2071588Z 32410b8f77ae0bc5c0131c9b3a7da15233cb7e2354cde0e66b992c02dfa3177c
+2025-12-23T18:56:38.2095999Z ##[command]/usr/bin/docker start 32410b8f77ae0bc5c0131c9b3a7da15233cb7e2354cde0e66b992c02dfa3177c
+2025-12-23T18:56:38.5158074Z 32410b8f77ae0bc5c0131c9b3a7da15233cb7e2354cde0e66b992c02dfa3177c
+2025-12-23T18:56:38.5178568Z ##[command]/usr/bin/docker ps --all --filter id=32410b8f77ae0bc5c0131c9b3a7da15233cb7e2354cde0e66b992c02dfa3177c --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2025-12-23T18:56:38.5334103Z 32410b8f77ae0bc5c0131c9b3a7da15233cb7e2354cde0e66b992c02dfa3177c Up Less than a second (health: starting)
+2025-12-23T18:56:38.5366538Z ##[command]/usr/bin/docker port 32410b8f77ae0bc5c0131c9b3a7da15233cb7e2354cde0e66b992c02dfa3177c
+2025-12-23T18:56:38.5564293Z 5432/tcp -> 0.0.0.0:5432
+2025-12-23T18:56:38.5571730Z 5432/tcp -> [::]:5432
+2025-12-23T18:56:38.5650438Z ##[endgroup]
+2025-12-23T18:56:38.5662237Z ##[group]Waiting for all services to be ready
+2025-12-23T18:56:38.5680457Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 32410b8f77ae0bc5c0131c9b3a7da15233cb7e2354cde0e66b992c02dfa3177c
+2025-12-23T18:56:38.5884444Z starting
+2025-12-23T18:56:38.5925209Z postgres service is starting, waiting 2 seconds before checking again.
+2025-12-23T18:56:40.5931484Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 32410b8f77ae0bc5c0131c9b3a7da15233cb7e2354cde0e66b992c02dfa3177c
+2025-12-23T18:56:40.6062852Z starting
+2025-12-23T18:56:40.6078209Z postgres service is starting, waiting 4 seconds before checking again.
+2025-12-23T18:56:44.6731075Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 32410b8f77ae0bc5c0131c9b3a7da15233cb7e2354cde0e66b992c02dfa3177c
+2025-12-23T18:56:44.6873048Z starting
+2025-12-23T18:56:44.6889281Z postgres service is starting, waiting 8 seconds before checking again.
+2025-12-23T18:56:53.1953599Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 32410b8f77ae0bc5c0131c9b3a7da15233cb7e2354cde0e66b992c02dfa3177c
+2025-12-23T18:56:53.2117336Z healthy
+2025-12-23T18:56:53.2135999Z postgres service is healthy.
+2025-12-23T18:56:53.2136659Z ##[endgroup]
+2025-12-23T18:56:53.2386744Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2025-12-23T18:56:53.2387377Z with:
+2025-12-23T18:56:53.2387559Z   repository: m-cahill/tunix-rt
+2025-12-23T18:56:53.2387931Z   token: ***
+2025-12-23T18:56:53.2388112Z   ssh-strict: true
+2025-12-23T18:56:53.2388284Z   ssh-user: git
+2025-12-23T18:56:53.2388470Z   persist-credentials: true
+2025-12-23T18:56:53.2388673Z   clean: true
+2025-12-23T18:56:53.2388864Z   sparse-checkout-cone-mode: true
+2025-12-23T18:56:53.2389095Z   fetch-depth: 1
+2025-12-23T18:56:53.2389269Z   fetch-tags: false
+2025-12-23T18:56:53.2389463Z   show-progress: true
+2025-12-23T18:56:53.2389642Z   lfs: false
+2025-12-23T18:56:53.2389801Z   submodules: false
+2025-12-23T18:56:53.2389976Z   set-safe-directory: true
+2025-12-23T18:56:53.2452956Z env:
+2025-12-23T18:56:53.2453233Z   REDIAI_MODE: mock
+2025-12-23T18:56:53.2454002Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T18:56:53.2454392Z ##[endgroup]
+2025-12-23T18:56:53.3592503Z Syncing repository: m-cahill/tunix-rt
+2025-12-23T18:56:53.3594148Z ##[group]Getting Git version info
+2025-12-23T18:56:53.3594698Z Working directory is '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-23T18:56:53.3595536Z [command]/usr/bin/git version
+2025-12-23T18:56:53.3718546Z git version 2.52.0
+2025-12-23T18:56:53.3747526Z ##[endgroup]
+2025-12-23T18:56:53.3764471Z Temporarily overriding HOME='/home/runner/work/_temp/4961067d-0316-4023-b8d7-a9102b141cc1' before making global git config changes
+2025-12-23T18:56:53.3766717Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-23T18:56:53.3781023Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T18:56:53.3823703Z Deleting the contents of '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-23T18:56:53.3828137Z ##[group]Initializing the repository
+2025-12-23T18:56:53.3833563Z [command]/usr/bin/git init /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T18:56:53.3970333Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-23T18:56:53.3972241Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-23T18:56:53.3973114Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-23T18:56:53.3973729Z hint: call:
+2025-12-23T18:56:53.3974001Z hint:
+2025-12-23T18:56:53.3974402Z hint: 	git config --global init.defaultBranch <name>
+2025-12-23T18:56:53.3974893Z hint:
+2025-12-23T18:56:53.3975356Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-23T18:56:53.3976360Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-23T18:56:53.3976938Z hint:
+2025-12-23T18:56:53.3977230Z hint: 	git branch -m <name>
+2025-12-23T18:56:53.3977880Z hint:
+2025-12-23T18:56:53.3978418Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-23T18:56:53.3990525Z Initialized empty Git repository in /home/runner/work/tunix-rt/tunix-rt/.git/
+2025-12-23T18:56:53.3996582Z [command]/usr/bin/git remote add origin https://github.com/m-cahill/tunix-rt
+2025-12-23T18:56:53.4032882Z ##[endgroup]
+2025-12-23T18:56:53.4033747Z ##[group]Disabling automatic garbage collection
+2025-12-23T18:56:53.4037898Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-23T18:56:53.4068496Z ##[endgroup]
+2025-12-23T18:56:53.4069417Z ##[group]Setting up auth
+2025-12-23T18:56:53.4076650Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-23T18:56:53.4113240Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-23T18:56:53.4518491Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-23T18:56:53.4556533Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-23T18:56:53.4786075Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-23T18:56:53.4831365Z ##[endgroup]
+2025-12-23T18:56:53.4832334Z ##[group]Fetching the repository
+2025-12-23T18:56:53.4841930Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +4bc7954e3f4f052eaae5af5173990f3e0765b1f4:refs/remotes/origin/main
+2025-12-23T18:56:54.1519833Z From https://github.com/m-cahill/tunix-rt
+2025-12-23T18:56:54.1521848Z  * [new ref]         4bc7954e3f4f052eaae5af5173990f3e0765b1f4 -> origin/main
+2025-12-23T18:56:54.1555246Z ##[endgroup]
+2025-12-23T18:56:54.1555809Z ##[group]Determining the checkout info
+2025-12-23T18:56:54.1557273Z ##[endgroup]
+2025-12-23T18:56:54.1564381Z [command]/usr/bin/git sparse-checkout disable
+2025-12-23T18:56:54.1617589Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-23T18:56:54.1669322Z ##[group]Checking out the ref
+2025-12-23T18:56:54.1680815Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-23T18:56:54.2872400Z Switched to a new branch 'main'
+2025-12-23T18:56:54.2883901Z branch 'main' set up to track 'origin/main'.
+2025-12-23T18:56:54.2889345Z ##[endgroup]
+2025-12-23T18:56:54.2934125Z [command]/usr/bin/git log -1 --format=%H
+2025-12-23T18:56:54.2958328Z 4bc7954e3f4f052eaae5af5173990f3e0765b1f4
+2025-12-23T18:56:54.3178780Z ##[group]Run actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+2025-12-23T18:56:54.3179173Z with:
+2025-12-23T18:56:54.3179340Z   python-version: 3.11
+2025-12-23T18:56:54.3179544Z   cache: pip
+2025-12-23T18:56:54.3179763Z   cache-dependency-path: backend/pyproject.toml
+2025-12-23T18:56:54.3180027Z   check-latest: false
+2025-12-23T18:56:54.3180499Z   token: ***
+2025-12-23T18:56:54.3180677Z   update-environment: true
+2025-12-23T18:56:54.3180899Z   allow-prereleases: false
+2025-12-23T18:56:54.3181081Z env:
+2025-12-23T18:56:54.3181240Z   REDIAI_MODE: mock
+2025-12-23T18:56:54.3181663Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T18:56:54.3181923Z ##[endgroup]
+2025-12-23T18:56:54.4806342Z ##[group]Installed versions
+2025-12-23T18:56:54.5327731Z Successfully set up CPython (3.11.14)
+2025-12-23T18:56:54.5334227Z ##[endgroup]
+2025-12-23T18:56:54.5814315Z [command]/opt/hostedtoolcache/Python/3.11.14/x64/bin/pip cache dir
+2025-12-23T18:56:55.8165145Z /home/runner/.cache/pip
+2025-12-23T18:56:55.9299274Z ##[warning]Failed to restore: Cache service responded with 400
+2025-12-23T18:56:55.9309415Z pip cache is not found
+2025-12-23T18:56:55.9409841Z ##[group]Run cd ../backend && python -m pip install -e ".[dev]"
+2025-12-23T18:56:55.9410449Z [36;1mcd ../backend && python -m pip install -e ".[dev]"[0m
+2025-12-23T18:56:55.9448875Z shell: /usr/bin/bash -e {0}
+2025-12-23T18:56:55.9449108Z env:
+2025-12-23T18:56:55.9449264Z   REDIAI_MODE: mock
+2025-12-23T18:56:55.9449803Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T18:56:55.9450291Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:56:55.9450708Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T18:56:55.9451103Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:56:55.9451441Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:56:55.9451807Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:56:55.9452154Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T18:56:55.9452456Z ##[endgroup]
+2025-12-23T18:56:57.1420430Z Obtaining file:///home/runner/work/tunix-rt/tunix-rt/backend
+2025-12-23T18:56:57.1442756Z   Installing build dependencies: started
+2025-12-23T18:56:58.6008382Z   Installing build dependencies: finished with status 'done'
+2025-12-23T18:56:58.6026036Z   Checking if build backend supports build_editable: started
+2025-12-23T18:56:58.9220502Z   Checking if build backend supports build_editable: finished with status 'done'
+2025-12-23T18:56:58.9228359Z   Getting requirements to build editable: started
+2025-12-23T18:56:59.2287508Z   Getting requirements to build editable: finished with status 'done'
+2025-12-23T18:56:59.2298746Z   Preparing editable metadata (pyproject.toml): started
+2025-12-23T18:56:59.4034819Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+2025-12-23T18:56:59.5408651Z Collecting fastapi>=0.104.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:59.6267625Z   Downloading fastapi-0.127.0-py3-none-any.whl.metadata (30 kB)
+2025-12-23T18:56:59.6732389Z Collecting uvicorn>=0.24.0 (from uvicorn[standard]>=0.24.0->tunix-rt-backend==0.1.0)
+2025-12-23T18:56:59.6877218Z   Downloading uvicorn-0.40.0-py3-none-any.whl.metadata (6.7 kB)
+2025-12-23T18:56:59.7188977Z Collecting httpx>=0.25.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:59.7333744Z   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+2025-12-23T18:56:59.8509268Z Collecting pydantic>=2.4.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:59.8657303Z   Downloading pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)
+2025-12-23T18:56:59.8982167Z Collecting pydantic-settings>=2.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:56:59.9131115Z   Downloading pydantic_settings-2.12.0-py3-none-any.whl.metadata (3.4 kB)
+2025-12-23T18:57:00.1777769Z Collecting sqlalchemy>=2.0.0 (from sqlalchemy[asyncio]>=2.0.0->tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.1926225Z   Downloading sqlalchemy-2.0.45-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+2025-12-23T18:57:00.2229346Z Collecting alembic>=1.12.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.2377880Z   Downloading alembic-1.17.2-py3-none-any.whl.metadata (7.2 kB)
+2025-12-23T18:57:00.2976916Z Collecting asyncpg>=0.29.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.3118882Z   Downloading asyncpg-0.31.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.4 kB)
+2025-12-23T18:57:00.3501705Z Collecting pyyaml>=6.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.3647032Z   Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2025-12-23T18:57:00.3802994Z Collecting prometheus-client>=0.19.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.3943384Z   Downloading prometheus_client-0.23.1-py3-none-any.whl.metadata (1.9 kB)
+2025-12-23T18:57:00.4306336Z Collecting pytest>=7.4.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.4448259Z   Downloading pytest-9.0.2-py3-none-any.whl.metadata (7.6 kB)
+2025-12-23T18:57:00.4685677Z Collecting pytest-cov>=4.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.4824090Z   Downloading pytest_cov-7.0.0-py3-none-any.whl.metadata (31 kB)
+2025-12-23T18:57:00.5121633Z Collecting pytest-asyncio>=0.21.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.5281888Z   Downloading pytest_asyncio-1.3.0-py3-none-any.whl.metadata (4.1 kB)
+2025-12-23T18:57:00.8930085Z Collecting ruff>=0.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:00.9076157Z   Downloading ruff-0.14.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (26 kB)
+2025-12-23T18:57:01.0100539Z Collecting mypy>=1.6.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:01.0245329Z   Downloading mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.2 kB)
+2025-12-23T18:57:01.0453082Z Collecting types-PyYAML>=6.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T18:57:01.0593843Z   Downloading types_pyyaml-6.0.12.20250915-py3-none-any.whl.metadata (1.7 kB)
+2025-12-23T18:57:01.0889454Z INFO: pip is looking at multiple versions of tunix-rt-backend[dev] to determine which version is compatible with other requirements. This could take a while.
+2025-12-23T18:57:01.0984740Z ERROR: Could not find a version that satisfies the requirement types-prometheus-client>=0.19.0; extra == "dev" (from tunix-rt-backend[dev]) (from versions: none)
+2025-12-23T18:57:01.1904988Z ERROR: No matching distribution found for types-prometheus-client>=0.19.0; extra == "dev"
+2025-12-23T18:57:01.3438996Z ##[error]Process completed with exit code 1.
+2025-12-23T18:57:01.3500364Z ##[group]Run actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b
+2025-12-23T18:57:01.3500874Z with:
+2025-12-23T18:57:01.3501062Z   name: playwright-report
+2025-12-23T18:57:01.3501291Z   path: e2e/playwright-report/
+2025-12-23T18:57:01.3501520Z   retention-days: 7
+2025-12-23T18:57:01.3501701Z   if-no-files-found: warn
+2025-12-23T18:57:01.3501902Z   compression-level: 6
+2025-12-23T18:57:01.3502104Z   overwrite: false
+2025-12-23T18:57:01.3502286Z   include-hidden-files: false
+2025-12-23T18:57:01.3502481Z env:
+2025-12-23T18:57:01.3502625Z   REDIAI_MODE: mock
+2025-12-23T18:57:01.3503166Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T18:57:01.3503481Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:57:01.3503886Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T18:57:01.3504267Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:57:01.3504634Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:57:01.3504961Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T18:57:01.3505302Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T18:57:01.3505589Z ##[endgroup]
+2025-12-23T18:57:01.5861620Z With the provided path, there will be 3 files uploaded
+2025-12-23T18:57:01.5862382Z Artifact name is valid!
+2025-12-23T18:57:01.5862751Z Root directory input is valid!
+2025-12-23T18:57:01.7318418Z Beginning upload of artifact content to blob storage
+2025-12-23T18:57:01.9516300Z Uploaded bytes 201232
+2025-12-23T18:57:01.9849924Z Finished uploading artifact content to blob storage!
+2025-12-23T18:57:01.9854230Z SHA256 hash of uploaded artifact zip is c225dc561b3b37ce9c4aae84ff1552f914003b9982704505ddb0cf6b9cf2a26d
+2025-12-23T18:57:01.9868655Z Finalizing artifact upload
+2025-12-23T18:57:02.1225713Z Artifact playwright-report.zip successfully finalized. Artifact ID 4955965876
+2025-12-23T18:57:02.1227929Z Artifact playwright-report has been successfully uploaded! Final size is 201232 bytes. Artifact ID is 4955965876
+2025-12-23T18:57:02.1235115Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20469108971/artifacts/4955965876
+2025-12-23T18:57:02.1410073Z Post job cleanup.
+2025-12-23T18:57:02.2531735Z [command]/usr/bin/git version
+2025-12-23T18:57:02.2574119Z git version 2.52.0
+2025-12-23T18:57:02.2623829Z Temporarily overriding HOME='/home/runner/work/_temp/8265300c-2cbd-4252-8ea8-a3ff92149a2f' before making global git config changes
+2025-12-23T18:57:02.2627311Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-23T18:57:02.2630991Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T18:57:02.2674418Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-23T18:57:02.2711150Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-23T18:57:02.2955318Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-23T18:57:02.2978959Z http.https://github.com/.extraheader
+2025-12-23T18:57:02.2995257Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-12-23T18:57:02.3038059Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-23T18:57:02.3401212Z Print service container logs: 72b5ecbb8a2b475c8d7a83fb174c9c5e_postgres15alpine_675b3a
+2025-12-23T18:57:02.3405610Z ##[command]/usr/bin/docker logs --details 32410b8f77ae0bc5c0131c9b3a7da15233cb7e2354cde0e66b992c02dfa3177c
+2025-12-23T18:57:02.3562148Z  The files belonging to this database system will be owned by user "postgres".
+2025-12-23T18:57:02.3563645Z  sh: locale: not found
+2025-12-23T18:57:02.3564070Z  This user must also own the server process.
+2025-12-23T18:57:02.3564491Z  
+2025-12-23T18:57:02.3564907Z  The database cluster will be initialized with locale "en_US.utf8".
+2025-12-23T18:57:02.3565579Z  The default database encoding has accordingly been set to "UTF8".
+2025-12-23T18:57:02.3566238Z  The default text search configuration will be set to "english".
+2025-12-23T18:57:02.3566767Z  
+2025-12-23T18:57:02.3567046Z  Data page checksums are disabled.
+2025-12-23T18:57:02.3567419Z  
+2025-12-23T18:57:02.3567905Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
+2025-12-23T18:57:02.3568502Z  creating subdirectories ... ok
+2025-12-23T18:57:02.3568978Z  selecting dynamic shared memory implementation ... posix
+2025-12-23T18:57:02.3569502Z  selecting default max_connections ... 100
+2025-12-23T18:57:02.3569934Z  selecting default shared_buffers ... 128MB
+2025-12-23T18:57:02.3570583Z  selecting default time zone ... UTC
+2025-12-23T18:57:02.3570999Z  creating configuration files ... ok
+2025-12-23T18:57:02.3571423Z  running bootstrap script ... ok
+2025-12-23T18:57:02.3571865Z  performing post-bootstrap initialization ... ok
+2025-12-23T18:57:02.3572330Z  syncing data to disk ... ok
+2025-12-23T18:57:02.3572662Z  
+2025-12-23T18:57:02.3572887Z  
+2025-12-23T18:57:02.3573219Z  Success. You can now start the database server using:
+2025-12-23T18:57:02.3573662Z  
+2025-12-23T18:57:02.3574002Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
+2025-12-23T18:57:02.3574435Z  
+2025-12-23T18:57:02.3575239Z  waiting for server to start....2025-12-23 18:56:39.610 UTC [40] LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2025-12-23T18:57:02.3576357Z  2025-12-23 18:56:39.611 UTC [40] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2025-12-23T18:57:02.3577202Z  2025-12-23 18:56:39.614 UTC [43] LOG:  database system was shut down at 2025-12-23 18:56:39 UTC
+2025-12-23T18:57:02.3577981Z  2025-12-23 18:56:39.618 UTC [40] LOG:  database system is ready to accept connections
+2025-12-23T18:57:02.3578524Z   done
+2025-12-23T18:57:02.3578783Z  server started
+2025-12-23T18:57:02.3579051Z  
+2025-12-23T18:57:02.3579543Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+2025-12-23T18:57:02.3580328Z  
+2025-12-23T18:57:02.3580855Z  waiting for server to shut down...2025-12-23 18:56:39.712 UTC [40] LOG:  received fast shutdown request
+2025-12-23T18:57:02.3581884Z  .2025-12-23 18:56:39.712 UTC [40] LOG:  aborting any active transactions
+2025-12-23T18:57:02.3582741Z  2025-12-23 18:56:39.715 UTC [40] LOG:  background worker "logical replication launcher" (PID 46) exited with exit code 1
+2025-12-23T18:57:02.3583537Z  2025-12-23 18:56:39.718 UTC [41] LOG:  shutting down
+2025-12-23T18:57:02.3584105Z  2025-12-23 18:56:39.719 UTC [41] LOG:  checkpoint starting: shutdown immediate
+2025-12-23T18:57:02.3585492Z  2025-12-23 18:56:39.722 UTC [41] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.005 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB
+2025-12-23T18:57:02.3586886Z  2025-12-23 18:56:39.726 UTC [40] LOG:  database system is shut down
+2025-12-23T18:57:02.3587366Z   done
+2025-12-23T18:57:02.3587618Z  server stopped
+2025-12-23T18:57:02.3587899Z  
+2025-12-23T18:57:02.3588248Z  PostgreSQL init process complete; ready for start up.
+2025-12-23T18:57:02.3588710Z  
+2025-12-23T18:57:02.3589553Z  2025-12-23 18:56:39.014 UTC [34] WARNING:  no usable system locales were found
+2025-12-23T18:57:02.3590702Z  initdb: warning: enabling "trust" authentication for local connections
+2025-12-23T18:57:02.3592413Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2025-12-23T18:57:02.3593665Z  2025-12-23 18:56:39.832 UTC [1] LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2025-12-23T18:57:02.3594528Z  2025-12-23 18:56:39.832 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2025-12-23T18:57:02.3594970Z  2025-12-23 18:56:39.832 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2025-12-23T18:57:02.3595441Z  2025-12-23 18:56:39.834 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2025-12-23T18:57:02.3595933Z  2025-12-23 18:56:39.837 UTC [54] LOG:  database system was shut down at 2025-12-23 18:56:39 UTC
+2025-12-23T18:57:02.3596389Z  2025-12-23 18:56:39.841 UTC [1] LOG:  database system is ready to accept connections
+2025-12-23T18:57:02.3596777Z  2025-12-23 18:56:48.553 UTC [64] FATAL:  role "root" does not exist
+2025-12-23T18:57:02.3597117Z  2025-12-23 18:56:58.609 UTC [71] FATAL:  role "root" does not exist
+2025-12-23T18:57:02.3602681Z Stop and remove container: 72b5ecbb8a2b475c8d7a83fb174c9c5e_postgres15alpine_675b3a
+2025-12-23T18:57:02.3607096Z ##[command]/usr/bin/docker rm --force 32410b8f77ae0bc5c0131c9b3a7da15233cb7e2354cde0e66b992c02dfa3177c
+2025-12-23T18:57:02.5256605Z 32410b8f77ae0bc5c0131c9b3a7da15233cb7e2354cde0e66b992c02dfa3177c
+2025-12-23T18:57:02.5286167Z Remove container network: github_network_1fe13b5e1883476dbcaeba5f99b02e9e
+2025-12-23T18:57:02.5291715Z ##[command]/usr/bin/docker network rm github_network_1fe13b5e1883476dbcaeba5f99b02e9e
+2025-12-23T18:57:02.6112288Z github_network_1fe13b5e1883476dbcaeba5f99b02e9e
+2025-12-23T18:57:02.6169159Z Cleaning up orphan processes
