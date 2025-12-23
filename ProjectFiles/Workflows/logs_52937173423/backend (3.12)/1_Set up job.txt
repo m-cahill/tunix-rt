@@ -1,0 +1,31 @@
+﻿2025-12-23T22:18:36.1201354Z Current runner version: '2.330.0'
+2025-12-23T22:18:36.1258476Z ##[group]Runner Image Provisioner
+2025-12-23T22:18:36.1260029Z Hosted Compute Agent
+2025-12-23T22:18:36.1260966Z Version: 20251211.462
+2025-12-23T22:18:36.1262040Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-23T22:18:36.1263343Z Build Date: 2025-12-11T16:28:49Z
+2025-12-23T22:18:36.1264610Z Worker ID: {dd3ce78a-d146-44f1-81ec-9d3057b66ec8}
+2025-12-23T22:18:36.1265761Z ##[endgroup]
+2025-12-23T22:18:36.1266793Z ##[group]Operating System
+2025-12-23T22:18:36.1267740Z Ubuntu
+2025-12-23T22:18:36.1289133Z 24.04.3
+2025-12-23T22:18:36.1289916Z LTS
+2025-12-23T22:18:36.1290635Z ##[endgroup]
+2025-12-23T22:18:36.1291638Z ##[group]Runner Image
+2025-12-23T22:18:36.1292628Z Image: ubuntu-24.04
+2025-12-23T22:18:36.1293519Z Version: 20251215.174.1
+2025-12-23T22:18:36.1295405Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-23T22:18:36.1318524Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-23T22:18:36.1320914Z ##[endgroup]
+2025-12-23T22:18:36.1322722Z ##[group]GITHUB_TOKEN Permissions
+2025-12-23T22:18:36.1325698Z Contents: read
+2025-12-23T22:18:36.1326592Z Metadata: read
+2025-12-23T22:18:36.1327520Z ##[endgroup]
+2025-12-23T22:18:36.1331516Z Secret source: Actions
+2025-12-23T22:18:36.1333091Z Prepare workflow directory
+2025-12-23T22:18:36.2276534Z Prepare all required actions
+2025-12-23T22:18:36.2396638Z Getting action download info
+2025-12-23T22:18:36.5563311Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2025-12-23T22:18:36.6772380Z Download action repository 'actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b' (SHA:0b93645e9fea7318ecaed2b359559ac225c90a2b)
+2025-12-23T22:18:36.8621306Z Download action repository 'actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b' (SHA:6f51ac03b9356f520e9adb1b1b7802705f340c2b)
+2025-12-23T22:18:37.2024040Z Complete job name: backend (3.12)

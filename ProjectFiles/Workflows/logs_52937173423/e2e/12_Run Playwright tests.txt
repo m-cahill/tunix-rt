@@ -1,0 +1,801 @@
+﻿2025-12-23T22:20:01.7375789Z ##[group]Run npx playwright test
+2025-12-23T22:20:01.7376323Z [36;1mnpx playwright test[0m
+2025-12-23T22:20:01.7416499Z shell: /usr/bin/bash -e {0}
+2025-12-23T22:20:01.7416737Z env:
+2025-12-23T22:20:01.7416905Z   REDIAI_MODE: mock
+2025-12-23T22:20:01.7417487Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T22:20:01.7418015Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:20:01.7418410Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T22:20:01.7418790Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:20:01.7419128Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:20:01.7419467Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:20:01.7419811Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T22:20:01.7420091Z ##[endgroup]
+2025-12-23T22:20:03.9656481Z [WebServer] INFO:     Started server process [3419]
+2025-12-23T22:20:03.9659041Z [WebServer] INFO:     Waiting for application startup.
+2025-12-23T22:20:03.9659879Z [WebServer] INFO:     Application startup complete.
+2025-12-23T22:20:03.9660813Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2025-12-23T22:20:05.7144716Z
+2025-12-23T22:20:05.7145435Z Running 8 tests using 1 worker
+2025-12-23T22:20:06.8514248Z [WebServer] [2m10:20:06 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?
+2025-12-23T22:20:07.2468009Z [WebServer] INFO:__main__:Tunix worker started
+2025-12-23T22:20:08.7851334Z [WebServer] [2m10:20:08 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:08.7854055Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:08.7855539Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:08.7856506Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:08.7857238Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:08.7858096Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:08.7858811Z [WebServer]      |                            ^
+2025-12-23T22:20:08.7859375Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:08.7859954Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:08.7861434Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:08.7863513Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:08.7868020Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:08.7869612Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:08.7871180Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:08.7872315Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:08.7873911Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:08.7876335Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:08.7878441Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:08.7880538Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:14.9781029Z [WebServer] [2m10:20:14 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:14.9783376Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:14.9784746Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:14.9786133Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:14.9802608Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:14.9803968Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:14.9804866Z [WebServer]      |                            ^
+2025-12-23T22:20:14.9805869Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:14.9807359Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:14.9809191Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:14.9811529Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:14.9813719Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:14.9815945Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:14.9819187Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:14.9820301Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:14.9821872Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:14.9824033Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:14.9826368Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:14.9828459Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:21.2551367Z [WebServer] [2m10:20:21 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:21.2552918Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:21.2554234Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:21.2576263Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:21.2577055Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:21.2577923Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:21.2578678Z [WebServer]      |                            ^
+2025-12-23T22:20:21.2579233Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:21.2579863Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:21.2581431Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:21.2583729Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:21.2617005Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:21.2618974Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:21.2620531Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:21.2621811Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:21.2623355Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:21.2625654Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:21.2627564Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:21.2629730Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:27.3951933Z [WebServer] [2m10:20:27 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:27.3953889Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:27.3956446Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:27.3957407Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:27.3958137Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:27.3958965Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:27.3959666Z [WebServer]      |                            ^
+2025-12-23T22:20:27.3960217Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:27.3960772Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:27.3962218Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:27.3964415Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:27.3986858Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:27.3988363Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:27.3994844Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:27.3996189Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:27.3997804Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:27.3999911Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:27.4042130Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:27.4044310Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:33.5737722Z [WebServer] [2m10:20:33 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:33.5740005Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:33.5741464Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:33.5742653Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:33.5743615Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:33.5746858Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:33.5747793Z [WebServer]      |                            ^
+2025-12-23T22:20:33.5748631Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:33.5749384Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:33.5750864Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:33.5753020Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:33.5754996Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:33.5774377Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:33.5776146Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:33.5780521Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:33.5782039Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:33.5784058Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:33.5802757Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:33.5806570Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:39.7022456Z [WebServer] [2m10:20:39 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:39.7024368Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:39.7025973Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:39.7029068Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:39.7029847Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:39.7030656Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:39.7031376Z [WebServer]      |                            ^
+2025-12-23T22:20:39.7031912Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:39.7032481Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:39.7033951Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:39.7036339Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:39.7038450Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:39.7040052Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:39.7041642Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:39.7043129Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:39.7044762Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:39.7047470Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:39.7049627Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:39.7051798Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:46.2401589Z [WebServer] [2m10:20:46 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:46.2403418Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:46.2404707Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:46.2406143Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:46.2408625Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:46.2409455Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:46.2410115Z [WebServer]      |                            ^
+2025-12-23T22:20:46.2410610Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:46.2411178Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:46.2413407Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:46.2415703Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:46.2417555Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:46.2418878Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:46.2420084Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:46.2420963Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:46.2422295Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:46.2424184Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:46.2426140Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:46.2428087Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:52.4573649Z [WebServer] [2m10:20:52 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:52.4575719Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:52.4577099Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:52.4578200Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:52.4579090Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:52.4580620Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:52.4581460Z [WebServer]      |                            ^
+2025-12-23T22:20:52.4582143Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:52.4582857Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:52.4584750Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:52.4588408Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:52.4590484Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:52.4592044Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:52.4593630Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:52.4594762Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:52.4596508Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:52.4598685Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:52.4600764Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:52.4602711Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:58.7831036Z [WebServer] [2m10:20:58 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:58.7832849Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:58.7836476Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:58.7839312Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:58.7840074Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:58.7840906Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:58.7841585Z [WebServer]      |                            ^
+2025-12-23T22:20:58.7842123Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:58.7842693Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:58.7844167Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:58.7846630Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:58.7848630Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:58.7850201Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:58.7851757Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:58.7852879Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:58.7858507Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:58.7861077Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:58.7863161Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:58.7865677Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:06.2471053Z [WebServer] [2m10:21:06 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:06.2475445Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:06.2476581Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:06.2477491Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:06.2480869Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:06.2485048Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:06.2488774Z [WebServer]      |                            ^
+2025-12-23T22:21:06.2489790Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:06.2490697Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:06.2492261Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:06.2494335Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:06.2496322Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:06.2497743Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:06.2499163Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:06.2500165Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:06.2501591Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:06.2503598Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:06.2507337Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:06.2509328Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:13.5330863Z [WebServer] [2m10:21:13 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:13.5332344Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:13.5333468Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:13.5334375Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:13.5335072Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:13.5352672Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:13.5353403Z [WebServer]      |                            ^
+2025-12-23T22:21:13.5353974Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:13.5354588Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:13.5356227Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:13.5358842Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:13.5361102Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:13.5362620Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:13.5364185Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:13.5365541Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:13.5367080Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:13.5369376Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:13.5371478Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:13.5373666Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:19.7585806Z [WebServer] [2m10:21:19 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:19.7610447Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:19.7619195Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:19.7620574Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:19.7621646Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:19.7622736Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:19.7623659Z [WebServer]      |                            ^
+2025-12-23T22:21:19.7624410Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:19.7625478Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:19.7627354Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:19.7629790Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:19.7632139Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:19.7633950Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:19.7635870Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:19.7651721Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:19.7653631Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:19.7656535Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:19.7659099Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:19.7661922Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:26.0396116Z [WebServer] [2m10:21:26 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:26.0398303Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:26.0399640Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:26.0400775Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:26.0401771Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:26.0402569Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:26.0403252Z [WebServer]      |                            ^
+2025-12-23T22:21:26.0403788Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:26.0404372Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:26.0406039Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:26.0408357Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:26.0410450Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:26.0411976Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:26.0413518Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:26.0414628Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:26.0416396Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:26.0418607Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:26.0420649Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:26.0422738Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:32.2221089Z [WebServer] [2m10:21:32 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:32.2222944Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:32.2224441Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:32.2225853Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:32.2226825Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:32.2238095Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:32.2238835Z [WebServer]      |                            ^
+2025-12-23T22:21:32.2239382Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:32.2239988Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:32.2241444Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:32.2243719Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:32.2246205Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:32.2247721Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:32.2249471Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:32.2250568Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:32.2296225Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:32.2298367Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:32.2300431Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:32.2302604Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:38.4497523Z [WebServer] [2m10:21:38 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:38.4499024Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:38.4500409Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:38.4511593Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:38.4513324Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:38.4514209Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:38.4514964Z [WebServer]      |                            ^
+2025-12-23T22:21:38.4515739Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:38.4516360Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:38.4517905Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:38.4520197Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:38.4522263Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:38.4523863Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:38.4525726Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:38.4526788Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:38.4528205Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:38.4530219Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:38.4532136Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:38.4534248Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:44.6236853Z [WebServer] [2m10:21:44 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:44.6242225Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:44.6246838Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:44.6251544Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:44.6256563Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:44.6260823Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:44.6264696Z [WebServer]      |                            ^
+2025-12-23T22:21:44.6268951Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:44.6270773Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:44.6276168Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:44.6281785Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:44.6284945Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:44.6288847Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:44.6292411Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:44.6293799Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:44.6295763Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:44.6302058Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:44.6309757Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:44.6312169Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:49.8546904Z ×F×F×F×F×F×F×F×F
+2025-12-23T22:21:49.8557625Z
+2025-12-23T22:21:49.8570039Z   1) [chromium] › tests/async_run.spec.ts:3:5 › async run flow: enqueue, poll, complete ────────────
+2025-12-23T22:21:49.8571003Z
+2025-12-23T22:21:49.8573165Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8574040Z
+2025-12-23T22:21:49.8578878Z     Locator: getByTestId('sys:api-status')
+2025-12-23T22:21:49.8581370Z     Expected pattern: [32m/API: healthy/i[39m
+2025-12-23T22:21:49.8581868Z     Timeout: 5000ms
+2025-12-23T22:21:49.8582318Z     Error: element(s) not found
+2025-12-23T22:21:49.8582595Z
+2025-12-23T22:21:49.8582722Z     Call log:
+2025-12-23T22:21:49.8583308Z     [2m  - Expect "toHaveText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8584061Z     [2m  - waiting for getByTestId('sys:api-status')[22m
+2025-12-23T22:21:49.8595924Z
+2025-12-23T22:21:49.8595953Z
+2025-12-23T22:21:49.8596072Z        5 |
+2025-12-23T22:21:49.8596420Z        6 |   // Wait for health
+2025-12-23T22:21:49.8597153Z     >  7 |   await expect(page.getByTestId('sys:api-status')).toHaveText(/API: healthy/i);
+2025-12-23T22:21:49.8597917Z          |                                                    ^
+2025-12-23T22:21:49.8598319Z        8 |
+2025-12-23T22:21:49.8598643Z        9 |   // Enable Async Mode
+2025-12-23T22:21:49.8599199Z       10 |   await page.getByLabel('Run Async (Non-blocking)').check();
+2025-12-23T22:21:49.8600009Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/async_run.spec.ts:7:52
+2025-12-23T22:21:49.8600493Z
+2025-12-23T22:21:49.8601508Z     Error Context: test-results/async_run-async-run-flow-enqueue-poll-complete-chromium/error-context.md
+2025-12-23T22:21:49.8602156Z
+2025-12-23T22:21:49.8602744Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8603133Z
+2025-12-23T22:21:49.8603973Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8604554Z
+2025-12-23T22:21:49.8604798Z     Locator: getByTestId('sys:api-status')
+2025-12-23T22:21:49.8605633Z     Expected pattern: [32m/API: healthy/i[39m
+2025-12-23T22:21:49.8606119Z     Timeout: 5000ms
+2025-12-23T22:21:49.8606507Z     Error: element(s) not found
+2025-12-23T22:21:49.8606783Z
+2025-12-23T22:21:49.8606912Z     Call log:
+2025-12-23T22:21:49.8607451Z     [2m  - Expect "toHaveText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8608206Z     [2m  - waiting for getByTestId('sys:api-status')[22m
+2025-12-23T22:21:49.8608607Z
+2025-12-23T22:21:49.8608620Z
+2025-12-23T22:21:49.8608751Z        5 |
+2025-12-23T22:21:49.8609083Z        6 |   // Wait for health
+2025-12-23T22:21:49.8609803Z     >  7 |   await expect(page.getByTestId('sys:api-status')).toHaveText(/API: healthy/i);
+2025-12-23T22:21:49.8610560Z          |                                                    ^
+2025-12-23T22:21:49.8610982Z        8 |
+2025-12-23T22:21:49.8611389Z        9 |   // Enable Async Mode
+2025-12-23T22:21:49.8612013Z       10 |   await page.getByLabel('Run Async (Non-blocking)').check();
+2025-12-23T22:21:49.8612865Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/async_run.spec.ts:7:52
+2025-12-23T22:21:49.8613372Z
+2025-12-23T22:21:49.8614084Z     Error Context: test-results/async_run-async-run-flow-enqueue-poll-complete-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8614815Z
+2025-12-23T22:21:49.8615776Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8616947Z     test-results/async_run-async-run-flow-enqueue-poll-complete-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8617734Z     Usage:
+2025-12-23T22:21:49.8617927Z
+2025-12-23T22:21:49.8618697Z         npx playwright show-trace test-results/async_run-async-run-flow-enqueue-poll-complete-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8619514Z
+2025-12-23T22:21:49.8620152Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8620606Z
+2025-12-23T22:21:49.8621347Z   2) [chromium] › tests/smoke.spec.ts:13:7 › Smoke Tests › homepage loads successfully ─────────────
+2025-12-23T22:21:49.8621945Z
+2025-12-23T22:21:49.8622735Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8623383Z
+2025-12-23T22:21:49.8623549Z     Locator: locator('h1')
+2025-12-23T22:21:49.8624137Z     Expected substring: [32m"Tunix RT"[39m
+2025-12-23T22:21:49.8624615Z     Timeout: 5000ms
+2025-12-23T22:21:49.8625028Z     Error: element(s) not found
+2025-12-23T22:21:49.8625898Z
+2025-12-23T22:21:49.8626058Z     Call log:
+2025-12-23T22:21:49.8626674Z     [2m  - Expect "toContainText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8627372Z     [2m  - waiting for locator('h1')[22m
+2025-12-23T22:21:49.8627714Z
+2025-12-23T22:21:49.8627751Z
+2025-12-23T22:21:49.8627878Z       15 |
+2025-12-23T22:21:49.8628270Z       16 |     // Check that the page title is present
+2025-12-23T22:21:49.8628972Z     > 17 |     await expect(page.locator('h1')).toContainText('Tunix RT');
+2025-12-23T22:21:49.8629602Z          |                                      ^
+2025-12-23T22:21:49.8630027Z       18 |   });
+2025-12-23T22:21:49.8630338Z       19 |
+2025-12-23T22:21:49.8630846Z       20 |   test('displays API healthy status', async ({ page }) => {
+2025-12-23T22:21:49.8631645Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:17:38
+2025-12-23T22:21:49.8632118Z
+2025-12-23T22:21:49.8632796Z     Error Context: test-results/smoke-Smoke-Tests-homepage-loads-successfully-chromium/error-context.md
+2025-12-23T22:21:49.8633746Z
+2025-12-23T22:21:49.8634412Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8634871Z
+2025-12-23T22:21:49.8635895Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8636779Z
+2025-12-23T22:21:49.8636954Z     Locator: locator('h1')
+2025-12-23T22:21:49.8637553Z     Expected substring: [32m"Tunix RT"[39m
+2025-12-23T22:21:49.8637992Z     Timeout: 5000ms
+2025-12-23T22:21:49.8638381Z     Error: element(s) not found
+2025-12-23T22:21:49.8638668Z
+2025-12-23T22:21:49.8638796Z     Call log:
+2025-12-23T22:21:49.8639292Z     [2m  - Expect "toContainText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8639872Z     [2m  - waiting for locator('h1')[22m
+2025-12-23T22:21:49.8640183Z
+2025-12-23T22:21:49.8640194Z
+2025-12-23T22:21:49.8640323Z       15 |
+2025-12-23T22:21:49.8640760Z       16 |     // Check that the page title is present
+2025-12-23T22:21:49.8641437Z     > 17 |     await expect(page.locator('h1')).toContainText('Tunix RT');
+2025-12-23T22:21:49.8642046Z          |                                      ^
+2025-12-23T22:21:49.8644602Z       18 |   });
+2025-12-23T22:21:49.8644957Z       19 |
+2025-12-23T22:21:49.8649897Z       20 |   test('displays API healthy status', async ({ page }) => {
+2025-12-23T22:21:49.8650794Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:17:38
+2025-12-23T22:21:49.8651287Z
+2025-12-23T22:21:49.8652013Z     Error Context: test-results/smoke-Smoke-Tests-homepage-loads-successfully-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8653021Z
+2025-12-23T22:21:49.8653788Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8654927Z     test-results/smoke-Smoke-Tests-homepage-loads-successfully-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8655924Z     Usage:
+2025-12-23T22:21:49.8656112Z
+2025-12-23T22:21:49.8656907Z         npx playwright show-trace test-results/smoke-Smoke-Tests-homepage-loads-successfully-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8657728Z
+2025-12-23T22:21:49.8658499Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8658925Z
+2025-12-23T22:21:49.8659644Z   3) [chromium] › tests/smoke.spec.ts:20:7 › Smoke Tests › displays API healthy status ─────────────
+2025-12-23T22:21:49.8660236Z
+2025-12-23T22:21:49.8660854Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8661394Z
+2025-12-23T22:21:49.8661624Z     Locator: getByTestId('sys:api-status')
+2025-12-23T22:21:49.8662069Z     Expected: visible
+2025-12-23T22:21:49.8662407Z     Timeout: 5000ms
+2025-12-23T22:21:49.8662786Z     Error: element(s) not found
+2025-12-23T22:21:49.8663055Z
+2025-12-23T22:21:49.8663191Z     Call log:
+2025-12-23T22:21:49.8663985Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8664701Z     [2m  - waiting for getByTestId('sys:api-status')[22m
+2025-12-23T22:21:49.8665065Z
+2025-12-23T22:21:49.8665076Z
+2025-12-23T22:21:49.8665790Z       23 |     // Wait for the API status to load using data-testid
+2025-12-23T22:21:49.8666768Z       24 |     const apiStatus = page.getByTestId('sys:api-status');
+2025-12-23T22:21:49.8667451Z     > 25 |     await expect(apiStatus).toBeVisible();
+2025-12-23T22:21:49.8667970Z          |                             ^
+2025-12-23T22:21:49.8668357Z       26 |
+2025-12-23T22:21:49.8668934Z       27 |     // In mock mode (CI), should always be healthy
+2025-12-23T22:21:49.8669481Z       28 |     // In real mode, depends on actual backend
+2025-12-23T22:21:49.8670168Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:25:29
+2025-12-23T22:21:49.8670612Z
+2025-12-23T22:21:49.8671222Z     Error Context: test-results/smoke-Smoke-Tests-displays-API-healthy-status-chromium/error-context.md
+2025-12-23T22:21:49.8671922Z
+2025-12-23T22:21:49.8672544Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8675469Z
+2025-12-23T22:21:49.8676169Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8676722Z
+2025-12-23T22:21:49.8676954Z     Locator: getByTestId('sys:api-status')
+2025-12-23T22:21:49.8677412Z     Expected: visible
+2025-12-23T22:21:49.8677759Z     Timeout: 5000ms
+2025-12-23T22:21:49.8678167Z     Error: element(s) not found
+2025-12-23T22:21:49.8678439Z
+2025-12-23T22:21:49.8678571Z     Call log:
+2025-12-23T22:21:49.8679157Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8679909Z     [2m  - waiting for getByTestId('sys:api-status')[22m
+2025-12-23T22:21:49.8680225Z
+2025-12-23T22:21:49.8680234Z
+2025-12-23T22:21:49.8680477Z       23 |     // Wait for the API status to load using data-testid
+2025-12-23T22:21:49.8681412Z       24 |     const apiStatus = page.getByTestId('sys:api-status');
+2025-12-23T22:21:49.8682078Z     > 25 |     await expect(apiStatus).toBeVisible();
+2025-12-23T22:21:49.8682586Z          |                             ^
+2025-12-23T22:21:49.8682967Z       26 |
+2025-12-23T22:21:49.8683378Z       27 |     // In mock mode (CI), should always be healthy
+2025-12-23T22:21:49.8683985Z       28 |     // In real mode, depends on actual backend
+2025-12-23T22:21:49.8684726Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:25:29
+2025-12-23T22:21:49.8685389Z
+2025-12-23T22:21:49.8686236Z     Error Context: test-results/smoke-Smoke-Tests-displays-API-healthy-status-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8687022Z
+2025-12-23T22:21:49.8687778Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8688901Z     test-results/smoke-Smoke-Tests-displays-API-healthy-status-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8689697Z     Usage:
+2025-12-23T22:21:49.8689878Z
+2025-12-23T22:21:49.8690646Z         npx playwright show-trace test-results/smoke-Smoke-Tests-displays-API-healthy-status-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8691446Z
+2025-12-23T22:21:49.8692083Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8692561Z
+2025-12-23T22:21:49.8693271Z   4) [chromium] › tests/smoke.spec.ts:32:7 › Smoke Tests › displays RediAI status ──────────────────
+2025-12-23T22:21:49.8693848Z
+2025-12-23T22:21:49.8694464Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8695003Z
+2025-12-23T22:21:49.8695523Z     Locator: getByTestId('sys:redi-status')
+2025-12-23T22:21:49.8696052Z     Expected: visible
+2025-12-23T22:21:49.8696399Z     Timeout: 5000ms
+2025-12-23T22:21:49.8696799Z     Error: element(s) not found
+2025-12-23T22:21:49.8697072Z
+2025-12-23T22:21:49.8697209Z     Call log:
+2025-12-23T22:21:49.8697963Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8698612Z     [2m  - waiting for getByTestId('sys:redi-status')[22m
+2025-12-23T22:21:49.8698993Z
+2025-12-23T22:21:49.8699007Z
+2025-12-23T22:21:49.8699348Z       35 |     // Wait for the RediAI status to load using data-testid
+2025-12-23T22:21:49.8700213Z       36 |     const rediStatus = page.getByTestId('sys:redi-status');
+2025-12-23T22:21:49.8700868Z     > 37 |     await expect(rediStatus).toBeVisible();
+2025-12-23T22:21:49.8701394Z          |                              ^
+2025-12-23T22:21:49.8701777Z       38 |
+2025-12-23T22:21:49.8702184Z       39 |     // Should show some status (healthy or down)
+2025-12-23T22:21:49.8702826Z       40 |     await expect(rediStatus).toContainText('RediAI:');
+2025-12-23T22:21:49.8703625Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:37:30
+2025-12-23T22:21:49.8704107Z
+2025-12-23T22:21:49.8704732Z     Error Context: test-results/smoke-Smoke-Tests-displays-RediAI-status-chromium/error-context.md
+2025-12-23T22:21:49.8705615Z
+2025-12-23T22:21:49.8706273Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8706749Z
+2025-12-23T22:21:49.8707380Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8708006Z
+2025-12-23T22:21:49.8708246Z     Locator: getByTestId('sys:redi-status')
+2025-12-23T22:21:49.8708687Z     Expected: visible
+2025-12-23T22:21:49.8709033Z     Timeout: 5000ms
+2025-12-23T22:21:49.8709418Z     Error: element(s) not found
+2025-12-23T22:21:49.8709701Z
+2025-12-23T22:21:49.8709890Z     Call log:
+2025-12-23T22:21:49.8710747Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8711610Z     [2m  - waiting for getByTestId('sys:redi-status')[22m
+2025-12-23T22:21:49.8712030Z
+2025-12-23T22:21:49.8712040Z
+2025-12-23T22:21:49.8712387Z       35 |     // Wait for the RediAI status to load using data-testid
+2025-12-23T22:21:49.8713420Z       36 |     const rediStatus = page.getByTestId('sys:redi-status');
+2025-12-23T22:21:49.8714330Z     > 37 |     await expect(rediStatus).toBeVisible();
+2025-12-23T22:21:49.8714956Z          |                              ^
+2025-12-23T22:21:49.8715847Z       38 |
+2025-12-23T22:21:49.8733254Z       39 |     // Should show some status (healthy or down)
+2025-12-23T22:21:49.8733856Z       40 |     await expect(rediStatus).toContainText('RediAI:');
+2025-12-23T22:21:49.8734623Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:37:30
+2025-12-23T22:21:49.8735034Z
+2025-12-23T22:21:49.8735817Z     Error Context: test-results/smoke-Smoke-Tests-displays-RediAI-status-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8736472Z
+2025-12-23T22:21:49.8737238Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8738318Z     test-results/smoke-Smoke-Tests-displays-RediAI-status-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8739074Z     Usage:
+2025-12-23T22:21:49.8739292Z
+2025-12-23T22:21:49.8739982Z         npx playwright show-trace test-results/smoke-Smoke-Tests-displays-RediAI-status-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8740745Z
+2025-12-23T22:21:49.8741362Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8742039Z
+2025-12-23T22:21:49.8742755Z   5) [chromium] › tests/smoke.spec.ts:43:7 › Smoke Tests › shows correct status indicators ─────────
+2025-12-23T22:21:49.8743340Z
+2025-12-23T22:21:49.8743951Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8744463Z
+2025-12-23T22:21:49.8744681Z     Locator: getByTestId('sys:api-card')
+2025-12-23T22:21:49.8745104Z     Expected: visible
+2025-12-23T22:21:49.8745804Z     Timeout: 5000ms
+2025-12-23T22:21:49.8746156Z     Error: element(s) not found
+2025-12-23T22:21:49.8746409Z
+2025-12-23T22:21:49.8746523Z     Call log:
+2025-12-23T22:21:49.8747273Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8747933Z     [2m  - waiting for getByTestId('sys:api-card')[22m
+2025-12-23T22:21:49.8748286Z
+2025-12-23T22:21:49.8748297Z
+2025-12-23T22:21:49.8748560Z       50 |     const apiCard = page.getByTestId('sys:api-card');
+2025-12-23T22:21:49.8749199Z       51 |     const rediCard = page.getByTestId('sys:redi-card');
+2025-12-23T22:21:49.8749782Z     > 52 |     await expect(apiCard).toBeVisible();
+2025-12-23T22:21:49.8750250Z          |                           ^
+2025-12-23T22:21:49.8750719Z       53 |     await expect(rediCard).toBeVisible();
+2025-12-23T22:21:49.8751140Z       54 |   });
+2025-12-23T22:21:49.8751410Z       55 | });
+2025-12-23T22:21:49.8751946Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:52:27
+2025-12-23T22:21:49.8752394Z
+2025-12-23T22:21:49.8753053Z     Error Context: test-results/smoke-Smoke-Tests-shows-correct-status-indicators-chromium/error-context.md
+2025-12-23T22:21:49.8753964Z
+2025-12-23T22:21:49.8757212Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8757702Z
+2025-12-23T22:21:49.8758359Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8758913Z
+2025-12-23T22:21:49.8759150Z     Locator: getByTestId('sys:api-card')
+2025-12-23T22:21:49.8759591Z     Expected: visible
+2025-12-23T22:21:49.8759937Z     Timeout: 5000ms
+2025-12-23T22:21:49.8760307Z     Error: element(s) not found
+2025-12-23T22:21:49.8760579Z
+2025-12-23T22:21:49.8760703Z     Call log:
+2025-12-23T22:21:49.8761263Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8761966Z     [2m  - waiting for getByTestId('sys:api-card')[22m
+2025-12-23T22:21:49.8762321Z
+2025-12-23T22:21:49.8762333Z
+2025-12-23T22:21:49.8762636Z       50 |     const apiCard = page.getByTestId('sys:api-card');
+2025-12-23T22:21:49.8763358Z       51 |     const rediCard = page.getByTestId('sys:redi-card');
+2025-12-23T22:21:49.8764021Z     > 52 |     await expect(apiCard).toBeVisible();
+2025-12-23T22:21:49.8764530Z          |                           ^
+2025-12-23T22:21:49.8764950Z       53 |     await expect(rediCard).toBeVisible();
+2025-12-23T22:21:49.8765552Z       54 |   });
+2025-12-23T22:21:49.8765864Z       55 | });
+2025-12-23T22:21:49.8766442Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:52:27
+2025-12-23T22:21:49.8766913Z
+2025-12-23T22:21:49.8767669Z     Error Context: test-results/smoke-Smoke-Tests-shows-correct-status-indicators-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8768493Z
+2025-12-23T22:21:49.8769224Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8770379Z     test-results/smoke-Smoke-Tests-shows-correct-status-indicators-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8771135Z     Usage:
+2025-12-23T22:21:49.8771308Z
+2025-12-23T22:21:49.8772090Z         npx playwright show-trace test-results/smoke-Smoke-Tests-shows-correct-status-indicators-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8773108Z
+2025-12-23T22:21:49.8773744Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8774201Z
+2025-12-23T22:21:49.8775479Z   6) [chromium] › tests/smoke.spec.ts:58:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace
+2025-12-23T22:21:49.8776195Z
+2025-12-23T22:21:49.8776980Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8777610Z
+2025-12-23T22:21:49.8777757Z     Locator: locator('h1')
+2025-12-23T22:21:49.8778303Z     Expected substring: [32m"Tunix RT"[39m
+2025-12-23T22:21:49.8778735Z     Timeout: 5000ms
+2025-12-23T22:21:49.8779118Z     Error: element(s) not found
+2025-12-23T22:21:49.8779384Z
+2025-12-23T22:21:49.8779510Z     Call log:
+2025-12-23T22:21:49.8780105Z     [2m  - Expect "toContainText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8780823Z     [2m  - waiting for locator('h1')[22m
+2025-12-23T22:21:49.8781125Z
+2025-12-23T22:21:49.8781135Z
+2025-12-23T22:21:49.8781230Z       60 |
+2025-12-23T22:21:49.8781575Z       61 |     // Wait for page to load
+2025-12-23T22:21:49.8782106Z     > 62 |     await expect(page.locator('h1')).toContainText('Tunix RT');
+2025-12-23T22:21:49.8782756Z          |                                      ^
+2025-12-23T22:21:49.8783164Z       63 |
+2025-12-23T22:21:49.8783591Z       64 |     // Click "Load Example" button using data-testid
+2025-12-23T22:21:49.8784339Z       65 |     const loadExampleBtn = page.getByTestId('trace:load-example');
+2025-12-23T22:21:49.8785117Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:62:38
+2025-12-23T22:21:49.8785742Z
+2025-12-23T22:21:49.8786521Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium/error-context.md
+2025-12-23T22:21:49.8787353Z
+2025-12-23T22:21:49.8788022Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8788473Z
+2025-12-23T22:21:49.8789196Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8789816Z
+2025-12-23T22:21:49.8789980Z     Locator: locator('h1')
+2025-12-23T22:21:49.8790505Z     Expected substring: [32m"Tunix RT"[39m
+2025-12-23T22:21:49.8790952Z     Timeout: 5000ms
+2025-12-23T22:21:49.8791336Z     Error: element(s) not found
+2025-12-23T22:21:49.8791608Z
+2025-12-23T22:21:49.8791739Z     Call log:
+2025-12-23T22:21:49.8792324Z     [2m  - Expect "toContainText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8792965Z     [2m  - waiting for locator('h1')[22m
+2025-12-23T22:21:49.8793282Z
+2025-12-23T22:21:49.8793293Z
+2025-12-23T22:21:49.8793408Z       60 |
+2025-12-23T22:21:49.8793757Z       61 |     // Wait for page to load
+2025-12-23T22:21:49.8794376Z     > 62 |     await expect(page.locator('h1')).toContainText('Tunix RT');
+2025-12-23T22:21:49.8795011Z          |                                      ^
+2025-12-23T22:21:49.8795601Z       63 |
+2025-12-23T22:21:49.8796088Z       64 |     // Click "Load Example" button using data-testid
+2025-12-23T22:21:49.8796821Z       65 |     const loadExampleBtn = page.getByTestId('trace:load-example');
+2025-12-23T22:21:49.8797665Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:62:38
+2025-12-23T22:21:49.8798127Z
+2025-12-23T22:21:49.8798927Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8801247Z
+2025-12-23T22:21:49.8801963Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8805011Z     test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8806064Z     Usage:
+2025-12-23T22:21:49.8806234Z
+2025-12-23T22:21:49.8807345Z         npx playwright show-trace test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8808256Z
+2025-12-23T22:21:49.8808863Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8809457Z
+2025-12-23T22:21:49.8810198Z   7) [chromium] › tests/smoke.spec.ts:101:7 › UNGAR Integration Panel › UNGAR section renders with status
+2025-12-23T22:21:49.8810825Z
+2025-12-23T22:21:49.8811420Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8811948Z
+2025-12-23T22:21:49.8812162Z     Locator: getByTestId('ungar:section')
+2025-12-23T22:21:49.8812599Z     Expected: visible
+2025-12-23T22:21:49.8812934Z     Timeout: 5000ms
+2025-12-23T22:21:49.8813303Z     Error: element(s) not found
+2025-12-23T22:21:49.8813561Z
+2025-12-23T22:21:49.8813679Z     Call log:
+2025-12-23T22:21:49.8814218Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8814930Z     [2m  - waiting for getByTestId('ungar:section')[22m
+2025-12-23T22:21:49.8815442Z
+2025-12-23T22:21:49.8815455Z
+2025-12-23T22:21:49.8815685Z       104 |     // Wait for UNGAR section to load
+2025-12-23T22:21:49.8816360Z       105 |     const ungarSection = page.getByTestId('ungar:section');
+2025-12-23T22:21:49.8817044Z     > 106 |     await expect(ungarSection).toBeVisible();
+2025-12-23T22:21:49.8817563Z           |                                ^
+2025-12-23T22:21:49.8817950Z       107 |
+2025-12-23T22:21:49.8818343Z       108 |     // Verify status container is displayed
+2025-12-23T22:21:49.8819077Z       109 |     const statusContainer = page.getByTestId('ungar:status-container');
+2025-12-23T22:21:49.8819970Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:106:32
+2025-12-23T22:21:49.8820448Z
+2025-12-23T22:21:49.8821233Z     Error Context: test-results/smoke-UNGAR-Integration-Pa-9239f-section-renders-with-status-chromium/error-context.md
+2025-12-23T22:21:49.8822043Z
+2025-12-23T22:21:49.8822645Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8823084Z
+2025-12-23T22:21:49.8823667Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8824432Z
+2025-12-23T22:21:49.8824665Z     Locator: getByTestId('ungar:section')
+2025-12-23T22:21:49.8825123Z     Expected: visible
+2025-12-23T22:21:49.8825616Z     Timeout: 5000ms
+2025-12-23T22:21:49.8825980Z     Error: element(s) not found
+2025-12-23T22:21:49.8826238Z
+2025-12-23T22:21:49.8826358Z     Call log:
+2025-12-23T22:21:49.8826949Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8827658Z     [2m  - waiting for getByTestId('ungar:section')[22m
+2025-12-23T22:21:49.8828026Z
+2025-12-23T22:21:49.8828045Z
+2025-12-23T22:21:49.8828260Z       104 |     // Wait for UNGAR section to load
+2025-12-23T22:21:49.8828886Z       105 |     const ungarSection = page.getByTestId('ungar:section');
+2025-12-23T22:21:49.8829810Z     > 106 |     await expect(ungarSection).toBeVisible();
+2025-12-23T22:21:49.8830335Z           |                                ^
+2025-12-23T22:21:49.8830720Z       107 |
+2025-12-23T22:21:49.8831139Z       108 |     // Verify status container is displayed
+2025-12-23T22:21:49.8832139Z       109 |     const statusContainer = page.getByTestId('ungar:status-container');
+2025-12-23T22:21:49.8833036Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:106:32
+2025-12-23T22:21:49.8833480Z
+2025-12-23T22:21:49.8834355Z     Error Context: test-results/smoke-UNGAR-Integration-Pa-9239f-section-renders-with-status-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8835484Z
+2025-12-23T22:21:49.8836259Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8837550Z     test-results/smoke-UNGAR-Integration-Pa-9239f-section-renders-with-status-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8838457Z     Usage:
+2025-12-23T22:21:49.8838627Z
+2025-12-23T22:21:49.8839540Z         npx playwright show-trace test-results/smoke-UNGAR-Integration-Pa-9239f-section-renders-with-status-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8840471Z
+2025-12-23T22:21:49.8841047Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8841471Z
+2025-12-23T22:21:49.8842295Z   8) [chromium] › tests/smoke.spec.ts:123:7 › Trace Comparison and Evaluation › can create two traces and compare them
+2025-12-23T22:21:49.8843006Z
+2025-12-23T22:21:49.8843738Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8844360Z
+2025-12-23T22:21:49.8844507Z     Locator: locator('h1')
+2025-12-23T22:21:49.8845027Z     Expected substring: [32m"Tunix RT"[39m
+2025-12-23T22:21:49.8845613Z     Timeout: 5000ms
+2025-12-23T22:21:49.8845981Z     Error: element(s) not found
+2025-12-23T22:21:49.8846256Z
+2025-12-23T22:21:49.8846374Z     Call log:
+2025-12-23T22:21:49.8846915Z     [2m  - Expect "toContainText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8847541Z     [2m  - waiting for locator('h1')[22m
+2025-12-23T22:21:49.8847839Z
+2025-12-23T22:21:49.8847856Z
+2025-12-23T22:21:49.8847973Z       125 |
+2025-12-23T22:21:49.8848284Z       126 |     // Wait for page to load
+2025-12-23T22:21:49.8848858Z     > 127 |     await expect(page.locator('h1')).toContainText('Tunix RT');
+2025-12-23T22:21:49.8849434Z           |                                      ^
+2025-12-23T22:21:49.8849809Z       128 |
+2025-12-23T22:21:49.8850224Z       129 |     // Create first trace (simple) using data-testid
+2025-12-23T22:21:49.8850879Z       130 |     const traceTextarea = page.getByTestId('trace:json');
+2025-12-23T22:21:49.8851669Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:127:38
+2025-12-23T22:21:49.8852109Z
+2025-12-23T22:21:49.8852874Z     Error Context: test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium/error-context.md
+2025-12-23T22:21:49.8853706Z
+2025-12-23T22:21:49.8854320Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8854748Z
+2025-12-23T22:21:49.8855652Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8856284Z
+2025-12-23T22:21:49.8856441Z     Locator: locator('h1')
+2025-12-23T22:21:49.8856963Z     Expected substring: [32m"Tunix RT"[39m
+2025-12-23T22:21:49.8857388Z     Timeout: 5000ms
+2025-12-23T22:21:49.8857739Z     Error: element(s) not found
+2025-12-23T22:21:49.8857993Z
+2025-12-23T22:21:49.8858109Z     Call log:
+2025-12-23T22:21:49.8858641Z     [2m  - Expect "toContainText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8859244Z     [2m  - waiting for locator('h1')[22m
+2025-12-23T22:21:49.8859538Z
+2025-12-23T22:21:49.8859547Z
+2025-12-23T22:21:49.8859663Z       125 |
+2025-12-23T22:21:49.8860219Z       126 |     // Wait for page to load
+2025-12-23T22:21:49.8860839Z     > 127 |     await expect(page.locator('h1')).toContainText('Tunix RT');
+2025-12-23T22:21:49.8861479Z           |                                      ^
+2025-12-23T22:21:49.8861873Z       128 |
+2025-12-23T22:21:49.8862538Z       129 |     // Create first trace (simple) using data-testid
+2025-12-23T22:21:49.8863220Z       130 |     const traceTextarea = page.getByTestId('trace:json');
+2025-12-23T22:21:49.8864033Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:127:38
+2025-12-23T22:21:49.8864508Z
+2025-12-23T22:21:49.8865578Z     Error Context: test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8866492Z
+2025-12-23T22:21:49.8867237Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8868525Z     test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8869419Z     Usage:
+2025-12-23T22:21:49.8869599Z
+2025-12-23T22:21:49.8870473Z         npx playwright show-trace test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8871374Z
+2025-12-23T22:21:49.8871978Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8872401Z
+2025-12-23T22:21:49.8872513Z   8 failed
+2025-12-23T22:21:49.8873340Z     [chromium] › tests/async_run.spec.ts:3:5 › async run flow: enqueue, poll, complete ─────────────
+2025-12-23T22:21:49.8874542Z     [chromium] › tests/smoke.spec.ts:13:7 › Smoke Tests › homepage loads successfully ──────────────
+2025-12-23T22:21:49.8875902Z     [chromium] › tests/smoke.spec.ts:20:7 › Smoke Tests › displays API healthy status ──────────────
+2025-12-23T22:21:49.8877074Z     [chromium] › tests/smoke.spec.ts:32:7 › Smoke Tests › displays RediAI status ───────────────────
+2025-12-23T22:21:49.8878290Z     [chromium] › tests/smoke.spec.ts:43:7 › Smoke Tests › shows correct status indicators ──────────
+2025-12-23T22:21:49.8879602Z     [chromium] › tests/smoke.spec.ts:58:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace
+2025-12-23T22:21:49.8880937Z     [chromium] › tests/smoke.spec.ts:101:7 › UNGAR Integration Panel › UNGAR section renders with status
+2025-12-23T22:21:49.8882323Z     [chromium] › tests/smoke.spec.ts:123:7 › Trace Comparison and Evaluation › can create two traces and compare them
+2025-12-23T22:21:49.9239925Z ##[error]Process completed with exit code 1.

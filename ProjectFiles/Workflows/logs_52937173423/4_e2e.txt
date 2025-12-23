@@ -1,0 +1,1709 @@
+﻿2025-12-23T22:18:40.4638626Z Current runner version: '2.330.0'
+2025-12-23T22:18:40.4671155Z ##[group]Runner Image Provisioner
+2025-12-23T22:18:40.4672531Z Hosted Compute Agent
+2025-12-23T22:18:40.4673410Z Version: 20251211.462
+2025-12-23T22:18:40.4674505Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-23T22:18:40.4676113Z Build Date: 2025-12-11T16:28:49Z
+2025-12-23T22:18:40.4677203Z Worker ID: {919eb178-1dd6-4287-8d53-3661f44bc8a0}
+2025-12-23T22:18:40.4678280Z ##[endgroup]
+2025-12-23T22:18:40.4679355Z ##[group]Operating System
+2025-12-23T22:18:40.4680356Z Ubuntu
+2025-12-23T22:18:40.4681094Z 24.04.3
+2025-12-23T22:18:40.4682073Z LTS
+2025-12-23T22:18:40.4682821Z ##[endgroup]
+2025-12-23T22:18:40.4683684Z ##[group]Runner Image
+2025-12-23T22:18:40.4684728Z Image: ubuntu-24.04
+2025-12-23T22:18:40.4685925Z Version: 20251215.174.1
+2025-12-23T22:18:40.4687713Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-23T22:18:40.4690656Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-23T22:18:40.4692674Z ##[endgroup]
+2025-12-23T22:18:40.4694412Z ##[group]GITHUB_TOKEN Permissions
+2025-12-23T22:18:40.4697171Z Contents: read
+2025-12-23T22:18:40.4698079Z Metadata: read
+2025-12-23T22:18:40.4698891Z ##[endgroup]
+2025-12-23T22:18:40.4701832Z Secret source: Actions
+2025-12-23T22:18:40.4703017Z Prepare workflow directory
+2025-12-23T22:18:40.5562520Z Prepare all required actions
+2025-12-23T22:18:40.5661478Z Getting action download info
+2025-12-23T22:18:40.9961820Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2025-12-23T22:18:41.1089330Z Download action repository 'actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b' (SHA:0b93645e9fea7318ecaed2b359559ac225c90a2b)
+2025-12-23T22:18:41.2650519Z Download action repository 'actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af' (SHA:39370e3970a6d050c480ffad4ff0ed4d3fdee5af)
+2025-12-23T22:18:41.3881185Z Download action repository 'actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57' (SHA:1bd1e32a3bdc45362d1e726936510720a7c30a57)
+2025-12-23T22:18:41.5403408Z Download action repository 'actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b' (SHA:6f51ac03b9356f520e9adb1b1b7802705f340c2b)
+2025-12-23T22:18:41.8007134Z Complete job name: e2e
+2025-12-23T22:18:41.8491555Z ##[group]Checking docker version
+2025-12-23T22:18:41.8504688Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2025-12-23T22:18:41.9303455Z '1.48'
+2025-12-23T22:18:41.9321511Z Docker daemon API version: '1.48'
+2025-12-23T22:18:41.9322908Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2025-12-23T22:18:41.9496923Z '1.48'
+2025-12-23T22:18:41.9511696Z Docker client API version: '1.48'
+2025-12-23T22:18:41.9517618Z ##[endgroup]
+2025-12-23T22:18:41.9520722Z ##[group]Clean up resources from previous jobs
+2025-12-23T22:18:41.9526992Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=ceedb8"
+2025-12-23T22:18:41.9676406Z ##[command]/usr/bin/docker network prune --force --filter "label=ceedb8"
+2025-12-23T22:18:41.9812103Z ##[endgroup]
+2025-12-23T22:18:41.9812632Z ##[group]Create local container network
+2025-12-23T22:18:41.9822728Z ##[command]/usr/bin/docker network create --label ceedb8 github_network_929d45183d3147409cfa8bc794fccb9e
+2025-12-23T22:18:42.0424816Z 102dde5d95ca1cb5be4649f8bdb667996cdc47fb8307a496dc9543d16251963f
+2025-12-23T22:18:42.0476367Z ##[endgroup]
+2025-12-23T22:18:42.0514396Z ##[group]Starting postgres service container
+2025-12-23T22:18:42.0533734Z ##[command]/usr/bin/docker pull postgres:15-alpine
+2025-12-23T22:18:42.8828716Z 15-alpine: Pulling from library/postgres
+2025-12-23T22:18:43.1620362Z 1074353eec0d: Pulling fs layer
+2025-12-23T22:18:43.1640682Z d2e5feb410e8: Pulling fs layer
+2025-12-23T22:18:43.1641649Z ff7ac73e977d: Pulling fs layer
+2025-12-23T22:18:43.1642314Z 25fbe13bb576: Pulling fs layer
+2025-12-23T22:18:43.1643012Z 060e3656c186: Pulling fs layer
+2025-12-23T22:18:43.1644045Z 9fa3a17171bc: Pulling fs layer
+2025-12-23T22:18:43.1644847Z 1de01a2b564f: Pulling fs layer
+2025-12-23T22:18:43.1645678Z 141979064465: Pulling fs layer
+2025-12-23T22:18:43.1646758Z 86a96880bc80: Pulling fs layer
+2025-12-23T22:18:43.1647450Z c5fd49a04d70: Pulling fs layer
+2025-12-23T22:18:43.1648162Z 9bb1b164157a: Pulling fs layer
+2025-12-23T22:18:43.1648809Z 25fbe13bb576: Waiting
+2025-12-23T22:18:43.1649557Z 060e3656c186: Waiting
+2025-12-23T22:18:43.1650527Z 9fa3a17171bc: Waiting
+2025-12-23T22:18:43.1651354Z 1de01a2b564f: Waiting
+2025-12-23T22:18:43.1652120Z 141979064465: Waiting
+2025-12-23T22:18:43.1653043Z 86a96880bc80: Waiting
+2025-12-23T22:18:43.1653846Z c5fd49a04d70: Waiting
+2025-12-23T22:18:43.1654647Z 9bb1b164157a: Waiting
+2025-12-23T22:18:43.3665060Z d2e5feb410e8: Verifying Checksum
+2025-12-23T22:18:43.3667211Z d2e5feb410e8: Download complete
+2025-12-23T22:18:43.4511162Z ff7ac73e977d: Verifying Checksum
+2025-12-23T22:18:43.4511754Z ff7ac73e977d: Download complete
+2025-12-23T22:18:43.4603871Z 1074353eec0d: Verifying Checksum
+2025-12-23T22:18:43.4606755Z 1074353eec0d: Download complete
+2025-12-23T22:18:43.5952110Z 1074353eec0d: Pull complete
+2025-12-23T22:18:43.6350636Z 25fbe13bb576: Verifying Checksum
+2025-12-23T22:18:43.6353673Z 25fbe13bb576: Download complete
+2025-12-23T22:18:43.6567320Z d2e5feb410e8: Pull complete
+2025-12-23T22:18:43.7009469Z ff7ac73e977d: Pull complete
+2025-12-23T22:18:43.7121534Z 060e3656c186: Verifying Checksum
+2025-12-23T22:18:43.7127375Z 060e3656c186: Download complete
+2025-12-23T22:18:43.7156908Z 25fbe13bb576: Pull complete
+2025-12-23T22:18:43.7256582Z 060e3656c186: Pull complete
+2025-12-23T22:18:43.9118042Z 1de01a2b564f: Verifying Checksum
+2025-12-23T22:18:43.9119173Z 1de01a2b564f: Download complete
+2025-12-23T22:18:43.9652644Z 141979064465: Verifying Checksum
+2025-12-23T22:18:43.9653160Z 141979064465: Download complete
+2025-12-23T22:18:44.1692594Z 86a96880bc80: Download complete
+2025-12-23T22:18:44.2251985Z c5fd49a04d70: Verifying Checksum
+2025-12-23T22:18:44.2252508Z c5fd49a04d70: Download complete
+2025-12-23T22:18:44.4215118Z 9bb1b164157a: Verifying Checksum
+2025-12-23T22:18:44.4216196Z 9bb1b164157a: Download complete
+2025-12-23T22:18:44.4544021Z 9fa3a17171bc: Verifying Checksum
+2025-12-23T22:18:44.4544615Z 9fa3a17171bc: Download complete
+2025-12-23T22:18:47.5589441Z 9fa3a17171bc: Pull complete
+2025-12-23T22:18:47.5768280Z 1de01a2b564f: Pull complete
+2025-12-23T22:18:47.6012880Z 141979064465: Pull complete
+2025-12-23T22:18:47.6179213Z 86a96880bc80: Pull complete
+2025-12-23T22:18:47.6303254Z c5fd49a04d70: Pull complete
+2025-12-23T22:18:47.6411223Z 9bb1b164157a: Pull complete
+2025-12-23T22:18:47.6480355Z Digest: sha256:b3968e348b48f1198cc6de6611d055dbad91cd561b7990c406c3fc28d7095b21
+2025-12-23T22:18:47.6496933Z Status: Downloaded newer image for postgres:15-alpine
+2025-12-23T22:18:47.6514602Z docker.io/library/postgres:15-alpine
+2025-12-23T22:18:47.6586863Z ##[command]/usr/bin/docker create --name 7d897ff0fbfd453c93f3ff0e17e975e5_postgres15alpine_d328f9 --label ceedb8 --network github_network_929d45183d3147409cfa8bc794fccb9e --network-alias postgres -p 5432:5432 --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5 -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres" -e "POSTGRES_DB=postgres" -e GITHUB_ACTIONS=true -e CI=true postgres:15-alpine
+2025-12-23T22:18:47.6870646Z 0296d1f3e2b1f5190e979f67e67f979fe90acacffaadf103ceec941d5e2325f2
+2025-12-23T22:18:47.6895775Z ##[command]/usr/bin/docker start 0296d1f3e2b1f5190e979f67e67f979fe90acacffaadf103ceec941d5e2325f2
+2025-12-23T22:18:47.9080890Z 0296d1f3e2b1f5190e979f67e67f979fe90acacffaadf103ceec941d5e2325f2
+2025-12-23T22:18:47.9112191Z ##[command]/usr/bin/docker ps --all --filter id=0296d1f3e2b1f5190e979f67e67f979fe90acacffaadf103ceec941d5e2325f2 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2025-12-23T22:18:47.9302286Z 0296d1f3e2b1f5190e979f67e67f979fe90acacffaadf103ceec941d5e2325f2 Up Less than a second (health: starting)
+2025-12-23T22:18:47.9331146Z ##[command]/usr/bin/docker port 0296d1f3e2b1f5190e979f67e67f979fe90acacffaadf103ceec941d5e2325f2
+2025-12-23T22:18:47.9530885Z 5432/tcp -> 0.0.0.0:5432
+2025-12-23T22:18:47.9535163Z 5432/tcp -> [::]:5432
+2025-12-23T22:18:47.9606847Z ##[endgroup]
+2025-12-23T22:18:47.9618308Z ##[group]Waiting for all services to be ready
+2025-12-23T22:18:47.9636243Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 0296d1f3e2b1f5190e979f67e67f979fe90acacffaadf103ceec941d5e2325f2
+2025-12-23T22:18:47.9825630Z starting
+2025-12-23T22:18:47.9860573Z postgres service is starting, waiting 2 seconds before checking again.
+2025-12-23T22:18:49.9867727Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 0296d1f3e2b1f5190e979f67e67f979fe90acacffaadf103ceec941d5e2325f2
+2025-12-23T22:18:49.9998178Z starting
+2025-12-23T22:18:50.0011385Z postgres service is starting, waiting 3 seconds before checking again.
+2025-12-23T22:18:53.8363445Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 0296d1f3e2b1f5190e979f67e67f979fe90acacffaadf103ceec941d5e2325f2
+2025-12-23T22:18:53.8522707Z starting
+2025-12-23T22:18:53.8540594Z postgres service is starting, waiting 7 seconds before checking again.
+2025-12-23T22:19:01.0566944Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 0296d1f3e2b1f5190e979f67e67f979fe90acacffaadf103ceec941d5e2325f2
+2025-12-23T22:19:01.0708996Z healthy
+2025-12-23T22:19:01.0727180Z postgres service is healthy.
+2025-12-23T22:19:01.0727919Z ##[endgroup]
+2025-12-23T22:19:01.1044794Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2025-12-23T22:19:01.1045582Z with:
+2025-12-23T22:19:01.1045771Z   repository: m-cahill/tunix-rt
+2025-12-23T22:19:01.1046125Z   token: ***
+2025-12-23T22:19:01.1046301Z   ssh-strict: true
+2025-12-23T22:19:01.1046476Z   ssh-user: git
+2025-12-23T22:19:01.1046670Z   persist-credentials: true
+2025-12-23T22:19:01.1046873Z   clean: true
+2025-12-23T22:19:01.1047059Z   sparse-checkout-cone-mode: true
+2025-12-23T22:19:01.1047276Z   fetch-depth: 1
+2025-12-23T22:19:01.1047443Z   fetch-tags: false
+2025-12-23T22:19:01.1047615Z   show-progress: true
+2025-12-23T22:19:01.1047800Z   lfs: false
+2025-12-23T22:19:01.1047956Z   submodules: false
+2025-12-23T22:19:01.1048137Z   set-safe-directory: true
+2025-12-23T22:19:01.1048518Z env:
+2025-12-23T22:19:01.1048674Z   REDIAI_MODE: mock
+2025-12-23T22:19:01.1049128Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T22:19:01.1049367Z ##[endgroup]
+2025-12-23T22:19:01.2165800Z Syncing repository: m-cahill/tunix-rt
+2025-12-23T22:19:01.2167812Z ##[group]Getting Git version info
+2025-12-23T22:19:01.2168463Z Working directory is '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-23T22:19:01.2169422Z [command]/usr/bin/git version
+2025-12-23T22:19:01.2253464Z git version 2.52.0
+2025-12-23T22:19:01.2281029Z ##[endgroup]
+2025-12-23T22:19:01.2295987Z Temporarily overriding HOME='/home/runner/work/_temp/cf98acfd-fd95-43c6-baa9-56a0ecee2b1d' before making global git config changes
+2025-12-23T22:19:01.2298258Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-23T22:19:01.2312077Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T22:19:01.2353329Z Deleting the contents of '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-23T22:19:01.2357968Z ##[group]Initializing the repository
+2025-12-23T22:19:01.2362491Z [command]/usr/bin/git init /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T22:19:01.2481653Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-23T22:19:01.2483492Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-23T22:19:01.2484336Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-23T22:19:01.2484952Z hint: call:
+2025-12-23T22:19:01.2485532Z hint:
+2025-12-23T22:19:01.2486702Z hint: 	git config --global init.defaultBranch <name>
+2025-12-23T22:19:01.2487249Z hint:
+2025-12-23T22:19:01.2487726Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-23T22:19:01.2488532Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-23T22:19:01.2489126Z hint:
+2025-12-23T22:19:01.2489423Z hint: 	git branch -m <name>
+2025-12-23T22:19:01.2489786Z hint:
+2025-12-23T22:19:01.2490326Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-23T22:19:01.2491437Z Initialized empty Git repository in /home/runner/work/tunix-rt/tunix-rt/.git/
+2025-12-23T22:19:01.2501180Z [command]/usr/bin/git remote add origin https://github.com/m-cahill/tunix-rt
+2025-12-23T22:19:01.2537124Z ##[endgroup]
+2025-12-23T22:19:01.2537753Z ##[group]Disabling automatic garbage collection
+2025-12-23T22:19:01.2541642Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-23T22:19:01.2573367Z ##[endgroup]
+2025-12-23T22:19:01.2574939Z ##[group]Setting up auth
+2025-12-23T22:19:01.2580598Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-23T22:19:01.2612604Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-23T22:19:01.2970732Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-23T22:19:01.3001876Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-23T22:19:01.3231071Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-23T22:19:01.3266231Z ##[endgroup]
+2025-12-23T22:19:01.3267824Z ##[group]Fetching the repository
+2025-12-23T22:19:01.3286146Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +f78db09675bf24f26509b7b4ecefad6fd929149b:refs/remotes/origin/main
+2025-12-23T22:19:02.3782497Z From https://github.com/m-cahill/tunix-rt
+2025-12-23T22:19:02.3784795Z  * [new ref]         f78db09675bf24f26509b7b4ecefad6fd929149b -> origin/main
+2025-12-23T22:19:02.3817651Z ##[endgroup]
+2025-12-23T22:19:02.3818591Z ##[group]Determining the checkout info
+2025-12-23T22:19:02.3820409Z ##[endgroup]
+2025-12-23T22:19:02.3824392Z [command]/usr/bin/git sparse-checkout disable
+2025-12-23T22:19:02.3874931Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-23T22:19:02.3904120Z ##[group]Checking out the ref
+2025-12-23T22:19:02.3910314Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-23T22:19:02.5093338Z Switched to a new branch 'main'
+2025-12-23T22:19:02.5096265Z branch 'main' set up to track 'origin/main'.
+2025-12-23T22:19:02.5108300Z ##[endgroup]
+2025-12-23T22:19:02.5151395Z [command]/usr/bin/git log -1 --format=%H
+2025-12-23T22:19:02.5180276Z f78db09675bf24f26509b7b4ecefad6fd929149b
+2025-12-23T22:19:02.5384736Z ##[group]Run actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+2025-12-23T22:19:02.5385102Z with:
+2025-12-23T22:19:02.5385576Z   python-version: 3.11
+2025-12-23T22:19:02.5385818Z   cache: pip
+2025-12-23T22:19:02.5386042Z   cache-dependency-path: backend/pyproject.toml
+2025-12-23T22:19:02.5386311Z   check-latest: false
+2025-12-23T22:19:02.5386600Z   token: ***
+2025-12-23T22:19:02.5386791Z   update-environment: true
+2025-12-23T22:19:02.5387000Z   allow-prereleases: false
+2025-12-23T22:19:02.5387194Z env:
+2025-12-23T22:19:02.5387346Z   REDIAI_MODE: mock
+2025-12-23T22:19:02.5387767Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T22:19:02.5388002Z ##[endgroup]
+2025-12-23T22:19:02.7016364Z ##[group]Installed versions
+2025-12-23T22:19:02.7140413Z Successfully set up CPython (3.11.14)
+2025-12-23T22:19:02.7142226Z ##[endgroup]
+2025-12-23T22:19:02.7564739Z [command]/opt/hostedtoolcache/Python/3.11.14/x64/bin/pip cache dir
+2025-12-23T22:19:04.0935495Z /home/runner/.cache/pip
+2025-12-23T22:19:04.2088088Z ##[warning]Failed to restore: Cache service responded with 400
+2025-12-23T22:19:04.2107981Z pip cache is not found
+2025-12-23T22:19:04.2219692Z ##[group]Run cd ../backend && python -m pip install -e ".[dev]"
+2025-12-23T22:19:04.2220163Z [36;1mcd ../backend && python -m pip install -e ".[dev]"[0m
+2025-12-23T22:19:04.2259438Z shell: /usr/bin/bash -e {0}
+2025-12-23T22:19:04.2259677Z env:
+2025-12-23T22:19:04.2259836Z   REDIAI_MODE: mock
+2025-12-23T22:19:04.2260364Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T22:19:04.2260689Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:04.2261090Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T22:19:04.2261471Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:04.2261816Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:04.2262169Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:04.2262505Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T22:19:04.2262793Z ##[endgroup]
+2025-12-23T22:19:05.4996708Z Obtaining file:///home/runner/work/tunix-rt/tunix-rt/backend
+2025-12-23T22:19:05.5016983Z   Installing build dependencies: started
+2025-12-23T22:19:06.9586075Z   Installing build dependencies: finished with status 'done'
+2025-12-23T22:19:06.9591555Z   Checking if build backend supports build_editable: started
+2025-12-23T22:19:07.3035071Z   Checking if build backend supports build_editable: finished with status 'done'
+2025-12-23T22:19:07.3043132Z   Getting requirements to build editable: started
+2025-12-23T22:19:07.6133137Z   Getting requirements to build editable: finished with status 'done'
+2025-12-23T22:19:07.6142137Z   Preparing editable metadata (pyproject.toml): started
+2025-12-23T22:19:07.7900796Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+2025-12-23T22:19:07.9298800Z Collecting fastapi==0.125.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:08.0415392Z   Downloading fastapi-0.125.0-py3-none-any.whl.metadata (30 kB)
+2025-12-23T22:19:08.0997533Z Collecting uvicorn==0.38.0 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:08.1109688Z   Downloading uvicorn-0.38.0-py3-none-any.whl.metadata (6.8 kB)
+2025-12-23T22:19:08.1494557Z Collecting httpx==0.28.1 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:08.1603348Z   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+2025-12-23T22:19:08.3062303Z Collecting pydantic==2.12.5 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:08.3170364Z   Downloading pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)
+2025-12-23T22:19:08.3552494Z Collecting pydantic-settings==2.12.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:08.3658690Z   Downloading pydantic_settings-2.12.0-py3-none-any.whl.metadata (3.4 kB)
+2025-12-23T22:19:08.6637073Z Collecting sqlalchemy==2.0.45 (from sqlalchemy[asyncio]==2.0.45->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:08.6759117Z   Downloading sqlalchemy-2.0.45-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+2025-12-23T22:19:08.7125816Z Collecting alembic==1.17.2 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:08.7235746Z   Downloading alembic-1.17.2-py3-none-any.whl.metadata (7.2 kB)
+2025-12-23T22:19:08.7919704Z Collecting asyncpg==0.31.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:08.8028489Z   Downloading asyncpg-0.31.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.4 kB)
+2025-12-23T22:19:08.8511649Z Collecting pyyaml==6.0.3 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:08.8612484Z   Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2025-12-23T22:19:08.8837752Z Collecting prometheus-client==0.23.1 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:08.8940613Z   Downloading prometheus_client-0.23.1-py3-none-any.whl.metadata (1.9 kB)
+2025-12-23T22:19:08.9372511Z Collecting pytest>=7.4.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:08.9471381Z   Downloading pytest-9.0.2-py3-none-any.whl.metadata (7.6 kB)
+2025-12-23T22:19:08.9724930Z Collecting pytest-cov>=4.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:08.9827027Z   Downloading pytest_cov-7.0.0-py3-none-any.whl.metadata (31 kB)
+2025-12-23T22:19:09.0130805Z Collecting pytest-asyncio>=0.21.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:09.0234633Z   Downloading pytest_asyncio-1.3.0-py3-none-any.whl.metadata (4.1 kB)
+2025-12-23T22:19:09.4236079Z Collecting ruff>=0.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:09.4343249Z   Downloading ruff-0.14.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (26 kB)
+2025-12-23T22:19:09.5466206Z Collecting mypy>=1.6.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:09.5571133Z   Downloading mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.2 kB)
+2025-12-23T22:19:09.5855158Z Collecting types-PyYAML>=6.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:09.5983545Z   Downloading types_pyyaml-6.0.12.20250915-py3-none-any.whl.metadata (1.7 kB)
+2025-12-23T22:19:09.6183660Z Collecting aiosqlite>=0.19.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T22:19:09.6285015Z   Downloading aiosqlite-0.22.1-py3-none-any.whl.metadata (4.3 kB)
+2025-12-23T22:19:09.6612557Z Collecting Mako (from alembic==1.17.2->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:09.6714688Z   Downloading mako-1.3.10-py3-none-any.whl.metadata (2.9 kB)
+2025-12-23T22:19:09.6962407Z Collecting typing-extensions>=4.12 (from alembic==1.17.2->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:09.7070646Z   Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+2025-12-23T22:19:09.7451539Z Collecting starlette<0.51.0,>=0.40.0 (from fastapi==0.125.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:09.7554087Z   Downloading starlette-0.50.0-py3-none-any.whl.metadata (6.3 kB)
+2025-12-23T22:19:09.7972932Z Collecting annotated-doc>=0.0.2 (from fastapi==0.125.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:09.8074729Z   Downloading annotated_doc-0.0.4-py3-none-any.whl.metadata (6.6 kB)
+2025-12-23T22:19:09.8263284Z Collecting annotated-types>=0.6.0 (from pydantic==2.12.5->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:09.8364982Z   Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+2025-12-23T22:19:10.5421457Z Collecting pydantic-core==2.41.5 (from pydantic==2.12.5->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:10.5526351Z   Downloading pydantic_core-2.41.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.3 kB)
+2025-12-23T22:19:10.5734671Z Collecting typing-inspection>=0.4.2 (from pydantic==2.12.5->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:10.5837950Z   Downloading typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+2025-12-23T22:19:10.6097129Z Collecting anyio (from httpx==0.28.1->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:10.6197025Z   Downloading anyio-4.12.0-py3-none-any.whl.metadata (4.3 kB)
+2025-12-23T22:19:10.6457495Z Collecting certifi (from httpx==0.28.1->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:10.6559560Z   Downloading certifi-2025.11.12-py3-none-any.whl.metadata (2.5 kB)
+2025-12-23T22:19:10.7272932Z Collecting httpcore==1.* (from httpx==0.28.1->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:10.7383954Z   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+2025-12-23T22:19:10.7608428Z Collecting idna (from httpx==0.28.1->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:10.7710266Z   Downloading idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+2025-12-23T22:19:10.8159556Z Collecting python-dotenv>=0.21.0 (from pydantic-settings==2.12.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:10.8261365Z   Downloading python_dotenv-1.2.1-py3-none-any.whl.metadata (25 kB)
+2025-12-23T22:19:10.9557725Z Collecting greenlet>=1 (from sqlalchemy==2.0.45->sqlalchemy[asyncio]==2.0.45->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:10.9662196Z   Downloading greenlet-3.3.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (4.1 kB)
+2025-12-23T22:19:10.9986218Z Collecting click>=7.0 (from uvicorn==0.38.0->uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:11.0091868Z   Downloading click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
+2025-12-23T22:19:11.0300136Z Collecting h11>=0.8 (from uvicorn==0.38.0->uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:11.0407368Z   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+2025-12-23T22:19:11.0786251Z Collecting httptools>=0.6.3 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:11.0890317Z   Downloading httptools-0.7.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+2025-12-23T22:19:11.1383703Z Collecting uvloop>=0.15.1 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:11.1486397Z   Downloading uvloop-0.22.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.9 kB)
+2025-12-23T22:19:11.2297140Z Collecting watchfiles>=0.13 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:11.2404185Z   Downloading watchfiles-1.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+2025-12-23T22:19:11.3317189Z Collecting websockets>=10.4 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:11.3424754Z   Downloading websockets-15.0.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+2025-12-23T22:19:11.3856360Z Collecting mypy_extensions>=1.0.0 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:11.3959888Z   Downloading mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
+2025-12-23T22:19:11.4152243Z Collecting pathspec>=0.9.0 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:11.4265005Z   Downloading pathspec-0.12.1-py3-none-any.whl.metadata (21 kB)
+2025-12-23T22:19:11.5098685Z Collecting librt>=0.6.2 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:11.5201529Z   Downloading librt-0.7.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (1.3 kB)
+2025-12-23T22:19:11.5416963Z Collecting iniconfig>=1.0.1 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:11.5519322Z   Downloading iniconfig-2.3.0-py3-none-any.whl.metadata (2.5 kB)
+2025-12-23T22:19:11.5743239Z Collecting packaging>=22 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:11.5842885Z   Downloading packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+2025-12-23T22:19:11.6033065Z Collecting pluggy<2,>=1.5 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:11.6136184Z   Downloading pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+2025-12-23T22:19:11.6420091Z Collecting pygments>=2.7.2 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:11.6524540Z   Downloading pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+2025-12-23T22:19:12.0973210Z Collecting coverage>=7.10.6 (from coverage[toml]>=7.10.6->pytest-cov>=4.1.0->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:12.1084042Z   Downloading coverage-7.13.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.5 kB)
+2025-12-23T22:19:12.2024485Z Collecting MarkupSafe>=0.9.2 (from Mako->alembic==1.17.2->tunix-rt-backend==0.1.0)
+2025-12-23T22:19:12.2131050Z   Downloading markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+2025-12-23T22:19:12.2294321Z Downloading alembic-1.17.2-py3-none-any.whl (248 kB)
+2025-12-23T22:19:12.2542231Z Downloading asyncpg-0.31.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.0 MB)
+2025-12-23T22:19:12.2868305Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.0/3.0 MB 94.5 MB/s  0:00:00
+2025-12-23T22:19:12.2979656Z Downloading fastapi-0.125.0-py3-none-any.whl (112 kB)
+2025-12-23T22:19:12.3122072Z Downloading pydantic-2.12.5-py3-none-any.whl (463 kB)
+2025-12-23T22:19:12.3270248Z Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+2025-12-23T22:19:12.3395471Z Downloading prometheus_client-0.23.1-py3-none-any.whl (61 kB)
+2025-12-23T22:19:12.3536470Z Downloading pydantic_core-2.41.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+2025-12-23T22:19:12.3681482Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 160.5 MB/s  0:00:00
+2025-12-23T22:19:12.3786454Z Downloading pydantic_settings-2.12.0-py3-none-any.whl (51 kB)
+2025-12-23T22:19:12.3921495Z Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (806 kB)
+2025-12-23T22:19:12.3992112Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 806.6/806.6 kB 123.3 MB/s  0:00:00
+2025-12-23T22:19:12.4100120Z Downloading sqlalchemy-2.0.45-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.3 MB)
+2025-12-23T22:19:12.4268085Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 213.9 MB/s  0:00:00
+2025-12-23T22:19:12.4371121Z Downloading uvicorn-0.38.0-py3-none-any.whl (68 kB)
+2025-12-23T22:19:12.4499730Z Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+2025-12-23T22:19:12.4626779Z Downloading starlette-0.50.0-py3-none-any.whl (74 kB)
+2025-12-23T22:19:12.4757797Z Downloading anyio-4.12.0-py3-none-any.whl (113 kB)
+2025-12-23T22:19:12.4887053Z Downloading aiosqlite-0.22.1-py3-none-any.whl (17 kB)
+2025-12-23T22:19:12.5007595Z Downloading annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
+2025-12-23T22:19:12.5134731Z Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+2025-12-23T22:19:12.5260235Z Downloading click-8.3.1-py3-none-any.whl (108 kB)
+2025-12-23T22:19:12.5394875Z Downloading greenlet-3.3.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (590 kB)
+2025-12-23T22:19:12.5465816Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 590.2/590.2 kB 74.8 MB/s  0:00:00
+2025-12-23T22:19:12.5568602Z Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+2025-12-23T22:19:12.5693210Z Downloading httptools-0.7.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (456 kB)
+2025-12-23T22:19:12.5890956Z Downloading idna-3.11-py3-none-any.whl (71 kB)
+2025-12-23T22:19:12.6026742Z Downloading mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (13.4 MB)
+2025-12-23T22:19:12.6670970Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.4/13.4 MB 215.7 MB/s  0:00:00
+2025-12-23T22:19:12.6783900Z Downloading librt-0.7.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (184 kB)
+2025-12-23T22:19:12.6918731Z Downloading mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+2025-12-23T22:19:12.7041363Z Downloading pathspec-0.12.1-py3-none-any.whl (31 kB)
+2025-12-23T22:19:12.7171149Z Downloading pytest-9.0.2-py3-none-any.whl (374 kB)
+2025-12-23T22:19:12.7304834Z Downloading pluggy-1.6.0-py3-none-any.whl (20 kB)
+2025-12-23T22:19:12.7430895Z Downloading iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+2025-12-23T22:19:12.7554170Z Downloading packaging-25.0-py3-none-any.whl (66 kB)
+2025-12-23T22:19:12.7701255Z Downloading pygments-2.19.2-py3-none-any.whl (1.2 MB)
+2025-12-23T22:19:12.7794238Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 156.8 MB/s  0:00:00
+2025-12-23T22:19:12.7897206Z Downloading pytest_asyncio-1.3.0-py3-none-any.whl (15 kB)
+2025-12-23T22:19:12.8025030Z Downloading pytest_cov-7.0.0-py3-none-any.whl (22 kB)
+2025-12-23T22:19:12.8152889Z Downloading coverage-7.13.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (250 kB)
+2025-12-23T22:19:12.8330821Z Downloading python_dotenv-1.2.1-py3-none-any.whl (21 kB)
+2025-12-23T22:19:12.8457492Z Downloading ruff-0.14.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (14.2 MB)
+2025-12-23T22:19:12.9113687Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.2/14.2 MB 222.4 MB/s  0:00:00
+2025-12-23T22:19:12.9220294Z Downloading types_pyyaml-6.0.12.20250915-py3-none-any.whl (20 kB)
+2025-12-23T22:19:12.9344909Z Downloading typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+2025-12-23T22:19:12.9471328Z Downloading typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+2025-12-23T22:19:12.9602937Z Downloading uvloop-0.22.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.8 MB)
+2025-12-23T22:19:13.0011565Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.8/3.8 MB 101.9 MB/s  0:00:00
+2025-12-23T22:19:13.0120107Z Downloading watchfiles-1.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (456 kB)
+2025-12-23T22:19:13.0280436Z Downloading websockets-15.0.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (182 kB)
+2025-12-23T22:19:13.0410399Z Downloading certifi-2025.11.12-py3-none-any.whl (159 kB)
+2025-12-23T22:19:13.0541167Z Downloading mako-1.3.10-py3-none-any.whl (78 kB)
+2025-12-23T22:19:13.0667157Z Downloading markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+2025-12-23T22:19:13.1389345Z Building wheels for collected packages: tunix-rt-backend
+2025-12-23T22:19:13.1397667Z   Building editable for tunix-rt-backend (pyproject.toml): started
+2025-12-23T22:19:13.3407166Z   Building editable for tunix-rt-backend (pyproject.toml): finished with status 'done'
+2025-12-23T22:19:13.3411456Z   Created wheel for tunix-rt-backend: filename=tunix_rt_backend-0.1.0-0.editable-py3-none-any.whl size=3178 sha256=09e76c99ca885916565ab8f10d6ae658c123b37a27bac57fcf46d1d09443cd10
+2025-12-23T22:19:13.3413873Z   Stored in directory: /tmp/pip-ephem-wheel-cache-zig_ycyj/wheels/6c/ee/47/0b2814d300ad026845dfa3996505f4a0f855be918f2df7eb34
+2025-12-23T22:19:13.3430824Z Successfully built tunix-rt-backend
+2025-12-23T22:19:13.4129064Z Installing collected packages: websockets, uvloop, typing-extensions, types-PyYAML, ruff, pyyaml, python-dotenv, pygments, prometheus-client, pluggy, pathspec, packaging, mypy_extensions, MarkupSafe, librt, iniconfig, idna, httptools, h11, greenlet, coverage, click, certifi, asyncpg, annotated-types, annotated-doc, aiosqlite, uvicorn, typing-inspection, sqlalchemy, pytest, pydantic-core, mypy, Mako, httpcore, anyio, watchfiles, starlette, pytest-cov, pytest-asyncio, pydantic, httpx, alembic, pydantic-settings, fastapi, tunix-rt-backend
+2025-12-23T22:19:18.5303805Z
+2025-12-23T22:19:18.5333788Z Successfully installed Mako-1.3.10 MarkupSafe-3.0.3 aiosqlite-0.22.1 alembic-1.17.2 annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.0 asyncpg-0.31.0 certifi-2025.11.12 click-8.3.1 coverage-7.13.0 fastapi-0.125.0 greenlet-3.3.0 h11-0.16.0 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 idna-3.11 iniconfig-2.3.0 librt-0.7.4 mypy-1.19.1 mypy_extensions-1.1.0 packaging-25.0 pathspec-0.12.1 pluggy-1.6.0 prometheus-client-0.23.1 pydantic-2.12.5 pydantic-core-2.41.5 pydantic-settings-2.12.0 pygments-2.19.2 pytest-9.0.2 pytest-asyncio-1.3.0 pytest-cov-7.0.0 python-dotenv-1.2.1 pyyaml-6.0.3 ruff-0.14.10 sqlalchemy-2.0.45 starlette-0.50.0 tunix-rt-backend-0.1.0 types-PyYAML-6.0.12.20250915 typing-extensions-4.15.0 typing-inspection-0.4.2 uvicorn-0.38.0 uvloop-0.22.1 watchfiles-1.1.1 websockets-15.0.1
+2025-12-23T22:19:19.0951048Z ##[group]Run cd ../backend && alembic upgrade head
+2025-12-23T22:19:19.0951418Z [36;1mcd ../backend && alembic upgrade head[0m
+2025-12-23T22:19:19.0984635Z shell: /usr/bin/bash -e {0}
+2025-12-23T22:19:19.0984868Z env:
+2025-12-23T22:19:19.0985033Z   REDIAI_MODE: mock
+2025-12-23T22:19:19.0985830Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T22:19:19.0986159Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:19.0986548Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T22:19:19.0986942Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:19.0987285Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:19.0987634Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:19.0987976Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T22:19:19.0988266Z ##[endgroup]
+2025-12-23T22:19:19.8002939Z INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+2025-12-23T22:19:19.8015974Z INFO  [alembic.runtime.migration] Will assume transactional DDL.
+2025-12-23T22:19:19.8289052Z INFO  [alembic.runtime.migration] Running upgrade  -> 001, create_traces_table
+2025-12-23T22:19:19.8383640Z INFO  [alembic.runtime.migration] Running upgrade 001 -> f8f1393630e4, add traces created_at index
+2025-12-23T22:19:19.8444552Z INFO  [alembic.runtime.migration] Running upgrade f8f1393630e4 -> f3cc010ca8a6, add_scores_table
+2025-12-23T22:19:19.8594078Z INFO  [alembic.runtime.migration] Running upgrade f3cc010ca8a6 -> 4bf76cdb97da, add_tunix_runs_table
+2025-12-23T22:19:19.8698786Z INFO  [alembic.runtime.migration] Running upgrade 4bf76cdb97da -> 2b3a4c5d6e7f, add_config_column_to_tunix_runs
+2025-12-23T22:19:19.8717940Z INFO  [alembic.runtime.migration] Running upgrade 2b3a4c5d6e7f -> 3c4d5e6f7a8b, add_log_chunks_table
+2025-12-23T22:19:19.9692193Z ##[group]Run actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
+2025-12-23T22:19:19.9692542Z with:
+2025-12-23T22:19:19.9692730Z   node-version: 18
+2025-12-23T22:19:19.9692915Z   always-auth: false
+2025-12-23T22:19:19.9693105Z   check-latest: false
+2025-12-23T22:19:19.9693409Z   token: ***
+2025-12-23T22:19:19.9693566Z env:
+2025-12-23T22:19:19.9693726Z   REDIAI_MODE: mock
+2025-12-23T22:19:19.9694125Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T22:19:19.9694442Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:19.9694826Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T22:19:19.9695421Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:19.9695840Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:19.9696173Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:19.9696543Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T22:19:19.9696832Z ##[endgroup]
+2025-12-23T22:19:20.1664215Z Attempting to download 18...
+2025-12-23T22:19:20.9751606Z Acquiring 18.20.8 - x64 from https://github.com/actions/node-versions/releases/download/18.20.8-14110393767/node-18.20.8-linux-x64.tar.gz
+2025-12-23T22:19:21.5931388Z Extracting ...
+2025-12-23T22:19:21.6046018Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/159eb021-d4b7-4e0e-a1b4-ce5c5fa45481 -f /home/runner/work/_temp/4172512f-c7a5-46ef-96cb-0d80a4982029
+2025-12-23T22:19:22.6459684Z Adding to the cache ...
+2025-12-23T22:19:24.6257024Z ##[group]Environment details
+2025-12-23T22:19:24.9122156Z node: v18.20.8
+2025-12-23T22:19:24.9126446Z npm: 10.8.2
+2025-12-23T22:19:24.9127449Z yarn: 1.22.22
+2025-12-23T22:19:24.9128318Z ##[endgroup]
+2025-12-23T22:19:24.9264932Z ##[group]Run cd ../frontend && npm ci
+2025-12-23T22:19:24.9265654Z [36;1mcd ../frontend && npm ci[0m
+2025-12-23T22:19:24.9299107Z shell: /usr/bin/bash -e {0}
+2025-12-23T22:19:24.9299326Z env:
+2025-12-23T22:19:24.9299485Z   REDIAI_MODE: mock
+2025-12-23T22:19:24.9300099Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T22:19:24.9300446Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:24.9300826Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T22:19:24.9301203Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:24.9301532Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:24.9301870Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:24.9302213Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T22:19:24.9302492Z ##[endgroup]
+2025-12-23T22:19:27.1775472Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-12-23T22:19:27.6904244Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-12-23T22:19:27.7741359Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-12-23T22:19:28.5255015Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+2025-12-23T22:19:28.5397162Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-12-23T22:19:31.2815947Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-12-23T22:19:31.7476182Z
+2025-12-23T22:19:31.7480142Z added 406 packages, and audited 407 packages in 7s
+2025-12-23T22:19:31.7483944Z
+2025-12-23T22:19:31.7484491Z 117 packages are looking for funding
+2025-12-23T22:19:31.7485101Z   run `npm fund` for details
+2025-12-23T22:19:31.7836829Z
+2025-12-23T22:19:31.7864872Z 5 moderate severity vulnerabilities
+2025-12-23T22:19:31.7865491Z
+2025-12-23T22:19:31.7865971Z To address all issues (including breaking changes), run:
+2025-12-23T22:19:31.7866483Z   npm audit fix --force
+2025-12-23T22:19:31.7866742Z
+2025-12-23T22:19:31.7866950Z Run `npm audit` for details.
+2025-12-23T22:19:31.8271004Z ##[group]Run npm ci
+2025-12-23T22:19:31.8271362Z [36;1mnpm ci[0m
+2025-12-23T22:19:31.8317106Z shell: /usr/bin/bash -e {0}
+2025-12-23T22:19:31.8317468Z env:
+2025-12-23T22:19:31.8317733Z   REDIAI_MODE: mock
+2025-12-23T22:19:31.8318486Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T22:19:31.8319038Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:31.8319706Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T22:19:31.8320432Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:31.8321014Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:31.8321607Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:31.8322202Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T22:19:31.8322685Z ##[endgroup]
+2025-12-23T22:19:33.0633032Z
+2025-12-23T22:19:33.0633851Z added 5 packages, and audited 6 packages in 1s
+2025-12-23T22:19:33.0655778Z
+2025-12-23T22:19:33.0656059Z found 0 vulnerabilities
+2025-12-23T22:19:33.1571521Z ##[group]Run actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57
+2025-12-23T22:19:33.1572070Z with:
+2025-12-23T22:19:33.1572353Z   path: ~/.cache/ms-playwright
+2025-12-23T22:19:33.1573056Z   key: Linux-playwright-fe063faa6a61e51595814e40883a56ebf6bc1b9e9c0d8c741d475eeebf898fad
+2025-12-23T22:19:33.1573816Z   restore-keys: Linux-playwright-
+
+2025-12-23T22:19:33.1574234Z   enableCrossOsArchive: false
+2025-12-23T22:19:33.1574602Z   fail-on-cache-miss: false
+2025-12-23T22:19:33.1574953Z   lookup-only: false
+2025-12-23T22:19:33.1575708Z   save-always: false
+2025-12-23T22:19:33.1576019Z env:
+2025-12-23T22:19:33.1576271Z   REDIAI_MODE: mock
+2025-12-23T22:19:33.1577033Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T22:19:33.1577565Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:33.1578235Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T22:19:33.1578912Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:33.1579532Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:33.1580113Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:33.1580708Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T22:19:33.1581187Z ##[endgroup]
+2025-12-23T22:19:33.6491722Z ##[warning]Cache not found for keys: Linux-playwright-fe063faa6a61e51595814e40883a56ebf6bc1b9e9c0d8c741d475eeebf898fad, Linux-playwright-
+2025-12-23T22:19:33.6496930Z Cache not found for input keys: Linux-playwright-fe063faa6a61e51595814e40883a56ebf6bc1b9e9c0d8c741d475eeebf898fad, Linux-playwright-
+2025-12-23T22:19:33.6574170Z ##[group]Run npx playwright install chromium --with-deps
+2025-12-23T22:19:33.6574821Z [36;1mnpx playwright install chromium --with-deps[0m
+2025-12-23T22:19:33.6619894Z shell: /usr/bin/bash -e {0}
+2025-12-23T22:19:33.6620118Z env:
+2025-12-23T22:19:33.6620452Z   REDIAI_MODE: mock
+2025-12-23T22:19:33.6621127Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T22:19:33.6621693Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:33.6622327Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T22:19:33.6623007Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:33.6623650Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:33.6624296Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:19:33.6624940Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T22:19:33.6625687Z ##[endgroup]
+2025-12-23T22:19:34.7114851Z Installing dependencies...
+2025-12-23T22:19:34.7200346Z Switching to root user to install dependencies...
+2025-12-23T22:19:34.8249835Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2025-12-23T22:19:34.9174893Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2025-12-23T22:19:34.9239107Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2025-12-23T22:19:34.9336333Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2025-12-23T22:19:34.9362031Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2025-12-23T22:19:35.0574573Z Hit:6 https://packages.microsoft.com/repos/azure-cli noble InRelease
+2025-12-23T22:19:35.0939857Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2025-12-23T22:19:35.1376776Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1684 kB]
+2025-12-23T22:19:35.1670846Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [311 kB]
+2025-12-23T22:19:35.1708880Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [175 kB]
+2025-12-23T22:19:35.1744256Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 c-n-f Metadata [15.8 kB]
+2025-12-23T22:19:35.1806781Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1506 kB]
+2025-12-23T22:19:35.1958821Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [306 kB]
+2025-12-23T22:19:35.2012887Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [377 kB]
+2025-12-23T22:19:35.2079997Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 c-n-f Metadata [31.4 kB]
+2025-12-23T22:19:35.2108482Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [2413 kB]
+2025-12-23T22:19:35.2387028Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [550 kB]
+2025-12-23T22:19:35.2827759Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]
+2025-12-23T22:19:35.2834739Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 c-n-f Metadata [516 B]
+2025-12-23T22:19:35.2851582Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [30.3 kB]
+2025-12-23T22:19:35.2861603Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [6048 B]
+2025-12-23T22:19:35.2892024Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+2025-12-23T22:19:35.2907411Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 c-n-f Metadata [488 B]
+2025-12-23T22:19:35.2922453Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Packages [40.4 kB]
+2025-12-23T22:19:35.2951751Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7300 B]
+2025-12-23T22:19:35.2963334Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 c-n-f Metadata [368 B]
+2025-12-23T22:19:35.2975148Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [29.5 kB]
+2025-12-23T22:19:35.3065048Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe Translation-en [17.9 kB]
+2025-12-23T22:19:35.3067865Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [10.5 kB]
+2025-12-23T22:19:35.3069176Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 c-n-f Metadata [1444 B]
+2025-12-23T22:19:35.3071136Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [216 B]
+2025-12-23T22:19:35.3493359Z Get:32 http://azure.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]
+2025-12-23T22:19:35.3531308Z Get:33 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [225 kB]
+2025-12-23T22:19:35.3572829Z Get:34 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [21.5 kB]
+2025-12-23T22:19:35.3608009Z Get:35 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 c-n-f Metadata [9504 B]
+2025-12-23T22:19:35.3609315Z Get:36 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [71.5 kB]
+2025-12-23T22:19:35.3630620Z Get:37 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Components [212 B]
+2025-12-23T22:19:35.3676343Z Get:38 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [212 B]
+2025-12-23T22:19:35.4378234Z Get:39 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [11.4 kB]
+2025-12-23T22:19:35.4552428Z Get:40 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [77.7 kB]
+2025-12-23T22:19:35.4843164Z Get:41 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [58.9 kB]
+2025-12-23T22:19:44.0226327Z Fetched 8375 kB in 1s (6214 kB/s)
+2025-12-23T22:19:44.8686846Z Reading package lists...
+2025-12-23T22:19:44.9126497Z Reading package lists...
+2025-12-23T22:19:45.1146744Z Building dependency tree...
+2025-12-23T22:19:45.1158251Z Reading state information...
+2025-12-23T22:19:45.2874464Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.1).
+2025-12-23T22:19:45.2877727Z libasound2t64 set to manually installed.
+2025-12-23T22:19:45.2880150Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+2025-12-23T22:19:45.2885924Z libatk-bridge2.0-0t64 set to manually installed.
+2025-12-23T22:19:45.2887581Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+2025-12-23T22:19:45.2888239Z libatk1.0-0t64 set to manually installed.
+2025-12-23T22:19:45.2888929Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+2025-12-23T22:19:45.2889598Z libatspi2.0-0t64 set to manually installed.
+2025-12-23T22:19:45.2890247Z libcairo2 is already the newest version (1.18.0-3build1).
+2025-12-23T22:19:45.2890845Z libcairo2 set to manually installed.
+2025-12-23T22:19:45.2891536Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.9).
+2025-12-23T22:19:45.2892185Z libcups2t64 set to manually installed.
+2025-12-23T22:19:45.2892858Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+2025-12-23T22:19:45.2893491Z libdbus-1-3 set to manually installed.
+2025-12-23T22:19:45.2894179Z libdrm2 is already the newest version (2.4.122-1~ubuntu0.24.04.2).
+2025-12-23T22:19:45.2894811Z libdrm2 set to manually installed.
+2025-12-23T22:19:45.2898974Z libgbm1 is already the newest version (25.0.7-0ubuntu0.24.04.2).
+2025-12-23T22:19:45.2899649Z libgbm1 set to manually installed.
+2025-12-23T22:19:45.2900221Z libnspr4 is already the newest version (2:4.35-1.1build1).
+2025-12-23T22:19:45.2900581Z libnspr4 set to manually installed.
+2025-12-23T22:19:45.2900952Z libnss3 is already the newest version (2:3.98-1build1).
+2025-12-23T22:19:45.2901284Z libnss3 set to manually installed.
+2025-12-23T22:19:45.2901663Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+2025-12-23T22:19:45.2902355Z libpango-1.0-0 set to manually installed.
+2025-12-23T22:19:45.2902756Z libx11-6 is already the newest version (2:1.8.7-1build1).
+2025-12-23T22:19:45.2903090Z libx11-6 set to manually installed.
+2025-12-23T22:19:45.2903424Z libxcb1 is already the newest version (1.15-1ubuntu2).
+2025-12-23T22:19:45.2903902Z libxcb1 set to manually installed.
+2025-12-23T22:19:45.2904279Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+2025-12-23T22:19:45.2904657Z libxcomposite1 set to manually installed.
+2025-12-23T22:19:45.2905031Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+2025-12-23T22:19:45.2905653Z libxdamage1 set to manually installed.
+2025-12-23T22:19:45.2906038Z libxext6 is already the newest version (2:1.3.4-1build2).
+2025-12-23T22:19:45.2906373Z libxext6 set to manually installed.
+2025-12-23T22:19:45.2906736Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+2025-12-23T22:19:45.2907092Z libxfixes3 set to manually installed.
+2025-12-23T22:19:45.2907470Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+2025-12-23T22:19:45.2907837Z libxkbcommon0 set to manually installed.
+2025-12-23T22:19:45.2908200Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+2025-12-23T22:19:45.2908544Z libxrandr2 set to manually installed.
+2025-12-23T22:19:45.2908903Z xvfb is already the newest version (2:21.1.12-1ubuntu1.5).
+2025-12-23T22:19:45.2909386Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+2025-12-23T22:19:45.2909900Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+2025-12-23T22:19:45.2910287Z libfontconfig1 set to manually installed.
+2025-12-23T22:19:45.2910680Z libfreetype6 is already the newest version (2.13.2+dfsg-1build3).
+2025-12-23T22:19:45.2911052Z libfreetype6 set to manually installed.
+2025-12-23T22:19:45.2911434Z fonts-liberation is already the newest version (1:2.1.5-3).
+2025-12-23T22:19:45.2911804Z fonts-liberation set to manually installed.
+2025-12-23T22:19:45.2912175Z The following additional packages will be installed:
+2025-12-23T22:19:45.2912610Z   gir1.2-glib-2.0 libglib2.0-bin libglib2.0-data xfonts-encodings xfonts-utils
+2025-12-23T22:19:45.2913006Z Suggested packages:
+2025-12-23T22:19:45.2913214Z   low-memory-monitor
+2025-12-23T22:19:45.2913421Z Recommended packages:
+2025-12-23T22:19:45.2913659Z   fonts-ipafont-mincho fonts-tlwg-loma
+2025-12-23T22:19:45.4501079Z The following NEW packages will be installed:
+2025-12-23T22:19:45.4503196Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2025-12-23T22:19:45.4510600Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2025-12-23T22:19:45.4512446Z   xfonts-utils
+2025-12-23T22:19:45.4516257Z The following packages will be upgraded:
+2025-12-23T22:19:45.4522894Z   gir1.2-glib-2.0 libglib2.0-0t64 libglib2.0-bin libglib2.0-data
+2025-12-23T22:19:45.5201018Z 4 upgraded, 9 newly installed, 0 to remove and 65 not upgraded.
+2025-12-23T22:19:45.5202113Z Need to get 23.0 MB of archives.
+2025-12-23T22:19:45.5203153Z After this operation, 79.5 MB of additional disk space will be used.
+2025-12-23T22:19:45.5204260Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2025-12-23T22:19:45.5968194Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+2025-12-23T22:19:45.7032545Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libglib2.0-data all 2.80.0-6ubuntu3.5 [48.8 kB]
+2025-12-23T22:19:45.7885826Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libglib2.0-bin amd64 2.80.0-6ubuntu3.5 [97.9 kB]
+2025-12-23T22:19:45.8362761Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 gir1.2-glib-2.0 amd64 2.80.0-6ubuntu3.5 [183 kB]
+2025-12-23T22:19:45.8879763Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libglib2.0-0t64 amd64 2.80.0-6ubuntu3.5 [1544 kB]
+2025-12-23T22:19:45.9568193Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+2025-12-23T22:19:46.0887986Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+2025-12-23T22:19:46.1369226Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+2025-12-23T22:19:46.2257549Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+2025-12-23T22:19:46.3984397Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+2025-12-23T22:19:46.4778875Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+2025-12-23T22:19:46.5347334Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+2025-12-23T22:19:46.6047946Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+2025-12-23T22:19:46.8797864Z Fetched 23.0 MB in 1s (20.6 MB/s)
+2025-12-23T22:19:46.9102440Z Selecting previously unselected package fonts-ipafont-gothic.
+2025-12-23T22:19:46.9430191Z (Reading database ...
+2025-12-23T22:19:46.9431456Z (Reading database ... 5%
+2025-12-23T22:19:46.9432677Z (Reading database ... 10%
+2025-12-23T22:19:46.9434180Z (Reading database ... 15%
+2025-12-23T22:19:46.9434556Z (Reading database ... 20%
+2025-12-23T22:19:46.9434956Z (Reading database ... 25%
+2025-12-23T22:19:46.9435615Z (Reading database ... 30%
+2025-12-23T22:19:46.9435993Z (Reading database ... 35%
+2025-12-23T22:19:46.9436350Z (Reading database ... 40%
+2025-12-23T22:19:46.9436709Z (Reading database ... 45%
+2025-12-23T22:19:46.9437102Z (Reading database ... 50%
+2025-12-23T22:19:46.9533148Z (Reading database ... 55%
+2025-12-23T22:19:47.1022886Z (Reading database ... 60%
+2025-12-23T22:19:47.1901565Z (Reading database ... 65%
+2025-12-23T22:19:47.2446616Z (Reading database ... 70%
+2025-12-23T22:19:47.3222177Z (Reading database ... 75%
+2025-12-23T22:19:47.4583728Z (Reading database ... 80%
+2025-12-23T22:19:47.6057049Z (Reading database ... 85%
+2025-12-23T22:19:47.8170562Z (Reading database ... 90%
+2025-12-23T22:19:47.9590006Z (Reading database ... 95%
+2025-12-23T22:19:47.9591812Z (Reading database ... 100%
+2025-12-23T22:19:47.9592512Z (Reading database ... 217374 files and directories currently installed.)
+2025-12-23T22:19:47.9635696Z Preparing to unpack .../00-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+2025-12-23T22:19:47.9729101Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+2025-12-23T22:19:48.2384521Z Preparing to unpack .../01-libglib2.0-data_2.80.0-6ubuntu3.5_all.deb ...
+2025-12-23T22:19:48.2446316Z Unpacking libglib2.0-data (2.80.0-6ubuntu3.5) over (2.80.0-6ubuntu3.4) ...
+2025-12-23T22:19:48.2894094Z Preparing to unpack .../02-libglib2.0-bin_2.80.0-6ubuntu3.5_amd64.deb ...
+2025-12-23T22:19:48.2925606Z Unpacking libglib2.0-bin (2.80.0-6ubuntu3.5) over (2.80.0-6ubuntu3.4) ...
+2025-12-23T22:19:48.3557060Z Preparing to unpack .../03-gir1.2-glib-2.0_2.80.0-6ubuntu3.5_amd64.deb ...
+2025-12-23T22:19:48.3591866Z Unpacking gir1.2-glib-2.0:amd64 (2.80.0-6ubuntu3.5) over (2.80.0-6ubuntu3.4) ...
+2025-12-23T22:19:48.4052886Z Preparing to unpack .../04-libglib2.0-0t64_2.80.0-6ubuntu3.5_amd64.deb ...
+2025-12-23T22:19:48.4151177Z Unpacking libglib2.0-0t64:amd64 (2.80.0-6ubuntu3.5) over (2.80.0-6ubuntu3.4) ...
+2025-12-23T22:19:48.4676734Z Selecting previously unselected package fonts-freefont-ttf.
+2025-12-23T22:19:48.4814305Z Preparing to unpack .../05-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+2025-12-23T22:19:48.4825146Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+2025-12-23T22:19:48.5741924Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2025-12-23T22:19:48.5874922Z Preparing to unpack .../06-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+2025-12-23T22:19:48.5887312Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2025-12-23T22:19:48.6127954Z Selecting previously unselected package fonts-unifont.
+2025-12-23T22:19:48.6260918Z Preparing to unpack .../07-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+2025-12-23T22:19:48.6268620Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+2025-12-23T22:19:48.7571484Z Selecting previously unselected package fonts-wqy-zenhei.
+2025-12-23T22:19:48.7706057Z Preparing to unpack .../08-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+2025-12-23T22:19:48.7859131Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+2025-12-23T22:19:49.2673578Z Selecting previously unselected package xfonts-encodings.
+2025-12-23T22:19:49.2806614Z Preparing to unpack .../09-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+2025-12-23T22:19:49.2819604Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2025-12-23T22:19:49.3158730Z Selecting previously unselected package xfonts-utils.
+2025-12-23T22:19:49.3292584Z Preparing to unpack .../10-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+2025-12-23T22:19:49.3305733Z Unpacking xfonts-utils (1:7.7+6build3) ...
+2025-12-23T22:19:49.3739429Z Selecting previously unselected package xfonts-cyrillic.
+2025-12-23T22:19:49.3871703Z Preparing to unpack .../11-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+2025-12-23T22:19:49.3883553Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+2025-12-23T22:19:49.4288962Z Selecting previously unselected package xfonts-scalable.
+2025-12-23T22:19:49.4424324Z Preparing to unpack .../12-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+2025-12-23T22:19:49.4437088Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+2025-12-23T22:19:49.4901036Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+2025-12-23T22:19:49.5048978Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+2025-12-23T22:19:49.5084323Z Setting up libglib2.0-0t64:amd64 (2.80.0-6ubuntu3.5) ...
+2025-12-23T22:19:49.5402523Z Setting up libglib2.0-data (2.80.0-6ubuntu3.5) ...
+2025-12-23T22:19:49.5436064Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2025-12-23T22:19:49.5471648Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2025-12-23T22:19:49.5520583Z Setting up gir1.2-glib-2.0:amd64 (2.80.0-6ubuntu3.5) ...
+2025-12-23T22:19:49.5558797Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+2025-12-23T22:19:49.5633432Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2025-12-23T22:19:49.5656154Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+2025-12-23T22:19:49.5697077Z Setting up libglib2.0-bin (2.80.0-6ubuntu3.5) ...
+2025-12-23T22:19:49.5727179Z Setting up xfonts-utils (1:7.7+6build3) ...
+2025-12-23T22:19:49.5778422Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+2025-12-23T22:19:49.6228720Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+2025-12-23T22:19:49.6572728Z Processing triggers for libc-bin (2.39-0ubuntu8.6) ...
+2025-12-23T22:19:49.9310104Z Processing triggers for man-db (2.12.0-4build2) ...
+2025-12-23T22:19:49.9462058Z Not building database; man-db/auto-update is not 'true'.
+2025-12-23T22:19:49.9484767Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+2025-12-23T22:19:50.6942798Z
+2025-12-23T22:19:50.6944674Z Running kernel seems to be up-to-date.
+2025-12-23T22:19:50.6945022Z
+2025-12-23T22:19:50.6945390Z Restarting services...
+2025-12-23T22:19:50.7386337Z  systemctl restart packagekit.service php8.3-fpm.service polkit.service udisks2.service
+2025-12-23T22:19:50.9428230Z
+2025-12-23T22:19:50.9429278Z Service restarts being deferred:
+2025-12-23T22:19:50.9430465Z  systemctl restart ModemManager.service
+2025-12-23T22:19:50.9445849Z  systemctl restart networkd-dispatcher.service
+2025-12-23T22:19:50.9447023Z
+2025-12-23T22:19:50.9447647Z No containers need to be restarted.
+2025-12-23T22:19:50.9448858Z
+2025-12-23T22:19:50.9449390Z No user sessions are running outdated binaries.
+2025-12-23T22:19:50.9450794Z
+2025-12-23T22:19:50.9451288Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2025-12-23T22:19:51.8961302Z Downloading Chromium 143.0.7499.4 (playwright build v1200) from https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1200/chromium-linux.zip
+2025-12-23T22:19:52.1829995Z |                                                                                |   0% of 164.7 MiB
+2025-12-23T22:19:52.4223084Z |■■■■■■■■                                                                        |  10% of 164.7 MiB
+2025-12-23T22:19:52.5766451Z |■■■■■■■■■■■■■■■■                                                                |  20% of 164.7 MiB
+2025-12-23T22:19:52.7045564Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 164.7 MiB
+2025-12-23T22:19:52.8225711Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 164.7 MiB
+2025-12-23T22:19:52.9401489Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 164.7 MiB
+2025-12-23T22:19:53.0541652Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 164.7 MiB
+2025-12-23T22:19:53.1640701Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 164.7 MiB
+2025-12-23T22:19:53.2754491Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 164.7 MiB
+2025-12-23T22:19:53.3887408Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 164.7 MiB
+2025-12-23T22:19:53.4989905Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 164.7 MiB
+2025-12-23T22:19:57.2604277Z Chromium 143.0.7499.4 (playwright build v1200) downloaded to /home/runner/.cache/ms-playwright/chromium-1200
+2025-12-23T22:19:57.2610224Z Downloading FFMPEG playwright build v1011 from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+2025-12-23T22:19:57.5400177Z |                                                                                |   0% of 2.3 MiB
+2025-12-23T22:19:57.5758632Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+2025-12-23T22:19:57.5917414Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+2025-12-23T22:19:57.6020961Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+2025-12-23T22:19:57.6089517Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+2025-12-23T22:19:57.6149914Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+2025-12-23T22:19:57.6196518Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+2025-12-23T22:19:57.6237893Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+2025-12-23T22:19:57.6269569Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+2025-12-23T22:19:57.6303358Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+2025-12-23T22:19:57.6332841Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+2025-12-23T22:19:57.7206217Z FFMPEG playwright build v1011 downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+2025-12-23T22:19:57.7210323Z Downloading Chromium Headless Shell 143.0.7499.4 (playwright build v1200) from https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1200/chromium-headless-shell-linux.zip
+2025-12-23T22:19:58.0137776Z |                                                                                |   0% of 109.7 MiB
+2025-12-23T22:19:58.1985677Z |■■■■■■■■                                                                        |  10% of 109.7 MiB
+2025-12-23T22:19:58.3453724Z |■■■■■■■■■■■■■■■■                                                                |  20% of 109.7 MiB
+2025-12-23T22:19:58.4433990Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 109.7 MiB
+2025-12-23T22:19:58.5253413Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 109.7 MiB
+2025-12-23T22:19:58.6156899Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 109.7 MiB
+2025-12-23T22:19:58.6929149Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 109.7 MiB
+2025-12-23T22:19:58.7698310Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 109.7 MiB
+2025-12-23T22:19:58.8458212Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 109.7 MiB
+2025-12-23T22:19:58.9205441Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 109.7 MiB
+2025-12-23T22:19:58.9896999Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 109.7 MiB
+2025-12-23T22:20:01.7137844Z Chromium Headless Shell 143.0.7499.4 (playwright build v1200) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1200
+2025-12-23T22:20:01.7375809Z ##[group]Run npx playwright test
+2025-12-23T22:20:01.7376327Z [36;1mnpx playwright test[0m
+2025-12-23T22:20:01.7416507Z shell: /usr/bin/bash -e {0}
+2025-12-23T22:20:01.7416740Z env:
+2025-12-23T22:20:01.7416908Z   REDIAI_MODE: mock
+2025-12-23T22:20:01.7417490Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T22:20:01.7418019Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:20:01.7418412Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T22:20:01.7418792Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:20:01.7419131Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:20:01.7419469Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:20:01.7419812Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T22:20:01.7420094Z ##[endgroup]
+2025-12-23T22:20:03.9656530Z [WebServer] INFO:     Started server process [3419]
+2025-12-23T22:20:03.9659144Z [WebServer] INFO:     Waiting for application startup.
+2025-12-23T22:20:03.9659886Z [WebServer] INFO:     Application startup complete.
+2025-12-23T22:20:03.9660817Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2025-12-23T22:20:05.7144766Z
+2025-12-23T22:20:05.7145444Z Running 8 tests using 1 worker
+2025-12-23T22:20:06.8514300Z [WebServer] [2m10:20:06 PM[22m [31m[1m[vite][22m[39m Pre-transform error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?
+2025-12-23T22:20:07.2468052Z [WebServer] INFO:__main__:Tunix worker started
+2025-12-23T22:20:08.7851374Z [WebServer] [2m10:20:08 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:08.7854074Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:08.7855584Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:08.7856510Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:08.7857245Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:08.7858103Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:08.7858819Z [WebServer]      |                            ^
+2025-12-23T22:20:08.7859380Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:08.7859958Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:08.7861440Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:08.7863522Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:08.7868059Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:08.7869618Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:08.7871194Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:08.7872320Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:08.7873921Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:08.7876343Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:08.7878447Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:08.7880974Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:14.9781070Z [WebServer] [2m10:20:14 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:14.9783385Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:14.9784751Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:14.9786143Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:14.9802623Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:14.9803976Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:14.9804874Z [WebServer]      |                            ^
+2025-12-23T22:20:14.9805879Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:14.9807484Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:14.9809199Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:14.9811536Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:14.9813732Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:14.9815952Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:14.9819196Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:14.9820308Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:14.9821891Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:14.9824043Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:14.9826374Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:14.9828464Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:21.2551409Z [WebServer] [2m10:20:21 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:21.2552925Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:21.2554274Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:21.2576278Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:21.2577060Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:21.2577928Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:21.2578682Z [WebServer]      |                            ^
+2025-12-23T22:20:21.2579238Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:21.2579867Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:21.2581436Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:21.2583735Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:21.2617343Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:21.2618979Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:21.2620536Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:21.2621817Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:21.2623360Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:21.2625662Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:21.2627578Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:21.2629736Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:27.3951972Z [WebServer] [2m10:20:27 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:27.3953897Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:27.3956456Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:27.3957414Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:27.3958141Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:27.3958973Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:27.3959690Z [WebServer]      |                            ^
+2025-12-23T22:20:27.3960221Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:27.3960775Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:27.3962229Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:27.3964422Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:27.3986876Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:27.3988372Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:27.3994860Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:27.3996215Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:27.3997813Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:27.3999920Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:27.4042148Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:27.4044315Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:33.5738114Z [WebServer] [2m10:20:33 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:33.5740012Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:33.5741472Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:33.5742659Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:33.5743622Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:33.5746868Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:33.5747801Z [WebServer]      |                            ^
+2025-12-23T22:20:33.5748637Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:33.5749394Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:33.5750868Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:33.5753035Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:33.5755002Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:33.5774393Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:33.5776155Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:33.5780534Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:33.5782045Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:33.5784062Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:33.5802781Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:33.5806579Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:39.7022497Z [WebServer] [2m10:20:39 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:39.7024376Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:39.7025981Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:39.7029076Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:39.7029852Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:39.7030696Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:39.7031381Z [WebServer]      |                            ^
+2025-12-23T22:20:39.7031916Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:39.7032486Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:39.7033957Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:39.7036353Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:39.7038456Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:39.7040056Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:39.7041945Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:39.7043135Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:39.7044767Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:39.7047478Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:39.7049632Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:39.7051803Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:46.2401665Z [WebServer] [2m10:20:46 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:46.2403427Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:46.2404713Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:46.2406148Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:46.2408633Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:46.2409459Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:46.2410118Z [WebServer]      |                            ^
+2025-12-23T22:20:46.2410616Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:46.2411184Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:46.2413414Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:46.2415722Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:46.2417560Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:46.2418883Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:46.2420087Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:46.2420967Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:46.2422300Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:46.2424203Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:46.2426145Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:46.2428092Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:52.4573686Z [WebServer] [2m10:20:52 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:52.4575729Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:52.4577105Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:52.4578206Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:52.4579527Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:52.4580626Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:52.4581465Z [WebServer]      |                            ^
+2025-12-23T22:20:52.4582148Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:52.4582862Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:52.4584757Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:52.4588418Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:52.4590490Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:52.4592057Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:52.4593635Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:52.4594767Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:52.4596513Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:52.4598692Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:52.4600769Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:52.4602728Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:20:58.7831082Z [WebServer] [2m10:20:58 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:20:58.7832864Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:20:58.7836489Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:20:58.7839323Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:20:58.7840088Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:20:58.7840911Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:20:58.7841589Z [WebServer]      |                            ^
+2025-12-23T22:20:58.7842128Z [WebServer]   40 |  function App() {
+2025-12-23T22:20:58.7842699Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:20:58.7844195Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:20:58.7846637Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:20:58.7848639Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:20:58.7850205Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:20:58.7851767Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:20:58.7852886Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:20:58.7858820Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:20:58.7861095Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:20:58.7863169Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:20:58.7865688Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:06.2471092Z [WebServer] [2m10:21:06 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:06.2475468Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:06.2476586Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:06.2477525Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:06.2480879Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:06.2485058Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:06.2488807Z [WebServer]      |                            ^
+2025-12-23T22:21:06.2489797Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:06.2490707Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:06.2492266Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:06.2494340Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:06.2496339Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:06.2497747Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:06.2499167Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:06.2500168Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:06.2501594Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:06.2503602Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:06.2507349Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:06.2509342Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:13.5330906Z [WebServer] [2m10:21:13 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:13.5332351Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:13.5333474Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:13.5334380Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:13.5335076Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:13.5352687Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:13.5353409Z [WebServer]      |                            ^
+2025-12-23T22:21:13.5353978Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:13.5354603Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:13.5356538Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:13.5358858Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:13.5361112Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:13.5362629Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:13.5364196Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:13.5365550Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:13.5367100Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:13.5369391Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:13.5371491Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:13.5373681Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:19.7585846Z [WebServer] [2m10:21:19 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:19.7610464Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:19.7619241Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:19.7620584Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:19.7621654Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:19.7622743Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:19.7623666Z [WebServer]      |                            ^
+2025-12-23T22:21:19.7624416Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:19.7625488Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:19.7627364Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:19.7629799Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:19.7632160Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:19.7633957Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:19.7635889Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:19.7651737Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:19.7653637Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:19.7656542Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:19.7659396Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:19.7661934Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:26.0396154Z [WebServer] [2m10:21:26 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:26.0398312Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:26.0399647Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:26.0400781Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:26.0401782Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:26.0402576Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:26.0403259Z [WebServer]      |                            ^
+2025-12-23T22:21:26.0403810Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:26.0404375Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:26.0406048Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:26.0408382Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:26.0410458Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:26.0411980Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:26.0413522Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:26.0414644Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:26.0416404Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:26.0418612Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:26.0420659Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:26.0422742Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:32.2221126Z [WebServer] [2m10:21:32 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:32.2222990Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:32.2224450Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:32.2225860Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:32.2226830Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:32.2238108Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:32.2238840Z [WebServer]      |                            ^
+2025-12-23T22:21:32.2239386Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:32.2239992Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:32.2241449Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:32.2244078Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:32.2246214Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:32.2247728Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:32.2249479Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:32.2250573Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:32.2296243Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:32.2298378Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:32.2300457Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:32.2302618Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:38.4497563Z [WebServer] [2m10:21:38 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:38.4499029Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:38.4500418Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:38.4511610Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:38.4513332Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:38.4514243Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:38.4514969Z [WebServer]      |                            ^
+2025-12-23T22:21:38.4515746Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:38.4516365Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:38.4517911Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:38.4520203Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:38.4522274Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:38.4523869Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:38.4525746Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:38.4526793Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:38.4528210Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:38.4530223Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:38.4532141Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:38.4534254Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:44.6237229Z [WebServer] [2m10:21:44 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./components/LiveLogs" from "src/App.tsx". Does the file exist?[39m
+2025-12-23T22:21:44.6242236Z [WebServer]   Plugin: [35mvite:import-analysis[39m
+2025-12-23T22:21:44.6246849Z [WebServer]   File: [36m/home/runner/work/tunix-rt/tunix-rt/frontend/src/App.tsx[39m:34:25
+2025-12-23T22:21:44.6251557Z [WebServer] [33m  37 |  } from "./api/client";
+2025-12-23T22:21:44.6256574Z [WebServer]   38 |  import { EXAMPLE_TRACE } from "./exampleTrace";
+2025-12-23T22:21:44.6260830Z [WebServer]   39 |  import { LiveLogs } from "./components/LiveLogs";
+2025-12-23T22:21:44.6264717Z [WebServer]      |                            ^
+2025-12-23T22:21:44.6268961Z [WebServer]   40 |  function App() {
+2025-12-23T22:21:44.6270785Z [WebServer]   41 |    _s();[39m
+2025-12-23T22:21:44.6276189Z [WebServer]       at TransformPluginContext._formatError (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+2025-12-23T22:21:44.6281809Z [WebServer]       at TransformPluginContext.error (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+2025-12-23T22:21:44.6284956Z [WebServer]       at normalizeUrl (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+2025-12-23T22:21:44.6288859Z [WebServer]       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-23T22:21:44.6292426Z [WebServer]       at async file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+2025-12-23T22:21:44.6293808Z [WebServer]       at async Promise.all (index 6)
+2025-12-23T22:21:44.6295782Z [WebServer]       at async TransformPluginContext.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+2025-12-23T22:21:44.6302083Z [WebServer]       at async PluginContainer.transform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+2025-12-23T22:21:44.6309776Z [WebServer]       at async loadAndTransform (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+2025-12-23T22:21:44.6312182Z [WebServer]       at async viteTransformMiddleware (file:///home/runner/work/tunix-rt/tunix-rt/frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+2025-12-23T22:21:49.8546946Z ×F×F×F×F×F×F×F×F
+2025-12-23T22:21:49.8557640Z
+2025-12-23T22:21:49.8570054Z   1) [chromium] › tests/async_run.spec.ts:3:5 › async run flow: enqueue, poll, complete ────────────
+2025-12-23T22:21:49.8571014Z
+2025-12-23T22:21:49.8573178Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8574049Z
+2025-12-23T22:21:49.8578892Z     Locator: getByTestId('sys:api-status')
+2025-12-23T22:21:49.8581382Z     Expected pattern: [32m/API: healthy/i[39m
+2025-12-23T22:21:49.8581917Z     Timeout: 5000ms
+2025-12-23T22:21:49.8582323Z     Error: element(s) not found
+2025-12-23T22:21:49.8582601Z
+2025-12-23T22:21:49.8582726Z     Call log:
+2025-12-23T22:21:49.8583316Z     [2m  - Expect "toHaveText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8584069Z     [2m  - waiting for getByTestId('sys:api-status')[22m
+2025-12-23T22:21:49.8595944Z
+2025-12-23T22:21:49.8595956Z
+2025-12-23T22:21:49.8596077Z        5 |
+2025-12-23T22:21:49.8596426Z        6 |   // Wait for health
+2025-12-23T22:21:49.8597162Z     >  7 |   await expect(page.getByTestId('sys:api-status')).toHaveText(/API: healthy/i);
+2025-12-23T22:21:49.8597925Z          |                                                    ^
+2025-12-23T22:21:49.8598322Z        8 |
+2025-12-23T22:21:49.8598646Z        9 |   // Enable Async Mode
+2025-12-23T22:21:49.8599203Z       10 |   await page.getByLabel('Run Async (Non-blocking)').check();
+2025-12-23T22:21:49.8600017Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/async_run.spec.ts:7:52
+2025-12-23T22:21:49.8600832Z
+2025-12-23T22:21:49.8601522Z     Error Context: test-results/async_run-async-run-flow-enqueue-poll-complete-chromium/error-context.md
+2025-12-23T22:21:49.8602160Z
+2025-12-23T22:21:49.8602748Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8603135Z
+2025-12-23T22:21:49.8603978Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8604559Z
+2025-12-23T22:21:49.8604813Z     Locator: getByTestId('sys:api-status')
+2025-12-23T22:21:49.8605642Z     Expected pattern: [32m/API: healthy/i[39m
+2025-12-23T22:21:49.8606126Z     Timeout: 5000ms
+2025-12-23T22:21:49.8606512Z     Error: element(s) not found
+2025-12-23T22:21:49.8606790Z
+2025-12-23T22:21:49.8606916Z     Call log:
+2025-12-23T22:21:49.8607458Z     [2m  - Expect "toHaveText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8608234Z     [2m  - waiting for getByTestId('sys:api-status')[22m
+2025-12-23T22:21:49.8608614Z
+2025-12-23T22:21:49.8608622Z
+2025-12-23T22:21:49.8608756Z        5 |
+2025-12-23T22:21:49.8609088Z        6 |   // Wait for health
+2025-12-23T22:21:49.8609811Z     >  7 |   await expect(page.getByTestId('sys:api-status')).toHaveText(/API: healthy/i);
+2025-12-23T22:21:49.8610567Z          |                                                    ^
+2025-12-23T22:21:49.8610986Z        8 |
+2025-12-23T22:21:49.8611400Z        9 |   // Enable Async Mode
+2025-12-23T22:21:49.8612018Z       10 |   await page.getByLabel('Run Async (Non-blocking)').check();
+2025-12-23T22:21:49.8612875Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/async_run.spec.ts:7:52
+2025-12-23T22:21:49.8613380Z
+2025-12-23T22:21:49.8614091Z     Error Context: test-results/async_run-async-run-flow-enqueue-poll-complete-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8614821Z
+2025-12-23T22:21:49.8615789Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8616971Z     test-results/async_run-async-run-flow-enqueue-poll-complete-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8617748Z     Usage:
+2025-12-23T22:21:49.8617941Z
+2025-12-23T22:21:49.8618706Z         npx playwright show-trace test-results/async_run-async-run-flow-enqueue-poll-complete-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8619524Z
+2025-12-23T22:21:49.8620167Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8620612Z
+2025-12-23T22:21:49.8621355Z   2) [chromium] › tests/smoke.spec.ts:13:7 › Smoke Tests › homepage loads successfully ─────────────
+2025-12-23T22:21:49.8621953Z
+2025-12-23T22:21:49.8622742Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8623391Z
+2025-12-23T22:21:49.8623564Z     Locator: locator('h1')
+2025-12-23T22:21:49.8624146Z     Expected substring: [32m"Tunix RT"[39m
+2025-12-23T22:21:49.8624644Z     Timeout: 5000ms
+2025-12-23T22:21:49.8625034Z     Error: element(s) not found
+2025-12-23T22:21:49.8625920Z
+2025-12-23T22:21:49.8626064Z     Call log:
+2025-12-23T22:21:49.8626681Z     [2m  - Expect "toContainText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8627381Z     [2m  - waiting for locator('h1')[22m
+2025-12-23T22:21:49.8627720Z
+2025-12-23T22:21:49.8627755Z
+2025-12-23T22:21:49.8627883Z       15 |
+2025-12-23T22:21:49.8628275Z       16 |     // Check that the page title is present
+2025-12-23T22:21:49.8628978Z     > 17 |     await expect(page.locator('h1')).toContainText('Tunix RT');
+2025-12-23T22:21:49.8629607Z          |                                      ^
+2025-12-23T22:21:49.8630034Z       18 |   });
+2025-12-23T22:21:49.8630345Z       19 |
+2025-12-23T22:21:49.8630853Z       20 |   test('displays API healthy status', async ({ page }) => {
+2025-12-23T22:21:49.8631655Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:17:38
+2025-12-23T22:21:49.8632126Z
+2025-12-23T22:21:49.8633005Z     Error Context: test-results/smoke-Smoke-Tests-homepage-loads-successfully-chromium/error-context.md
+2025-12-23T22:21:49.8633755Z
+2025-12-23T22:21:49.8634421Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8634877Z
+2025-12-23T22:21:49.8635907Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8636789Z
+2025-12-23T22:21:49.8636960Z     Locator: locator('h1')
+2025-12-23T22:21:49.8637562Z     Expected substring: [32m"Tunix RT"[39m
+2025-12-23T22:21:49.8637999Z     Timeout: 5000ms
+2025-12-23T22:21:49.8638385Z     Error: element(s) not found
+2025-12-23T22:21:49.8638674Z
+2025-12-23T22:21:49.8638800Z     Call log:
+2025-12-23T22:21:49.8639296Z     [2m  - Expect "toContainText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8639878Z     [2m  - waiting for locator('h1')[22m
+2025-12-23T22:21:49.8640187Z
+2025-12-23T22:21:49.8640197Z
+2025-12-23T22:21:49.8640346Z       15 |
+2025-12-23T22:21:49.8640767Z       16 |     // Check that the page title is present
+2025-12-23T22:21:49.8641442Z     > 17 |     await expect(page.locator('h1')).toContainText('Tunix RT');
+2025-12-23T22:21:49.8642051Z          |                                      ^
+2025-12-23T22:21:49.8644614Z       18 |   });
+2025-12-23T22:21:49.8644964Z       19 |
+2025-12-23T22:21:49.8649914Z       20 |   test('displays API healthy status', async ({ page }) => {
+2025-12-23T22:21:49.8650804Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:17:38
+2025-12-23T22:21:49.8651293Z
+2025-12-23T22:21:49.8652021Z     Error Context: test-results/smoke-Smoke-Tests-homepage-loads-successfully-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8653032Z
+2025-12-23T22:21:49.8653795Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8654950Z     test-results/smoke-Smoke-Tests-homepage-loads-successfully-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8655934Z     Usage:
+2025-12-23T22:21:49.8656118Z
+2025-12-23T22:21:49.8656917Z         npx playwright show-trace test-results/smoke-Smoke-Tests-homepage-loads-successfully-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8657737Z
+2025-12-23T22:21:49.8658508Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8658932Z
+2025-12-23T22:21:49.8659655Z   3) [chromium] › tests/smoke.spec.ts:20:7 › Smoke Tests › displays API healthy status ─────────────
+2025-12-23T22:21:49.8660247Z
+2025-12-23T22:21:49.8660860Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8661401Z
+2025-12-23T22:21:49.8661628Z     Locator: getByTestId('sys:api-status')
+2025-12-23T22:21:49.8662074Z     Expected: visible
+2025-12-23T22:21:49.8662413Z     Timeout: 5000ms
+2025-12-23T22:21:49.8662790Z     Error: element(s) not found
+2025-12-23T22:21:49.8663061Z
+2025-12-23T22:21:49.8663404Z     Call log:
+2025-12-23T22:21:49.8663990Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8664706Z     [2m  - waiting for getByTestId('sys:api-status')[22m
+2025-12-23T22:21:49.8665069Z
+2025-12-23T22:21:49.8665078Z
+2025-12-23T22:21:49.8665801Z       23 |     // Wait for the API status to load using data-testid
+2025-12-23T22:21:49.8666776Z       24 |     const apiStatus = page.getByTestId('sys:api-status');
+2025-12-23T22:21:49.8667461Z     > 25 |     await expect(apiStatus).toBeVisible();
+2025-12-23T22:21:49.8667975Z          |                             ^
+2025-12-23T22:21:49.8668361Z       26 |
+2025-12-23T22:21:49.8668940Z       27 |     // In mock mode (CI), should always be healthy
+2025-12-23T22:21:49.8669485Z       28 |     // In real mode, depends on actual backend
+2025-12-23T22:21:49.8670173Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:25:29
+2025-12-23T22:21:49.8670618Z
+2025-12-23T22:21:49.8671238Z     Error Context: test-results/smoke-Smoke-Tests-displays-API-healthy-status-chromium/error-context.md
+2025-12-23T22:21:49.8671926Z
+2025-12-23T22:21:49.8672549Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8675485Z
+2025-12-23T22:21:49.8676175Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8676727Z
+2025-12-23T22:21:49.8676958Z     Locator: getByTestId('sys:api-status')
+2025-12-23T22:21:49.8677417Z     Expected: visible
+2025-12-23T22:21:49.8677765Z     Timeout: 5000ms
+2025-12-23T22:21:49.8678173Z     Error: element(s) not found
+2025-12-23T22:21:49.8678444Z
+2025-12-23T22:21:49.8678575Z     Call log:
+2025-12-23T22:21:49.8679165Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8679917Z     [2m  - waiting for getByTestId('sys:api-status')[22m
+2025-12-23T22:21:49.8680229Z
+2025-12-23T22:21:49.8680237Z
+2025-12-23T22:21:49.8680500Z       23 |     // Wait for the API status to load using data-testid
+2025-12-23T22:21:49.8681423Z       24 |     const apiStatus = page.getByTestId('sys:api-status');
+2025-12-23T22:21:49.8682085Z     > 25 |     await expect(apiStatus).toBeVisible();
+2025-12-23T22:21:49.8682591Z          |                             ^
+2025-12-23T22:21:49.8682972Z       26 |
+2025-12-23T22:21:49.8683383Z       27 |     // In mock mode (CI), should always be healthy
+2025-12-23T22:21:49.8683993Z       28 |     // In real mode, depends on actual backend
+2025-12-23T22:21:49.8684733Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:25:29
+2025-12-23T22:21:49.8685397Z
+2025-12-23T22:21:49.8686245Z     Error Context: test-results/smoke-Smoke-Tests-displays-API-healthy-status-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8687031Z
+2025-12-23T22:21:49.8687784Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8688924Z     test-results/smoke-Smoke-Tests-displays-API-healthy-status-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8689705Z     Usage:
+2025-12-23T22:21:49.8689884Z
+2025-12-23T22:21:49.8690657Z         npx playwright show-trace test-results/smoke-Smoke-Tests-displays-API-healthy-status-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8691451Z
+2025-12-23T22:21:49.8692093Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8692568Z
+2025-12-23T22:21:49.8693277Z   4) [chromium] › tests/smoke.spec.ts:32:7 › Smoke Tests › displays RediAI status ──────────────────
+2025-12-23T22:21:49.8693852Z
+2025-12-23T22:21:49.8694473Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8695016Z
+2025-12-23T22:21:49.8695531Z     Locator: getByTestId('sys:redi-status')
+2025-12-23T22:21:49.8696060Z     Expected: visible
+2025-12-23T22:21:49.8696405Z     Timeout: 5000ms
+2025-12-23T22:21:49.8696807Z     Error: element(s) not found
+2025-12-23T22:21:49.8697077Z
+2025-12-23T22:21:49.8697443Z     Call log:
+2025-12-23T22:21:49.8697969Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8698617Z     [2m  - waiting for getByTestId('sys:redi-status')[22m
+2025-12-23T22:21:49.8699000Z
+2025-12-23T22:21:49.8699010Z
+2025-12-23T22:21:49.8699353Z       35 |     // Wait for the RediAI status to load using data-testid
+2025-12-23T22:21:49.8700219Z       36 |     const rediStatus = page.getByTestId('sys:redi-status');
+2025-12-23T22:21:49.8700875Z     > 37 |     await expect(rediStatus).toBeVisible();
+2025-12-23T22:21:49.8701400Z          |                              ^
+2025-12-23T22:21:49.8701781Z       38 |
+2025-12-23T22:21:49.8702188Z       39 |     // Should show some status (healthy or down)
+2025-12-23T22:21:49.8702836Z       40 |     await expect(rediStatus).toContainText('RediAI:');
+2025-12-23T22:21:49.8703632Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:37:30
+2025-12-23T22:21:49.8704112Z
+2025-12-23T22:21:49.8704747Z     Error Context: test-results/smoke-Smoke-Tests-displays-RediAI-status-chromium/error-context.md
+2025-12-23T22:21:49.8705620Z
+2025-12-23T22:21:49.8706285Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8706756Z
+2025-12-23T22:21:49.8707390Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8708013Z
+2025-12-23T22:21:49.8708251Z     Locator: getByTestId('sys:redi-status')
+2025-12-23T22:21:49.8708692Z     Expected: visible
+2025-12-23T22:21:49.8709040Z     Timeout: 5000ms
+2025-12-23T22:21:49.8709424Z     Error: element(s) not found
+2025-12-23T22:21:49.8709708Z
+2025-12-23T22:21:49.8709896Z     Call log:
+2025-12-23T22:21:49.8710757Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8711615Z     [2m  - waiting for getByTestId('sys:redi-status')[22m
+2025-12-23T22:21:49.8712033Z
+2025-12-23T22:21:49.8712043Z
+2025-12-23T22:21:49.8712411Z       35 |     // Wait for the RediAI status to load using data-testid
+2025-12-23T22:21:49.8713430Z       36 |     const rediStatus = page.getByTestId('sys:redi-status');
+2025-12-23T22:21:49.8714341Z     > 37 |     await expect(rediStatus).toBeVisible();
+2025-12-23T22:21:49.8714961Z          |                              ^
+2025-12-23T22:21:49.8715856Z       38 |
+2025-12-23T22:21:49.8733270Z       39 |     // Should show some status (healthy or down)
+2025-12-23T22:21:49.8733871Z       40 |     await expect(rediStatus).toContainText('RediAI:');
+2025-12-23T22:21:49.8734632Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:37:30
+2025-12-23T22:21:49.8735040Z
+2025-12-23T22:21:49.8735826Z     Error Context: test-results/smoke-Smoke-Tests-displays-RediAI-status-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8736478Z
+2025-12-23T22:21:49.8737248Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8738344Z     test-results/smoke-Smoke-Tests-displays-RediAI-status-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8739081Z     Usage:
+2025-12-23T22:21:49.8739296Z
+2025-12-23T22:21:49.8739988Z         npx playwright show-trace test-results/smoke-Smoke-Tests-displays-RediAI-status-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8740753Z
+2025-12-23T22:21:49.8741368Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8742045Z
+2025-12-23T22:21:49.8742763Z   5) [chromium] › tests/smoke.spec.ts:43:7 › Smoke Tests › shows correct status indicators ─────────
+2025-12-23T22:21:49.8743345Z
+2025-12-23T22:21:49.8743956Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8744467Z
+2025-12-23T22:21:49.8744685Z     Locator: getByTestId('sys:api-card')
+2025-12-23T22:21:49.8745108Z     Expected: visible
+2025-12-23T22:21:49.8745810Z     Timeout: 5000ms
+2025-12-23T22:21:49.8746162Z     Error: element(s) not found
+2025-12-23T22:21:49.8746413Z
+2025-12-23T22:21:49.8746735Z     Call log:
+2025-12-23T22:21:49.8747279Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8747938Z     [2m  - waiting for getByTestId('sys:api-card')[22m
+2025-12-23T22:21:49.8748291Z
+2025-12-23T22:21:49.8748299Z
+2025-12-23T22:21:49.8748564Z       50 |     const apiCard = page.getByTestId('sys:api-card');
+2025-12-23T22:21:49.8749203Z       51 |     const rediCard = page.getByTestId('sys:redi-card');
+2025-12-23T22:21:49.8749786Z     > 52 |     await expect(apiCard).toBeVisible();
+2025-12-23T22:21:49.8750254Z          |                           ^
+2025-12-23T22:21:49.8750723Z       53 |     await expect(rediCard).toBeVisible();
+2025-12-23T22:21:49.8751143Z       54 |   });
+2025-12-23T22:21:49.8751413Z       55 | });
+2025-12-23T22:21:49.8751950Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:52:27
+2025-12-23T22:21:49.8752398Z
+2025-12-23T22:21:49.8753064Z     Error Context: test-results/smoke-Smoke-Tests-shows-correct-status-indicators-chromium/error-context.md
+2025-12-23T22:21:49.8753970Z
+2025-12-23T22:21:49.8757231Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8757709Z
+2025-12-23T22:21:49.8758366Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8758919Z
+2025-12-23T22:21:49.8759156Z     Locator: getByTestId('sys:api-card')
+2025-12-23T22:21:49.8759596Z     Expected: visible
+2025-12-23T22:21:49.8759941Z     Timeout: 5000ms
+2025-12-23T22:21:49.8760312Z     Error: element(s) not found
+2025-12-23T22:21:49.8760584Z
+2025-12-23T22:21:49.8760707Z     Call log:
+2025-12-23T22:21:49.8761274Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8761971Z     [2m  - waiting for getByTestId('sys:api-card')[22m
+2025-12-23T22:21:49.8762326Z
+2025-12-23T22:21:49.8762343Z
+2025-12-23T22:21:49.8762644Z       50 |     const apiCard = page.getByTestId('sys:api-card');
+2025-12-23T22:21:49.8763385Z       51 |     const rediCard = page.getByTestId('sys:redi-card');
+2025-12-23T22:21:49.8764039Z     > 52 |     await expect(apiCard).toBeVisible();
+2025-12-23T22:21:49.8764536Z          |                           ^
+2025-12-23T22:21:49.8764954Z       53 |     await expect(rediCard).toBeVisible();
+2025-12-23T22:21:49.8765556Z       54 |   });
+2025-12-23T22:21:49.8765869Z       55 | });
+2025-12-23T22:21:49.8766449Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:52:27
+2025-12-23T22:21:49.8766918Z
+2025-12-23T22:21:49.8767677Z     Error Context: test-results/smoke-Smoke-Tests-shows-correct-status-indicators-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8768502Z
+2025-12-23T22:21:49.8769231Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8770387Z     test-results/smoke-Smoke-Tests-shows-correct-status-indicators-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8771139Z     Usage:
+2025-12-23T22:21:49.8771313Z
+2025-12-23T22:21:49.8772299Z         npx playwright show-trace test-results/smoke-Smoke-Tests-shows-correct-status-indicators-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8773117Z
+2025-12-23T22:21:49.8773763Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8774208Z
+2025-12-23T22:21:49.8775492Z   6) [chromium] › tests/smoke.spec.ts:58:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace
+2025-12-23T22:21:49.8776204Z
+2025-12-23T22:21:49.8776986Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8777615Z
+2025-12-23T22:21:49.8777761Z     Locator: locator('h1')
+2025-12-23T22:21:49.8778307Z     Expected substring: [32m"Tunix RT"[39m
+2025-12-23T22:21:49.8778739Z     Timeout: 5000ms
+2025-12-23T22:21:49.8779124Z     Error: element(s) not found
+2025-12-23T22:21:49.8779389Z
+2025-12-23T22:21:49.8779515Z     Call log:
+2025-12-23T22:21:49.8780135Z     [2m  - Expect "toContainText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8780840Z     [2m  - waiting for locator('h1')[22m
+2025-12-23T22:21:49.8781129Z
+2025-12-23T22:21:49.8781137Z
+2025-12-23T22:21:49.8781233Z       60 |
+2025-12-23T22:21:49.8781580Z       61 |     // Wait for page to load
+2025-12-23T22:21:49.8782111Z     > 62 |     await expect(page.locator('h1')).toContainText('Tunix RT');
+2025-12-23T22:21:49.8782765Z          |                                      ^
+2025-12-23T22:21:49.8783169Z       63 |
+2025-12-23T22:21:49.8783596Z       64 |     // Click "Load Example" button using data-testid
+2025-12-23T22:21:49.8784346Z       65 |     const loadExampleBtn = page.getByTestId('trace:load-example');
+2025-12-23T22:21:49.8785123Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:62:38
+2025-12-23T22:21:49.8785748Z
+2025-12-23T22:21:49.8786529Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium/error-context.md
+2025-12-23T22:21:49.8787373Z
+2025-12-23T22:21:49.8788031Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8788476Z
+2025-12-23T22:21:49.8789201Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8789820Z
+2025-12-23T22:21:49.8789984Z     Locator: locator('h1')
+2025-12-23T22:21:49.8790510Z     Expected substring: [32m"Tunix RT"[39m
+2025-12-23T22:21:49.8790956Z     Timeout: 5000ms
+2025-12-23T22:21:49.8791341Z     Error: element(s) not found
+2025-12-23T22:21:49.8791614Z
+2025-12-23T22:21:49.8791744Z     Call log:
+2025-12-23T22:21:49.8792330Z     [2m  - Expect "toContainText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8792971Z     [2m  - waiting for locator('h1')[22m
+2025-12-23T22:21:49.8793286Z
+2025-12-23T22:21:49.8793295Z
+2025-12-23T22:21:49.8793411Z       60 |
+2025-12-23T22:21:49.8793760Z       61 |     // Wait for page to load
+2025-12-23T22:21:49.8794399Z     > 62 |     await expect(page.locator('h1')).toContainText('Tunix RT');
+2025-12-23T22:21:49.8795016Z          |                                      ^
+2025-12-23T22:21:49.8795606Z       63 |
+2025-12-23T22:21:49.8796093Z       64 |     // Click "Load Example" button using data-testid
+2025-12-23T22:21:49.8796825Z       65 |     const loadExampleBtn = page.getByTestId('trace:load-example');
+2025-12-23T22:21:49.8797669Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:62:38
+2025-12-23T22:21:49.8798132Z
+2025-12-23T22:21:49.8798933Z     Error Context: test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8801254Z
+2025-12-23T22:21:49.8801969Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8805024Z     test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8806068Z     Usage:
+2025-12-23T22:21:49.8806453Z
+2025-12-23T22:21:49.8807350Z         npx playwright show-trace test-results/smoke-Trace-Upload-and-Ret-228c6-mple-upload-and-fetch-trace-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8808259Z
+2025-12-23T22:21:49.8808868Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8809461Z
+2025-12-23T22:21:49.8810204Z   7) [chromium] › tests/smoke.spec.ts:101:7 › UNGAR Integration Panel › UNGAR section renders with status
+2025-12-23T22:21:49.8810829Z
+2025-12-23T22:21:49.8811424Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8811952Z
+2025-12-23T22:21:49.8812166Z     Locator: getByTestId('ungar:section')
+2025-12-23T22:21:49.8812602Z     Expected: visible
+2025-12-23T22:21:49.8812937Z     Timeout: 5000ms
+2025-12-23T22:21:49.8813306Z     Error: element(s) not found
+2025-12-23T22:21:49.8813564Z
+2025-12-23T22:21:49.8813684Z     Call log:
+2025-12-23T22:21:49.8814240Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8814934Z     [2m  - waiting for getByTestId('ungar:section')[22m
+2025-12-23T22:21:49.8815447Z
+2025-12-23T22:21:49.8815458Z
+2025-12-23T22:21:49.8815689Z       104 |     // Wait for UNGAR section to load
+2025-12-23T22:21:49.8816364Z       105 |     const ungarSection = page.getByTestId('ungar:section');
+2025-12-23T22:21:49.8817047Z     > 106 |     await expect(ungarSection).toBeVisible();
+2025-12-23T22:21:49.8817567Z           |                                ^
+2025-12-23T22:21:49.8817954Z       107 |
+2025-12-23T22:21:49.8818347Z       108 |     // Verify status container is displayed
+2025-12-23T22:21:49.8819082Z       109 |     const statusContainer = page.getByTestId('ungar:status-container');
+2025-12-23T22:21:49.8819973Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:106:32
+2025-12-23T22:21:49.8820451Z
+2025-12-23T22:21:49.8821246Z     Error Context: test-results/smoke-UNGAR-Integration-Pa-9239f-section-renders-with-status-chromium/error-context.md
+2025-12-23T22:21:49.8822047Z
+2025-12-23T22:21:49.8822651Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8823089Z
+2025-12-23T22:21:49.8823672Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+2025-12-23T22:21:49.8824439Z
+2025-12-23T22:21:49.8824670Z     Locator: getByTestId('ungar:section')
+2025-12-23T22:21:49.8825127Z     Expected: visible
+2025-12-23T22:21:49.8825620Z     Timeout: 5000ms
+2025-12-23T22:21:49.8825984Z     Error: element(s) not found
+2025-12-23T22:21:49.8826243Z
+2025-12-23T22:21:49.8826362Z     Call log:
+2025-12-23T22:21:49.8826956Z     [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+2025-12-23T22:21:49.8827666Z     [2m  - waiting for getByTestId('ungar:section')[22m
+2025-12-23T22:21:49.8828030Z
+2025-12-23T22:21:49.8828047Z
+2025-12-23T22:21:49.8828263Z       104 |     // Wait for UNGAR section to load
+2025-12-23T22:21:49.8829110Z       105 |     const ungarSection = page.getByTestId('ungar:section');
+2025-12-23T22:21:49.8829819Z     > 106 |     await expect(ungarSection).toBeVisible();
+2025-12-23T22:21:49.8830342Z           |                                ^
+2025-12-23T22:21:49.8830726Z       107 |
+2025-12-23T22:21:49.8831144Z       108 |     // Verify status container is displayed
+2025-12-23T22:21:49.8832149Z       109 |     const statusContainer = page.getByTestId('ungar:status-container');
+2025-12-23T22:21:49.8833045Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:106:32
+2025-12-23T22:21:49.8833486Z
+2025-12-23T22:21:49.8834374Z     Error Context: test-results/smoke-UNGAR-Integration-Pa-9239f-section-renders-with-status-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8835493Z
+2025-12-23T22:21:49.8836265Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8837571Z     test-results/smoke-UNGAR-Integration-Pa-9239f-section-renders-with-status-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8838461Z     Usage:
+2025-12-23T22:21:49.8838631Z
+2025-12-23T22:21:49.8839544Z         npx playwright show-trace test-results/smoke-UNGAR-Integration-Pa-9239f-section-renders-with-status-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8840475Z
+2025-12-23T22:21:49.8841052Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8841474Z
+2025-12-23T22:21:49.8842300Z   8) [chromium] › tests/smoke.spec.ts:123:7 › Trace Comparison and Evaluation › can create two traces and compare them
+2025-12-23T22:21:49.8843009Z
+2025-12-23T22:21:49.8843741Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8844363Z
+2025-12-23T22:21:49.8844511Z     Locator: locator('h1')
+2025-12-23T22:21:49.8845031Z     Expected substring: [32m"Tunix RT"[39m
+2025-12-23T22:21:49.8845617Z     Timeout: 5000ms
+2025-12-23T22:21:49.8845999Z     Error: element(s) not found
+2025-12-23T22:21:49.8846259Z
+2025-12-23T22:21:49.8846377Z     Call log:
+2025-12-23T22:21:49.8846918Z     [2m  - Expect "toContainText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8847544Z     [2m  - waiting for locator('h1')[22m
+2025-12-23T22:21:49.8847850Z
+2025-12-23T22:21:49.8847858Z
+2025-12-23T22:21:49.8847976Z       125 |
+2025-12-23T22:21:49.8848287Z       126 |     // Wait for page to load
+2025-12-23T22:21:49.8848863Z     > 127 |     await expect(page.locator('h1')).toContainText('Tunix RT');
+2025-12-23T22:21:49.8849439Z           |                                      ^
+2025-12-23T22:21:49.8849813Z       128 |
+2025-12-23T22:21:49.8850229Z       129 |     // Create first trace (simple) using data-testid
+2025-12-23T22:21:49.8850884Z       130 |     const traceTextarea = page.getByTestId('trace:json');
+2025-12-23T22:21:49.8851673Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:127:38
+2025-12-23T22:21:49.8852113Z
+2025-12-23T22:21:49.8852894Z     Error Context: test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium/error-context.md
+2025-12-23T22:21:49.8853711Z
+2025-12-23T22:21:49.8854326Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8854752Z
+2025-12-23T22:21:49.8855658Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T22:21:49.8856290Z
+2025-12-23T22:21:49.8856445Z     Locator: locator('h1')
+2025-12-23T22:21:49.8856968Z     Expected substring: [32m"Tunix RT"[39m
+2025-12-23T22:21:49.8857392Z     Timeout: 5000ms
+2025-12-23T22:21:49.8857743Z     Error: element(s) not found
+2025-12-23T22:21:49.8857996Z
+2025-12-23T22:21:49.8858112Z     Call log:
+2025-12-23T22:21:49.8858646Z     [2m  - Expect "toContainText" with timeout 5000ms[22m
+2025-12-23T22:21:49.8859249Z     [2m  - waiting for locator('h1')[22m
+2025-12-23T22:21:49.8859541Z
+2025-12-23T22:21:49.8859550Z
+2025-12-23T22:21:49.8859887Z       125 |
+2025-12-23T22:21:49.8860225Z       126 |     // Wait for page to load
+2025-12-23T22:21:49.8860846Z     > 127 |     await expect(page.locator('h1')).toContainText('Tunix RT');
+2025-12-23T22:21:49.8861485Z           |                                      ^
+2025-12-23T22:21:49.8861877Z       128 |
+2025-12-23T22:21:49.8862546Z       129 |     // Create first trace (simple) using data-testid
+2025-12-23T22:21:49.8863226Z       130 |     const traceTextarea = page.getByTestId('trace:json');
+2025-12-23T22:21:49.8864042Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/smoke.spec.ts:127:38
+2025-12-23T22:21:49.8864517Z
+2025-12-23T22:21:49.8865587Z     Error Context: test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/error-context.md
+2025-12-23T22:21:49.8866500Z
+2025-12-23T22:21:49.8867245Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8868552Z     test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8869428Z     Usage:
+2025-12-23T22:21:49.8869604Z
+2025-12-23T22:21:49.8870478Z         npx playwright show-trace test-results/smoke-Trace-Comparison-and-cea2e-two-traces-and-compare-them-chromium-retry1/trace.zip
+2025-12-23T22:21:49.8871378Z
+2025-12-23T22:21:49.8871992Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T22:21:49.8872405Z
+2025-12-23T22:21:49.8872517Z   8 failed
+2025-12-23T22:21:49.8873345Z     [chromium] › tests/async_run.spec.ts:3:5 › async run flow: enqueue, poll, complete ─────────────
+2025-12-23T22:21:49.8874546Z     [chromium] › tests/smoke.spec.ts:13:7 › Smoke Tests › homepage loads successfully ──────────────
+2025-12-23T22:21:49.8875908Z     [chromium] › tests/smoke.spec.ts:20:7 › Smoke Tests › displays API healthy status ──────────────
+2025-12-23T22:21:49.8877101Z     [chromium] › tests/smoke.spec.ts:32:7 › Smoke Tests › displays RediAI status ───────────────────
+2025-12-23T22:21:49.8878295Z     [chromium] › tests/smoke.spec.ts:43:7 › Smoke Tests › shows correct status indicators ──────────
+2025-12-23T22:21:49.8879607Z     [chromium] › tests/smoke.spec.ts:58:7 › Trace Upload and Retrieval › can load example, upload, and fetch trace
+2025-12-23T22:21:49.8880942Z     [chromium] › tests/smoke.spec.ts:101:7 › UNGAR Integration Panel › UNGAR section renders with status
+2025-12-23T22:21:49.8882330Z     [chromium] › tests/smoke.spec.ts:123:7 › Trace Comparison and Evaluation › can create two traces and compare them
+2025-12-23T22:21:49.9239945Z ##[error]Process completed with exit code 1.
+2025-12-23T22:21:49.9283020Z ##[group]Run actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b
+2025-12-23T22:21:49.9283392Z with:
+2025-12-23T22:21:49.9283584Z   name: playwright-report
+2025-12-23T22:21:49.9283820Z   path: e2e/playwright-report/
+2025-12-23T22:21:49.9284046Z   retention-days: 7
+2025-12-23T22:21:49.9284247Z   if-no-files-found: warn
+2025-12-23T22:21:49.9284453Z   compression-level: 6
+2025-12-23T22:21:49.9284652Z   overwrite: false
+2025-12-23T22:21:49.9284846Z   include-hidden-files: false
+2025-12-23T22:21:49.9285059Z env:
+2025-12-23T22:21:49.9285446Z   REDIAI_MODE: mock
+2025-12-23T22:21:49.9285999Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T22:21:49.9286515Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:21:49.9286918Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T22:21:49.9287304Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:21:49.9287683Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:21:49.9288023Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T22:21:49.9288378Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T22:21:49.9288670Z ##[endgroup]
+2025-12-23T22:21:50.1666454Z With the provided path, there will be 26 files uploaded
+2025-12-23T22:21:50.1670542Z Artifact name is valid!
+2025-12-23T22:21:50.1671080Z Root directory input is valid!
+2025-12-23T22:21:50.4279415Z Beginning upload of artifact content to blob storage
+2025-12-23T22:21:51.1528382Z Uploaded bytes 1687259
+2025-12-23T22:21:51.2144901Z Finished uploading artifact content to blob storage!
+2025-12-23T22:21:51.2149585Z SHA256 hash of uploaded artifact zip is 452812b40989e91c55efaecb2afdd7ff8f1469cebd0ab701c317bc53ac18df22
+2025-12-23T22:21:51.2151209Z Finalizing artifact upload
+2025-12-23T22:21:51.3613631Z Artifact playwright-report.zip successfully finalized. Artifact ID 4957284162
+2025-12-23T22:21:51.3615534Z Artifact playwright-report has been successfully uploaded! Final size is 1687259 bytes. Artifact ID is 4957284162
+2025-12-23T22:21:51.3622595Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20472836100/artifacts/4957284162
+2025-12-23T22:21:51.3774749Z Post job cleanup.
+2025-12-23T22:21:51.4726013Z [command]/usr/bin/git version
+2025-12-23T22:21:51.4793055Z git version 2.52.0
+2025-12-23T22:21:51.4858807Z Temporarily overriding HOME='/home/runner/work/_temp/4ab2f5b0-b204-440f-ab04-ab239477876b' before making global git config changes
+2025-12-23T22:21:51.4863126Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-23T22:21:51.4878307Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T22:21:51.4957177Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-23T22:21:51.4999985Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-23T22:21:51.5256266Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-23T22:21:51.5280526Z http.https://github.com/.extraheader
+2025-12-23T22:21:51.5297718Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-12-23T22:21:51.5331689Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-23T22:21:51.5671017Z Print service container logs: 7d897ff0fbfd453c93f3ff0e17e975e5_postgres15alpine_d328f9
+2025-12-23T22:21:51.5675564Z ##[command]/usr/bin/docker logs --details 0296d1f3e2b1f5190e979f67e67f979fe90acacffaadf103ceec941d5e2325f2
+2025-12-23T22:21:51.5812096Z  sh: locale: not found
+2025-12-23T22:21:51.5814190Z  The files belonging to this database system will be owned by user "postgres".
+2025-12-23T22:21:51.5814887Z  This user must also own the server process.
+2025-12-23T22:21:51.5815445Z
+2025-12-23T22:21:51.5815854Z  The database cluster will be initialized with locale "en_US.utf8".
+2025-12-23T22:21:51.5816538Z  The default database encoding has accordingly been set to "UTF8".
+2025-12-23T22:21:51.5817186Z  The default text search configuration will be set to "english".
+2025-12-23T22:21:51.5817683Z
+2025-12-23T22:21:51.5817957Z  Data page checksums are disabled.
+2025-12-23T22:21:51.5818319Z
+2025-12-23T22:21:51.5818820Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
+2025-12-23T22:21:51.5819413Z  creating subdirectories ... ok
+2025-12-23T22:21:51.5820161Z  selecting dynamic shared memory implementation ... posix
+2025-12-23T22:21:51.5820689Z  selecting default max_connections ... 100
+2025-12-23T22:21:51.5821127Z  selecting default shared_buffers ... 128MB
+2025-12-23T22:21:51.5821555Z  selecting default time zone ... UTC
+2025-12-23T22:21:51.5821958Z  creating configuration files ... ok
+2025-12-23T22:21:51.5822362Z  running bootstrap script ... ok
+2025-12-23T22:21:51.5822798Z  performing post-bootstrap initialization ... ok
+2025-12-23T22:21:51.5823250Z  syncing data to disk ... ok
+2025-12-23T22:21:51.5823577Z
+2025-12-23T22:21:51.5823810Z
+2025-12-23T22:21:51.5824146Z  Success. You can now start the database server using:
+2025-12-23T22:21:51.5824585Z
+2025-12-23T22:21:51.5824918Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
+2025-12-23T22:21:51.5825504Z
+2025-12-23T22:21:51.5826318Z  waiting for server to start....2025-12-23 22:18:48.991 UTC [40] LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2025-12-23T22:21:51.5827465Z  2025-12-23 22:18:48.992 UTC [40] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2025-12-23T22:21:51.5829949Z  2025-12-23 22:18:48.995 UTC [43] LOG:  database system was shut down at 2025-12-23 22:18:48 UTC
+2025-12-23T22:21:51.5830768Z  2025-12-23 22:18:48.999 UTC [40] LOG:  database system is ready to accept connections
+2025-12-23T22:21:51.5831314Z   done
+2025-12-23T22:21:51.5831578Z  server started
+2025-12-23T22:21:51.5831851Z
+2025-12-23T22:21:51.5832341Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+2025-12-23T22:21:51.5832954Z
+2025-12-23T22:21:51.5833473Z  waiting for server to shut down...2025-12-23 22:18:49.091 UTC [40] LOG:  received fast shutdown request
+2025-12-23T22:21:51.5834258Z  .2025-12-23 22:18:49.092 UTC [40] LOG:  aborting any active transactions
+2025-12-23T22:21:51.5835120Z  2025-12-23 22:18:49.097 UTC [40] LOG:  background worker "logical replication launcher" (PID 46) exited with exit code 1
+2025-12-23T22:21:51.5836171Z  2025-12-23 22:18:49.097 UTC [41] LOG:  shutting down
+2025-12-23T22:21:51.5836740Z  2025-12-23 22:18:49.098 UTC [41] LOG:  checkpoint starting: shutdown immediate
+2025-12-23T22:21:51.5838143Z  2025-12-23 22:18:49.102 UTC [41] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.001 s, total=0.006 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB
+2025-12-23T22:21:51.5839500Z  2025-12-23 22:18:49.106 UTC [40] LOG:  database system is shut down
+2025-12-23T22:21:51.5839982Z   done
+2025-12-23T22:21:51.5840246Z  server stopped
+2025-12-23T22:21:51.5840527Z
+2025-12-23T22:21:51.5840880Z  PostgreSQL init process complete; ready for start up.
+2025-12-23T22:21:51.5841336Z
+2025-12-23T22:21:51.5841748Z  2025-12-23 22:18:48.400 UTC [34] WARNING:  no usable system locales were found
+2025-12-23T22:21:51.5842671Z  initdb: warning: enabling "trust" authentication for local connections
+2025-12-23T22:21:51.5843635Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2025-12-23T22:21:51.5844862Z  2025-12-23 22:18:49.212 UTC [1] LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2025-12-23T22:21:51.5845960Z  2025-12-23 22:18:49.212 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2025-12-23T22:21:51.5846649Z  2025-12-23 22:18:49.212 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2025-12-23T22:21:51.5847429Z  2025-12-23 22:18:49.213 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2025-12-23T22:21:51.5848674Z  2025-12-23 22:18:49.217 UTC [54] LOG:  database system was shut down at 2025-12-23 22:18:49 UTC
+2025-12-23T22:21:51.5849449Z  2025-12-23 22:18:49.221 UTC [1] LOG:  database system is ready to accept connections
+2025-12-23T22:21:51.5850839Z  2025-12-23 22:18:57.945 UTC [64] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5851585Z  2025-12-23 22:19:08.001 UTC [71] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5851967Z  2025-12-23 22:19:18.057 UTC [77] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5852315Z  2025-12-23 22:19:28.139 UTC [86] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5852661Z  2025-12-23 22:19:38.195 UTC [93] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5853008Z  2025-12-23 22:19:48.246 UTC [99] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5853346Z  2025-12-23 22:19:58.313 UTC [107] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5853712Z  2025-12-23 22:20:08.359 UTC [115] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5854054Z  2025-12-23 22:20:18.401 UTC [122] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5854394Z  2025-12-23 22:20:28.441 UTC [130] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5854730Z  2025-12-23 22:20:38.485 UTC [137] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5855066Z  2025-12-23 22:20:48.529 UTC [144] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5855728Z  2025-12-23 22:20:58.591 UTC [152] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5856084Z  2025-12-23 22:21:08.639 UTC [159] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5856425Z  2025-12-23 22:21:18.692 UTC [166] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5856755Z  2025-12-23 22:21:28.732 UTC [174] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5857093Z  2025-12-23 22:21:38.775 UTC [181] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5857425Z  2025-12-23 22:21:48.816 UTC [188] FATAL:  role "root" does not exist
+2025-12-23T22:21:51.5862542Z Stop and remove container: 7d897ff0fbfd453c93f3ff0e17e975e5_postgres15alpine_d328f9
+2025-12-23T22:21:51.5867967Z ##[command]/usr/bin/docker rm --force 0296d1f3e2b1f5190e979f67e67f979fe90acacffaadf103ceec941d5e2325f2
+2025-12-23T22:21:51.7236631Z 0296d1f3e2b1f5190e979f67e67f979fe90acacffaadf103ceec941d5e2325f2
+2025-12-23T22:21:51.7283171Z Remove container network: github_network_929d45183d3147409cfa8bc794fccb9e
+2025-12-23T22:21:51.7289799Z ##[command]/usr/bin/docker network rm github_network_929d45183d3147409cfa8bc794fccb9e
+2025-12-23T22:21:51.8132801Z github_network_929d45183d3147409cfa8bc794fccb9e
+2025-12-23T22:21:51.8190722Z Cleaning up orphan processes

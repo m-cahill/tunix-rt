@@ -1,0 +1,15 @@
+﻿2025-12-23T20:54:53.7577608Z ##[group]Run cd ../backend
+2025-12-23T20:54:53.7577896Z [36;1mcd ../backend[0m
+2025-12-23T20:54:53.7578235Z [36;1mcyclonedx-py requirements -i pyproject.toml -o sbom.json --format json[0m
+2025-12-23T20:54:53.7613255Z shell: /usr/bin/bash -e {0}
+2025-12-23T20:54:53.7613484Z env:
+2025-12-23T20:54:53.7613724Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T20:54:53.7614135Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T20:54:53.7614555Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T20:54:53.7614905Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T20:54:53.7615261Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T20:54:53.7615603Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T20:54:53.7615894Z ##[endgroup]
+2025-12-23T20:54:53.9494074Z usage: cyclonedx-py [-h] [--version] <command> ...
+2025-12-23T20:54:53.9496521Z cyclonedx-py: error: unrecognized arguments: --format
+2025-12-23T20:54:53.9893623Z ##[error]Process completed with exit code 2.

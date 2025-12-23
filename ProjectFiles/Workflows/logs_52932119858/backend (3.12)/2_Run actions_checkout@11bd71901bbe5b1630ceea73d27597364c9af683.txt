@@ -1,0 +1,70 @@
+﻿2025-12-23T20:30:37.2448718Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2025-12-23T20:30:37.2449712Z with:
+2025-12-23T20:30:37.2450110Z   repository: m-cahill/tunix-rt
+2025-12-23T20:30:37.2450720Z   token: ***
+2025-12-23T20:30:37.2451106Z   ssh-strict: true
+2025-12-23T20:30:37.2451488Z   ssh-user: git
+2025-12-23T20:30:37.2451932Z   persist-credentials: true
+2025-12-23T20:30:37.2452361Z   clean: true
+2025-12-23T20:30:37.2452751Z   sparse-checkout-cone-mode: true
+2025-12-23T20:30:37.2453209Z   fetch-depth: 1
+2025-12-23T20:30:37.2453588Z   fetch-tags: false
+2025-12-23T20:30:37.2453975Z   show-progress: true
+2025-12-23T20:30:37.2454365Z   lfs: false
+2025-12-23T20:30:37.2454728Z   submodules: false
+2025-12-23T20:30:37.2455254Z   set-safe-directory: true
+2025-12-23T20:30:37.2455922Z ##[endgroup]
+2025-12-23T20:30:37.3612641Z Syncing repository: m-cahill/tunix-rt
+2025-12-23T20:30:37.3614286Z ##[group]Getting Git version info
+2025-12-23T20:30:37.3615006Z Working directory is '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-23T20:30:37.3618991Z [command]/usr/bin/git version
+2025-12-23T20:30:37.3687991Z git version 2.52.0
+2025-12-23T20:30:37.3716751Z ##[endgroup]
+2025-12-23T20:30:37.3733005Z Temporarily overriding HOME='/home/runner/work/_temp/470e9a71-80d0-4d5b-90da-23df0ec54788' before making global git config changes
+2025-12-23T20:30:37.3737830Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-23T20:30:37.3751192Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T20:30:37.3794787Z Deleting the contents of '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-23T20:30:37.3797656Z ##[group]Initializing the repository
+2025-12-23T20:30:37.3803030Z [command]/usr/bin/git init /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T20:30:37.3923420Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-23T20:30:37.3925602Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-23T20:30:37.3927483Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-23T20:30:37.3928653Z hint: call:
+2025-12-23T20:30:37.3929220Z hint:
+2025-12-23T20:30:37.3929925Z hint: 	git config --global init.defaultBranch <name>
+2025-12-23T20:30:37.3930845Z hint:
+2025-12-23T20:30:37.3931751Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-23T20:30:37.3933229Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-23T20:30:37.3934489Z hint:
+2025-12-23T20:30:37.3935380Z hint: 	git branch -m <name>
+2025-12-23T20:30:37.3936174Z hint:
+2025-12-23T20:30:37.3937232Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-23T20:30:37.3938934Z Initialized empty Git repository in /home/runner/work/tunix-rt/tunix-rt/.git/
+2025-12-23T20:30:37.3947628Z [command]/usr/bin/git remote add origin https://github.com/m-cahill/tunix-rt
+2025-12-23T20:30:37.3986301Z ##[endgroup]
+2025-12-23T20:30:37.3987479Z ##[group]Disabling automatic garbage collection
+2025-12-23T20:30:37.3990954Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-23T20:30:37.4023372Z ##[endgroup]
+2025-12-23T20:30:37.4024896Z ##[group]Setting up auth
+2025-12-23T20:30:37.4030892Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-23T20:30:37.4064195Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-23T20:30:37.4419882Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-23T20:30:37.4452659Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-23T20:30:37.4682688Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-23T20:30:37.4717513Z ##[endgroup]
+2025-12-23T20:30:37.4720023Z ##[group]Fetching the repository
+2025-12-23T20:30:37.4736245Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +f2ab738662103319b3c7a3b05b650096b57169ba:refs/remotes/origin/main
+2025-12-23T20:30:38.3461296Z From https://github.com/m-cahill/tunix-rt
+2025-12-23T20:30:38.3464119Z  * [new ref]         f2ab738662103319b3c7a3b05b650096b57169ba -> origin/main
+2025-12-23T20:30:38.3496876Z ##[endgroup]
+2025-12-23T20:30:38.3498624Z ##[group]Determining the checkout info
+2025-12-23T20:30:38.3500270Z ##[endgroup]
+2025-12-23T20:30:38.3504513Z [command]/usr/bin/git sparse-checkout disable
+2025-12-23T20:30:38.3549320Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-23T20:30:38.3580501Z ##[group]Checking out the ref
+2025-12-23T20:30:38.3583073Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-23T20:30:38.5095507Z Switched to a new branch 'main'
+2025-12-23T20:30:38.5101293Z branch 'main' set up to track 'origin/main'.
+2025-12-23T20:30:38.5112229Z ##[endgroup]
+2025-12-23T20:30:38.5155281Z [command]/usr/bin/git log -1 --format=%H
+2025-12-23T20:30:38.5180081Z f2ab738662103319b3c7a3b05b650096b57169ba

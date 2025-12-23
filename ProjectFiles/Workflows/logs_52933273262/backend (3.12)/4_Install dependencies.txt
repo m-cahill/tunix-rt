@@ -1,0 +1,173 @@
+﻿2025-12-23T20:54:29.8447158Z ##[group]Run python -m pip install -e ".[dev]"
+2025-12-23T20:54:29.8447627Z [36;1mpython -m pip install -e ".[dev]"[0m
+2025-12-23T20:54:29.8487799Z shell: /usr/bin/bash -e {0}
+2025-12-23T20:54:29.8488114Z env:
+2025-12-23T20:54:29.8488441Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-23T20:54:29.8488886Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib/pkgconfig
+2025-12-23T20:54:29.8489339Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-23T20:54:29.8489903Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-23T20:54:29.8490320Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.12/x64
+2025-12-23T20:54:29.8490738Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.12/x64/lib
+2025-12-23T20:54:29.8491075Z ##[endgroup]
+2025-12-23T20:54:30.5255627Z Obtaining file:///home/runner/work/tunix-rt/tunix-rt/backend
+2025-12-23T20:54:30.5277656Z   Installing build dependencies: started
+2025-12-23T20:54:31.6002005Z   Installing build dependencies: finished with status 'done'
+2025-12-23T20:54:31.6007582Z   Checking if build backend supports build_editable: started
+2025-12-23T20:54:31.9030297Z   Checking if build backend supports build_editable: finished with status 'done'
+2025-12-23T20:54:31.9038875Z   Getting requirements to build editable: started
+2025-12-23T20:54:32.2461266Z   Getting requirements to build editable: finished with status 'done'
+2025-12-23T20:54:32.2470368Z   Preparing editable metadata (pyproject.toml): started
+2025-12-23T20:54:32.4446802Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+2025-12-23T20:54:32.5696999Z Collecting fastapi==0.125.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:32.6220092Z   Downloading fastapi-0.125.0-py3-none-any.whl.metadata (30 kB)
+2025-12-23T20:54:32.6636469Z Collecting uvicorn==0.38.0 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:32.6665179Z   Downloading uvicorn-0.38.0-py3-none-any.whl.metadata (6.8 kB)
+2025-12-23T20:54:32.6877371Z Collecting httpx==0.28.1 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:32.6981073Z   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+2025-12-23T20:54:32.8224620Z Collecting pydantic==2.12.5 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:32.8253722Z   Downloading pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)
+2025-12-23T20:54:32.8533301Z Collecting pydantic-settings==2.12.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:32.8560200Z   Downloading pydantic_settings-2.12.0-py3-none-any.whl.metadata (3.4 kB)
+2025-12-23T20:54:33.1285696Z Collecting sqlalchemy==2.0.45 (from sqlalchemy[asyncio]==2.0.45->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.1322592Z   Downloading sqlalchemy-2.0.45-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+2025-12-23T20:54:33.1635498Z Collecting alembic==1.17.2 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.1663928Z   Downloading alembic-1.17.2-py3-none-any.whl.metadata (7.2 kB)
+2025-12-23T20:54:33.2091172Z Collecting asyncpg==0.31.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.2124713Z   Downloading asyncpg-0.31.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (4.4 kB)
+2025-12-23T20:54:33.2509502Z Collecting pyyaml==6.0.3 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.2538060Z   Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2025-12-23T20:54:33.2687294Z Collecting prometheus-client==0.23.1 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.2713293Z   Downloading prometheus_client-0.23.1-py3-none-any.whl.metadata (1.9 kB)
+2025-12-23T20:54:33.3083289Z Collecting pytest>=7.4.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.3107851Z   Downloading pytest-9.0.2-py3-none-any.whl.metadata (7.6 kB)
+2025-12-23T20:54:33.3290814Z Collecting pytest-cov>=4.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.3317915Z   Downloading pytest_cov-7.0.0-py3-none-any.whl.metadata (31 kB)
+2025-12-23T20:54:33.3582557Z Collecting pytest-asyncio>=0.21.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.3606643Z   Downloading pytest_asyncio-1.3.0-py3-none-any.whl.metadata (4.1 kB)
+2025-12-23T20:54:33.7574068Z Collecting ruff>=0.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.7604078Z   Downloading ruff-0.14.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (26 kB)
+2025-12-23T20:54:33.8675015Z Collecting mypy>=1.6.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.8702763Z   Downloading mypy-1.19.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.2 kB)
+2025-12-23T20:54:33.8932042Z Collecting types-PyYAML>=6.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.8957329Z   Downloading types_pyyaml-6.0.12.20250915-py3-none-any.whl.metadata (1.7 kB)
+2025-12-23T20:54:33.9092207Z Collecting aiosqlite>=0.19.0 (from tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.9117697Z   Downloading aiosqlite-0.22.1-py3-none-any.whl.metadata (4.3 kB)
+2025-12-23T20:54:33.9425807Z Collecting Mako (from alembic==1.17.2->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.9460492Z   Downloading mako-1.3.10-py3-none-any.whl.metadata (2.9 kB)
+2025-12-23T20:54:33.9654973Z Collecting typing-extensions>=4.12 (from alembic==1.17.2->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:33.9681689Z   Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+2025-12-23T20:54:34.0000662Z Collecting starlette<0.51.0,>=0.40.0 (from fastapi==0.125.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:34.0092983Z   Downloading starlette-0.50.0-py3-none-any.whl.metadata (6.3 kB)
+2025-12-23T20:54:34.0432901Z Collecting annotated-doc>=0.0.2 (from fastapi==0.125.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:34.0463796Z   Downloading annotated_doc-0.0.4-py3-none-any.whl.metadata (6.6 kB)
+2025-12-23T20:54:34.0585897Z Collecting annotated-types>=0.6.0 (from pydantic==2.12.5->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:34.0614629Z   Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+2025-12-23T20:54:34.7423924Z Collecting pydantic-core==2.41.5 (from pydantic==2.12.5->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:34.7453517Z   Downloading pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.3 kB)
+2025-12-23T20:54:34.7603957Z Collecting typing-inspection>=0.4.2 (from pydantic==2.12.5->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:34.7630341Z   Downloading typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+2025-12-23T20:54:34.7883811Z Collecting anyio (from httpx==0.28.1->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:34.7918202Z   Downloading anyio-4.12.0-py3-none-any.whl.metadata (4.3 kB)
+2025-12-23T20:54:34.8182710Z Collecting certifi (from httpx==0.28.1->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:34.8214889Z   Downloading certifi-2025.11.12-py3-none-any.whl.metadata (2.5 kB)
+2025-12-23T20:54:34.8440494Z Collecting httpcore==1.* (from httpx==0.28.1->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:34.8466263Z   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+2025-12-23T20:54:34.8626702Z Collecting idna (from httpx==0.28.1->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:34.8654716Z   Downloading idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+2025-12-23T20:54:34.9030681Z Collecting python-dotenv>=0.21.0 (from pydantic-settings==2.12.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:34.9058495Z   Downloading python_dotenv-1.2.1-py3-none-any.whl.metadata (25 kB)
+2025-12-23T20:54:35.0389516Z Collecting greenlet>=1 (from sqlalchemy==2.0.45->sqlalchemy[asyncio]==2.0.45->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.0420546Z   Downloading greenlet-3.3.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (4.1 kB)
+2025-12-23T20:54:35.0692669Z Collecting click>=7.0 (from uvicorn==0.38.0->uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.0721984Z   Downloading click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
+2025-12-23T20:54:35.0858965Z Collecting h11>=0.8 (from uvicorn==0.38.0->uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.0890999Z   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+2025-12-23T20:54:35.1251616Z Collecting httptools>=0.6.3 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.1286239Z   Downloading httptools-0.7.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+2025-12-23T20:54:35.1741755Z Collecting uvloop>=0.15.1 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.1770147Z   Downloading uvloop-0.22.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.9 kB)
+2025-12-23T20:54:35.3034665Z Collecting watchfiles>=0.13 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.3066879Z   Downloading watchfiles-1.1.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+2025-12-23T20:54:35.3913050Z Collecting websockets>=10.4 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.3943832Z   Downloading websockets-15.0.1-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+2025-12-23T20:54:35.4356043Z Collecting mypy_extensions>=1.0.0 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.4384076Z   Downloading mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
+2025-12-23T20:54:35.4520374Z Collecting pathspec>=0.9.0 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.4548294Z   Downloading pathspec-0.12.1-py3-none-any.whl.metadata (21 kB)
+2025-12-23T20:54:35.5405940Z Collecting librt>=0.6.2 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.5435065Z   Downloading librt-0.7.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (1.3 kB)
+2025-12-23T20:54:35.5585359Z Collecting iniconfig>=1.0.1 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.5612280Z   Downloading iniconfig-2.3.0-py3-none-any.whl.metadata (2.5 kB)
+2025-12-23T20:54:35.5795464Z Collecting packaging>=22 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.5826839Z   Downloading packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+2025-12-23T20:54:35.5968835Z Collecting pluggy<2,>=1.5 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.5997668Z   Downloading pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+2025-12-23T20:54:35.6212101Z Collecting pygments>=2.7.2 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.6240308Z   Downloading pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+2025-12-23T20:54:35.9944277Z Collecting coverage>=7.10.6 (from coverage[toml]>=7.10.6->pytest-cov>=4.1.0->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:35.9973678Z   Downloading coverage-7.13.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.5 kB)
+2025-12-23T20:54:36.1561716Z Collecting MarkupSafe>=0.9.2 (from Mako->alembic==1.17.2->tunix-rt-backend==0.1.0)
+2025-12-23T20:54:36.1595177Z   Downloading markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+2025-12-23T20:54:36.1691998Z Downloading alembic-1.17.2-py3-none-any.whl (248 kB)
+2025-12-23T20:54:36.1797160Z Downloading asyncpg-0.31.0-cp312-cp312-manylinux_2_28_x86_64.whl (3.5 MB)
+2025-12-23T20:54:36.2041614Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.5/3.5 MB 158.0 MB/s  0:00:00
+2025-12-23T20:54:36.2070099Z Downloading fastapi-0.125.0-py3-none-any.whl (112 kB)
+2025-12-23T20:54:36.2144751Z Downloading pydantic-2.12.5-py3-none-any.whl (463 kB)
+2025-12-23T20:54:36.2223823Z Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+2025-12-23T20:54:36.2280672Z Downloading prometheus_client-0.23.1-py3-none-any.whl (61 kB)
+2025-12-23T20:54:36.2339569Z Downloading pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+2025-12-23T20:54:36.2501939Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 137.9 MB/s  0:00:00
+2025-12-23T20:54:36.2533604Z Downloading pydantic_settings-2.12.0-py3-none-any.whl (51 kB)
+2025-12-23T20:54:36.2611460Z Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+2025-12-23T20:54:36.2698394Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 95.3 MB/s  0:00:00
+2025-12-23T20:54:36.2733726Z Downloading sqlalchemy-2.0.45-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.3 MB)
+2025-12-23T20:54:36.2976904Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 145.1 MB/s  0:00:00
+2025-12-23T20:54:36.3007180Z Downloading uvicorn-0.38.0-py3-none-any.whl (68 kB)
+2025-12-23T20:54:36.3063927Z Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+2025-12-23T20:54:36.3124115Z Downloading starlette-0.50.0-py3-none-any.whl (74 kB)
+2025-12-23T20:54:36.3186764Z Downloading anyio-4.12.0-py3-none-any.whl (113 kB)
+2025-12-23T20:54:36.3247484Z Downloading aiosqlite-0.22.1-py3-none-any.whl (17 kB)
+2025-12-23T20:54:36.3302145Z Downloading annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
+2025-12-23T20:54:36.3356729Z Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+2025-12-23T20:54:36.3412561Z Downloading click-8.3.1-py3-none-any.whl (108 kB)
+2025-12-23T20:54:36.3518992Z Downloading greenlet-3.3.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (609 kB)
+2025-12-23T20:54:36.3606615Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 609.9/609.9 kB 70.2 MB/s  0:00:00
+2025-12-23T20:54:36.3638834Z Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+2025-12-23T20:54:36.3707173Z Downloading httptools-0.7.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (517 kB)
+2025-12-23T20:54:36.3781003Z Downloading idna-3.11-py3-none-any.whl (71 kB)
+2025-12-23T20:54:36.3837365Z Downloading mypy-1.19.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (13.6 MB)
+2025-12-23T20:54:36.4477308Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.6/13.6 MB 220.6 MB/s  0:00:00
+2025-12-23T20:54:36.4520773Z Downloading librt-0.7.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (189 kB)
+2025-12-23T20:54:36.4584991Z Downloading mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+2025-12-23T20:54:36.4633923Z Downloading pathspec-0.12.1-py3-none-any.whl (31 kB)
+2025-12-23T20:54:36.4686869Z Downloading pytest-9.0.2-py3-none-any.whl (374 kB)
+2025-12-23T20:54:36.4763837Z Downloading pluggy-1.6.0-py3-none-any.whl (20 kB)
+2025-12-23T20:54:36.4841648Z Downloading iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+2025-12-23T20:54:36.4891796Z Downloading packaging-25.0-py3-none-any.whl (66 kB)
+2025-12-23T20:54:36.4949039Z Downloading pygments-2.19.2-py3-none-any.whl (1.2 MB)
+2025-12-23T20:54:36.5043227Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 144.8 MB/s  0:00:00
+2025-12-23T20:54:36.5070162Z Downloading pytest_asyncio-1.3.0-py3-none-any.whl (15 kB)
+2025-12-23T20:54:36.5121839Z Downloading pytest_cov-7.0.0-py3-none-any.whl (22 kB)
+2025-12-23T20:54:36.5180673Z Downloading coverage-7.13.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (252 kB)
+2025-12-23T20:54:36.5241603Z Downloading python_dotenv-1.2.1-py3-none-any.whl (21 kB)
+2025-12-23T20:54:36.5296913Z Downloading ruff-0.14.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (14.2 MB)
+2025-12-23T20:54:36.5951190Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.2/14.2 MB 224.3 MB/s  0:00:00
+2025-12-23T20:54:36.5980444Z Downloading types_pyyaml-6.0.12.20250915-py3-none-any.whl (20 kB)
+2025-12-23T20:54:36.6037562Z Downloading typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+2025-12-23T20:54:36.6095836Z Downloading typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+2025-12-23T20:54:36.6155067Z Downloading uvloop-0.22.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.4 MB)
+2025-12-23T20:54:36.6487231Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.4/4.4 MB 149.5 MB/s  0:00:00
+2025-12-23T20:54:36.6525157Z Downloading watchfiles-1.1.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (456 kB)
+2025-12-23T20:54:36.6600888Z Downloading websockets-15.0.1-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (182 kB)
+2025-12-23T20:54:36.6658258Z Downloading certifi-2025.11.12-py3-none-any.whl (159 kB)
+2025-12-23T20:54:36.6740636Z Downloading mako-1.3.10-py3-none-any.whl (78 kB)
+2025-12-23T20:54:36.6796323Z Downloading markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+2025-12-23T20:54:36.7590093Z Building wheels for collected packages: tunix-rt-backend
+2025-12-23T20:54:36.7599183Z   Building editable for tunix-rt-backend (pyproject.toml): started
+2025-12-23T20:54:36.9943061Z   Building editable for tunix-rt-backend (pyproject.toml): finished with status 'done'
+2025-12-23T20:54:36.9948374Z   Created wheel for tunix-rt-backend: filename=tunix_rt_backend-0.1.0-0.editable-py3-none-any.whl size=3178 sha256=dc665f413a8eb7e4da2a94f11aa6618a996cba0ed24a36922d186fe7b3721407
+2025-12-23T20:54:36.9951185Z   Stored in directory: /tmp/pip-ephem-wheel-cache-tdnnbxux/wheels/ca/82/26/1257064f2ccacab10a6c1673d369503c6cf47642032a94cd53
+2025-12-23T20:54:36.9971563Z Successfully built tunix-rt-backend
+2025-12-23T20:54:37.0780201Z Installing collected packages: websockets, uvloop, typing-extensions, types-PyYAML, ruff, pyyaml, python-dotenv, pygments, prometheus-client, pluggy, pathspec, packaging, mypy_extensions, MarkupSafe, librt, iniconfig, idna, httptools, h11, greenlet, coverage, click, certifi, asyncpg, annotated-types, annotated-doc, aiosqlite, uvicorn, typing-inspection, sqlalchemy, pytest, pydantic-core, mypy, Mako, httpcore, anyio, watchfiles, starlette, pytest-cov, pytest-asyncio, pydantic, httpx, alembic, pydantic-settings, fastapi, tunix-rt-backend
+2025-12-23T20:54:42.8395237Z
+2025-12-23T20:54:42.8444962Z Successfully installed Mako-1.3.10 MarkupSafe-3.0.3 aiosqlite-0.22.1 alembic-1.17.2 annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.0 asyncpg-0.31.0 certifi-2025.11.12 click-8.3.1 coverage-7.13.0 fastapi-0.125.0 greenlet-3.3.0 h11-0.16.0 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 idna-3.11 iniconfig-2.3.0 librt-0.7.4 mypy-1.19.1 mypy_extensions-1.1.0 packaging-25.0 pathspec-0.12.1 pluggy-1.6.0 prometheus-client-0.23.1 pydantic-2.12.5 pydantic-core-2.41.5 pydantic-settings-2.12.0 pygments-2.19.2 pytest-9.0.2 pytest-asyncio-1.3.0 pytest-cov-7.0.0 python-dotenv-1.2.1 pyyaml-6.0.3 ruff-0.14.10 sqlalchemy-2.0.45 starlette-0.50.0 tunix-rt-backend-0.1.0 types-PyYAML-6.0.12.20250915 typing-extensions-4.15.0 typing-inspection-0.4.2 uvicorn-0.38.0 uvloop-0.22.1 watchfiles-1.1.1 websockets-15.0.1

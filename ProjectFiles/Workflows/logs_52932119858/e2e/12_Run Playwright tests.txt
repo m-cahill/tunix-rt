@@ -1,0 +1,98 @@
+﻿2025-12-23T20:31:57.7618363Z ##[group]Run npx playwright test
+2025-12-23T20:31:57.7618874Z [36;1mnpx playwright test[0m
+2025-12-23T20:31:57.7656545Z shell: /usr/bin/bash -e {0}
+2025-12-23T20:31:57.7656925Z env:
+2025-12-23T20:31:57.7657281Z   REDIAI_MODE: mock
+2025-12-23T20:31:57.7658065Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-23T20:31:57.7658667Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T20:31:57.7659589Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-23T20:31:57.7660690Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T20:31:57.7661329Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T20:31:57.7661977Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-23T20:31:57.7662642Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-23T20:31:57.7663142Z ##[endgroup]
+2025-12-23T20:31:59.9048562Z [WebServer] INFO:     Started server process [3428]
+2025-12-23T20:31:59.9053862Z [WebServer] INFO:     Waiting for application startup.
+2025-12-23T20:31:59.9055306Z [WebServer] INFO:     Application startup complete.
+2025-12-23T20:31:59.9056799Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2025-12-23T20:32:00.7027285Z
+2025-12-23T20:32:00.7031915Z Running 8 tests using 1 worker
+2025-12-23T20:32:02.3190791Z [WebServer] INFO:__main__:Tunix worker started
+2025-12-23T20:32:06.4185615Z [WebServer] INFO:__main__:Claimed run cd765336-108f-471e-bd3b-bf6ab539a128
+2025-12-23T20:32:06.4210747Z [WebServer] INFO:__main__:Completed run cd765336-108f-471e-bd3b-bf6ab539a128 with status failed
+2025-12-23T20:32:38.4844662Z [WebServer] INFO:__main__:Claimed run 1f245939-845d-4b74-ad1c-d38747ee7934
+2025-12-23T20:32:38.4867723Z [WebServer] INFO:__main__:Completed run 1f245939-845d-4b74-ad1c-d38747ee7934 with status failed
+2025-12-23T20:33:09.2934139Z ×T·······
+2025-12-23T20:33:09.2948270Z
+2025-12-23T20:33:09.2967598Z   1) [chromium] › tests/async_run.spec.ts:3:5 › async run flow: enqueue, poll, complete ────────────
+2025-12-23T20:33:09.2972094Z
+2025-12-23T20:33:09.2972525Z     [31mTest timeout of 30000ms exceeded.[39m
+2025-12-23T20:33:09.2972882Z
+2025-12-23T20:33:09.2973635Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T20:33:09.2974239Z
+2025-12-23T20:33:09.2974462Z     Locator:  getByTestId('tunix:run-status')
+2025-12-23T20:33:09.2975129Z     Expected: [32m"[7mcomplet[27med"[39m
+2025-12-23T20:33:09.2975842Z     Received: [31m"[7mStatus: fail[27med"[39m
+2025-12-23T20:33:09.2976216Z
+2025-12-23T20:33:09.2976347Z     Call log:
+2025-12-23T20:33:09.2976905Z     [2m  - Expect "toHaveText" with timeout 30000ms[22m
+2025-12-23T20:33:09.2977558Z     [2m  - waiting for getByTestId('tunix:run-status')[22m
+2025-12-23T20:33:09.2978345Z     [2m    8 × locator resolved to <p data-testid="tunix:run-status">…</p>[22m
+2025-12-23T20:33:09.2979040Z     [2m      - unexpected value "Status: pending"[22m
+2025-12-23T20:33:09.2980118Z     [2m    25 × locator resolved to <p data-testid="tunix:run-status">…</p>[22m
+2025-12-23T20:33:09.2980994Z     [2m       - unexpected value "Status: failed"[22m
+2025-12-23T20:33:09.2981448Z
+2025-12-23T20:33:09.2981463Z
+2025-12-23T20:33:09.2981739Z       21 |   // Status should eventually become 'completed'
+2025-12-23T20:33:09.2982367Z       22 |   // Note: It goes pending -> running -> completed
+2025-12-23T20:33:09.2983306Z     > 23 |   await expect(page.getByTestId('tunix:run-status')).toHaveText('completed', { timeout: 30000 });
+2025-12-23T20:33:09.2984208Z          |                                                      ^
+2025-12-23T20:33:09.2984676Z       24 |
+2025-12-23T20:33:09.2984993Z       25 |   // Check output
+2025-12-23T20:33:09.2985824Z       26 |   await expect(page.getByTestId('tunix:run-message')).toHaveText('Dry-run validation successful');
+2025-12-23T20:33:09.2986919Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/async_run.spec.ts:23:54
+2025-12-23T20:33:09.2987885Z
+2025-12-23T20:33:09.2988586Z     Error Context: test-results/async_run-async-run-flow-enqueue-poll-complete-chromium/error-context.md
+2025-12-23T20:33:09.2991338Z
+2025-12-23T20:33:09.2992029Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T20:33:09.2992496Z
+2025-12-23T20:33:09.2992861Z     [31mTest timeout of 30000ms exceeded.[39m
+2025-12-23T20:33:09.2993212Z
+2025-12-23T20:33:09.2994291Z     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
+2025-12-23T20:33:09.2994925Z
+2025-12-23T20:33:09.2995196Z     Locator:  getByTestId('tunix:run-status')
+2025-12-23T20:33:09.2995864Z     Expected: [32m"[7mcomplet[27med"[39m
+2025-12-23T20:33:09.2996609Z     Received: [31m"[7mStatus: fail[27med"[39m
+2025-12-23T20:33:09.2996962Z
+2025-12-23T20:33:09.2997096Z     Call log:
+2025-12-23T20:33:09.2997647Z     [2m  - Expect "toHaveText" with timeout 30000ms[22m
+2025-12-23T20:33:09.2998446Z     [2m  - waiting for getByTestId('tunix:run-status')[22m
+2025-12-23T20:33:09.2999644Z     [2m    8 × locator resolved to <p data-testid="tunix:run-status">…</p>[22m
+2025-12-23T20:33:09.3000513Z     [2m      - unexpected value "Status: pending"[22m
+2025-12-23T20:33:09.3001413Z     [2m    25 × locator resolved to <p data-testid="tunix:run-status">…</p>[22m
+2025-12-23T20:33:09.3002286Z     [2m       - unexpected value "Status: failed"[22m
+2025-12-23T20:33:09.3002659Z
+2025-12-23T20:33:09.3002671Z
+2025-12-23T20:33:09.3002949Z       21 |   // Status should eventually become 'completed'
+2025-12-23T20:33:09.3003582Z       22 |   // Note: It goes pending -> running -> completed
+2025-12-23T20:33:09.3004550Z     > 23 |   await expect(page.getByTestId('tunix:run-status')).toHaveText('completed', { timeout: 30000 });
+2025-12-23T20:33:09.3005392Z          |                                                      ^
+2025-12-23T20:33:09.3005840Z       24 |
+2025-12-23T20:33:09.3006151Z       25 |   // Check output
+2025-12-23T20:33:09.3007002Z       26 |   await expect(page.getByTestId('tunix:run-message')).toHaveText('Dry-run validation successful');
+2025-12-23T20:33:09.3008110Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/async_run.spec.ts:23:54
+2025-12-23T20:33:09.3008621Z
+2025-12-23T20:33:09.3009698Z     Error Context: test-results/async_run-async-run-flow-enqueue-poll-complete-chromium-retry1/error-context.md
+2025-12-23T20:33:09.3010529Z
+2025-12-23T20:33:09.3011308Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-23T20:33:09.3012479Z     test-results/async_run-async-run-flow-enqueue-poll-complete-chromium-retry1/trace.zip
+2025-12-23T20:33:09.3013334Z     Usage:
+2025-12-23T20:33:09.3013513Z
+2025-12-23T20:33:09.3014273Z         npx playwright show-trace test-results/async_run-async-run-flow-enqueue-poll-complete-chromium-retry1/trace.zip
+2025-12-23T20:33:09.3015089Z
+2025-12-23T20:33:09.3015740Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-23T20:33:09.3016207Z
+2025-12-23T20:33:09.3016334Z   1 failed
+2025-12-23T20:33:09.3017231Z     [chromium] › tests/async_run.spec.ts:3:5 › async run flow: enqueue, poll, complete ─────────────
+2025-12-23T20:33:09.3017983Z   7 passed (1.2m)
+2025-12-23T20:33:09.3512288Z ##[error]Process completed with exit code 1.

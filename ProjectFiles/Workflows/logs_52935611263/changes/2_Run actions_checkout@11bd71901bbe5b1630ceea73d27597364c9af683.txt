@@ -1,0 +1,85 @@
+﻿2025-12-23T21:43:12.5038495Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2025-12-23T21:43:12.5039430Z with:
+2025-12-23T21:43:12.5039852Z   fetch-depth: 0
+2025-12-23T21:43:12.5040147Z   repository: m-cahill/tunix-rt
+2025-12-23T21:43:12.5040740Z   token: ***
+2025-12-23T21:43:12.5041108Z   ssh-strict: true
+2025-12-23T21:43:12.5041385Z   ssh-user: git
+2025-12-23T21:43:12.5041684Z   persist-credentials: true
+2025-12-23T21:43:12.5042036Z   clean: true
+2025-12-23T21:43:12.5042346Z   sparse-checkout-cone-mode: true
+2025-12-23T21:43:12.5042663Z   fetch-tags: false
+2025-12-23T21:43:12.5043128Z   show-progress: true
+2025-12-23T21:43:12.5043456Z   lfs: false
+2025-12-23T21:43:12.5043723Z   submodules: false
+2025-12-23T21:43:12.5044142Z   set-safe-directory: true
+2025-12-23T21:43:12.5044704Z ##[endgroup]
+2025-12-23T21:43:12.6196606Z Syncing repository: m-cahill/tunix-rt
+2025-12-23T21:43:12.6198215Z ##[group]Getting Git version info
+2025-12-23T21:43:12.6198712Z Working directory is '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-23T21:43:12.6199643Z [command]/usr/bin/git version
+2025-12-23T21:43:12.7756746Z git version 2.52.0
+2025-12-23T21:43:12.7799247Z ##[endgroup]
+2025-12-23T21:43:12.7816993Z Temporarily overriding HOME='/home/runner/work/_temp/4f44262e-3d1e-4a34-bc50-00d6a28b10c7' before making global git config changes
+2025-12-23T21:43:12.7820267Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-23T21:43:12.7835250Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T21:43:12.8199684Z Deleting the contents of '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-23T21:43:12.8205887Z ##[group]Initializing the repository
+2025-12-23T21:43:12.8210374Z [command]/usr/bin/git init /home/runner/work/tunix-rt/tunix-rt
+2025-12-23T21:43:13.2780792Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-23T21:43:13.2783333Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-23T21:43:13.2785301Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-23T21:43:13.2787614Z hint: call:
+2025-12-23T21:43:13.2788102Z hint:
+2025-12-23T21:43:13.2788788Z hint: 	git config --global init.defaultBranch <name>
+2025-12-23T21:43:13.2789424Z hint:
+2025-12-23T21:43:13.2789978Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-23T21:43:13.2790901Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-23T21:43:13.2791620Z hint:
+2025-12-23T21:43:13.2792145Z hint: 	git branch -m <name>
+2025-12-23T21:43:13.2792729Z hint:
+2025-12-23T21:43:13.2793500Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-23T21:43:13.2794483Z Initialized empty Git repository in /home/runner/work/tunix-rt/tunix-rt/.git/
+2025-12-23T21:43:13.2798596Z [command]/usr/bin/git remote add origin https://github.com/m-cahill/tunix-rt
+2025-12-23T21:43:13.2835102Z ##[endgroup]
+2025-12-23T21:43:13.2837138Z ##[group]Disabling automatic garbage collection
+2025-12-23T21:43:13.2839334Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-23T21:43:13.2867600Z ##[endgroup]
+2025-12-23T21:43:13.2869534Z ##[group]Setting up auth
+2025-12-23T21:43:13.2874576Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-23T21:43:13.2904927Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-23T21:43:13.3173999Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-23T21:43:13.3202391Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-23T21:43:13.3386370Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-23T21:43:13.3427020Z ##[endgroup]
+2025-12-23T21:43:13.3429490Z ##[group]Fetching the repository
+2025-12-23T21:43:13.3436796Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2025-12-23T21:43:14.4992453Z From https://github.com/m-cahill/tunix-rt
+2025-12-23T21:43:14.4994003Z  * [new branch]      dependabot/github_actions/actions/cache-5.0.1 -> origin/dependabot/github_actions/actions/cache-5.0.1
+2025-12-23T21:43:14.4995691Z  * [new branch]      dependabot/github_actions/actions/checkout-6 -> origin/dependabot/github_actions/actions/checkout-6
+2025-12-23T21:43:14.4997331Z  * [new branch]      dependabot/github_actions/actions/setup-node-6.1.0 -> origin/dependabot/github_actions/actions/setup-node-6.1.0
+2025-12-23T21:43:14.4998950Z  * [new branch]      dependabot/github_actions/actions/setup-python-6 -> origin/dependabot/github_actions/actions/setup-python-6
+2025-12-23T21:43:14.5000626Z  * [new branch]      dependabot/github_actions/actions/upload-artifact-6 -> origin/dependabot/github_actions/actions/upload-artifact-6
+2025-12-23T21:43:14.5002360Z  * [new branch]      dependabot/npm_and_yarn/e2e/types/node-25.0.3 -> origin/dependabot/npm_and_yarn/e2e/types/node-25.0.3
+2025-12-23T21:43:14.5004015Z  * [new branch]      dependabot/npm_and_yarn/frontend/eslint-9.39.2 -> origin/dependabot/npm_and_yarn/frontend/eslint-9.39.2
+2025-12-23T21:43:14.5005618Z  * [new branch]      dependabot/npm_and_yarn/frontend/eslint-plugin-react-hooks-7.0.1 -> origin/dependabot/npm_and_yarn/frontend/eslint-plugin-react-hooks-7.0.1
+2025-12-23T21:43:14.5007419Z  * [new branch]      dependabot/npm_and_yarn/frontend/multi-92cd713b78 -> origin/dependabot/npm_and_yarn/frontend/multi-92cd713b78
+2025-12-23T21:43:14.5009063Z  * [new branch]      dependabot/npm_and_yarn/frontend/testing-library/react-16.3.1 -> origin/dependabot/npm_and_yarn/frontend/testing-library/react-16.3.1
+2025-12-23T21:43:14.5010794Z  * [new branch]      dependabot/npm_and_yarn/frontend/vitejs/plugin-react-5.1.2 -> origin/dependabot/npm_and_yarn/frontend/vitejs/plugin-react-5.1.2
+2025-12-23T21:43:14.5012151Z  * [new branch]      main       -> origin/main
+2025-12-23T21:43:14.5014387Z [command]/usr/bin/git branch --list --remote origin/main
+2025-12-23T21:43:14.5015192Z   origin/main
+2025-12-23T21:43:14.5016668Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2025-12-23T21:43:14.5017377Z 8fd6b1017b9f776efd3f840d074c86ec81c77db1
+2025-12-23T21:43:14.5019056Z ##[endgroup]
+2025-12-23T21:43:14.5019798Z ##[group]Determining the checkout info
+2025-12-23T21:43:14.5020578Z ##[endgroup]
+2025-12-23T21:43:14.5021226Z [command]/usr/bin/git sparse-checkout disable
+2025-12-23T21:43:14.5023135Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-23T21:43:14.5026075Z ##[group]Checking out the ref
+2025-12-23T21:43:14.5027512Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-23T21:43:14.5648560Z Switched to a new branch 'main'
+2025-12-23T21:43:14.5652235Z branch 'main' set up to track 'origin/main'.
+2025-12-23T21:43:14.5665707Z ##[endgroup]
+2025-12-23T21:43:14.5699608Z [command]/usr/bin/git log -1 --format=%H
+2025-12-23T21:43:14.5721412Z 8fd6b1017b9f776efd3f840d074c86ec81c77db1

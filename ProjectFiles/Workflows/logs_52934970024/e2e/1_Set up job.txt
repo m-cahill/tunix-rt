@@ -1,0 +1,33 @@
+﻿2025-12-23T21:28:54.9317826Z Current runner version: '2.330.0'
+2025-12-23T21:28:54.9352199Z ##[group]Runner Image Provisioner
+2025-12-23T21:28:54.9353753Z Hosted Compute Agent
+2025-12-23T21:28:54.9354724Z Version: 20251211.462
+2025-12-23T21:28:54.9355886Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-23T21:28:54.9357103Z Build Date: 2025-12-11T16:28:49Z
+2025-12-23T21:28:54.9358139Z Worker ID: {e18fb6e9-5b23-4777-b67f-b5e7267bfab9}
+2025-12-23T21:28:54.9359356Z ##[endgroup]
+2025-12-23T21:28:54.9360249Z ##[group]Operating System
+2025-12-23T21:28:54.9361248Z Ubuntu
+2025-12-23T21:28:54.9362159Z 24.04.3
+2025-12-23T21:28:54.9362861Z LTS
+2025-12-23T21:28:54.9363961Z ##[endgroup]
+2025-12-23T21:28:54.9364886Z ##[group]Runner Image
+2025-12-23T21:28:54.9365915Z Image: ubuntu-24.04
+2025-12-23T21:28:54.9366727Z Version: 20251215.174.1
+2025-12-23T21:28:54.9368664Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-23T21:28:54.9371255Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-23T21:28:54.9373895Z ##[endgroup]
+2025-12-23T21:28:54.9375518Z ##[group]GITHUB_TOKEN Permissions
+2025-12-23T21:28:54.9377938Z Contents: read
+2025-12-23T21:28:54.9379041Z Metadata: read
+2025-12-23T21:28:54.9379986Z ##[endgroup]
+2025-12-23T21:28:54.9382761Z Secret source: Actions
+2025-12-23T21:28:54.9384223Z Prepare workflow directory
+2025-12-23T21:28:55.0192006Z Prepare all required actions
+2025-12-23T21:28:55.0228014Z Getting action download info
+2025-12-23T21:28:55.4975952Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2025-12-23T21:28:56.1239308Z Download action repository 'actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b' (SHA:0b93645e9fea7318ecaed2b359559ac225c90a2b)
+2025-12-23T21:28:56.3980343Z Download action repository 'actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af' (SHA:39370e3970a6d050c480ffad4ff0ed4d3fdee5af)
+2025-12-23T21:28:56.6542008Z Download action repository 'actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57' (SHA:1bd1e32a3bdc45362d1e726936510720a7c30a57)
+2025-12-23T21:28:56.8169646Z Download action repository 'actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b' (SHA:6f51ac03b9356f520e9adb1b1b7802705f340c2b)
+2025-12-23T21:28:57.1972767Z Complete job name: e2e
