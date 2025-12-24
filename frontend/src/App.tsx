@@ -35,9 +35,10 @@ import {
 import { EXAMPLE_TRACE } from './exampleTrace'
 import { LiveLogs } from './components/LiveLogs'
 import { Leaderboard } from './components/Leaderboard'
+import { Tuning } from './components/Tuning'
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'leaderboard'>('home')
+  const [currentPage, setCurrentPage] = useState<'home' | 'leaderboard' | 'tuning'>('home')
 
   const [apiHealth, setApiHealth] = useState<HealthResponse | null>(null)
   const [rediHealth, setRediHealth] = useState<RediHealthResponse | null>(null)
@@ -524,12 +525,27 @@ function App() {
           >
             Leaderboard
           </button>
+          <button
+            onClick={() => setCurrentPage('tuning')}
+            style={{
+              fontWeight: currentPage === 'tuning' ? 'bold' : 'normal',
+              marginLeft: '10px',
+              padding: '8px 16px',
+              background: currentPage === 'tuning' ? '#eee' : 'transparent',
+              border: '1px solid #ccc',
+              borderRadius: '4px'
+            }}
+          >
+            Tuning (M19)
+          </button>
         </nav>
       </div>
       <p>Reasoning-Trace Framework with RediAI Integration</p>
 
       {currentPage === 'leaderboard' ? (
         <Leaderboard />
+      ) : currentPage === 'tuning' ? (
+        <Tuning />
       ) : (
         <>
       <div className={`status-card ${getStatusClass(apiHealth?.status)}`} data-testid="sys:api-card">

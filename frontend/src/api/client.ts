@@ -645,3 +645,81 @@ export async function getLeaderboard(limit: number = 50, offset: number = 0): Pr
   params.set('offset', offset.toString())
   return fetchJSON<LeaderboardResponse>(`/api/tunix/evaluations?${params.toString()}`)
 }
+
+/**
+ * M19: Tuning Types and Functions
+ */
+
+export interface TuningJobCreate {
+  name: string
+  dataset_key: string
+  base_model_id: string
+  metric_name?: string
+  metric_mode?: 'max' | 'min'
+  num_samples?: number
+  max_concurrent_trials?: number
+  search_space: Record<string, any>
+}
+
+export interface TuningTrial {
+  id: string
+  tuning_job_id: string
+  run_id: string | null
+  params_json: Record<string, any>
+  metric_value: number | null
+  status: string
+  error: string | null
+  created_at: string
+  completed_at: string | null
+}
+
+export interface TuningJob {
+  id: string
+  name: string
+  status: string
+  dataset_key: string
+  base_model_id: string
+  mode: string
+  metric_name: string
+  metric_mode: string
+  num_samples: number
+  max_concurrent_trials: number
+  search_space_json: Record<string, any>
+  best_run_id: string | null
+  best_params_json: Record<string, any> | null
+  created_at: string
+  started_at: string | null
+  completed_at: string | null
+  trials?: TuningTrial[]
+}
+
+export interface TuningJobStartResponse {
+  job_id: string
+  status: string
+  message: string
+}
+
+export async function createTuningJob(request: TuningJobCreate): Promise<TuningJob> {
+  return fetchJSON<TuningJob>('/api/tuning/jobs', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(request)
+  })
+}
+
+export async function startTuningJob(jobId: string): Promise<TuningJobStartResponse> {
+  return fetchJSON<TuningJobStartResponse>(`/api/tuning/jobs/${jobId}/start`, {
+    method: 'POST'
+  })
+}
+
+export async function listTuningJobs(limit: number = 20, offset: number = 0): Promise<TuningJob[]> {
+  const params = new URLSearchParams()
+  params.set('limit', limit.toString())
+  params.set('offset', offset.toString())
+  return fetchJSON<TuningJob[]>(`/api/tuning/jobs?${params.toString()}`)
+}
+
+export async function getTuningJob(jobId: string): Promise<TuningJob> {
+  return fetchJSON<TuningJob>(`/api/tuning/jobs/${jobId}`)
+}

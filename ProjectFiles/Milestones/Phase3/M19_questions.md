@@ -1,0 +1,5 @@
+
+1. **Ray Dependency**: Should I add a new `tuning` optional dependency group in `backend/pyproject.toml` containing `ray[tune]`, or should I add it to the main dependencies? (The plan implies "Add Ray Tune dependency (pin reasonably; keep CI stable)", suggesting it might be core, but given its size, optional seems safer).
+2. **Trial Persistence**: The plan lists `TunixTuningTrial` as "optional but recommended". Given the requirement to "link it to a TunixRun id", is it preferred to implement `TunixTuningTrial` as a full SQLAlchemy model/table now, or should I start with storing trial summaries in a JSON column on the Job? (I lean towards a separate table for cleaner FKs to `TunixRun`).
+3. **Ray Trainable & DB**: The Ray trainable function will run in a separate process. I assume it needs to initialize its own DB connection/session to call `TunixRun` services. Is there an existing pattern for "worker process DB initialization" I should reuse (like in `worker.py`)?
+4. **API Prefix**: Should the new endpoints be under `/api/tuning/...`?

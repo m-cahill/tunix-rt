@@ -23,6 +23,12 @@ from tunix_rt_backend.schemas.trace import (
     TraceListResponse,
     TraceStep,
 )
+from tunix_rt_backend.schemas.tuning import (
+    TuningJobCreate,
+    TuningJobRead,
+    TuningJobStartResponse,
+    TuningTrialRead,
+)
 from tunix_rt_backend.schemas.tunix import (
     ExecutionMode,
     ExecutionStatus,
@@ -74,4 +80,8 @@ __all__ = [
     "TunixRunListResponse",
     "ExecutionMode",
     "ExecutionStatus",
+    "TuningJobCreate",
+    "TuningJobRead",
+    "TuningJobStartResponse",
+    "TuningTrialRead",
 ]
