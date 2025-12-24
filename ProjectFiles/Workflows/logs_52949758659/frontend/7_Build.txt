@@ -1,0 +1,10 @@
+﻿2025-12-24T04:23:35.3072202Z ##[group]Run npm run build
+2025-12-24T04:23:35.3072465Z [36;1mnpm run build[0m
+2025-12-24T04:23:35.3105889Z shell: /usr/bin/bash -e {0}
+2025-12-24T04:23:35.3106140Z ##[endgroup]
+2025-12-24T04:23:35.4433162Z
+2025-12-24T04:23:35.4433894Z > tunix-rt-frontend@0.1.0 build
+2025-12-24T04:23:35.4434380Z > tsc && vite build
+2025-12-24T04:23:35.4434572Z
+2025-12-24T04:23:38.3893186Z ##[error]src/components/Tuning.tsx(9,3): error TS6133: 'ApiError' is declared but its value is never read.
+2025-12-24T04:23:38.4130573Z ##[error]Process completed with exit code 2.

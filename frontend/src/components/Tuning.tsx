@@ -6,7 +6,6 @@ import {
   createTuningJob,
   startTuningJob,
   getTuningJob,
-  ApiError
 } from '../api/client'
 
 export function Tuning() {

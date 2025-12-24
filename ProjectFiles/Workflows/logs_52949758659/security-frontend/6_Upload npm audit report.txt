@@ -1,0 +1,21 @@
+﻿2025-12-24T04:23:28.1283238Z ##[group]Run actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b
+2025-12-24T04:23:28.1283646Z with:
+2025-12-24T04:23:28.1283833Z   name: npm-audit-report
+2025-12-24T04:23:28.1284062Z   path: frontend/npm-audit-report.json
+2025-12-24T04:23:28.1284316Z   retention-days: 30
+2025-12-24T04:23:28.1284513Z   if-no-files-found: warn
+2025-12-24T04:23:28.1284724Z   compression-level: 6
+2025-12-24T04:23:28.1284930Z   overwrite: false
+2025-12-24T04:23:28.1285124Z   include-hidden-files: false
+2025-12-24T04:23:28.1285331Z ##[endgroup]
+2025-12-24T04:23:28.3720275Z With the provided path, there will be 1 file uploaded
+2025-12-24T04:23:28.3722203Z Artifact name is valid!
+2025-12-24T04:23:28.3722918Z Root directory input is valid!
+2025-12-24T04:23:28.5120400Z Beginning upload of artifact content to blob storage
+2025-12-24T04:23:28.6217849Z Uploaded bytes 903
+2025-12-24T04:23:28.6534968Z Finished uploading artifact content to blob storage!
+2025-12-24T04:23:28.6544018Z SHA256 hash of uploaded artifact zip is 8763effbe9564a74be214e9473910379bbd77c48563430dc99fa36fc2ff384fa
+2025-12-24T04:23:28.6545967Z Finalizing artifact upload
+2025-12-24T04:23:28.7642131Z Artifact npm-audit-report.zip successfully finalized. Artifact ID 4958924277
+2025-12-24T04:23:28.7643376Z Artifact npm-audit-report has been successfully uploaded! Final size is 903 bytes. Artifact ID is 4958924277
+2025-12-24T04:23:28.7644786Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20478156546/artifacts/4958924277

@@ -1,0 +1,28 @@
+﻿2025-12-24T04:23:42.6807195Z ##[group]Run actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b
+2025-12-24T04:23:42.6807560Z with:
+2025-12-24T04:23:42.6807724Z   name: backend-sbom
+2025-12-24T04:23:42.6808155Z   path: backend/sbom.json
+2025-12-24T04:23:42.6808480Z   retention-days: 90
+2025-12-24T04:23:42.6808767Z   if-no-files-found: warn
+2025-12-24T04:23:42.6809081Z   compression-level: 6
+2025-12-24T04:23:42.6809265Z   overwrite: false
+2025-12-24T04:23:42.6809442Z   include-hidden-files: false
+2025-12-24T04:23:42.6809639Z env:
+2025-12-24T04:23:42.6809853Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T04:23:42.6810237Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T04:23:42.6810602Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T04:23:42.6810932Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T04:23:42.6811259Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T04:23:42.6811592Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T04:23:42.6811898Z ##[endgroup]
+2025-12-24T04:23:42.9220998Z With the provided path, there will be 1 file uploaded
+2025-12-24T04:23:42.9226869Z Artifact name is valid!
+2025-12-24T04:23:42.9228791Z Root directory input is valid!
+2025-12-24T04:23:43.1449367Z Beginning upload of artifact content to blob storage
+2025-12-24T04:23:43.3854525Z Uploaded bytes 134
+2025-12-24T04:23:43.4493643Z Finished uploading artifact content to blob storage!
+2025-12-24T04:23:43.4497529Z SHA256 hash of uploaded artifact zip is 4853ce2fee0788a89d2a10cb8e04006d18a6a83e015f7d5cd9a1db5252e6465a
+2025-12-24T04:23:43.4500206Z Finalizing artifact upload
+2025-12-24T04:23:43.5789316Z Artifact backend-sbom.zip successfully finalized. Artifact ID 4958925571
+2025-12-24T04:23:43.5791822Z Artifact backend-sbom has been successfully uploaded! Final size is 134 bytes. Artifact ID is 4958925571
+2025-12-24T04:23:43.5797518Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20478156546/artifacts/4958925571

@@ -1,0 +1,5 @@
+﻿2025-12-24T04:23:43.6596086Z Post job cleanup.
+2025-12-24T04:23:43.8161724Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/tunix-rt/tunix-rt --files-from manifest.txt --use-compress-program zstdmt
+2025-12-24T04:23:45.2798890Z Sent 46202880 of 64635237 (71.5%), 44.0 MBs/sec
+2025-12-24T04:23:45.7566900Z Sent 64635237 of 64635237 (100.0%), 41.7 MBs/sec
+2025-12-24T04:23:45.9171827Z Cache saved with key: security-tools-Linux-e2665ba0b26511f934c164c3b34eb06475b6c44fede74d72a7a92450853fa1a0
