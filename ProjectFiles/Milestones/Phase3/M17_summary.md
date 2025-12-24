@@ -35,10 +35,12 @@
     *   Evaluation retrieval.
     *   Leaderboard sorting logic.
 *   **Coverage**: Verified `EvaluationService` logic with unit tests using SQLite in-memory DB.
+*   **CI Stability**: Fixed E2E test `async_run.spec.ts` which was failing due to invalid dataset key. All workflows green.
 
 ## 📝 Documentation
 *   Updated `tunix-rt.md` with M17 architecture details.
 *   Schema documented in code and migration files.
+*   Created `M17_audit.md` with detailed delta analysis.
 
 ## ⏭️ Next Steps (M18)
 *   **Hyperparameter Tuning**: Implement Ray Tune or similar for grid search.
