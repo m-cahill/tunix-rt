@@ -42,10 +42,10 @@
     - generic [ref=e38]:
       - paragraph [ref=e39]:
         - strong [ref=e40]: "Status:"
-        - text: Failed to fetch status
+        - text: "Tunix runtime not installed. Dry-run mode available for validation. Install Tunix for local execution: pip install -e '.[tunix]'"
       - paragraph [ref=e41]:
         - strong [ref=e42]: "Runtime Required:"
-        - text: No (Artifact-based)
+        - text: "Yes"
     - generic [ref=e43]:
       - generic [ref=e44]:
         - generic [ref=e45]: "Dataset Key (e.g., ungar_hcd-v1):"
@@ -71,8 +71,23 @@
         - button "Run (Dry-run)" [ref=e59]
         - button "Run with Tunix (Local)" [ref=e60]
     - generic [ref=e61]:
-      - strong [ref=e62]: "Error:"
-      - text: "Run failed: HTTP error: Not Found (404)"
-    - heading "▶ Run History" [level=3] [ref=e64]:
-      - button "▶ Run History" [ref=e65] [cursor=pointer]
+      - heading "Run Failed" [level=3] [ref=e62]
+      - generic [ref=e63]:
+        - paragraph [ref=e64]:
+          - strong [ref=e65]: "Run ID:"
+          - text: 9cb76111-d388-44d1-ada0-581322056d27
+        - paragraph [ref=e66]:
+          - strong [ref=e67]: "Status:"
+          - text: pending
+        - paragraph [ref=e68]:
+          - strong [ref=e69]: "Mode:"
+          - text: dry-run
+        - paragraph [ref=e70]:
+          - strong [ref=e71]: "Duration:"
+          - text: s
+        - paragraph [ref=e72]:
+          - strong [ref=e73]: "Message:"
+          - text: Dry-run execution pending
+    - heading "▶ Run History" [level=3] [ref=e75]:
+      - button "▶ Run History" [ref=e76] [cursor=pointer]
 ```

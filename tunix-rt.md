@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M16 Complete** ✅  
-**Coverage:** 82% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Async Execution + Live Logs (SSE) + Cancellation | **Testing:** 197 backend + 28 frontend tests
+**Milestone M17 Complete** ✅  
+**Coverage:** 82% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Evaluation Loop + Leaderboard + Async Execution | **Tests:** 202 backend + 28 frontend tests
 
 ## Overview
 
@@ -18,6 +18,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M15 Enhancements:** Async Execution Engine - `POST /api/tunix/run?mode=async` for non-blocking enqueue, dedicated worker process (`worker.py`) using Postgres `SKIP LOCKED` for robust job claiming, status polling endpoint, frontend "Run Async" toggle with auto-refresh, Prometheus metrics (`/metrics`) for run counts/duration/latency, `config` column migration for deferred execution parameters.
 
 **M16 Enhancements:** Operational UX - Real-time log streaming via SSE (`/api/tunix/runs/{id}/logs`), Run cancellation (`POST /cancel`) with worker termination, Artifacts/Checkpoints management (`/artifacts` list + download), Hardening (pinned dependencies, optimized trace batch insertion), `tunix_run_log_chunks` table for streaming persistence.
+
+**M17 Enhancements:** Evaluation & Quality Loop - `tunix_run_evaluations` table for persisting scores, "Mock Judge" for deterministic evaluation, Auto-trigger on run completion (async/sync), Leaderboard UI (`/leaderboard`), Manual re-evaluation API (`POST /evaluate`), Dry-run exclusion.
 
 ## System Architecture
 
@@ -632,6 +634,36 @@ curl http://localhost:8000/api/tunix/runs/123e4567-e89b-12d3-a456-426614174000
 
 ---
 
+### M17 Evaluation Endpoints (New)
+
+#### `GET /api/tunix/evaluations`
+
+**Description:** Get leaderboard data (ranked list of evaluated runs).
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "run_id": "...",
+      "model_id": "google/gemma-2b-it",
+      "score": 85.5,
+      "verdict": "pass"
+    }
+  ]
+}
+```
+
+#### `GET /api/tunix/runs/{id}/evaluation`
+
+**Description:** Get detailed evaluation results for a run.
+
+#### `POST /api/tunix/runs/{id}/evaluate`
+
+**Description:** Manually trigger evaluation for a completed run (skips dry-runs).
+
+---
+
 ## Database Schema
 
 ### M2 Schema
@@ -739,6 +771,23 @@ pending ──► running ──► completed
 
 **Indexes:**
 - `ix_tunix_run_log_chunks_run_id_seq` on `(run_id, seq)` for efficient streaming.
+
+### M17 Schema (New)
+
+**Table: `tunix_run_evaluations`**
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| `id` | UUID | PRIMARY KEY | Evaluation unique ID |
+| `run_id` | UUID | FK → tunix_runs.run_id | Associated run |
+| `score` | FLOAT | NOT NULL | Primary aggregate score (0-100) |
+| `verdict` | VARCHAR(32) | NOT NULL | 'pass' or 'fail' |
+| `details` | JSON | NOT NULL | Full evaluation metrics and details |
+| `created_at` | TIMESTAMPTZ | NOT NULL | Creation timestamp |
+
+**Indexes:**
+- `ix_tunix_run_evaluations_run_id`: Fast lookup by run.
+- `ix_tunix_run_evaluations_score`: Leaderboard sorting.
 
 ## Configuration
 
@@ -1287,11 +1336,24 @@ docs: update README
 - **Tests:** Backend unit tests for async flow + worker logic; E2E test for async UI flow.
 - **Documentation:** Updated README with worker info; new PERFORMANCE_BASELINE.md.
 
-## Next Steps (M15+)
+### M16: Operational UX & Hardening (Phase 5) ✅
+- **Live Logs:** Real-time streaming via SSE (`/api/tunix/runs/{id}/logs`).
+- **Cancellation:** Stop running/pending jobs (`POST /cancel`).
+- **Artifacts:** List and download run outputs.
+- **Hardening:** Pinned dependencies, optimized batch insert.
+- **Schema:** `tunix_run_log_chunks` table.
 
-1. **M16**: Log streaming (SSE/WebSockets) + Checkpoint management + Run cancellation
-2. **M17**: Evaluation loop + hyperparameter tuning (Ray Tune, leaderboard)
-3. **M18**: Production MLOps (model registry, deployment, monitoring)
+### M17: Evaluation & Model Quality Loop (Phase 6) ✅
+- **Evaluation Engine:** Deterministic "Mock Judge" service.
+- **Database:** `tunix_run_evaluations` table for metrics and verdicts.
+- **Auto-Trigger:** Runs automatically after successful completion (skips dry-runs).
+- **Leaderboard:** New UI page for ranking runs by score.
+- **Endpoints:** `GET /evaluation`, `GET /leaderboard`, `POST /evaluate`.
+
+## Next Steps (M18+)
+
+1. **M18**: Production MLOps (model registry, deployment, monitoring)
+2. **M19**: Hyperparameter Tuning (Ray Tune)
 
 ## Architecture Decisions
 
@@ -1312,9 +1374,9 @@ Apache-2.0
 
 ---
 
-**Last Updated:** M16 Complete  
-**Version:** 0.8.0  
+**Last Updated:** M17 Complete  
+**Version:** 0.9.0  
 **Coverage:** Backend 82% Line, Frontend 77% Line  
 **Security:** SHA-Pinned CI + SBOM + Pre-commit Hooks  
-**Architecture:** Tunix Async Execution + Live Logs (SSE) + Cancellation  
-**Tests:** 225 total (197 backend + 28 frontend)
+**Architecture:** Tunix Async + Evaluation Loop + Leaderboard  
+**Tests:** 230 total (202 backend + 28 frontend)

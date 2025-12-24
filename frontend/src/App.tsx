@@ -16,6 +16,8 @@ import {
   getTunixRunStatus,
   listArtifacts,
   cancelRun,
+  getEvaluation,
+  evaluateRun,
   type HealthResponse,
   type RediHealthResponse,
   type TraceDetail,
@@ -28,12 +30,16 @@ import {
   type TunixRunListItem,
   type TunixRunListResponse,
   type ArtifactListResponse,
+  type EvaluationResponse,
   ApiError,
 } from './api/client'
 import { EXAMPLE_TRACE } from './exampleTrace'
 import { LiveLogs } from './components/LiveLogs'
+import { Leaderboard } from './components/Leaderboard'
 
 function App() {
+  const [currentPage, setCurrentPage] = useState<'home' | 'leaderboard'>('home')
+
   const [apiHealth, setApiHealth] = useState<HealthResponse | null>(null)
   const [rediHealth, setRediHealth] = useState<RediHealthResponse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -85,12 +91,16 @@ function App() {
   const [artifacts, setArtifacts] = useState<ArtifactListResponse | null>(null)
   const [artifactsLoading, setArtifactsLoading] = useState(false)
 
+  // M17: Evaluation state
+  const [selectedRunEvaluation, setSelectedRunEvaluation] = useState<EvaluationResponse | null>(null)
+  const [evaluationLoading, setEvaluationLoading] = useState(false)
+
   useEffect(() => {
     const fetchHealth = async () => {
-      setLoading(true)
+      // Don't set global loading true on poll, only initial
+      if (!apiHealth) setLoading(true)
 
       try {
-        // Fetch API health
         const apiData = await getApiHealth()
         setApiHealth(apiData)
       } catch (error) {
@@ -98,7 +108,6 @@ function App() {
       }
 
       try {
-        // Fetch RediAI health
         const rediData = await getRediHealth()
         setRediHealth(rediData)
       } catch (error) {
@@ -106,7 +115,6 @@ function App() {
       }
 
       try {
-        // Fetch UNGAR status
         const ungarData = await getUngarStatus()
         setUngarStatus(ungarData)
       } catch (error) {
@@ -114,7 +122,6 @@ function App() {
       }
 
       try {
-        // Fetch Tunix status (M12)
         const tunixData = await getTunixStatus()
         setTunixStatus(tunixData)
       } catch (error) {
@@ -124,13 +131,9 @@ function App() {
       setLoading(false)
     }
 
-    // Fetch immediately
     fetchHealth()
-
-    // Set up polling every 30 seconds
     const intervalId = setInterval(fetchHealth, 30000)
 
-    // Cleanup on unmount
     return () => {
       clearInterval(intervalId)
       if (pollingIntervalRef.current) {
@@ -146,7 +149,6 @@ function App() {
       try {
         const status = await getTunixRunStatus(runId)
 
-        // Update local result state with status
         setTunixRunResult((prev) => {
           if (!prev) return null
           return {
@@ -160,17 +162,14 @@ function App() {
           if (pollingIntervalRef.current) clearInterval(pollingIntervalRef.current)
           pollingIntervalRef.current = null
 
-          // Fetch full details
           const result = await getTunixRun(runId)
           setTunixRunResult(result)
 
-          // Refresh list if expanded
           if (runHistoryExpanded) {
             handleRefreshRunHistory()
           }
         }
       } catch (error) {
-        // Stop polling on error to avoid spam
         if (pollingIntervalRef.current) clearInterval(pollingIntervalRef.current)
       }
     }, 4000)
@@ -297,8 +296,6 @@ function App() {
 
     try {
       const blob = await exportTunixSft({ dataset_key: tunixDatasetKey })
-
-      // Download the JSONL file
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
@@ -307,7 +304,6 @@ function App() {
       a.click()
       window.URL.revokeObjectURL(url)
       document.body.removeChild(a)
-
       setTunixError(null)
     } catch (error) {
       if (error instanceof ApiError) {
@@ -360,7 +356,6 @@ function App() {
     setTunixLoading(true)
     setTunixRunResult(null)
 
-    // Clear previous polling
     if (pollingIntervalRef.current) {
       clearInterval(pollingIntervalRef.current)
       pollingIntervalRef.current = null
@@ -382,7 +377,6 @@ function App() {
       if (tunixAsyncMode && result.status === 'pending') {
         startPollingRun(result.run_id)
       } else {
-        // Sync mode finished immediately, refresh history if expanded
         if (runHistoryExpanded) {
           await handleRefreshRunHistory()
         }
@@ -399,7 +393,6 @@ function App() {
     }
   }
 
-  // M14: Run history handlers
   const handleRefreshRunHistory = async () => {
     setRunHistoryLoading(true)
     setRunHistoryError(null)
@@ -421,22 +414,33 @@ function App() {
 
   const handleViewRunDetail = async (runId: string) => {
     if (selectedRunId === runId) {
-      // Toggle collapse
       setSelectedRunId(null)
       setSelectedRunDetail(null)
       setArtifacts(null)
+      setSelectedRunEvaluation(null)
       return
     }
 
     setSelectedRunId(runId)
     setSelectedRunDetail(null)
     setArtifacts(null)
+    setSelectedRunEvaluation(null)
     setRunHistoryError(null)
 
     try {
       const result = await getTunixRun(runId)
       setSelectedRunDetail(result)
       setRunHistoryError(null)
+
+      // Auto-fetch evaluation if completed
+      if (result.status === 'completed') {
+        try {
+            const evalRes = await getEvaluation(runId)
+            setSelectedRunEvaluation(evalRes)
+        } catch (e) {
+            setSelectedRunEvaluation(null)
+        }
+      }
     } catch (error) {
       if (error instanceof ApiError) {
         setRunHistoryError(error.message)
@@ -446,11 +450,21 @@ function App() {
     }
   }
 
+  const handleEvaluateRun = async (runId: string) => {
+    setEvaluationLoading(true)
+    try {
+        const res = await evaluateRun(runId)
+        setSelectedRunEvaluation(res)
+    } catch (e) {
+        alert('Evaluation failed')
+    } finally {
+        setEvaluationLoading(false)
+    }
+  }
+
   const handleToggleRunHistory = () => {
     const newExpanded = !runHistoryExpanded
     setRunHistoryExpanded(newExpanded)
-
-    // Fetch run history when expanding
     if (newExpanded && !runHistory) {
       handleRefreshRunHistory()
     }
@@ -460,9 +474,7 @@ function App() {
     if (!confirm('Are you sure you want to cancel this run?')) return
     try {
         await cancelRun(runId)
-        // Refresh details to show update
         handleViewRunDetail(runId)
-        // Refresh history status
         handleRefreshRunHistory()
     } catch (e) {
         alert('Failed to cancel run')
@@ -483,9 +495,42 @@ function App() {
 
   return (
     <div>
-      <h1>Tunix RT</h1>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <h1>Tunix RT</h1>
+        <nav style={{ marginBottom: '20px' }}>
+          <button
+            onClick={() => setCurrentPage('home')}
+            style={{
+              fontWeight: currentPage === 'home' ? 'bold' : 'normal',
+              marginRight: '10px',
+              padding: '8px 16px',
+              background: currentPage === 'home' ? '#eee' : 'transparent',
+              border: '1px solid #ccc',
+              borderRadius: '4px'
+            }}
+          >
+            Home
+          </button>
+          <button
+            onClick={() => setCurrentPage('leaderboard')}
+            style={{
+              fontWeight: currentPage === 'leaderboard' ? 'bold' : 'normal',
+              padding: '8px 16px',
+              background: currentPage === 'leaderboard' ? '#eee' : 'transparent',
+              border: '1px solid #ccc',
+              borderRadius: '4px'
+            }}
+          >
+            Leaderboard
+          </button>
+        </nav>
+      </div>
       <p>Reasoning-Trace Framework with RediAI Integration</p>
 
+      {currentPage === 'leaderboard' ? (
+        <Leaderboard />
+      ) : (
+        <>
       <div className={`status-card ${getStatusClass(apiHealth?.status)}`} data-testid="sys:api-card">
         <h2>API Status</h2>
         {loading ? (
@@ -1009,6 +1054,39 @@ function App() {
                                     <p><strong>Exit Code:</strong> {selectedRunDetail.exit_code}</p>
                                   )}
 
+                                  {/* M17: Evaluation Section */}
+                                  {selectedRunDetail.status === 'completed' && (
+                                    <div className="evaluation-summary" style={{margin: '10px 0', padding: '10px', backgroundColor: '#e8f5e9', border: '1px solid #c8e6c9', borderRadius: '4px'}}>
+                                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                            <h5>Evaluation</h5>
+                                            <button
+                                                onClick={() => handleEvaluateRun(run.run_id)}
+                                                disabled={evaluationLoading}
+                                                style={{fontSize: '0.8em', padding: '2px 8px'}}
+                                            >
+                                                {evaluationLoading ? 'Evaluating...' : 'Re-evaluate'}
+                                            </button>
+                                        </div>
+
+                                        {selectedRunEvaluation ? (
+                                            <div>
+                                                <p><strong>Score:</strong> {selectedRunEvaluation.score.toFixed(1)} / 100</p>
+                                                <p><strong>Verdict:</strong> <span className={`status-badge ${selectedRunEvaluation.verdict === 'pass' ? 'status-completed' : 'status-failed'}`}>{selectedRunEvaluation.verdict.toUpperCase()}</span></p>
+                                                <div style={{fontSize: '0.9em', marginTop: '5px'}}>
+                                                    <strong>Metrics:</strong>
+                                                    <ul style={{listStyleType: 'none', paddingLeft: 0, margin: '5px 0'}}>
+                                                        {Object.entries(selectedRunEvaluation.metrics).map(([key, val]) => (
+                                                            <li key={key}>{key}: {val}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <p>No evaluation available.</p>
+                                        )}
+                                    </div>
+                                  )}
+
                                   {['pending', 'running'].includes(selectedRunDetail.status) ? (
                                     <LiveLogs
                                         runId={selectedRunDetail.run_id}
@@ -1075,6 +1153,8 @@ function App() {
           )}
         </div>
       </div>
+      </>
+      )}
     </div>
   )
 }

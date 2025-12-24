@@ -85,6 +85,16 @@ async def process_run_safely(run: TunixRun, db: AsyncSession) -> None:
                 mode=request.dry_run and "dry-run" or "local", status=response.status
             ).observe(response.duration_seconds)
 
+        # M17: Auto-evaluate if completed (skip dry-run)
+        if response.status == "completed" and not request.dry_run:
+            try:
+                from tunix_rt_backend.services.evaluation import EvaluationService
+
+                await EvaluationService(db).evaluate_run(run.run_id)
+                logger.info(f"Auto-evaluation completed for {run.run_id}")
+            except Exception as e:
+                logger.error(f"Auto-evaluation failed for {run.run_id}: {e}")
+
     except Exception as e:
         logger.error(f"Error processing run {run.run_id}: {e}")
         # Mark failed manually if execution logic crashed

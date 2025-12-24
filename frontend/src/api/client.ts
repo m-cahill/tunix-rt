@@ -570,3 +570,72 @@ export async function cancelRun(runId: string): Promise<{ message: string }> {
     method: 'POST'
   })
 }
+
+/**
+ * M17: Evaluation types and functions
+ */
+
+export interface EvaluationMetric {
+  name: string
+  score: number
+  max_score: number
+  details?: Record<string, any>
+}
+
+export interface EvaluationJudgeInfo {
+  name: string
+  version: string
+}
+
+export interface EvaluationResponse {
+  evaluation_id: string
+  run_id: string
+  score: number
+  verdict: 'pass' | 'fail' | 'uncertain'
+  metrics: Record<string, number>
+  detailed_metrics: EvaluationMetric[]
+  judge: EvaluationJudgeInfo
+  evaluated_at: string
+}
+
+export interface LeaderboardItem {
+  run_id: string
+  model_id: string
+  dataset_key: string
+  score: number
+  verdict: string
+  metrics: Record<string, number>
+  evaluated_at: string
+}
+
+export interface LeaderboardResponse {
+  data: LeaderboardItem[]
+}
+
+/**
+ * Trigger evaluation for a completed run
+ * @param runId - UUID of the run
+ * @param request - Optional params
+ */
+export async function evaluateRun(runId: string, request?: { judge_override?: string }): Promise<EvaluationResponse> {
+  return fetchJSON<EvaluationResponse>(`/api/tunix/runs/${runId}/evaluate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: request ? JSON.stringify(request) : undefined
+  })
+}
+
+/**
+ * Get evaluation details for a run
+ * @param runId - UUID of the run
+ */
+export async function getEvaluation(runId: string): Promise<EvaluationResponse> {
+  return fetchJSON<EvaluationResponse>(`/api/tunix/runs/${runId}/evaluation`)
+}
+
+/**
+ * Get leaderboard data
+ */
+export async function getLeaderboard(): Promise<LeaderboardResponse> {
+  return fetchJSON<LeaderboardResponse>('/api/tunix/evaluations')
+}
