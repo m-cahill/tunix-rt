@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M19 Complete** ✅  
-**Coverage:** 82% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Ray Tune Integration + Job Persistence | **Tests:** 209 backend + 28 frontend tests
+**Milestone M20 Complete** ✅  
+**Coverage:** 82% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Model Registry + Artifact Promotion | **Tests:** 213 backend + 28 frontend tests
 
 ## Overview
 
@@ -25,4 +25,68 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 
 **M19 Enhancements:** Hyperparameter Tuning - Ray Tune integration for optimization sweeps (`/api/tuning/jobs`), `TunixTuningJob` and `TunixTuningTrial` tables, Search Space validation, Automated best-run selection, Frontend Tuning UI.
 
-## System Architecture
+**M20 Enhancements:** Model Registry - `ModelArtifact` and `ModelVersion` tables, content-addressed storage for artifacts, promotion from TunixRun, API endpoints for artifact management and download, Frontend Registry UI.
+
+## Database Schema
+
+### `traces`
+Core table for reasoning traces.
+- `trace_id` (UUID, PK)
+- `trace_version` (String)
+- `payload` (JSON)
+- `created_at` (DateTime)
+
+### `scores`
+Scores associated with traces.
+- `score_id` (UUID, PK)
+- `trace_id` (UUID, FK)
+- `score` (Float)
+- `details` (JSON)
+- `created_at` (DateTime)
+
+### `tunix_runs`
+Training run execution records.
+- `run_id` (UUID, PK)
+- `dataset_key` (String)
+- `model_id` (String)
+- `status` (String)
+- `metrics` (JSON)
+- `config` (JSON)
+- `created_at` (DateTime)
+
+### `tunix_tuning_jobs` (M19)
+Hyperparameter tuning jobs.
+- `id` (UUID, PK)
+- `name` (String)
+- `search_space_json` (JSON)
+- `best_run_id` (UUID, FK)
+- `status` (String)
+
+### `tunix_tuning_trials` (M19)
+Individual trials within a tuning job.
+- `id` (String, PK)
+- `tuning_job_id` (UUID, FK)
+- `run_id` (UUID, FK)
+- `params_json` (JSON)
+- `metric_value` (Float)
+
+### `model_artifacts` (M20)
+Logical model families.
+- `id` (UUID, PK)
+- `name` (String, Unique)
+- `task_type` (String)
+- `created_at`, `updated_at` (DateTime)
+
+### `model_versions` (M20)
+Immutable versions of artifacts.
+- `id` (UUID, PK)
+- `artifact_id` (UUID, FK)
+- `version` (String)
+- `source_run_id` (UUID, FK)
+- `status` (String)
+- `metrics_json` (JSON)
+- `config_json` (JSON)
+- `provenance_json` (JSON)
+- `storage_uri` (String)
+- `sha256` (String)
+- `created_at` (DateTime)

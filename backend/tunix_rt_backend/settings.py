@@ -29,6 +29,7 @@ class Settings(BaseSettings):
     tunix_output_max_bytes: int = Field(
         default=10240, ge=1024, le=1048576
     )  # 10KB default for stdout/stderr
+    model_registry_path: str = "backend/artifacts/model_registry"
 
     # RediAI integration
     rediai_mode: Literal["mock", "real"] = "mock"

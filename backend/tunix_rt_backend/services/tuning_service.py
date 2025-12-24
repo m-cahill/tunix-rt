@@ -26,6 +26,8 @@ try:
     RAY_AVAILABLE = True
 except ImportError:
     RAY_AVAILABLE = False
+    train = None
+    tune = None
     logger.warning("Ray Tune not installed. Tuning features will be disabled.")
 
 

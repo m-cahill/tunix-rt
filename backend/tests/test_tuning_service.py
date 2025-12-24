@@ -11,8 +11,8 @@ from tunix_rt_backend.services.tuning_service import TuningService, _convert_sea
 
 
 @pytest.mark.asyncio
-async def test_create_and_get_job(db: AsyncSession) -> None:
-    service = TuningService(db)
+async def test_create_and_get_job(test_db: AsyncSession) -> None:
+    service = TuningService(test_db)
 
     job_in = TuningJobCreate(
         name="Test Job",
@@ -57,15 +57,16 @@ def test_convert_search_space() -> None:
 
 
 @pytest.mark.asyncio
-async def test_start_job_not_found(db: AsyncSession) -> None:
-    service = TuningService(db)
-    with pytest.raises(ValueError, match="not found"):
-        await service.start_job(uuid.uuid4())
+async def test_start_job_not_found(test_db: AsyncSession) -> None:
+    service = TuningService(test_db)
+    with patch("tunix_rt_backend.services.tuning_service.RAY_AVAILABLE", True):
+        with pytest.raises(ValueError, match="not found"):
+            await service.start_job(uuid.uuid4())
 
 
 @pytest.mark.asyncio
-async def test_start_job_ray_not_installed(db: AsyncSession) -> None:
-    service = TuningService(db)
+async def test_start_job_ray_not_installed(test_db: AsyncSession) -> None:
+    service = TuningService(test_db)
     # Create valid job
     job = await service.create_job(
         TuningJobCreate(

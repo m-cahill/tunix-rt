@@ -1,6 +1,7 @@
 """Database models for tunix-rt backend."""
 
 from tunix_rt_backend.db.models.evaluation import TunixRunEvaluation
+from tunix_rt_backend.db.models.model_registry import ModelArtifact, ModelVersion
 from tunix_rt_backend.db.models.regression import RegressionBaseline
 from tunix_rt_backend.db.models.score import Score
 from tunix_rt_backend.db.models.trace import Trace
@@ -16,4 +17,6 @@ __all__ = [
     "RegressionBaseline",
     "TunixTuningJob",
     "TunixTuningTrial",
+    "ModelArtifact",
+    "ModelVersion",
 ]

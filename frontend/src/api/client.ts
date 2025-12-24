@@ -723,3 +723,79 @@ export async function listTuningJobs(limit: number = 20, offset: number = 0): Pr
 export async function getTuningJob(jobId: string): Promise<TuningJob> {
   return fetchJSON<TuningJob>(`/api/tuning/jobs/${jobId}`)
 }
+
+/**
+ * M20: Model Registry
+ */
+
+export interface ModelVersion {
+  id: string
+  artifact_id: string
+  version: string
+  source_run_id: string | null
+  status: string
+  metrics_json: Record<string, any> | null
+  config_json: Record<string, any> | null
+  provenance_json: Record<string, any> | null
+  storage_uri: string
+  sha256: string
+  size_bytes: number
+  created_at: string
+}
+
+export interface ModelArtifact {
+  id: string
+  name: string
+  description: string | null
+  task_type: string | null
+  created_at: string
+  updated_at: string
+  latest_version?: ModelVersion
+}
+
+export interface ModelArtifactCreate {
+  name: string
+  description?: string
+  task_type?: string
+}
+
+export interface ModelPromotionRequest {
+  source_run_id: string
+  version_label?: string
+  description?: string
+}
+
+export async function createModelArtifact(request: ModelArtifactCreate): Promise<ModelArtifact> {
+  return fetchJSON<ModelArtifact>('/api/models', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  })
+}
+
+export async function listModelArtifacts(): Promise<ModelArtifact[]> {
+  return fetchJSON<ModelArtifact[]>('/api/models')
+}
+
+export async function getModelArtifact(artifactId: string): Promise<ModelArtifact> {
+  return fetchJSON<ModelArtifact>(`/api/models/${artifactId}`)
+}
+
+export async function promoteRunToVersion(
+  artifactId: string,
+  request: ModelPromotionRequest
+): Promise<ModelVersion> {
+  return fetchJSON<ModelVersion>(`/api/models/${artifactId}/versions/promote`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  })
+}
+
+export async function getModelVersion(versionId: string): Promise<ModelVersion> {
+  return fetchJSON<ModelVersion>(`/api/models/versions/${versionId}`)
+}
+
+export function getModelDownloadUrl(versionId: string): string {
+  return `/api/models/versions/${versionId}/download`
+}

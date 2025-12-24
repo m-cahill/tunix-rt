@@ -1,7 +1,7 @@
 """Unit tests for tuning schemas."""
 
 import pytest
-from pydantic import ValidationError
+from pydantic import TypeAdapter, ValidationError
 
 from tunix_rt_backend.schemas.tuning import SearchSpaceParam, TuningJobCreate
 
@@ -45,8 +45,10 @@ def test_tuning_job_create_invalid_search_space() -> None:
 def test_search_space_param_validation() -> None:
     # Choice requires values
     with pytest.raises(ValidationError):
-        SearchSpaceParam.validate({"type": "choice"})  # Missing values
+        TypeAdapter(SearchSpaceParam).validate_python({"type": "choice"})  # Missing values
 
     # Uniform requires min/max
     with pytest.raises(ValidationError):
-        SearchSpaceParam.validate({"type": "uniform", "min": 0.1})  # Missing max
+        TypeAdapter(SearchSpaceParam).validate_python(
+            {"type": "uniform", "min": 0.1}
+        )  # Missing max
