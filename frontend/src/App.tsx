@@ -27,7 +27,6 @@ import {
   type TunixStatusResponse,
   type TunixManifestResponse,
   type TunixRunResponse,
-  type TunixRunListItem,
   type TunixRunListResponse,
   type ArtifactListResponse,
   type EvaluationResponse,
@@ -354,6 +353,7 @@ function App() {
 
     setTunixError(null)
     setTunixLoading(true)
+    setTunixRunLoading(true)
     setTunixRunResult(null)
 
     if (pollingIntervalRef.current) {
@@ -390,6 +390,7 @@ function App() {
       setTunixRunResult(null)
     } finally {
       setTunixLoading(false)
+      setTunixRunLoading(false)
     }
   }
 

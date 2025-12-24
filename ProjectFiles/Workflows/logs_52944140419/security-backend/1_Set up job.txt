@@ -1,0 +1,32 @@
+﻿2025-12-24T01:33:05.8035562Z Current runner version: '2.330.0'
+2025-12-24T01:33:05.8075713Z ##[group]Runner Image Provisioner
+2025-12-24T01:33:05.8076994Z Hosted Compute Agent
+2025-12-24T01:33:05.8077795Z Version: 20251211.462
+2025-12-24T01:33:05.8078702Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-24T01:33:05.8079776Z Build Date: 2025-12-11T16:28:49Z
+2025-12-24T01:33:05.8080722Z Worker ID: {eed8dc15-2b47-49e7-910d-491554c65884}
+2025-12-24T01:33:05.8081697Z ##[endgroup]
+2025-12-24T01:33:05.8082476Z ##[group]Operating System
+2025-12-24T01:33:05.8083454Z Ubuntu
+2025-12-24T01:33:05.8084193Z 24.04.3
+2025-12-24T01:33:05.8084834Z LTS
+2025-12-24T01:33:05.8085500Z ##[endgroup]
+2025-12-24T01:33:05.8086199Z ##[group]Runner Image
+2025-12-24T01:33:05.8087066Z Image: ubuntu-24.04
+2025-12-24T01:33:05.8087767Z Version: 20251215.174.1
+2025-12-24T01:33:05.8089199Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-24T01:33:05.8091596Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-24T01:33:05.8093733Z ##[endgroup]
+2025-12-24T01:33:05.8095219Z ##[group]GITHUB_TOKEN Permissions
+2025-12-24T01:33:05.8097736Z Contents: read
+2025-12-24T01:33:05.8098610Z Metadata: read
+2025-12-24T01:33:05.8099334Z ##[endgroup]
+2025-12-24T01:33:05.8102297Z Secret source: Actions
+2025-12-24T01:33:05.8103631Z Prepare workflow directory
+2025-12-24T01:33:05.8807805Z Prepare all required actions
+2025-12-24T01:33:05.8868373Z Getting action download info
+2025-12-24T01:33:06.3889825Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2025-12-24T01:33:06.5181971Z Download action repository 'actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b' (SHA:0b93645e9fea7318ecaed2b359559ac225c90a2b)
+2025-12-24T01:33:06.6286405Z Download action repository 'actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57' (SHA:1bd1e32a3bdc45362d1e726936510720a7c30a57)
+2025-12-24T01:33:06.7758009Z Download action repository 'actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b' (SHA:6f51ac03b9356f520e9adb1b1b7802705f340c2b)
+2025-12-24T01:33:06.9882229Z Complete job name: security-backend

@@ -16,6 +16,27 @@ class RediClientProtocol(Protocol):
         """
         ...
 
+    async def generate(
+        self,
+        model: str,
+        prompt: str,
+        *,
+        temperature: float = 0.0,
+        max_tokens: int = 1024,
+    ) -> str:
+        """Generate text using RediAI inference.
+
+        Args:
+            model: Model identifier
+            prompt: Input prompt
+            temperature: Sampling temperature (0.0 = deterministic)
+            max_tokens: Maximum tokens to generate
+
+        Returns:
+            Generated text content
+        """
+        ...
+
 
 class RediClient:
     """Real RediAI client using HTTP requests."""
@@ -30,6 +51,7 @@ class RediClient:
         self.base_url = base_url.rstrip("/")
         self.health_path = health_path
         self.health_url = f"{self.base_url}{health_path}"
+        self.generate_url = f"{self.base_url}/generate"
 
     async def health(self) -> dict[str, str]:
         """Check RediAI health by calling its health endpoint.
@@ -59,6 +81,32 @@ class RediClient:
         except Exception as e:
             return {"status": "down", "error": f"Unexpected error: {type(e).__name__}"}
 
+    async def generate(
+        self,
+        model: str,
+        prompt: str,
+        *,
+        temperature: float = 0.0,
+        max_tokens: int = 1024,
+    ) -> str:
+        """Generate text using RediAI inference."""
+        payload = {
+            "model": model,
+            "prompt": prompt,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+        }
+        try:
+            # Longer timeout for generation
+            async with httpx.AsyncClient(timeout=30.0) as client:
+                response = await client.post(self.generate_url, json=payload)
+                response.raise_for_status()
+                data = response.json()
+                # Assuming standard response format: {"text": "..."}
+                return str(data.get("text", ""))
+        except Exception as e:
+            raise RuntimeError(f"RediAI generation failed: {e}") from e
+
 
 class MockRediClient:
     """Mock RediAI client for testing and CI (no external dependencies)."""
@@ -81,3 +129,18 @@ class MockRediClient:
         if self.simulate_healthy:
             return {"status": "healthy"}
         return {"status": "down", "error": "Mock unhealthy state"}
+
+    async def generate(
+        self,
+        model: str,
+        prompt: str,
+        *,
+        temperature: float = 0.0,
+        max_tokens: int = 1024,
+    ) -> str:
+        """Mock generation logic."""
+        if not self.simulate_healthy:
+            raise RuntimeError("Mock RediAI is unhealthy")
+
+        # Simple mock response based on prompt presence
+        return f"Mock generation for model {model}. Input length: {len(prompt)}"

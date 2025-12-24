@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, StreamingResponse
 
 # M15: Observability
-from prometheus_client import CONTENT_TYPE_LATEST, generate_latest  # type: ignore
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest  # type: ignore[import-not-found]
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -58,6 +58,14 @@ from tunix_rt_backend.schemas.evaluation import (
     EvaluationRequest,
     EvaluationResponse,
     LeaderboardResponse,
+)
+
+# M18: Regression schemas
+from tunix_rt_backend.schemas.regression import (
+    RegressionBaselineCreate,
+    RegressionBaselineResponse,
+    RegressionCheckRequest,
+    RegressionCheckResult,
 )
 from tunix_rt_backend.scoring import baseline_score
 from tunix_rt_backend.services.datasets_export import export_dataset_to_jsonl
@@ -1316,6 +1324,7 @@ async def download_artifact(
 async def evaluate_tunix_run(
     run_id: uuid.UUID,
     db: Annotated[AsyncSession, Depends(get_db)],
+    redi_client: Annotated[RediClientProtocol, Depends(get_redi_client)],
     request: EvaluationRequest | None = None,
 ) -> EvaluationResponse:
     """Trigger evaluation for a completed run (M17).
@@ -1324,6 +1333,7 @@ async def evaluate_tunix_run(
         run_id: UUID of the run
         request: Optional evaluation parameters (judge_override)
         db: Database session
+        redi_client: RediAI client (injected)
 
     Returns:
         EvaluationResponse with results
@@ -1334,7 +1344,7 @@ async def evaluate_tunix_run(
     """
     from tunix_rt_backend.services.evaluation import EvaluationService
 
-    service = EvaluationService(db)
+    service = EvaluationService(db, redi_client)
     try:
         judge_override = request.judge_override if request else None
         return await service.evaluate_run(run_id, judge_override)
@@ -1384,6 +1394,8 @@ async def get_tunix_run_evaluation(
 @app.get("/api/tunix/evaluations", response_model=LeaderboardResponse)
 async def get_leaderboard(
     db: Annotated[AsyncSession, Depends(get_db)],
+    limit: int = 50,
+    offset: int = 0,
 ) -> LeaderboardResponse:
     """Get leaderboard data (M17).
 
@@ -1392,5 +1404,71 @@ async def get_leaderboard(
     """
     from tunix_rt_backend.services.evaluation import EvaluationService
 
+    # Validate pagination parameters
+    if limit < 1 or limit > 100:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail="limit must be between 1 and 100",
+        )
+
+    if offset < 0:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail="offset must be non-negative",
+        )
+
     service = EvaluationService(db)
-    return await service.get_leaderboard()
+    return await service.get_leaderboard(limit=limit, offset=offset)
+
+
+# ================================================================================
+# M18: Regression Endpoints
+# ================================================================================
+
+
+@app.post(
+    "/api/regression/baselines",
+    response_model=RegressionBaselineResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def create_regression_baseline(
+    request: RegressionBaselineCreate,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> RegressionBaselineResponse:
+    """Create or update a named regression baseline."""
+    from tunix_rt_backend.services.regression import RegressionService
+
+    service = RegressionService(db)
+    try:
+        return await service.create_baseline(request)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
+        )
+
+
+@app.post(
+    "/api/regression/check",
+    response_model=RegressionCheckResult,
+)
+async def check_regression(
+    request: RegressionCheckRequest,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> RegressionCheckResult:
+    """Check for regression against a baseline."""
+    from tunix_rt_backend.services.regression import RegressionService
+
+    service = RegressionService(db)
+    try:
+        return await service.check_regression(request.run_id, request.baseline_name)
+    except ValueError as e:
+        if "not found" in str(e):
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=str(e),
+            )
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
+        )

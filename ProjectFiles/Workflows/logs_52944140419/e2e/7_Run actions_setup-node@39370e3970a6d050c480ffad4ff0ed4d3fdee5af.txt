@@ -1,0 +1,26 @@
+﻿2025-12-24T01:33:46.7686034Z ##[group]Run actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
+2025-12-24T01:33:46.7686358Z with:
+2025-12-24T01:33:46.7686531Z   node-version: 18
+2025-12-24T01:33:46.7686703Z   always-auth: false
+2025-12-24T01:33:46.7686886Z   check-latest: false
+2025-12-24T01:33:46.7687188Z   token: ***
+2025-12-24T01:33:46.7687337Z env:
+2025-12-24T01:33:46.7687488Z   REDIAI_MODE: mock
+2025-12-24T01:33:46.7687855Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T01:33:46.7688158Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:46.7688517Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T01:33:46.7688878Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:46.7689193Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:46.7689514Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:46.7689829Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T01:33:46.7690143Z ##[endgroup]
+2025-12-24T01:33:46.9400657Z Attempting to download 18...
+2025-12-24T01:33:47.7311136Z Acquiring 18.20.8 - x64 from https://github.com/actions/node-versions/releases/download/18.20.8-14110393767/node-18.20.8-linux-x64.tar.gz
+2025-12-24T01:33:48.2757699Z Extracting ...
+2025-12-24T01:33:48.2850918Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/9319daa9-325d-4211-9c66-ba46e762b838 -f /home/runner/work/_temp/7367b638-f2aa-4738-bb6e-69b8766aa78f
+2025-12-24T01:33:49.2382431Z Adding to the cache ...
+2025-12-24T01:33:50.5313174Z ##[group]Environment details
+2025-12-24T01:33:50.7972627Z node: v18.20.8
+2025-12-24T01:33:50.7975483Z npm: 10.8.2
+2025-12-24T01:33:50.7977724Z yarn: 1.22.22
+2025-12-24T01:33:50.7980126Z ##[endgroup]

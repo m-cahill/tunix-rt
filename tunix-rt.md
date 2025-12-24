@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M17 Complete** ✅  
-**Coverage:** 82% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Evaluation Loop + Leaderboard + Async Execution | **Tests:** 202 backend + 28 frontend tests
+**Milestone M18 Complete** ✅  
+**Coverage:** 82% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Real Judge + Regression Gates + Pagination | **Tests:** 209 backend + 28 frontend tests
 
 ## Overview
 
@@ -20,6 +20,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M16 Enhancements:** Operational UX - Real-time log streaming via SSE (`/api/tunix/runs/{id}/logs`), Run cancellation (`POST /cancel`) with worker termination, Artifacts/Checkpoints management (`/artifacts` list + download), Hardening (pinned dependencies, optimized trace batch insertion), `tunix_run_log_chunks` table for streaming persistence.
 
 **M17 Enhancements:** Evaluation & Quality Loop - `tunix_run_evaluations` table for persisting scores, "Mock Judge" for deterministic evaluation, Auto-trigger on run completion (async/sync), Leaderboard UI (`/leaderboard`), Manual re-evaluation API (`POST /evaluate`), Dry-run exclusion.
+
+**M18 Enhancements:** Judge Abstraction & Regression - `GemmaJudge` implementation (using RediAI), `regression_baselines` table and endpoints (`POST /api/regression/baselines`, `/check`), Leaderboard pagination (API + UI), Pluggable Judge interface.
 
 ## System Architecture
 
@@ -634,11 +636,15 @@ curl http://localhost:8000/api/tunix/runs/123e4567-e89b-12d3-a456-426614174000
 
 ---
 
-### M17 Evaluation Endpoints (New)
+### M17 Evaluation Endpoints (Updated M18)
 
 #### `GET /api/tunix/evaluations`
 
 **Description:** Get leaderboard data (ranked list of evaluated runs).
+
+**Query Parameters (M18):**
+- `limit` (default 50): Max items.
+- `offset` (default 0): Pagination offset.
 
 **Response:**
 ```json
@@ -650,7 +656,8 @@ curl http://localhost:8000/api/tunix/runs/123e4567-e89b-12d3-a456-426614174000
       "score": 85.5,
       "verdict": "pass"
     }
-  ]
+  ],
+  "pagination": { "limit": 50, "offset": 0, "next_offset": 50 }
 }
 ```
 
@@ -660,7 +667,45 @@ curl http://localhost:8000/api/tunix/runs/123e4567-e89b-12d3-a456-426614174000
 
 #### `POST /api/tunix/runs/{id}/evaluate`
 
-**Description:** Manually trigger evaluation for a completed run (skips dry-runs).
+**Description:** Manually trigger evaluation for a completed run (skips dry-runs). Supports `judge_override`.
+
+---
+
+### M18 Regression Endpoints
+
+#### `POST /api/regression/baselines`
+
+**Description:** Create or update a regression baseline.
+
+**Request Body:**
+```json
+{
+  "name": "gemma-v1-baseline",
+  "run_id": "...",
+  "metric": "score"
+}
+```
+
+#### `POST /api/regression/check`
+
+**Description:** Check run against baseline.
+
+**Request Body:**
+```json
+{
+  "run_id": "...",
+  "baseline_name": "gemma-v1-baseline"
+}
+```
+
+**Response:**
+```json
+{
+  "verdict": "pass",
+  "delta": 5.0,
+  "delta_percent": 6.2
+}
+```
 
 ---
 
@@ -788,6 +833,18 @@ pending ──► running ──► completed
 **Indexes:**
 - `ix_tunix_run_evaluations_run_id`: Fast lookup by run.
 - `ix_tunix_run_evaluations_score`: Leaderboard sorting.
+
+### M18 Schema (New)
+
+**Table: `regression_baselines`**
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| `id` | UUID | PRIMARY KEY | Baseline unique ID |
+| `name` | VARCHAR | UNIQUE, NOT NULL | Baseline name |
+| `run_id` | UUID | FK → tunix_runs.run_id | Baseline run reference |
+| `metric` | VARCHAR | NOT NULL | Metric to compare (e.g. 'score') |
+| `created_at` | TIMESTAMPTZ | NOT NULL | Creation timestamp |
 
 ## Configuration
 
@@ -1021,8 +1078,11 @@ tunix-rt/
 │   │   │   ├── traces_batch.py         # Batch trace operations
 │   │   │   ├── datasets_export.py      # Dataset export formatting
 │   │   │   ├── datasets_builder.py     # Dataset manifest creation (M11)
-│   │   │   └── ungar_generator.py      # UNGAR trace generation (M11)
-│   │   │   └── tunix_execution.py      # Run execution & cancellation (M16)
+│   │   │   ├── ungar_generator.py      # UNGAR trace generation (M11)
+│   │   │   ├── tunix_execution.py      # Run execution & cancellation (M16)
+│   │   │   ├── evaluation.py           # Evaluation & Scoring (M17/M18)
+│   │   │   ├── regression.py           # Regression testing (M18)
+│   │   │   ├── judges.py               # Judge implementations (M18)
 │   │   ├── helpers/            # Utilities
 │   │   │   ├── datasets.py
 │   │   │   └── traces.py
@@ -1035,7 +1095,7 @@ tunix-rt/
 │   │   ├── test_services.py            # Service layer tests (M10)
 │   │   ├── test_services_ungar.py      # UNGAR service tests (M11)
 │   │   ├── test_services_datasets.py   # Dataset service tests (M11)
-│   │   └── test_redi_health.py
+│   │   ├── test_redi_health.py
 │   ├── Dockerfile
 │   └── pyproject.toml
 ├── frontend/                    # Vite + React + TypeScript
@@ -1045,7 +1105,7 @@ tunix-rt/
 │   │   ├── main.tsx            # Entry point
 │   │   ├── index.css           # Styles
 │   │   ├── components/         # React Components (M16)
-│   │   │   └── LiveLogs.tsx    # Live log streaming
+│   │   │   ├── LiveLogs.tsx    # Live log streaming
 │   ├── package.json
 │   ├── tsconfig.json
 │   └── vite.config.ts
@@ -1350,10 +1410,16 @@ docs: update README
 - **Leaderboard:** New UI page for ranking runs by score.
 - **Endpoints:** `GET /evaluation`, `GET /leaderboard`, `POST /evaluate`.
 
-## Next Steps (M18+)
+### M18: Judge Abstraction & Regression (Phase 7) ✅
+- **Real Judge:** Pluggable `Judge` interface with `GemmaJudge` (via RediAI).
+- **Regression Gates:** New service and DB table for named baselines.
+- **Pagination:** Leaderboard API and UI now support pagination.
+- **Credibility:** Evaluation decoupled from service logic.
 
-1. **M18**: Production MLOps (model registry, deployment, monitoring)
-2. **M19**: Hyperparameter Tuning (Ray Tune)
+## Next Steps (M19+)
+
+1. **M19**: Hyperparameter Tuning (Ray Tune)
+2. **M20**: Model Registry & Deployment
 
 ## Architecture Decisions
 
@@ -1374,9 +1440,9 @@ Apache-2.0
 
 ---
 
-**Last Updated:** M17 Complete  
-**Version:** 0.9.0  
+**Last Updated:** M18 Complete  
+**Version:** 0.10.0  
 **Coverage:** Backend 82% Line, Frontend 77% Line  
 **Security:** SHA-Pinned CI + SBOM + Pre-commit Hooks  
-**Architecture:** Tunix Async + Evaluation Loop + Leaderboard  
-**Tests:** 230 total (202 backend + 28 frontend)
+**Architecture:** Tunix Async + Evaluation Loop + Real Judges  
+**Tests:** 237 total (209 backend + 28 frontend)

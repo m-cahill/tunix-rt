@@ -8,6 +8,8 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
+from tunix_rt_backend.schemas import PaginationInfo
+
 
 class EvaluationMetric(BaseModel):
     """Single evaluation metric."""
@@ -62,6 +64,7 @@ class LeaderboardItem(BaseModel):
 
 
 class LeaderboardResponse(BaseModel):
-    """Leaderboard response."""
+    """Leaderboard response with pagination (M18)."""
 
     data: list[LeaderboardItem] = Field(..., description="List of leaderboard entries")
+    pagination: PaginationInfo | None = Field(None, description="Pagination metadata")

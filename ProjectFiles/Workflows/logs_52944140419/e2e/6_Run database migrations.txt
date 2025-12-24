@@ -1,0 +1,22 @@
+﻿2025-12-24T01:33:45.9202192Z ##[group]Run cd ../backend && alembic upgrade head
+2025-12-24T01:33:45.9202528Z [36;1mcd ../backend && alembic upgrade head[0m
+2025-12-24T01:33:45.9222766Z shell: /usr/bin/bash -e {0}
+2025-12-24T01:33:45.9223008Z env:
+2025-12-24T01:33:45.9223169Z   REDIAI_MODE: mock
+2025-12-24T01:33:45.9223704Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T01:33:45.9224004Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:45.9224361Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T01:33:45.9224720Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:45.9225283Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:45.9225677Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:45.9225995Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T01:33:45.9226265Z ##[endgroup]
+2025-12-24T01:33:46.6124477Z INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+2025-12-24T01:33:46.6125783Z INFO  [alembic.runtime.migration] Will assume transactional DDL.
+2025-12-24T01:33:46.6362229Z INFO  [alembic.runtime.migration] Running upgrade  -> 001, create_traces_table
+2025-12-24T01:33:46.6418792Z INFO  [alembic.runtime.migration] Running upgrade 001 -> f8f1393630e4, add traces created_at index
+2025-12-24T01:33:46.6453844Z INFO  [alembic.runtime.migration] Running upgrade f8f1393630e4 -> f3cc010ca8a6, add_scores_table
+2025-12-24T01:33:46.6541535Z INFO  [alembic.runtime.migration] Running upgrade f3cc010ca8a6 -> 4bf76cdb97da, add_tunix_runs_table
+2025-12-24T01:33:46.6614587Z INFO  [alembic.runtime.migration] Running upgrade 4bf76cdb97da -> 2b3a4c5d6e7f, add_config_column_to_tunix_runs
+2025-12-24T01:33:46.6632636Z INFO  [alembic.runtime.migration] Running upgrade 2b3a4c5d6e7f -> 3c4d5e6f7a8b, add_log_chunks_table
+2025-12-24T01:33:46.6704965Z INFO  [alembic.runtime.migration] Running upgrade 3c4d5e6f7a8b -> 5d6e7f8a9b0c, add_evaluations_table

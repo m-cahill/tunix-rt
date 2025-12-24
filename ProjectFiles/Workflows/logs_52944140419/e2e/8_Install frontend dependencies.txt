@@ -1,0 +1,31 @@
+﻿2025-12-24T01:33:50.8077261Z ##[group]Run cd ../frontend && npm ci
+2025-12-24T01:33:50.8077530Z [36;1mcd ../frontend && npm ci[0m
+2025-12-24T01:33:50.8096678Z shell: /usr/bin/bash -e {0}
+2025-12-24T01:33:50.8096922Z env:
+2025-12-24T01:33:50.8097085Z   REDIAI_MODE: mock
+2025-12-24T01:33:50.8097727Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T01:33:50.8098038Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:50.8098394Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T01:33:50.8098753Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:50.8099064Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:50.8099384Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:50.8099707Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T01:33:50.8099970Z ##[endgroup]
+2025-12-24T01:33:53.1374789Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-12-24T01:33:53.7990339Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-12-24T01:33:54.1015507Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-12-24T01:33:54.7377361Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-12-24T01:33:54.7378852Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+2025-12-24T01:33:57.1967304Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-12-24T01:33:57.5219625Z
+2025-12-24T01:33:57.5221394Z added 406 packages, and audited 407 packages in 7s
+2025-12-24T01:33:57.5221954Z
+2025-12-24T01:33:57.5223067Z 117 packages are looking for funding
+2025-12-24T01:33:57.5224106Z   run `npm fund` for details
+2025-12-24T01:33:57.5450047Z
+2025-12-24T01:33:57.5451674Z 5 moderate severity vulnerabilities
+2025-12-24T01:33:57.5455714Z
+2025-12-24T01:33:57.5457539Z To address all issues (including breaking changes), run:
+2025-12-24T01:33:57.5458330Z   npm audit fix --force
+2025-12-24T01:33:57.5459195Z
+2025-12-24T01:33:57.5459601Z Run `npm audit` for details.

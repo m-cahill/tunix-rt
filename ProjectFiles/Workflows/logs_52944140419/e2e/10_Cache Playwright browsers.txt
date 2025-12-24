@@ -1,0 +1,22 @@
+﻿2025-12-24T01:33:58.4364631Z ##[group]Run actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57
+2025-12-24T01:33:58.4364938Z with:
+2025-12-24T01:33:58.4365310Z   path: ~/.cache/ms-playwright
+2025-12-24T01:33:58.4365761Z   key: Linux-playwright-fe063faa6a61e51595814e40883a56ebf6bc1b9e9c0d8c741d475eeebf898fad
+2025-12-24T01:33:58.4366162Z   restore-keys: Linux-playwright-
+
+2025-12-24T01:33:58.4366402Z   enableCrossOsArchive: false
+2025-12-24T01:33:58.4366606Z   fail-on-cache-miss: false
+2025-12-24T01:33:58.4366811Z   lookup-only: false
+2025-12-24T01:33:58.4366983Z   save-always: false
+2025-12-24T01:33:58.4367154Z env:
+2025-12-24T01:33:58.4367297Z   REDIAI_MODE: mock
+2025-12-24T01:33:58.4367830Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T01:33:58.4368130Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:58.4368494Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T01:33:58.4368851Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:58.4369160Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:58.4369514Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T01:33:58.4369831Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T01:33:58.4370087Z ##[endgroup]
+2025-12-24T01:33:58.8153442Z ##[warning]Cache not found for keys: Linux-playwright-fe063faa6a61e51595814e40883a56ebf6bc1b9e9c0d8c741d475eeebf898fad, Linux-playwright-
+2025-12-24T01:33:58.8156521Z Cache not found for input keys: Linux-playwright-fe063faa6a61e51595814e40883a56ebf6bc1b9e9c0d8c741d475eeebf898fad, Linux-playwright-

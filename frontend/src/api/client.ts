@@ -610,6 +610,7 @@ export interface LeaderboardItem {
 
 export interface LeaderboardResponse {
   data: LeaderboardItem[]
+  pagination?: PaginationInfo
 }
 
 /**
@@ -635,7 +636,12 @@ export async function getEvaluation(runId: string): Promise<EvaluationResponse> 
 
 /**
  * Get leaderboard data
+ * @param limit - Max items per page (default 50)
+ * @param offset - Pagination offset (default 0)
  */
-export async function getLeaderboard(): Promise<LeaderboardResponse> {
-  return fetchJSON<LeaderboardResponse>('/api/tunix/evaluations')
+export async function getLeaderboard(limit: number = 50, offset: number = 0): Promise<LeaderboardResponse> {
+  const params = new URLSearchParams()
+  params.set('limit', limit.toString())
+  params.set('offset', offset.toString())
+  return fetchJSON<LeaderboardResponse>(`/api/tunix/evaluations?${params.toString()}`)
 }

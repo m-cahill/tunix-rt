@@ -1,0 +1,169 @@
+"""Regression testing service (M18).
+
+Handles baselines and regression checks.
+"""
+
+import logging
+import uuid
+from typing import Any, Literal
+
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from tunix_rt_backend.db.models import RegressionBaseline
+from tunix_rt_backend.schemas.regression import (
+    RegressionBaselineCreate,
+    RegressionBaselineResponse,
+    RegressionCheckResult,
+)
+from tunix_rt_backend.services.evaluation import EvaluationService
+
+logger = logging.getLogger(__name__)
+
+
+class RegressionService:
+    """Service for managing regression baselines and checks."""
+
+    def __init__(self, db: AsyncSession):
+        self.db = db
+
+    async def create_baseline(
+        self, request: RegressionBaselineCreate
+    ) -> RegressionBaselineResponse:
+        """Create or update a named baseline."""
+        # Check if run exists and has evaluation
+        # We need evaluation to ensure the metric exists?
+        # The prompt says "Baselines are policy... One named baseline per metric".
+        # But our schema is (name -> run_id, metric). And name is unique.
+        # So a baseline name implies a specific metric.
+
+        # Verify run has evaluation
+        service = EvaluationService(self.db)
+        evaluation = await service.get_evaluation(request.run_id)
+        if not evaluation:
+            raise ValueError(f"Run {request.run_id} has no evaluation")
+
+        # Check if metric exists in evaluation
+        if request.metric == "score":
+            pass  # Always exists
+        elif request.metric in evaluation.metrics:
+            pass
+        else:
+            # Check detailed metrics
+            found = False
+            for m in evaluation.detailed_metrics:
+                if m.name == request.metric:
+                    found = True
+                    break
+            if not found:
+                raise ValueError(f"Metric '{request.metric}' not found in run evaluation")
+
+        # Upsert baseline (delete existing with same name if any, then insert)
+        # Or just try insert and handle duplicate.
+        # Since we want to support updating baselines ("gemma-v1-initial" might be updated?),
+        # let's check if it exists.
+        stmt = select(RegressionBaseline).where(RegressionBaseline.name == request.name)
+        result = await self.db.execute(stmt)
+        existing = result.scalar_one_or_none()
+
+        if existing:
+            existing.run_id = request.run_id
+            existing.metric = request.metric
+            # existing.created_at = datetime.now(...) # Optional: update timestamp
+            await self.db.commit()
+            await self.db.refresh(existing)
+            db_baseline = existing
+        else:
+            db_baseline = RegressionBaseline(
+                name=request.name,
+                run_id=request.run_id,
+                metric=request.metric,
+            )
+            self.db.add(db_baseline)
+            await self.db.commit()
+            await self.db.refresh(db_baseline)
+
+        return RegressionBaselineResponse(
+            id=db_baseline.id,
+            name=db_baseline.name,
+            run_id=db_baseline.run_id,
+            metric=db_baseline.metric,
+            created_at=db_baseline.created_at,
+        )
+
+    async def check_regression(
+        self, run_id: uuid.UUID, baseline_name: str
+    ) -> RegressionCheckResult:
+        """Check if a run has regressed against a baseline."""
+        # 1. Fetch Baseline
+        stmt = select(RegressionBaseline).where(RegressionBaseline.name == baseline_name)
+        result = await self.db.execute(stmt)
+        baseline = result.scalar_one_or_none()
+        if not baseline:
+            raise ValueError(f"Baseline '{baseline_name}' not found")
+
+        # 2. Fetch Run Evaluation
+        service = EvaluationService(self.db)
+        current_eval = await service.get_evaluation(run_id)
+        if not current_eval:
+            raise ValueError(f"Run {run_id} not evaluated")
+
+        # 3. Fetch Baseline Evaluation
+        baseline_eval = await service.get_evaluation(baseline.run_id)
+        if not baseline_eval:
+            # Should not happen if data integrity is maintained
+            raise ValueError(f"Baseline run {baseline.run_id} evaluation not found")
+
+        # 4. Extract Metric Values
+        current_val = self._get_metric_value(current_eval, baseline.metric)
+        baseline_val = self._get_metric_value(baseline_eval, baseline.metric)
+
+        # 5. Compare
+        # Assume higher is better for "score" and most metrics
+        # TODO: Support "lower is better" configuration (e.g. latency)
+        # For M18, simplistic "fail if score drops > X%"
+        # Let's say tolerance is 5% relative drop
+        delta = current_val - baseline_val
+        if baseline_val != 0:
+            delta_percent = (delta / baseline_val) * 100.0
+        else:
+            delta_percent = 0.0 if delta == 0 else (100.0 if delta > 0 else -100.0)
+
+        # Fail if dropped by more than 5%
+        # i.e. current < baseline * 0.95
+        # or delta_percent < -5.0
+
+        threshold = -5.0  # 5% drop allowed
+
+        verdict: Literal["pass", "fail"] = "pass"
+        if delta_percent < threshold:
+            verdict = "fail"
+
+        return RegressionCheckResult(
+            run_id=run_id,
+            baseline_name=baseline_name,
+            baseline_run_id=baseline.run_id,
+            metric_name=baseline.metric,
+            baseline_value=baseline_val,
+            current_value=current_val,
+            delta=delta,
+            delta_percent=round(delta_percent, 2),
+            verdict=verdict,
+            details=f"Threshold: {threshold}%. Actual change: {delta_percent:.2f}%",
+        )
+
+    def _get_metric_value(self, evaluation: Any, metric_name: str) -> float:
+        """Extract metric value from evaluation response."""
+        if metric_name == "score":
+            return float(evaluation.score)
+
+        # Check simplified metrics dict
+        if metric_name in evaluation.metrics:
+            return float(evaluation.metrics[metric_name])
+
+        # Check detailed metrics
+        for m in evaluation.detailed_metrics:
+            if m.name == metric_name:
+                return float(m.score)
+
+        raise ValueError(f"Metric '{metric_name}' not found in evaluation")

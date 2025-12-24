@@ -1,0 +1,20 @@
+﻿2025-12-24T01:33:30.4774504Z ##[group]Run actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+2025-12-24T01:33:30.4774821Z with:
+2025-12-24T01:33:30.4774994Z   python-version: 3.11
+2025-12-24T01:33:30.4775303Z   cache: pip
+2025-12-24T01:33:30.4775509Z   cache-dependency-path: backend/pyproject.toml
+2025-12-24T01:33:30.4775762Z   check-latest: false
+2025-12-24T01:33:30.4776060Z   token: ***
+2025-12-24T01:33:30.4776231Z   update-environment: true
+2025-12-24T01:33:30.4776429Z   allow-prereleases: false
+2025-12-24T01:33:30.4776618Z env:
+2025-12-24T01:33:30.4776762Z   REDIAI_MODE: mock
+2025-12-24T01:33:30.4777148Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T01:33:30.4777370Z ##[endgroup]
+2025-12-24T01:33:30.6323770Z ##[group]Installed versions
+2025-12-24T01:33:30.6766232Z Successfully set up CPython (3.11.14)
+2025-12-24T01:33:30.6767253Z ##[endgroup]
+2025-12-24T01:33:30.7594107Z [command]/opt/hostedtoolcache/Python/3.11.14/x64/bin/pip cache dir
+2025-12-24T01:33:32.2386206Z /home/runner/.cache/pip
+2025-12-24T01:33:32.3648554Z ##[warning]Failed to restore: Cache service responded with 400
+2025-12-24T01:33:32.3664147Z pip cache is not found
