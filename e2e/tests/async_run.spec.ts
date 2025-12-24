@@ -10,7 +10,8 @@ test('async run flow: enqueue, poll, terminal state', async ({ page }) => {
   await page.getByLabel('Run Async (Non-blocking)').check();
 
   // Fill form
-  await page.getByTestId('tunix:dataset-key').fill('test-async-v1');
+  // Use a valid dataset key (test-v1 exists in backend/datasets/)
+  await page.getByTestId('tunix:dataset-key').fill('test-v1');
 
   // Click Dry-run
   await page.getByTestId('tunix:run-dry-btn').click();
@@ -47,6 +48,6 @@ test('async run flow: enqueue, poll, terminal state', async ({ page }) => {
 
   // Check history
   await page.getByTestId('tunix:toggle-history-btn').click();
-  await expect(page.getByTestId('tunix:history-list')).toContainText('test-async-v1');
+  await expect(page.getByTestId('tunix:history-list')).toContainText('test-v1');
   await expect(page.getByTestId('tunix:history-list')).toContainText('completed');
 });
