@@ -1,0 +1,29 @@
+{
+  "dataset_key": "test-v1",
+  "build_id": "5fa588eb-1020-4e32-92a1-3606fa111c2f",
+  "dataset_name": "test",
+  "dataset_version": "v1",
+  "dataset_schema_version": "1.0",
+  "created_at": "2025-12-24T06:46:02.134650Z",
+  "filters": {
+    "source": "test"
+  },
+  "selection_strategy": "latest",
+  "seed": null,
+  "trace_ids": [
+    "b917de17-21e0-42d4-8139-198907db8ef7",
+    "351c9e29-84c6-47bb-8101-54e477c61eff",
+    "0e1faeb8-80d7-4315-9771-28bfbec301b1"
+  ],
+  "trace_count": 3,
+  "stats": {
+    "trace_count": 3,
+    "avg_step_count": 1.0,
+    "min_step_count": 1,
+    "max_step_count": 1,
+    "avg_total_chars": 27.0
+  },
+  "session_id": null,
+  "parent_dataset_id": null,
+  "training_run_id": null
+}

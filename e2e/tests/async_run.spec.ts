@@ -1,6 +1,16 @@
 import { test, expect } from '@playwright/test';
+import * as fs from 'fs';
+import * as path from 'path';
 
 test('async run flow: enqueue, poll, terminal state', async ({ page }) => {
+  // Guardrail: Ensure test fixture exists before running
+  // We check in the backend/datasets folder relative to repo root.
+  // Playwright runs from e2e/, so we go up one level.
+  const datasetPath = path.join(__dirname, '../../backend/datasets/test-v1');
+  if (!fs.existsSync(datasetPath)) {
+    throw new Error(`E2E fixture missing: backend/datasets/test-v1. Verified at: ${datasetPath}`);
+  }
+
   await page.goto('/');
 
   // Wait for health
