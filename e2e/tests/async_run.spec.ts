@@ -14,7 +14,16 @@ test('async run flow: enqueue, poll, terminal state', async ({ page }) => {
   await page.getByTestId('tunix:dataset-key').fill('test-v1');
 
   // Click Dry-run
+  // Intercept the creation response to get the run ID
+  const runResponsePromise = page.waitForResponse(resp =>
+    resp.url().includes('/api/tunix/run') &&
+    resp.status() === 200 &&
+    resp.request().method() === 'POST'
+  );
   await page.getByTestId('tunix:run-dry-btn').click();
+  const runResponse = await runResponsePromise;
+  const runData = await runResponse.json();
+  const runId = runData.run_id;
 
   // Verify status is displayed
   await expect(page.getByTestId('tunix:run-status')).toBeVisible();
@@ -32,13 +41,34 @@ test('async run flow: enqueue, poll, terminal state', async ({ page }) => {
     // If failed, log details for debugging (this doesn't fail the test unless we throw,
     // but throwing helps CI fail fast with reason)
 
+    // Fetch full run details to get stderr
+    // We use the API context from the page (or request fixture if we had it, but page.request is available)
+    const detailsResponse = await page.request.get(`/api/tunix/runs/${runId}`);
+    if (detailsResponse.ok()) {
+        const details = await detailsResponse.json();
+        console.log('Run Failed. Details:', JSON.stringify(details, null, 2));
+
+        // Attach details to test report
+        await test.info().attach('run-details', {
+            body: JSON.stringify(details, null, 2),
+            contentType: 'application/json'
+        });
+
+        if (details.stderr) {
+            await test.info().attach('stderr', {
+                body: details.stderr,
+                contentType: 'text/plain'
+            });
+        }
+    }
+
     // We can try to get stderr from the UI if expanded, or just log what we see.
     // The UI shows message.
     const message = await page.getByTestId('tunix:run-message').innerText();
 
     // Expand details if possible to see stderr (optional but good for screenshots)
     // For now, just throw informative error
-    throw new Error(`Async run reached terminal state 'failed'. Message: ${message}`);
+    throw new Error(`Async run reached terminal state 'failed'. Message: ${message}. See attachments for stderr.`);
   } else if (statusText.includes('cancelled')) {
       throw new Error(`Async run was cancelled unexpectedly.`);
   }

@@ -55,4 +55,3 @@
 2.  **E2E Hardening:** Fix E2E test logging to surface stderr on failure.
 3.  **Dependency Update:** Upgrade `setuptools` to fix CVE.
 4.  **Integration:** Connect "Promote Best Trial" from Tuning UI to Registry (button placeholder exists, need implementation).
-

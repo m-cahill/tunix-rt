@@ -6,6 +6,7 @@ import {
   createTuningJob,
   startTuningJob,
   getTuningJob,
+  promoteRunToVersion,
 } from '../api/client'
 
 export function Tuning() {
@@ -99,6 +100,28 @@ export function Tuning() {
     }
   }
 
+  const handlePromoteBest = async (job: TuningJob) => {
+    if (!job.best_run_id) {
+      alert('No best run to promote (job might not be complete or successful)')
+      return
+    }
+
+    const artifactId = prompt('Enter Model Artifact ID to promote to:')
+    if (!artifactId) return
+
+    if (!confirm(`Promote run ${job.best_run_id.slice(0, 8)} to artifact ${artifactId}?`)) return
+
+    try {
+      await promoteRunToVersion(artifactId, {
+        source_run_id: job.best_run_id,
+        version_label: `tuning-${job.id.slice(0,6)}`
+      })
+      alert('Promotion successful! Check Model Registry.')
+    } catch (e: any) {
+      alert(`Promotion failed: ${e.message}`)
+    }
+  }
+
   return (
     <div className="tuning-page">
       <h2>Hyperparameter Tuning</h2>
@@ -163,6 +186,9 @@ export function Tuning() {
                 <td>
                   {job.status === 'created' && (
                     <button onClick={() => handleStart(job.id)} style={{marginRight: '5px'}}>Start</button>
+                  )}
+                  {job.status === 'completed' && job.best_run_id && (
+                     <button onClick={() => handlePromoteBest(job)} style={{marginRight: '5px'}}>Promote Best</button>
                   )}
                   <button onClick={() => handleView(job.id)}>
                     {selectedJobId === job.id ? 'Hide' : 'Details'}

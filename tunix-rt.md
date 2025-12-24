@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M20 Complete** ✅  
-**Coverage:** 82% Backend Line, 77% Frontend Line | **Security:** SHA-Pinned CI, SBOM Enabled, Pre-commit Hooks | **Architecture:** Model Registry + Artifact Promotion | **Tests:** 213 backend + 28 frontend tests
+**Milestone M21 Complete** ✅  
+**Coverage:** 82% Backend Line, 77% Frontend Line | **Security:** 0 npm vulns, pinned deps, setuptools patched | **Architecture:** Promote Best Trial UI | **Tests:** E2E Failure Traces Enabled
 
 ## Overview
 
@@ -12,6 +12,26 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M2 Enhancements:** Database integration (async SQLAlchemy + PostgreSQL), Alembic migrations, trace CRUD API (create/retrieve/list), frontend trace UI, comprehensive validation, and payload size limits.
 
 **M3 Enhancements:** Trace system hardening - DB connection pool settings applied, created_at index for list performance, frontend trace UI unit tests (8 total), frontend coverage artifact generation confirmed, Alembic auto-ID migration policy documented, curl API examples, and DB troubleshooting guide.
+
+**M4 Enhancements:** Deterministic E2E testing - Postgres service container in CI, `skip-locked` job distribution logic, explicit `DATABASE_URL` configuration, reliable health checks, and standardized port bindings.
+
+**M5 Enhancements:** Enterprise-grade code coverage - Enforced 80% line / 68% branch gates, dedicated coverage reports, `coverage_gate.py` tool, and removal of synthetic coverage hacks.
+
+**M6 Enhancements:** Validation Refactoring - Centralized validation logic into `helpers/`, eliminated duplication across endpoints, improved error consistency, and boosted maintainability while increasing test coverage.
+
+**M7 Enhancements:** UNGAR Integration - Optional integration with the UNGAR game engine for synthetic data generation (High Card Duel), JSONL export, and graceful degradation when dependencies are missing.
+
+**M8 Enhancements:** Dataset Pipeline - Versioned dataset creation (`POST /api/datasets/build`), manifest-based reproducibility, Tunix SFT prompt rendering, and training smoke tests.
+
+**M9 Enhancements:** Reproducible Training Loop - Training manifests, deterministic evaluation loop, static eval sets, batch trace import, and comprehensive documentation for the full trace-to-training lifecycle.
+
+**M10 Enhancements:** App Layer Refactor - Service layer extraction, thin controllers, typed export formats, performance optimization for batch operations, and architectural guardrails documentation.
+
+**M11 Enhancements:** Stabilization & Hardening - Complete service extraction (<600 line app.py), security hardening (SHA-pinned CI, SBOM, pre-commit), production documentation (SLOs, training guides), and Windows compatibility fixes.
+
+**M12 Enhancements:** Tunix Integration Skeleton - Mock-first Tunix integration, portable JSONL/YAML artifact generation, frontend integration panel, and 14 new tests without runtime dependencies.
+
+**M13 Enhancements:** Tunix Runtime Execution - Optional local execution of training runs, dry-run validation, subprocess output capture, graceful 501 degradation, and separate CI workflow for runtime tests.
 
 **M14 Enhancements:** Tunix Run Registry - persistent storage with `tunix_runs` table (UUID PK, indexed columns), Alembic migration, immediate run persistence (create with status="running", update on completion), graceful DB failure handling, `GET /api/tunix/runs` with pagination/filtering, `GET /api/tunix/runs/{run_id}` for details, frontend Run History panel (collapsible, manual refresh), stdout/stderr truncation (10KB), 12 new backend tests + 7 frontend tests (all dry-run, no Tunix dependency).
 
@@ -26,6 +46,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M19 Enhancements:** Hyperparameter Tuning - Ray Tune integration for optimization sweeps (`/api/tuning/jobs`), `TunixTuningJob` and `TunixTuningTrial` tables, Search Space validation, Automated best-run selection, Frontend Tuning UI.
 
 **M20 Enhancements:** Model Registry - `ModelArtifact` and `ModelVersion` tables, content-addressed storage for artifacts, promotion from TunixRun, API endpoints for artifact management and download, Frontend Registry UI.
+
+**M21 Enhancements:** Security & Reliability Hardening - Frontend dependency audit clean (Vite/esbuild patched), `setuptools` CVE patched, Dependencies pinned (`save-exact=true`), E2E failure observability (traces retained, stderr attached), "Promote Best Trial" UI workflow, Repo hygiene (`ProjectFiles/Workflows` ignored).
 
 ## Database Schema
 

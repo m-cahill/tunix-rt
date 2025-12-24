@@ -1,0 +1,68 @@
+﻿2025-12-24T05:43:26.4797351Z ##[group]Run npx playwright test
+2025-12-24T05:43:26.4797670Z [36;1mnpx playwright test[0m
+2025-12-24T05:43:26.4833248Z shell: /usr/bin/bash -e {0}
+2025-12-24T05:43:26.4833630Z env:
+2025-12-24T05:43:26.4833917Z   REDIAI_MODE: mock
+2025-12-24T05:43:26.4834713Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T05:43:26.4835304Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T05:43:26.4835984Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T05:43:26.4836406Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T05:43:26.4836750Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T05:43:26.4837093Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T05:43:26.4837432Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T05:43:26.4837745Z ##[endgroup]
+2025-12-24T05:43:28.7974505Z [WebServer] INFO:     Started server process [3432]
+2025-12-24T05:43:28.7980970Z [WebServer] INFO:     Waiting for application startup.
+2025-12-24T05:43:28.7981789Z [WebServer] INFO:     Application startup complete.
+2025-12-24T05:43:28.7982694Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2025-12-24T05:43:30.5877399Z
+2025-12-24T05:43:30.5877972Z Running 8 tests using 1 worker
+2025-12-24T05:43:32.0175333Z [WebServer] INFO:__main__:Tunix worker started
+2025-12-24T05:43:36.1607594Z [WebServer] INFO:__main__:Claimed run fd186782-a0e8-4563-8014-4979a2df11af
+2025-12-24T05:43:36.1648997Z [WebServer] INFO:__main__:Completed run fd186782-a0e8-4563-8014-4979a2df11af with status failed
+2025-12-24T05:43:44.1931067Z [WebServer] INFO:__main__:Claimed run adee1d80-6da1-468c-8e0d-007d2e9f9320
+2025-12-24T05:43:44.1961922Z [WebServer] INFO:__main__:Completed run adee1d80-6da1-468c-8e0d-007d2e9f9320 with status failed
+2025-12-24T05:43:50.8021127Z ×F·······
+2025-12-24T05:43:50.8023388Z
+2025-12-24T05:43:50.8040445Z   1) [chromium] › tests/async_run.spec.ts:3:5 › async run flow: enqueue, poll, terminal state ──────
+2025-12-24T05:43:50.8041470Z
+2025-12-24T05:43:50.8042163Z     Error: Async run reached terminal state 'failed'. Message: Message: Dry-run execution failed
+2025-12-24T05:43:50.8044526Z
+2025-12-24T05:43:50.8045029Z       39 |     // Expand details if possible to see stderr (optional but good for screenshots)
+2025-12-24T05:43:50.8045792Z       40 |     // For now, just throw informative error
+2025-12-24T05:43:50.8046618Z     > 41 |     throw new Error(`Async run reached terminal state 'failed'. Message: ${message}`);
+2025-12-24T05:43:50.8047304Z          |           ^
+2025-12-24T05:43:50.8047754Z       42 |   } else if (statusText.includes('cancelled')) {
+2025-12-24T05:43:50.8048416Z       43 |       throw new Error(`Async run was cancelled unexpectedly.`);
+2025-12-24T05:43:50.8048905Z       44 |   }
+2025-12-24T05:43:50.8049815Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/async_run.spec.ts:41:11
+2025-12-24T05:43:50.8050369Z
+2025-12-24T05:43:50.8051102Z     Error Context: test-results/async_run-async-run-flow-enqueue-poll-terminal-state-chromium/error-context.md
+2025-12-24T05:43:50.8051802Z
+2025-12-24T05:43:50.8052391Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-24T05:43:50.8052786Z
+2025-12-24T05:43:50.8053253Z     Error: Async run reached terminal state 'failed'. Message: Message: Dry-run execution failed
+2025-12-24T05:43:50.8053782Z
+2025-12-24T05:43:50.8054256Z       39 |     // Expand details if possible to see stderr (optional but good for screenshots)
+2025-12-24T05:43:50.8055024Z       40 |     // For now, just throw informative error
+2025-12-24T05:43:50.8055840Z     > 41 |     throw new Error(`Async run reached terminal state 'failed'. Message: ${message}`);
+2025-12-24T05:43:50.8056521Z          |           ^
+2025-12-24T05:43:50.8057008Z       42 |   } else if (statusText.includes('cancelled')) {
+2025-12-24T05:43:50.8058108Z       43 |       throw new Error(`Async run was cancelled unexpectedly.`);
+2025-12-24T05:43:50.8058983Z       44 |   }
+2025-12-24T05:43:50.8059880Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/async_run.spec.ts:41:11
+2025-12-24T05:43:50.8060404Z
+2025-12-24T05:43:50.8061224Z     Error Context: test-results/async_run-async-run-flow-enqueue-poll-terminal-state-chromium-retry1/error-context.md
+2025-12-24T05:43:50.8062006Z
+2025-12-24T05:43:50.8062787Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-24T05:43:50.8064008Z     test-results/async_run-async-run-flow-enqueue-poll-terminal-state-chromium-retry1/trace.zip
+2025-12-24T05:43:50.8064858Z     Usage:
+2025-12-24T05:43:50.8065039Z
+2025-12-24T05:43:50.8065805Z         npx playwright show-trace test-results/async_run-async-run-flow-enqueue-poll-terminal-state-chromium-retry1/trace.zip
+2025-12-24T05:43:50.8066665Z
+2025-12-24T05:43:50.8067348Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-24T05:43:50.8067796Z
+2025-12-24T05:43:50.8067922Z   1 failed
+2025-12-24T05:43:50.8068816Z     [chromium] › tests/async_run.spec.ts:3:5 › async run flow: enqueue, poll, terminal state ───────
+2025-12-24T05:43:50.8069922Z   7 passed (23.0s)
+2025-12-24T05:43:50.8617358Z ##[error]Process completed with exit code 1.

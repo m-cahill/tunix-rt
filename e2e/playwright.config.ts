@@ -38,7 +38,7 @@ export default defineConfig({
     /* M4: Standardize on 127.0.0.1 (IPv4) to avoid ::1 (IPv6) connection issues */
     baseURL: `http://127.0.0.1:${FRONTEND_PORT}`,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
   },
 
   /* Configure projects for major browsers */

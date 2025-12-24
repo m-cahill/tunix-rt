@@ -1,0 +1,25 @@
+﻿2025-12-24T05:42:37.9121356Z ##[group]Run cd ../backend && alembic upgrade head
+2025-12-24T05:42:37.9121770Z [36;1mcd ../backend && alembic upgrade head[0m
+2025-12-24T05:42:37.9155428Z shell: /usr/bin/bash -e {0}
+2025-12-24T05:42:37.9155669Z env:
+2025-12-24T05:42:37.9155829Z   REDIAI_MODE: mock
+2025-12-24T05:42:37.9156387Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T05:42:37.9156731Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T05:42:37.9157129Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T05:42:37.9157523Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T05:42:37.9157866Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T05:42:37.9158214Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T05:42:37.9158551Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T05:42:37.9158835Z ##[endgroup]
+2025-12-24T05:42:38.6148534Z INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+2025-12-24T05:42:38.6150943Z INFO  [alembic.runtime.migration] Will assume transactional DDL.
+2025-12-24T05:42:38.6420810Z INFO  [alembic.runtime.migration] Running upgrade  -> 001, create_traces_table
+2025-12-24T05:42:38.6496219Z INFO  [alembic.runtime.migration] Running upgrade 001 -> f8f1393630e4, add traces created_at index
+2025-12-24T05:42:38.6541230Z INFO  [alembic.runtime.migration] Running upgrade f8f1393630e4 -> f3cc010ca8a6, add_scores_table
+2025-12-24T05:42:38.6649612Z INFO  [alembic.runtime.migration] Running upgrade f3cc010ca8a6 -> 4bf76cdb97da, add_tunix_runs_table
+2025-12-24T05:42:38.6742216Z INFO  [alembic.runtime.migration] Running upgrade 4bf76cdb97da -> 2b3a4c5d6e7f, add_config_column_to_tunix_runs
+2025-12-24T05:42:38.6762217Z INFO  [alembic.runtime.migration] Running upgrade 2b3a4c5d6e7f -> 3c4d5e6f7a8b, add_log_chunks_table
+2025-12-24T05:42:38.6877952Z INFO  [alembic.runtime.migration] Running upgrade 3c4d5e6f7a8b -> 5d6e7f8a9b0c, add_evaluations_table
+2025-12-24T05:42:38.6984202Z INFO  [alembic.runtime.migration] Running upgrade 5d6e7f8a9b0c -> 6e7f8a9b0c1d, add_regression_baselines_table
+2025-12-24T05:42:38.7047322Z INFO  [alembic.runtime.migration] Running upgrade 6e7f8a9b0c1d -> 7f8a9b0c1d2e, add_tuning_jobs_table
+2025-12-24T05:42:38.7250689Z INFO  [alembic.runtime.migration] Running upgrade 7f8a9b0c1d2e -> 8a9b0c1d2e3f, add_model_registry_tables

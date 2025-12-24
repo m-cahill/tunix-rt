@@ -1,0 +1,23 @@
+﻿2025-12-24T05:41:57.0600467Z ##[group]Run actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
+2025-12-24T05:41:57.0601091Z with:
+2025-12-24T05:41:57.0601433Z   node-version: 18
+2025-12-24T05:41:57.0601788Z   cache: npm
+2025-12-24T05:41:57.0602187Z   cache-dependency-path: frontend/package-lock.json
+2025-12-24T05:41:57.0602660Z   always-auth: false
+2025-12-24T05:41:57.0603018Z   check-latest: false
+2025-12-24T05:41:57.0603585Z   token: ***
+2025-12-24T05:41:57.0603929Z ##[endgroup]
+2025-12-24T05:41:57.2689863Z Attempting to download 18...
+2025-12-24T05:41:57.9597304Z Acquiring 18.20.8 - x64 from https://github.com/actions/node-versions/releases/download/18.20.8-14110393767/node-18.20.8-linux-x64.tar.gz
+2025-12-24T05:41:58.6107707Z Extracting ...
+2025-12-24T05:41:58.6219533Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/4e0334d8-196f-4af4-b864-64be45e4a68c -f /home/runner/work/_temp/9bb9a04b-0737-4639-9f39-534c9096bfa8
+2025-12-24T05:41:59.7070112Z Adding to the cache ...
+2025-12-24T05:42:01.7447488Z ##[group]Environment details
+2025-12-24T05:42:02.0375794Z node: v18.20.8
+2025-12-24T05:42:02.0380777Z npm: 10.8.2
+2025-12-24T05:42:02.0381117Z yarn: 1.22.22
+2025-12-24T05:42:02.0381817Z ##[endgroup]
+2025-12-24T05:42:02.0407222Z [command]/opt/hostedtoolcache/node/18.20.8/x64/bin/npm config get cache
+2025-12-24T05:42:02.1684365Z /home/runner/.npm
+2025-12-24T05:42:02.2378447Z ##[warning]Failed to restore: Cache service responded with 400
+2025-12-24T05:42:02.2389184Z npm cache is not found
