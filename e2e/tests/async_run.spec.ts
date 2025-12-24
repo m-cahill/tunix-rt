@@ -2,26 +2,51 @@ import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
 
-test('async run flow: enqueue, poll, terminal state', async ({ page }) => {
-  // Guardrail: Ensure test fixture exists before running
-  // We check in the backend/datasets folder relative to repo root.
-  // Playwright runs from e2e/, so we go up one level.
-  const datasetPath = path.join(__dirname, '../../backend/datasets/test-v1');
-  if (!fs.existsSync(datasetPath)) {
-    throw new Error(`E2E fixture missing: backend/datasets/test-v1. Verified at: ${datasetPath}`);
-  }
-
+test('async run flow: enqueue, poll, terminal state', async ({ page, request }) => {
   await page.goto('/');
 
-  // Wait for health
+  // Guardrail: Ensure backend is healthy before starting
   await expect(page.getByTestId('sys:api-status')).toHaveText(/API: healthy/i);
+
+  // 1. Create a minimal trace via API to ensure we have data
+  const traceRes = await request.post('/api/traces', {
+    data: {
+      trace_version: '1.0',
+      prompt: 'E2E Test Prompt',
+      final_answer: 'E2E Test Answer',
+      steps: [
+        { i: 0, type: 'reasoning', content: 'Step 1' }
+      ],
+      meta: { source: 'e2e-async-test' }
+    }
+  });
+  expect(traceRes.ok()).toBeTruthy();
+  const traceData = await traceRes.json();
+  const traceId = traceData.id;
+
+  // 2. Build a dynamic dataset containing this trace
+  const datasetName = `e2e-test-${Date.now()}`;
+  const buildRes = await request.post('/api/datasets/build', {
+    data: {
+      dataset_name: datasetName,
+      dataset_version: 'v1',
+      filters: { source: 'e2e-async-test' }, // Filter by the source we just used
+      limit: 10,
+      selection_strategy: 'latest'
+    }
+  });
+  expect(buildRes.ok()).toBeTruthy();
+  const buildData = await buildRes.json();
+  const datasetKey = buildData.dataset_key;
+
+  // Verify dataset is not empty (Guardrail B)
+  expect(buildData.trace_count).toBeGreaterThan(0);
 
   // Enable Async Mode
   await page.getByLabel('Run Async (Non-blocking)').check();
 
-  // Fill form
-  // Use a valid dataset key (test-v1 exists in backend/datasets/)
-  await page.getByTestId('tunix:dataset-key').fill('test-v1');
+  // Fill form with the dynamic dataset key
+  await page.getByTestId('tunix:dataset-key').fill(datasetKey);
 
   // Click Dry-run
   // Intercept the creation response to get the run ID
@@ -88,6 +113,6 @@ test('async run flow: enqueue, poll, terminal state', async ({ page }) => {
 
   // Check history
   await page.getByTestId('tunix:toggle-history-btn').click();
-  await expect(page.getByTestId('tunix:history-list')).toContainText('test-v1');
+  await expect(page.getByTestId('tunix:history-list')).toContainText(datasetKey);
   await expect(page.getByTestId('tunix:history-list')).toContainText('completed');
 });
