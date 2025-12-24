@@ -1,0 +1,31 @@
+﻿2025-12-24T02:57:50.5888017Z ##[group]Run npm audit --json > npm-audit-report.json || true
+2025-12-24T02:57:50.5888485Z [36;1mnpm audit --json > npm-audit-report.json || true[0m
+2025-12-24T02:57:50.5888805Z [36;1mnpm audit || true[0m
+2025-12-24T02:57:50.5923196Z shell: /usr/bin/bash -e {0}
+2025-12-24T02:57:50.5923443Z ##[endgroup]
+2025-12-24T02:57:53.0770682Z # npm audit report
+2025-12-24T02:57:53.0770987Z
+2025-12-24T02:57:53.0771201Z esbuild  <=0.24.2
+2025-12-24T02:57:53.0771550Z Severity: moderate
+2025-12-24T02:57:53.0772795Z esbuild enables any website to send any requests to the development server and read the response - https://github.com/advisories/GHSA-67mh-4wv8-2f99
+2025-12-24T02:57:53.0773908Z fix available via `npm audit fix --force`
+2025-12-24T02:57:53.0774506Z Will install vite@6.4.1, which is a breaking change
+2025-12-24T02:57:53.0774999Z node_modules/esbuild
+2025-12-24T02:57:53.0775312Z   vite  0.11.0 - 6.1.6
+2025-12-24T02:57:53.0775717Z   Depends on vulnerable versions of esbuild
+2025-12-24T02:57:53.0776131Z   node_modules/vite
+2025-12-24T02:57:53.0776535Z     vite-node  <=2.2.0-beta.2
+2025-12-24T02:57:53.0776970Z     Depends on vulnerable versions of vite
+2025-12-24T02:57:53.0777379Z     node_modules/vite-node
+2025-12-24T02:57:53.0777878Z       vitest  0.0.1 - 0.0.12 || 0.0.29 - 0.0.122 || 0.3.3 - 2.2.0-beta.2
+2025-12-24T02:57:53.0778444Z       Depends on vulnerable versions of vite
+2025-12-24T02:57:53.0779480Z       Depends on vulnerable versions of vite-node
+2025-12-24T02:57:53.0779930Z       node_modules/vitest
+2025-12-24T02:57:53.0780328Z         @vitest/coverage-v8  <=2.2.0-beta.2
+2025-12-24T02:57:53.0780819Z         Depends on vulnerable versions of vitest
+2025-12-24T02:57:53.0781299Z         node_modules/@vitest/coverage-v8
+2025-12-24T02:57:53.0781602Z
+2025-12-24T02:57:53.0781833Z 5 moderate severity vulnerabilities
+2025-12-24T02:57:53.0782110Z
+2025-12-24T02:57:53.0782452Z To address all issues (including breaking changes), run:
+2025-12-24T02:57:53.0782940Z   npm audit fix --force

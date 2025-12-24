@@ -1,0 +1,969 @@
+﻿2025-12-24T02:57:36.0842373Z Current runner version: '2.330.0'
+2025-12-24T02:57:36.0905519Z ##[group]Runner Image Provisioner
+2025-12-24T02:57:36.0906914Z Hosted Compute Agent
+2025-12-24T02:57:36.0907930Z Version: 20251211.462
+2025-12-24T02:57:36.0908872Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-24T02:57:36.0910004Z Build Date: 2025-12-11T16:28:49Z
+2025-12-24T02:57:36.0911473Z Worker ID: {d292091c-b1ec-4a7b-aadd-8f1a1b4592ad}
+2025-12-24T02:57:36.0912718Z ##[endgroup]
+2025-12-24T02:57:36.0913575Z ##[group]Operating System
+2025-12-24T02:57:36.0914712Z Ubuntu
+2025-12-24T02:57:36.0915485Z 24.04.3
+2025-12-24T02:57:36.0916244Z LTS
+2025-12-24T02:57:36.0917711Z ##[endgroup]
+2025-12-24T02:57:36.0918560Z ##[group]Runner Image
+2025-12-24T02:57:36.0919506Z Image: ubuntu-24.04
+2025-12-24T02:57:36.0950802Z Version: 20251215.174.1
+2025-12-24T02:57:36.0952772Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-24T02:57:36.0955665Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-24T02:57:36.0957402Z ##[endgroup]
+2025-12-24T02:57:36.0959288Z ##[group]GITHUB_TOKEN Permissions
+2025-12-24T02:57:36.0962322Z Contents: read
+2025-12-24T02:57:36.0963361Z Metadata: read
+2025-12-24T02:57:36.0964222Z ##[endgroup]
+2025-12-24T02:57:36.0967323Z Secret source: Actions
+2025-12-24T02:57:36.0968756Z Prepare workflow directory
+2025-12-24T02:57:36.2257280Z Prepare all required actions
+2025-12-24T02:57:36.2364632Z Getting action download info
+2025-12-24T02:57:36.6038488Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2025-12-24T02:57:36.7405887Z Download action repository 'actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b' (SHA:0b93645e9fea7318ecaed2b359559ac225c90a2b)
+2025-12-24T02:57:36.8609339Z Download action repository 'actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af' (SHA:39370e3970a6d050c480ffad4ff0ed4d3fdee5af)
+2025-12-24T02:57:37.0251695Z Download action repository 'actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57' (SHA:1bd1e32a3bdc45362d1e726936510720a7c30a57)
+2025-12-24T02:57:37.1392859Z Download action repository 'actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b' (SHA:6f51ac03b9356f520e9adb1b1b7802705f340c2b)
+2025-12-24T02:57:37.4345471Z Complete job name: e2e
+2025-12-24T02:57:37.4795364Z ##[group]Checking docker version
+2025-12-24T02:57:37.4807647Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2025-12-24T02:57:37.5632100Z '1.48'
+2025-12-24T02:57:37.5647305Z Docker daemon API version: '1.48'
+2025-12-24T02:57:37.5647784Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2025-12-24T02:57:37.5810270Z '1.48'
+2025-12-24T02:57:37.5823579Z Docker client API version: '1.48'
+2025-12-24T02:57:37.5829002Z ##[endgroup]
+2025-12-24T02:57:37.5832346Z ##[group]Clean up resources from previous jobs
+2025-12-24T02:57:37.5837039Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=28fd72"
+2025-12-24T02:57:37.5998050Z ##[command]/usr/bin/docker network prune --force --filter "label=28fd72"
+2025-12-24T02:57:37.6136032Z ##[endgroup]
+2025-12-24T02:57:37.6136358Z ##[group]Create local container network
+2025-12-24T02:57:37.6145481Z ##[command]/usr/bin/docker network create --label 28fd72 github_network_70d7a57e4ead4fa589bba37d537818e6
+2025-12-24T02:57:37.6811436Z 7c352d5d875126f0cb174ee4aa327fc8a4b303cd69aa0cd74a9a13c96d09238c
+2025-12-24T02:57:37.6823706Z ##[endgroup]
+2025-12-24T02:57:37.6846993Z ##[group]Starting postgres service container
+2025-12-24T02:57:37.6866378Z ##[command]/usr/bin/docker pull postgres:15-alpine
+2025-12-24T02:57:37.9649866Z 15-alpine: Pulling from library/postgres
+2025-12-24T02:57:38.0537850Z 1074353eec0d: Pulling fs layer
+2025-12-24T02:57:38.0538341Z d2e5feb410e8: Pulling fs layer
+2025-12-24T02:57:38.0618316Z ff7ac73e977d: Pulling fs layer
+2025-12-24T02:57:38.0619361Z 25fbe13bb576: Pulling fs layer
+2025-12-24T02:57:38.0620197Z 060e3656c186: Pulling fs layer
+2025-12-24T02:57:38.0621512Z 9fa3a17171bc: Pulling fs layer
+2025-12-24T02:57:38.0622552Z 1de01a2b564f: Pulling fs layer
+2025-12-24T02:57:38.0623192Z 141979064465: Pulling fs layer
+2025-12-24T02:57:38.0624055Z 86a96880bc80: Pulling fs layer
+2025-12-24T02:57:38.0624760Z c5fd49a04d70: Pulling fs layer
+2025-12-24T02:57:38.0625415Z 9bb1b164157a: Pulling fs layer
+2025-12-24T02:57:38.0626385Z 1de01a2b564f: Waiting
+2025-12-24T02:57:38.0627154Z 141979064465: Waiting
+2025-12-24T02:57:38.0628177Z 86a96880bc80: Waiting
+2025-12-24T02:57:38.0629060Z c5fd49a04d70: Waiting
+2025-12-24T02:57:38.0629923Z 9bb1b164157a: Waiting
+2025-12-24T02:57:38.0631044Z 060e3656c186: Waiting
+2025-12-24T02:57:38.0631934Z 9fa3a17171bc: Waiting
+2025-12-24T02:57:38.0632765Z 25fbe13bb576: Waiting
+2025-12-24T02:57:38.1449721Z d2e5feb410e8: Download complete
+2025-12-24T02:57:38.1661505Z ff7ac73e977d: Verifying Checksum
+2025-12-24T02:57:38.1681425Z ff7ac73e977d: Download complete
+2025-12-24T02:57:38.2025322Z 1074353eec0d: Verifying Checksum
+2025-12-24T02:57:38.2043474Z 1074353eec0d: Download complete
+2025-12-24T02:57:38.2232723Z 25fbe13bb576: Verifying Checksum
+2025-12-24T02:57:38.2235840Z 25fbe13bb576: Download complete
+2025-12-24T02:57:38.2579131Z 060e3656c186: Verifying Checksum
+2025-12-24T02:57:38.2581462Z 060e3656c186: Download complete
+2025-12-24T02:57:38.3296797Z 1de01a2b564f: Verifying Checksum
+2025-12-24T02:57:38.3300293Z 1de01a2b564f: Download complete
+2025-12-24T02:57:38.3337799Z 141979064465: Verifying Checksum
+2025-12-24T02:57:38.3340279Z 141979064465: Download complete
+2025-12-24T02:57:38.3773514Z 1074353eec0d: Pull complete
+2025-12-24T02:57:38.4147902Z d2e5feb410e8: Pull complete
+2025-12-24T02:57:38.4166045Z c5fd49a04d70: Verifying Checksum
+2025-12-24T02:57:38.4171634Z c5fd49a04d70: Download complete
+2025-12-24T02:57:38.4194393Z 86a96880bc80: Verifying Checksum
+2025-12-24T02:57:38.4195663Z 86a96880bc80: Download complete
+2025-12-24T02:57:38.4742118Z ff7ac73e977d: Pull complete
+2025-12-24T02:57:38.5081668Z 9bb1b164157a: Verifying Checksum
+2025-12-24T02:57:38.5084951Z 9bb1b164157a: Download complete
+2025-12-24T02:57:38.5114328Z 25fbe13bb576: Pull complete
+2025-12-24T02:57:38.5289890Z 060e3656c186: Pull complete
+2025-12-24T02:57:39.2955136Z 9fa3a17171bc: Verifying Checksum
+2025-12-24T02:57:39.2956017Z 9fa3a17171bc: Download complete
+2025-12-24T02:57:42.4053961Z 9fa3a17171bc: Pull complete
+2025-12-24T02:57:42.4222341Z 1de01a2b564f: Pull complete
+2025-12-24T02:57:42.4444487Z 141979064465: Pull complete
+2025-12-24T02:57:42.4608070Z 86a96880bc80: Pull complete
+2025-12-24T02:57:42.4738448Z c5fd49a04d70: Pull complete
+2025-12-24T02:57:42.4862109Z 9bb1b164157a: Pull complete
+2025-12-24T02:57:42.4918663Z Digest: sha256:b3968e348b48f1198cc6de6611d055dbad91cd561b7990c406c3fc28d7095b21
+2025-12-24T02:57:42.4935713Z Status: Downloaded newer image for postgres:15-alpine
+2025-12-24T02:57:42.4952601Z docker.io/library/postgres:15-alpine
+2025-12-24T02:57:42.5022790Z ##[command]/usr/bin/docker create --name 8bbe0983d7f8440997a3b31d66bba1d9_postgres15alpine_f8f132 --label 28fd72 --network github_network_70d7a57e4ead4fa589bba37d537818e6 --network-alias postgres -p 5432:5432 --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5 -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres" -e "POSTGRES_DB=postgres" -e GITHUB_ACTIONS=true -e CI=true postgres:15-alpine
+2025-12-24T02:57:42.5289392Z 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:42.5313648Z ##[command]/usr/bin/docker start 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:42.7478922Z 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:42.7513425Z ##[command]/usr/bin/docker ps --all --filter id=89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2025-12-24T02:57:42.7671970Z 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f Up Less than a second (health: starting)
+2025-12-24T02:57:42.7703761Z ##[command]/usr/bin/docker port 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:42.7883952Z 5432/tcp -> 0.0.0.0:5432
+2025-12-24T02:57:42.7890758Z 5432/tcp -> [::]:5432
+2025-12-24T02:57:42.7959463Z ##[endgroup]
+2025-12-24T02:57:42.7970961Z ##[group]Waiting for all services to be ready
+2025-12-24T02:57:42.7987870Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:42.8204646Z starting
+2025-12-24T02:57:42.8241054Z postgres service is starting, waiting 2 seconds before checking again.
+2025-12-24T02:57:44.8243018Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:44.8376995Z starting
+2025-12-24T02:57:44.8390681Z postgres service is starting, waiting 3 seconds before checking again.
+2025-12-24T02:57:48.7232429Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:48.7362320Z starting
+2025-12-24T02:57:48.7375721Z postgres service is starting, waiting 7 seconds before checking again.
+2025-12-24T02:57:56.0057838Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:56.0184903Z healthy
+2025-12-24T02:57:56.0203395Z postgres service is healthy.
+2025-12-24T02:57:56.0204524Z ##[endgroup]
+2025-12-24T02:57:56.0529708Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2025-12-24T02:57:56.0530505Z with:
+2025-12-24T02:57:56.0530711Z   repository: m-cahill/tunix-rt
+2025-12-24T02:57:56.0531065Z   token: ***
+2025-12-24T02:57:56.0531238Z   ssh-strict: true
+2025-12-24T02:57:56.0531417Z   ssh-user: git
+2025-12-24T02:57:56.0531603Z   persist-credentials: true
+2025-12-24T02:57:56.0531805Z   clean: true
+2025-12-24T02:57:56.0531986Z   sparse-checkout-cone-mode: true
+2025-12-24T02:57:56.0532204Z   fetch-depth: 1
+2025-12-24T02:57:56.0532378Z   fetch-tags: false
+2025-12-24T02:57:56.0532552Z   show-progress: true
+2025-12-24T02:57:56.0532733Z   lfs: false
+2025-12-24T02:57:56.0532890Z   submodules: false
+2025-12-24T02:57:56.0533073Z   set-safe-directory: true
+2025-12-24T02:57:56.0533484Z env:
+2025-12-24T02:57:56.0533652Z   REDIAI_MODE: mock
+2025-12-24T02:57:56.0534113Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T02:57:56.0534359Z ##[endgroup]
+2025-12-24T02:57:56.1679040Z Syncing repository: m-cahill/tunix-rt
+2025-12-24T02:57:56.1681164Z ##[group]Getting Git version info
+2025-12-24T02:57:56.1681796Z Working directory is '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-24T02:57:56.1682751Z [command]/usr/bin/git version
+2025-12-24T02:57:56.1763023Z git version 2.52.0
+2025-12-24T02:57:56.1790776Z ##[endgroup]
+2025-12-24T02:57:56.1807643Z Temporarily overriding HOME='/home/runner/work/_temp/fb3b26bf-8872-4ed1-a488-7d4484e81fa9' before making global git config changes
+2025-12-24T02:57:56.1811265Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-24T02:57:56.1826177Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-24T02:57:56.1870013Z Deleting the contents of '/home/runner/work/tunix-rt/tunix-rt'
+2025-12-24T02:57:56.1874807Z ##[group]Initializing the repository
+2025-12-24T02:57:56.1879556Z [command]/usr/bin/git init /home/runner/work/tunix-rt/tunix-rt
+2025-12-24T02:57:56.2006738Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-24T02:57:56.2008713Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-24T02:57:56.2009616Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-24T02:57:56.2012733Z hint: call:
+2025-12-24T02:57:56.2013702Z hint:
+2025-12-24T02:57:56.2014706Z hint: 	git config --global init.defaultBranch <name>
+2025-12-24T02:57:56.2016202Z hint:
+2025-12-24T02:57:56.2016727Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-24T02:57:56.2017606Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-24T02:57:56.2018239Z hint:
+2025-12-24T02:57:56.2018576Z hint: 	git branch -m <name>
+2025-12-24T02:57:56.2019159Z hint:
+2025-12-24T02:57:56.2019731Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-24T02:57:56.2020907Z Initialized empty Git repository in /home/runner/work/tunix-rt/tunix-rt/.git/
+2025-12-24T02:57:56.2026417Z [command]/usr/bin/git remote add origin https://github.com/m-cahill/tunix-rt
+2025-12-24T02:57:56.2064419Z ##[endgroup]
+2025-12-24T02:57:56.2065819Z ##[group]Disabling automatic garbage collection
+2025-12-24T02:57:56.2072179Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-24T02:57:56.2103258Z ##[endgroup]
+2025-12-24T02:57:56.2105238Z ##[group]Setting up auth
+2025-12-24T02:57:56.2111671Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-24T02:57:56.2144125Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-24T02:57:56.2505399Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-24T02:57:56.2539763Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-24T02:57:56.2769350Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-24T02:57:56.2814101Z ##[endgroup]
+2025-12-24T02:57:56.2815689Z ##[group]Fetching the repository
+2025-12-24T02:57:56.2823627Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +e7b5c68822d7ef03ae95fa67d92fa76ffd14e118:refs/remotes/origin/main
+2025-12-24T02:57:57.0666715Z From https://github.com/m-cahill/tunix-rt
+2025-12-24T02:57:57.0671155Z  * [new ref]         e7b5c68822d7ef03ae95fa67d92fa76ffd14e118 -> origin/main
+2025-12-24T02:57:57.0703633Z ##[endgroup]
+2025-12-24T02:57:57.0704219Z ##[group]Determining the checkout info
+2025-12-24T02:57:57.0706254Z ##[endgroup]
+2025-12-24T02:57:57.0712534Z [command]/usr/bin/git sparse-checkout disable
+2025-12-24T02:57:57.0756180Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-24T02:57:57.0785909Z ##[group]Checking out the ref
+2025-12-24T02:57:57.0790766Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-24T02:57:57.2293710Z Switched to a new branch 'main'
+2025-12-24T02:57:57.2296039Z branch 'main' set up to track 'origin/main'.
+2025-12-24T02:57:57.2312766Z ##[endgroup]
+2025-12-24T02:57:57.2354734Z [command]/usr/bin/git log -1 --format=%H
+2025-12-24T02:57:57.2379221Z e7b5c68822d7ef03ae95fa67d92fa76ffd14e118
+2025-12-24T02:57:57.2608890Z ##[group]Run actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+2025-12-24T02:57:57.2609269Z with:
+2025-12-24T02:57:57.2609440Z   python-version: 3.11
+2025-12-24T02:57:57.2609639Z   cache: pip
+2025-12-24T02:57:57.2609852Z   cache-dependency-path: backend/pyproject.toml
+2025-12-24T02:57:57.2610127Z   check-latest: false
+2025-12-24T02:57:57.2610591Z   token: ***
+2025-12-24T02:57:57.2610784Z   update-environment: true
+2025-12-24T02:57:57.2611008Z   allow-prereleases: false
+2025-12-24T02:57:57.2611201Z env:
+2025-12-24T02:57:57.2611390Z   REDIAI_MODE: mock
+2025-12-24T02:57:57.2611786Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T02:57:57.2612021Z ##[endgroup]
+2025-12-24T02:57:57.4195394Z ##[group]Installed versions
+2025-12-24T02:57:57.4319064Z Successfully set up CPython (3.11.14)
+2025-12-24T02:57:57.4321461Z ##[endgroup]
+2025-12-24T02:57:57.4720861Z [command]/opt/hostedtoolcache/Python/3.11.14/x64/bin/pip cache dir
+2025-12-24T02:57:57.8231916Z /home/runner/.cache/pip
+2025-12-24T02:57:57.9696425Z ##[warning]Failed to restore: Cache service responded with 400
+2025-12-24T02:57:57.9706029Z pip cache is not found
+2025-12-24T02:57:57.9828430Z ##[group]Run cd ../backend && python -m pip install -e ".[dev]"
+2025-12-24T02:57:57.9828895Z [36;1mcd ../backend && python -m pip install -e ".[dev]"[0m
+2025-12-24T02:57:57.9871744Z shell: /usr/bin/bash -e {0}
+2025-12-24T02:57:57.9871973Z env:
+2025-12-24T02:57:57.9872134Z   REDIAI_MODE: mock
+2025-12-24T02:57:57.9872906Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T02:57:57.9873445Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:57:57.9873853Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T02:57:57.9874248Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:57:57.9874601Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:57:57.9874962Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:57:57.9875306Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T02:57:57.9875582Z ##[endgroup]
+2025-12-24T02:57:58.5663429Z Obtaining file:///home/runner/work/tunix-rt/tunix-rt/backend
+2025-12-24T02:57:58.5683221Z   Installing build dependencies: started
+2025-12-24T02:57:59.5207697Z   Installing build dependencies: finished with status 'done'
+2025-12-24T02:57:59.5213487Z   Checking if build backend supports build_editable: started
+2025-12-24T02:57:59.8067176Z   Checking if build backend supports build_editable: finished with status 'done'
+2025-12-24T02:57:59.8075340Z   Getting requirements to build editable: started
+2025-12-24T02:58:00.1083763Z   Getting requirements to build editable: finished with status 'done'
+2025-12-24T02:58:00.1093205Z   Preparing editable metadata (pyproject.toml): started
+2025-12-24T02:58:00.2810060Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+2025-12-24T02:58:00.4121743Z Collecting fastapi==0.125.0 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:00.4788784Z   Downloading fastapi-0.125.0-py3-none-any.whl.metadata (30 kB)
+2025-12-24T02:58:00.5256319Z Collecting uvicorn==0.38.0 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:00.5346351Z   Downloading uvicorn-0.38.0-py3-none-any.whl.metadata (6.8 kB)
+2025-12-24T02:58:00.5711102Z Collecting httpx==0.28.1 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:00.5791248Z   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+2025-12-24T02:58:00.7166626Z Collecting pydantic==2.12.5 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:00.7244634Z   Downloading pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)
+2025-12-24T02:58:00.7591023Z Collecting pydantic-settings==2.12.0 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:00.7675835Z   Downloading pydantic_settings-2.12.0-py3-none-any.whl.metadata (3.4 kB)
+2025-12-24T02:58:01.0610313Z Collecting sqlalchemy==2.0.45 (from sqlalchemy[asyncio]==2.0.45->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:01.0732776Z   Downloading sqlalchemy-2.0.45-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+2025-12-24T02:58:01.1072328Z Collecting alembic==1.17.2 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:01.1154571Z   Downloading alembic-1.17.2-py3-none-any.whl.metadata (7.2 kB)
+2025-12-24T02:58:01.1787007Z Collecting asyncpg==0.31.0 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:01.1907370Z   Downloading asyncpg-0.31.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.4 kB)
+2025-12-24T02:58:01.2401213Z Collecting pyyaml==6.0.3 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:01.2475983Z   Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+2025-12-24T02:58:01.2666978Z Collecting prometheus-client==0.23.1 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:01.2760938Z   Downloading prometheus_client-0.23.1-py3-none-any.whl.metadata (1.9 kB)
+2025-12-24T02:58:01.3161574Z Collecting pytest>=7.4.0 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:01.3236506Z   Downloading pytest-9.0.2-py3-none-any.whl.metadata (7.6 kB)
+2025-12-24T02:58:01.3462868Z Collecting pytest-cov>=4.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:01.3552348Z   Downloading pytest_cov-7.0.0-py3-none-any.whl.metadata (31 kB)
+2025-12-24T02:58:01.3825094Z Collecting pytest-asyncio>=0.21.0 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:01.3902093Z   Downloading pytest_asyncio-1.3.0-py3-none-any.whl.metadata (4.1 kB)
+2025-12-24T02:58:01.7754653Z Collecting ruff>=0.1.0 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:01.7832329Z   Downloading ruff-0.14.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (26 kB)
+2025-12-24T02:58:01.8894814Z Collecting mypy>=1.6.0 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:01.8971689Z   Downloading mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.2 kB)
+2025-12-24T02:58:01.9221283Z Collecting types-PyYAML>=6.0.0 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:01.9296272Z   Downloading types_pyyaml-6.0.12.20250915-py3-none-any.whl.metadata (1.7 kB)
+2025-12-24T02:58:01.9458075Z Collecting aiosqlite>=0.19.0 (from tunix-rt-backend==0.1.0)
+2025-12-24T02:58:01.9534645Z   Downloading aiosqlite-0.22.1-py3-none-any.whl.metadata (4.3 kB)
+2025-12-24T02:58:01.9874461Z Collecting Mako (from alembic==1.17.2->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:01.9956305Z   Downloading mako-1.3.10-py3-none-any.whl.metadata (2.9 kB)
+2025-12-24T02:58:02.0181816Z Collecting typing-extensions>=4.12 (from alembic==1.17.2->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:02.0254994Z   Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+2025-12-24T02:58:02.0638048Z Collecting starlette<0.51.0,>=0.40.0 (from fastapi==0.125.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:02.0711325Z   Downloading starlette-0.50.0-py3-none-any.whl.metadata (6.3 kB)
+2025-12-24T02:58:02.1184983Z Collecting annotated-doc>=0.0.2 (from fastapi==0.125.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:02.1259276Z   Downloading annotated_doc-0.0.4-py3-none-any.whl.metadata (6.6 kB)
+2025-12-24T02:58:02.1425246Z Collecting annotated-types>=0.6.0 (from pydantic==2.12.5->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:02.1503742Z   Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+2025-12-24T02:58:02.8531068Z Collecting pydantic-core==2.41.5 (from pydantic==2.12.5->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:02.8608010Z   Downloading pydantic_core-2.41.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.3 kB)
+2025-12-24T02:58:02.8852484Z Collecting typing-inspection>=0.4.2 (from pydantic==2.12.5->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:02.8926631Z   Downloading typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+2025-12-24T02:58:02.9167612Z Collecting anyio (from httpx==0.28.1->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:02.9243465Z   Downloading anyio-4.12.0-py3-none-any.whl.metadata (4.3 kB)
+2025-12-24T02:58:02.9488218Z Collecting certifi (from httpx==0.28.1->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:02.9564254Z   Downloading certifi-2025.11.12-py3-none-any.whl.metadata (2.5 kB)
+2025-12-24T02:58:03.0255069Z Collecting httpcore==1.* (from httpx==0.28.1->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.0333633Z   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+2025-12-24T02:58:03.0544848Z Collecting idna (from httpx==0.28.1->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.0626534Z   Downloading idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+2025-12-24T02:58:03.0999263Z Collecting python-dotenv>=0.21.0 (from pydantic-settings==2.12.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.1075054Z   Downloading python_dotenv-1.2.1-py3-none-any.whl.metadata (25 kB)
+2025-12-24T02:58:03.2333271Z Collecting greenlet>=1 (from sqlalchemy==2.0.45->sqlalchemy[asyncio]==2.0.45->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.2409516Z   Downloading greenlet-3.3.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (4.1 kB)
+2025-12-24T02:58:03.2705108Z Collecting click>=7.0 (from uvicorn==0.38.0->uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.2784628Z   Downloading click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
+2025-12-24T02:58:03.2938605Z Collecting h11>=0.8 (from uvicorn==0.38.0->uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.3029650Z   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+2025-12-24T02:58:03.3365780Z Collecting httptools>=0.6.3 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.3445317Z   Downloading httptools-0.7.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+2025-12-24T02:58:03.3996421Z Collecting uvloop>=0.15.1 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.4073439Z   Downloading uvloop-0.22.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.9 kB)
+2025-12-24T02:58:03.4837005Z Collecting watchfiles>=0.13 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.5183226Z   Downloading watchfiles-1.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+2025-12-24T02:58:03.6091843Z Collecting websockets>=10.4 (from uvicorn[standard]==0.38.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.6174525Z   Downloading websockets-15.0.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+2025-12-24T02:58:03.6591670Z Collecting mypy_extensions>=1.0.0 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.6665931Z   Downloading mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
+2025-12-24T02:58:03.6835160Z Collecting pathspec>=0.9.0 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.6910965Z   Downloading pathspec-0.12.1-py3-none-any.whl.metadata (21 kB)
+2025-12-24T02:58:03.7720307Z Collecting librt>=0.6.2 (from mypy>=1.6.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.7796381Z   Downloading librt-0.7.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (1.3 kB)
+2025-12-24T02:58:03.7982219Z Collecting iniconfig>=1.0.1 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.8054782Z   Downloading iniconfig-2.3.0-py3-none-any.whl.metadata (2.5 kB)
+2025-12-24T02:58:03.8254099Z Collecting packaging>=22 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.8328479Z   Downloading packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+2025-12-24T02:58:03.8500253Z Collecting pluggy<2,>=1.5 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.8610949Z   Downloading pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+2025-12-24T02:58:03.8872178Z Collecting pygments>=2.7.2 (from pytest>=7.4.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:03.8948795Z   Downloading pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+2025-12-24T02:58:04.3136525Z Collecting coverage>=7.10.6 (from coverage[toml]>=7.10.6->pytest-cov>=4.1.0->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:04.3238466Z   Downloading coverage-7.13.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.5 kB)
+2025-12-24T02:58:04.4099535Z Collecting MarkupSafe>=0.9.2 (from Mako->alembic==1.17.2->tunix-rt-backend==0.1.0)
+2025-12-24T02:58:04.4174798Z   Downloading markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+2025-12-24T02:58:04.4304156Z Downloading alembic-1.17.2-py3-none-any.whl (248 kB)
+2025-12-24T02:58:04.4618416Z Downloading asyncpg-0.31.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.0 MB)
+2025-12-24T02:58:04.6043135Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.0/3.0 MB 22.4 MB/s  0:00:00
+2025-12-24T02:58:04.6145234Z Downloading fastapi-0.125.0-py3-none-any.whl (112 kB)
+2025-12-24T02:58:04.6257528Z Downloading pydantic-2.12.5-py3-none-any.whl (463 kB)
+2025-12-24T02:58:04.6476512Z Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+2025-12-24T02:58:04.6585470Z Downloading prometheus_client-0.23.1-py3-none-any.whl (61 kB)
+2025-12-24T02:58:04.6685269Z Downloading pydantic_core-2.41.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+2025-12-24T02:58:04.7165154Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 44.9 MB/s  0:00:00
+2025-12-24T02:58:04.7245017Z Downloading pydantic_settings-2.12.0-py3-none-any.whl (51 kB)
+2025-12-24T02:58:04.7346347Z Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (806 kB)
+2025-12-24T02:58:04.7531132Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 806.6/806.6 kB 37.3 MB/s  0:00:00
+2025-12-24T02:58:04.7608024Z Downloading sqlalchemy-2.0.45-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.3 MB)
+2025-12-24T02:58:04.8109016Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 66.3 MB/s  0:00:00
+2025-12-24T02:58:04.8185821Z Downloading uvicorn-0.38.0-py3-none-any.whl (68 kB)
+2025-12-24T02:58:04.8286876Z Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+2025-12-24T02:58:04.8389509Z Downloading starlette-0.50.0-py3-none-any.whl (74 kB)
+2025-12-24T02:58:04.8491832Z Downloading anyio-4.12.0-py3-none-any.whl (113 kB)
+2025-12-24T02:58:04.8589563Z Downloading aiosqlite-0.22.1-py3-none-any.whl (17 kB)
+2025-12-24T02:58:04.8693483Z Downloading annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
+2025-12-24T02:58:04.8792005Z Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+2025-12-24T02:58:04.8891481Z Downloading click-8.3.1-py3-none-any.whl (108 kB)
+2025-12-24T02:58:04.8995026Z Downloading greenlet-3.3.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (590 kB)
+2025-12-24T02:58:04.9097933Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 590.2/590.2 kB 46.6 MB/s  0:00:00
+2025-12-24T02:58:04.9171985Z Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+2025-12-24T02:58:04.9271037Z Downloading httptools-0.7.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (456 kB)
+2025-12-24T02:58:04.9404324Z Downloading idna-3.11-py3-none-any.whl (71 kB)
+2025-12-24T02:58:04.9531243Z Downloading mypy-1.19.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (13.4 MB)
+2025-12-24T02:58:05.0717931Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.4/13.4 MB 114.1 MB/s  0:00:00
+2025-12-24T02:58:05.0796441Z Downloading librt-0.7.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (184 kB)
+2025-12-24T02:58:05.0914637Z Downloading mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+2025-12-24T02:58:05.1012179Z Downloading pathspec-0.12.1-py3-none-any.whl (31 kB)
+2025-12-24T02:58:05.1112923Z Downloading pytest-9.0.2-py3-none-any.whl (374 kB)
+2025-12-24T02:58:05.1229858Z Downloading pluggy-1.6.0-py3-none-any.whl (20 kB)
+2025-12-24T02:58:05.1330326Z Downloading iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+2025-12-24T02:58:05.1427685Z Downloading packaging-25.0-py3-none-any.whl (66 kB)
+2025-12-24T02:58:05.1534388Z Downloading pygments-2.19.2-py3-none-any.whl (1.2 MB)
+2025-12-24T02:58:05.1636496Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 131.4 MB/s  0:00:00
+2025-12-24T02:58:05.1711648Z Downloading pytest_asyncio-1.3.0-py3-none-any.whl (15 kB)
+2025-12-24T02:58:05.1806932Z Downloading pytest_cov-7.0.0-py3-none-any.whl (22 kB)
+2025-12-24T02:58:05.1908203Z Downloading coverage-7.13.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (250 kB)
+2025-12-24T02:58:05.2011050Z Downloading python_dotenv-1.2.1-py3-none-any.whl (21 kB)
+2025-12-24T02:58:05.2115010Z Downloading ruff-0.14.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (14.2 MB)
+2025-12-24T02:58:05.2858085Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.2/14.2 MB 195.1 MB/s  0:00:00
+2025-12-24T02:58:05.2931567Z Downloading types_pyyaml-6.0.12.20250915-py3-none-any.whl (20 kB)
+2025-12-24T02:58:05.3028048Z Downloading typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+2025-12-24T02:58:05.3130172Z Downloading typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+2025-12-24T02:58:05.3228939Z Downloading uvloop-0.22.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.8 MB)
+2025-12-24T02:58:05.3495170Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.8/3.8 MB 146.7 MB/s  0:00:00
+2025-12-24T02:58:05.3568409Z Downloading watchfiles-1.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (456 kB)
+2025-12-24T02:58:05.3694777Z Downloading websockets-15.0.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (182 kB)
+2025-12-24T02:58:05.3802800Z Downloading certifi-2025.11.12-py3-none-any.whl (159 kB)
+2025-12-24T02:58:05.3906652Z Downloading mako-1.3.10-py3-none-any.whl (78 kB)
+2025-12-24T02:58:05.4017299Z Downloading markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+2025-12-24T02:58:05.4732745Z Building wheels for collected packages: tunix-rt-backend
+2025-12-24T02:58:05.4740735Z   Building editable for tunix-rt-backend (pyproject.toml): started
+2025-12-24T02:58:05.6742906Z   Building editable for tunix-rt-backend (pyproject.toml): finished with status 'done'
+2025-12-24T02:58:05.6748923Z   Created wheel for tunix-rt-backend: filename=tunix_rt_backend-0.1.0-0.editable-py3-none-any.whl size=3178 sha256=2092f0e3da026e2c85fd6472f87484d1fafeac8122eba27a876733237c003d3a
+2025-12-24T02:58:05.6751866Z   Stored in directory: /tmp/pip-ephem-wheel-cache-qklwtng6/wheels/6c/ee/47/0b2814d300ad026845dfa3996505f4a0f855be918f2df7eb34
+2025-12-24T02:58:05.6766126Z Successfully built tunix-rt-backend
+2025-12-24T02:58:05.7460114Z Installing collected packages: websockets, uvloop, typing-extensions, types-PyYAML, ruff, pyyaml, python-dotenv, pygments, prometheus-client, pluggy, pathspec, packaging, mypy_extensions, MarkupSafe, librt, iniconfig, idna, httptools, h11, greenlet, coverage, click, certifi, asyncpg, annotated-types, annotated-doc, aiosqlite, uvicorn, typing-inspection, sqlalchemy, pytest, pydantic-core, mypy, Mako, httpcore, anyio, watchfiles, starlette, pytest-cov, pytest-asyncio, pydantic, httpx, alembic, pydantic-settings, fastapi, tunix-rt-backend
+2025-12-24T02:58:10.7155410Z
+2025-12-24T02:58:10.7186613Z Successfully installed Mako-1.3.10 MarkupSafe-3.0.3 aiosqlite-0.22.1 alembic-1.17.2 annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.0 asyncpg-0.31.0 certifi-2025.11.12 click-8.3.1 coverage-7.13.0 fastapi-0.125.0 greenlet-3.3.0 h11-0.16.0 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 idna-3.11 iniconfig-2.3.0 librt-0.7.4 mypy-1.19.1 mypy_extensions-1.1.0 packaging-25.0 pathspec-0.12.1 pluggy-1.6.0 prometheus-client-0.23.1 pydantic-2.12.5 pydantic-core-2.41.5 pydantic-settings-2.12.0 pygments-2.19.2 pytest-9.0.2 pytest-asyncio-1.3.0 pytest-cov-7.0.0 python-dotenv-1.2.1 pyyaml-6.0.3 ruff-0.14.10 sqlalchemy-2.0.45 starlette-0.50.0 tunix-rt-backend-0.1.0 types-PyYAML-6.0.12.20250915 typing-extensions-4.15.0 typing-inspection-0.4.2 uvicorn-0.38.0 uvloop-0.22.1 watchfiles-1.1.1 websockets-15.0.1
+2025-12-24T02:58:11.2407602Z ##[group]Run cd ../backend && alembic upgrade head
+2025-12-24T02:58:11.2407971Z [36;1mcd ../backend && alembic upgrade head[0m
+2025-12-24T02:58:11.2441908Z shell: /usr/bin/bash -e {0}
+2025-12-24T02:58:11.2442138Z env:
+2025-12-24T02:58:11.2442304Z   REDIAI_MODE: mock
+2025-12-24T02:58:11.2442975Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T02:58:11.2443425Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:11.2443819Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T02:58:11.2444200Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:11.2444532Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:11.2444873Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:11.2445201Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T02:58:11.2445482Z ##[endgroup]
+2025-12-24T02:58:11.8161192Z INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+2025-12-24T02:58:11.8166655Z INFO  [alembic.runtime.migration] Will assume transactional DDL.
+2025-12-24T02:58:11.8400322Z INFO  [alembic.runtime.migration] Running upgrade  -> 001, create_traces_table
+2025-12-24T02:58:11.8470060Z INFO  [alembic.runtime.migration] Running upgrade 001 -> f8f1393630e4, add traces created_at index
+2025-12-24T02:58:11.8511972Z INFO  [alembic.runtime.migration] Running upgrade f8f1393630e4 -> f3cc010ca8a6, add_scores_table
+2025-12-24T02:58:11.8612228Z INFO  [alembic.runtime.migration] Running upgrade f3cc010ca8a6 -> 4bf76cdb97da, add_tunix_runs_table
+2025-12-24T02:58:11.8701514Z INFO  [alembic.runtime.migration] Running upgrade 4bf76cdb97da -> 2b3a4c5d6e7f, add_config_column_to_tunix_runs
+2025-12-24T02:58:11.8721138Z INFO  [alembic.runtime.migration] Running upgrade 2b3a4c5d6e7f -> 3c4d5e6f7a8b, add_log_chunks_table
+2025-12-24T02:58:11.8814155Z INFO  [alembic.runtime.migration] Running upgrade 3c4d5e6f7a8b -> 5d6e7f8a9b0c, add_evaluations_table
+2025-12-24T02:58:11.8916651Z INFO  [alembic.runtime.migration] Running upgrade 5d6e7f8a9b0c -> 6e7f8a9b0c1d, add_regression_baselines_table
+2025-12-24T02:58:11.9869776Z ##[group]Run actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
+2025-12-24T02:58:11.9870127Z with:
+2025-12-24T02:58:11.9870297Z   node-version: 18
+2025-12-24T02:58:11.9870750Z   always-auth: false
+2025-12-24T02:58:11.9870948Z   check-latest: false
+2025-12-24T02:58:11.9871251Z   token: ***
+2025-12-24T02:58:11.9871412Z env:
+2025-12-24T02:58:11.9871570Z   REDIAI_MODE: mock
+2025-12-24T02:58:11.9871958Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T02:58:11.9872274Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:11.9872659Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T02:58:11.9873049Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:11.9873390Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:11.9873721Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:11.9874107Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T02:58:11.9874392Z ##[endgroup]
+2025-12-24T02:58:12.1829067Z Attempting to download 18...
+2025-12-24T02:58:12.5135806Z Acquiring 18.20.8 - x64 from https://github.com/actions/node-versions/releases/download/18.20.8-14110393767/node-18.20.8-linux-x64.tar.gz
+2025-12-24T02:58:13.0504223Z Extracting ...
+2025-12-24T02:58:13.0621565Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/8a4a0eb0-a0a1-4fd1-92e0-b4e10e344cfd -f /home/runner/work/_temp/b5b6576b-0497-44c8-be4b-76949678b009
+2025-12-24T02:58:14.1301922Z Adding to the cache ...
+2025-12-24T02:58:16.0644496Z ##[group]Environment details
+2025-12-24T02:58:16.3498880Z node: v18.20.8
+2025-12-24T02:58:16.3499904Z npm: 10.8.2
+2025-12-24T02:58:16.3501120Z yarn: 1.22.22
+2025-12-24T02:58:16.3502127Z ##[endgroup]
+2025-12-24T02:58:16.3646844Z ##[group]Run cd ../frontend && npm ci
+2025-12-24T02:58:16.3647162Z [36;1mcd ../frontend && npm ci[0m
+2025-12-24T02:58:16.3680675Z shell: /usr/bin/bash -e {0}
+2025-12-24T02:58:16.3680899Z env:
+2025-12-24T02:58:16.3681062Z   REDIAI_MODE: mock
+2025-12-24T02:58:16.3681810Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T02:58:16.3682157Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:16.3682547Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T02:58:16.3682937Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:16.3683271Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:16.3683624Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:16.3683980Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T02:58:16.3684259Z ##[endgroup]
+2025-12-24T02:58:18.8589938Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-12-24T02:58:19.6832832Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-12-24T02:58:19.9945112Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-12-24T02:58:20.6339932Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-12-24T02:58:20.6353683Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+2025-12-24T02:58:23.4461039Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-12-24T02:58:23.7577394Z
+2025-12-24T02:58:23.7578798Z added 406 packages, and audited 407 packages in 7s
+2025-12-24T02:58:23.7580156Z
+2025-12-24T02:58:23.7580669Z 117 packages are looking for funding
+2025-12-24T02:58:23.7581191Z   run `npm fund` for details
+2025-12-24T02:58:23.7812844Z
+2025-12-24T02:58:23.7821113Z 5 moderate severity vulnerabilities
+2025-12-24T02:58:23.7821655Z
+2025-12-24T02:58:23.7822287Z To address all issues (including breaking changes), run:
+2025-12-24T02:58:23.7823063Z   npm audit fix --force
+2025-12-24T02:58:23.7823440Z
+2025-12-24T02:58:23.7823825Z Run `npm audit` for details.
+2025-12-24T02:58:23.8103551Z ##[group]Run npm ci
+2025-12-24T02:58:23.8103935Z [36;1mnpm ci[0m
+2025-12-24T02:58:23.8153290Z shell: /usr/bin/bash -e {0}
+2025-12-24T02:58:23.8153666Z env:
+2025-12-24T02:58:23.8153947Z   REDIAI_MODE: mock
+2025-12-24T02:58:23.8154750Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T02:58:23.8155326Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:23.8156038Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T02:58:23.8156728Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:23.8157315Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:23.8157930Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:23.8158550Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T02:58:23.8159052Z ##[endgroup]
+2025-12-24T02:58:24.7207168Z
+2025-12-24T02:58:24.7208657Z added 5 packages, and audited 6 packages in 830ms
+2025-12-24T02:58:24.7219340Z
+2025-12-24T02:58:24.7230956Z found 0 vulnerabilities
+2025-12-24T02:58:24.7899247Z ##[group]Run actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57
+2025-12-24T02:58:24.7899595Z with:
+2025-12-24T02:58:24.7899773Z   path: ~/.cache/ms-playwright
+2025-12-24T02:58:24.7900193Z   key: Linux-playwright-fe063faa6a61e51595814e40883a56ebf6bc1b9e9c0d8c741d475eeebf898fad
+2025-12-24T02:58:24.7900868Z   restore-keys: Linux-playwright-
+
+2025-12-24T02:58:24.7901117Z   enableCrossOsArchive: false
+2025-12-24T02:58:24.7901339Z   fail-on-cache-miss: false
+2025-12-24T02:58:24.7901543Z   lookup-only: false
+2025-12-24T02:58:24.7901720Z   save-always: false
+2025-12-24T02:58:24.7901897Z env:
+2025-12-24T02:58:24.7902063Z   REDIAI_MODE: mock
+2025-12-24T02:58:24.7902606Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T02:58:24.7902919Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:24.7903303Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T02:58:24.7903696Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:24.7904053Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:24.7904386Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:24.7904725Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T02:58:24.7905000Z ##[endgroup]
+2025-12-24T02:58:25.0383787Z ##[warning]Cache not found for keys: Linux-playwright-fe063faa6a61e51595814e40883a56ebf6bc1b9e9c0d8c741d475eeebf898fad, Linux-playwright-
+2025-12-24T02:58:25.0388195Z Cache not found for input keys: Linux-playwright-fe063faa6a61e51595814e40883a56ebf6bc1b9e9c0d8c741d475eeebf898fad, Linux-playwright-
+2025-12-24T02:58:25.0454452Z ##[group]Run npx playwright install chromium --with-deps
+2025-12-24T02:58:25.0454842Z [36;1mnpx playwright install chromium --with-deps[0m
+2025-12-24T02:58:25.0488256Z shell: /usr/bin/bash -e {0}
+2025-12-24T02:58:25.0488471Z env:
+2025-12-24T02:58:25.0488630Z   REDIAI_MODE: mock
+2025-12-24T02:58:25.0489155Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T02:58:25.0489485Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:25.0489885Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T02:58:25.0490261Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:25.0490931Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:25.0491286Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:25.0491638Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T02:58:25.0491917Z ##[endgroup]
+2025-12-24T02:58:26.0622443Z Installing dependencies...
+2025-12-24T02:58:26.0715475Z Switching to root user to install dependencies...
+2025-12-24T02:58:26.1891508Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2025-12-24T02:58:26.2801993Z Hit:6 https://packages.microsoft.com/repos/azure-cli noble InRelease
+2025-12-24T02:58:26.2803358Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2025-12-24T02:58:26.2804697Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2025-12-24T02:58:26.2884039Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2025-12-24T02:58:26.3025802Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2025-12-24T02:58:26.3118085Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2025-12-24T02:58:26.5545104Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [11.4 kB]
+2025-12-24T02:58:26.5846371Z Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [77.7 kB]
+2025-12-24T02:58:26.5907812Z Get:10 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [58.9 kB]
+2025-12-24T02:58:26.6104155Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1684 kB]
+2025-12-24T02:58:26.6263323Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [311 kB]
+2025-12-24T02:58:26.6303450Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [175 kB]
+2025-12-24T02:58:26.6337573Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 c-n-f Metadata [15.8 kB]
+2025-12-24T02:58:26.6351467Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1506 kB]
+2025-12-24T02:58:26.6525300Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [306 kB]
+2025-12-24T02:58:26.6571818Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [378 kB]
+2025-12-24T02:58:26.6646694Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 c-n-f Metadata [31.4 kB]
+2025-12-24T02:58:26.6656677Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [2413 kB]
+2025-12-24T02:58:26.6954858Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [550 kB]
+2025-12-24T02:58:26.7434882Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]
+2025-12-24T02:58:26.7446745Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 c-n-f Metadata [516 B]
+2025-12-24T02:58:26.7487054Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [30.3 kB]
+2025-12-24T02:58:26.7488676Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [6048 B]
+2025-12-24T02:58:26.7492704Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+2025-12-24T02:58:26.7512754Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 c-n-f Metadata [488 B]
+2025-12-24T02:58:26.7525466Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Packages [40.4 kB]
+2025-12-24T02:58:26.7547381Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7312 B]
+2025-12-24T02:58:26.7556892Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 c-n-f Metadata [368 B]
+2025-12-24T02:58:26.7587223Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [29.5 kB]
+2025-12-24T02:58:26.7594463Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe Translation-en [17.9 kB]
+2025-12-24T02:58:26.7608302Z Get:32 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [10.5 kB]
+2025-12-24T02:58:26.7682280Z Get:33 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 c-n-f Metadata [1444 B]
+2025-12-24T02:58:26.7686082Z Get:34 http://azure.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [216 B]
+2025-12-24T02:58:26.8061266Z Get:35 http://azure.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]
+2025-12-24T02:58:26.8079437Z Get:36 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [225 kB]
+2025-12-24T02:58:26.8107606Z Get:37 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [21.5 kB]
+2025-12-24T02:58:26.8122545Z Get:38 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 c-n-f Metadata [9504 B]
+2025-12-24T02:58:26.8128612Z Get:39 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [71.4 kB]
+2025-12-24T02:58:26.8150186Z Get:40 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Components [212 B]
+2025-12-24T02:58:26.8157810Z Get:41 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [212 B]
+2025-12-24T02:58:37.0346816Z Fetched 8375 kB in 1s (5957 kB/s)
+2025-12-24T02:58:37.7659780Z Reading package lists...
+2025-12-24T02:58:37.7909969Z Reading package lists...
+2025-12-24T02:58:37.9562520Z Building dependency tree...
+2025-12-24T02:58:37.9573763Z Reading state information...
+2025-12-24T02:58:38.1105428Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.1).
+2025-12-24T02:58:38.1106534Z libasound2t64 set to manually installed.
+2025-12-24T02:58:38.1108088Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+2025-12-24T02:58:38.1109429Z libatk-bridge2.0-0t64 set to manually installed.
+2025-12-24T02:58:38.1110140Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+2025-12-24T02:58:38.1111007Z libatk1.0-0t64 set to manually installed.
+2025-12-24T02:58:38.1111772Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+2025-12-24T02:58:38.1112482Z libatspi2.0-0t64 set to manually installed.
+2025-12-24T02:58:38.1113230Z libcairo2 is already the newest version (1.18.0-3build1).
+2025-12-24T02:58:38.1113840Z libcairo2 set to manually installed.
+2025-12-24T02:58:38.1114540Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.9).
+2025-12-24T02:58:38.1115165Z libcups2t64 set to manually installed.
+2025-12-24T02:58:38.1115793Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+2025-12-24T02:58:38.1116328Z libdbus-1-3 set to manually installed.
+2025-12-24T02:58:38.1116717Z libdrm2 is already the newest version (2.4.122-1~ubuntu0.24.04.2).
+2025-12-24T02:58:38.1117074Z libdrm2 set to manually installed.
+2025-12-24T02:58:38.1117437Z libgbm1 is already the newest version (25.0.7-0ubuntu0.24.04.2).
+2025-12-24T02:58:38.1117779Z libgbm1 set to manually installed.
+2025-12-24T02:58:38.1118130Z libnspr4 is already the newest version (2:4.35-1.1build1).
+2025-12-24T02:58:38.1118468Z libnspr4 set to manually installed.
+2025-12-24T02:58:38.1118802Z libnss3 is already the newest version (2:3.98-1build1).
+2025-12-24T02:58:38.1119131Z libnss3 set to manually installed.
+2025-12-24T02:58:38.1119490Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+2025-12-24T02:58:38.1120295Z libpango-1.0-0 set to manually installed.
+2025-12-24T02:58:38.1121289Z libx11-6 is already the newest version (2:1.8.7-1build1).
+2025-12-24T02:58:38.1121642Z libx11-6 set to manually installed.
+2025-12-24T02:58:38.1121974Z libxcb1 is already the newest version (1.15-1ubuntu2).
+2025-12-24T02:58:38.1122296Z libxcb1 set to manually installed.
+2025-12-24T02:58:38.1122662Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+2025-12-24T02:58:38.1123035Z libxcomposite1 set to manually installed.
+2025-12-24T02:58:38.1123404Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+2025-12-24T02:58:38.1123899Z libxdamage1 set to manually installed.
+2025-12-24T02:58:38.1124369Z libxext6 is already the newest version (2:1.3.4-1build2).
+2025-12-24T02:58:38.1124697Z libxext6 set to manually installed.
+2025-12-24T02:58:38.1125048Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+2025-12-24T02:58:38.1125389Z libxfixes3 set to manually installed.
+2025-12-24T02:58:38.1125756Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+2025-12-24T02:58:38.1126108Z libxkbcommon0 set to manually installed.
+2025-12-24T02:58:38.1126464Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+2025-12-24T02:58:38.1126801Z libxrandr2 set to manually installed.
+2025-12-24T02:58:38.1127427Z xvfb is already the newest version (2:21.1.12-1ubuntu1.5).
+2025-12-24T02:58:38.1128265Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+2025-12-24T02:58:38.1129182Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+2025-12-24T02:58:38.1129881Z libfontconfig1 set to manually installed.
+2025-12-24T02:58:38.1130297Z libfreetype6 is already the newest version (2.13.2+dfsg-1build3).
+2025-12-24T02:58:38.1130905Z libfreetype6 set to manually installed.
+2025-12-24T02:58:38.1131289Z fonts-liberation is already the newest version (1:2.1.5-3).
+2025-12-24T02:58:38.1131655Z fonts-liberation set to manually installed.
+2025-12-24T02:58:38.1132036Z The following additional packages will be installed:
+2025-12-24T02:58:38.1133147Z   gir1.2-glib-2.0 libglib2.0-bin libglib2.0-data xfonts-encodings xfonts-utils
+2025-12-24T02:58:38.1134731Z Suggested packages:
+2025-12-24T02:58:38.1135120Z   low-memory-monitor
+2025-12-24T02:58:38.1135485Z Recommended packages:
+2025-12-24T02:58:38.1135958Z   fonts-ipafont-mincho fonts-tlwg-loma
+2025-12-24T02:58:38.1408119Z The following NEW packages will be installed:
+2025-12-24T02:58:38.1411015Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2025-12-24T02:58:38.1414528Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2025-12-24T02:58:38.1416513Z   xfonts-utils
+2025-12-24T02:58:38.1419561Z The following packages will be upgraded:
+2025-12-24T02:58:38.1425317Z   gir1.2-glib-2.0 libglib2.0-0t64 libglib2.0-bin libglib2.0-data
+2025-12-24T02:58:38.1595464Z 4 upgraded, 9 newly installed, 0 to remove and 65 not upgraded.
+2025-12-24T02:58:38.1596473Z Need to get 23.0 MB of archives.
+2025-12-24T02:58:38.1600334Z After this operation, 79.5 MB of additional disk space will be used.
+2025-12-24T02:58:38.1601550Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2025-12-24T02:58:38.1797654Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+2025-12-24T02:58:38.2190270Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libglib2.0-data all 2.80.0-6ubuntu3.5 [48.8 kB]
+2025-12-24T02:58:38.2220007Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libglib2.0-bin amd64 2.80.0-6ubuntu3.5 [97.9 kB]
+2025-12-24T02:58:38.2257735Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 gir1.2-glib-2.0 amd64 2.80.0-6ubuntu3.5 [183 kB]
+2025-12-24T02:58:38.2300292Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libglib2.0-0t64 amd64 2.80.0-6ubuntu3.5 [1544 kB]
+2025-12-24T02:58:38.2491778Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+2025-12-24T02:58:38.3052586Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+2025-12-24T02:58:38.3085798Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+2025-12-24T02:58:38.3416535Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+2025-12-24T02:58:38.4149623Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+2025-12-24T02:58:38.4235179Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+2025-12-24T02:58:38.4271491Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+2025-12-24T02:58:38.4327822Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+2025-12-24T02:58:38.6965360Z Fetched 23.0 MB in 0s (79.8 MB/s)
+2025-12-24T02:58:38.7258823Z Selecting previously unselected package fonts-ipafont-gothic.
+2025-12-24T02:58:38.7557557Z (Reading database ...
+2025-12-24T02:58:38.7558681Z (Reading database ... 5%
+2025-12-24T02:58:38.7559248Z (Reading database ... 10%
+2025-12-24T02:58:38.7559702Z (Reading database ... 15%
+2025-12-24T02:58:38.7560617Z (Reading database ... 20%
+2025-12-24T02:58:38.7561098Z (Reading database ... 25%
+2025-12-24T02:58:38.7575811Z (Reading database ... 30%
+2025-12-24T02:58:38.7576290Z (Reading database ... 35%
+2025-12-24T02:58:38.7576689Z (Reading database ... 40%
+2025-12-24T02:58:38.7577119Z (Reading database ... 45%
+2025-12-24T02:58:38.7577521Z (Reading database ... 50%
+2025-12-24T02:58:38.7670046Z (Reading database ... 55%
+2025-12-24T02:58:38.9021742Z (Reading database ... 60%
+2025-12-24T02:58:39.0014729Z (Reading database ... 65%
+2025-12-24T02:58:39.0546708Z (Reading database ... 70%
+2025-12-24T02:58:39.1552134Z (Reading database ... 75%
+2025-12-24T02:58:39.3476994Z (Reading database ... 80%
+2025-12-24T02:58:39.5391075Z (Reading database ... 85%
+2025-12-24T02:58:39.7283218Z (Reading database ... 90%
+2025-12-24T02:58:39.9002900Z (Reading database ... 95%
+2025-12-24T02:58:39.9003593Z (Reading database ... 100%
+2025-12-24T02:58:39.9004482Z (Reading database ... 217374 files and directories currently installed.)
+2025-12-24T02:58:39.9048412Z Preparing to unpack .../00-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+2025-12-24T02:58:39.9147502Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+2025-12-24T02:58:40.1649651Z Preparing to unpack .../01-libglib2.0-data_2.80.0-6ubuntu3.5_all.deb ...
+2025-12-24T02:58:40.1670332Z Unpacking libglib2.0-data (2.80.0-6ubuntu3.5) over (2.80.0-6ubuntu3.4) ...
+2025-12-24T02:58:40.2061905Z Preparing to unpack .../02-libglib2.0-bin_2.80.0-6ubuntu3.5_amd64.deb ...
+2025-12-24T02:58:40.2087978Z Unpacking libglib2.0-bin (2.80.0-6ubuntu3.5) over (2.80.0-6ubuntu3.4) ...
+2025-12-24T02:58:40.3126333Z Preparing to unpack .../03-gir1.2-glib-2.0_2.80.0-6ubuntu3.5_amd64.deb ...
+2025-12-24T02:58:40.3149333Z Unpacking gir1.2-glib-2.0:amd64 (2.80.0-6ubuntu3.5) over (2.80.0-6ubuntu3.4) ...
+2025-12-24T02:58:40.3589076Z Preparing to unpack .../04-libglib2.0-0t64_2.80.0-6ubuntu3.5_amd64.deb ...
+2025-12-24T02:58:40.3663950Z Unpacking libglib2.0-0t64:amd64 (2.80.0-6ubuntu3.5) over (2.80.0-6ubuntu3.4) ...
+2025-12-24T02:58:40.4111829Z Selecting previously unselected package fonts-freefont-ttf.
+2025-12-24T02:58:40.4249656Z Preparing to unpack .../05-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+2025-12-24T02:58:40.4257804Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+2025-12-24T02:58:40.5135114Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2025-12-24T02:58:40.5271267Z Preparing to unpack .../06-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+2025-12-24T02:58:40.5280785Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2025-12-24T02:58:40.5501908Z Selecting previously unselected package fonts-unifont.
+2025-12-24T02:58:40.5635759Z Preparing to unpack .../07-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+2025-12-24T02:58:40.5658012Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+2025-12-24T02:58:40.6956559Z Selecting previously unselected package fonts-wqy-zenhei.
+2025-12-24T02:58:40.7088817Z Preparing to unpack .../08-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+2025-12-24T02:58:40.7225757Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+2025-12-24T02:58:41.1951618Z Selecting previously unselected package xfonts-encodings.
+2025-12-24T02:58:41.2085658Z Preparing to unpack .../09-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+2025-12-24T02:58:41.2096755Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2025-12-24T02:58:41.2405678Z Selecting previously unselected package xfonts-utils.
+2025-12-24T02:58:41.2538481Z Preparing to unpack .../10-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+2025-12-24T02:58:41.2548080Z Unpacking xfonts-utils (1:7.7+6build3) ...
+2025-12-24T02:58:41.3253798Z Selecting previously unselected package xfonts-cyrillic.
+2025-12-24T02:58:41.3387275Z Preparing to unpack .../11-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+2025-12-24T02:58:41.3396790Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+2025-12-24T02:58:41.3771731Z Selecting previously unselected package xfonts-scalable.
+2025-12-24T02:58:41.3902727Z Preparing to unpack .../12-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+2025-12-24T02:58:41.3911787Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+2025-12-24T02:58:41.4348178Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+2025-12-24T02:58:41.4481845Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+2025-12-24T02:58:41.4512840Z Setting up libglib2.0-0t64:amd64 (2.80.0-6ubuntu3.5) ...
+2025-12-24T02:58:41.4814296Z Setting up libglib2.0-data (2.80.0-6ubuntu3.5) ...
+2025-12-24T02:58:41.4838087Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2025-12-24T02:58:41.4859640Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2025-12-24T02:58:41.4881828Z Setting up gir1.2-glib-2.0:amd64 (2.80.0-6ubuntu3.5) ...
+2025-12-24T02:58:41.4905866Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+2025-12-24T02:58:41.4978595Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2025-12-24T02:58:41.4995763Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+2025-12-24T02:58:41.5021586Z Setting up libglib2.0-bin (2.80.0-6ubuntu3.5) ...
+2025-12-24T02:58:41.5047468Z Setting up xfonts-utils (1:7.7+6build3) ...
+2025-12-24T02:58:41.5091687Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+2025-12-24T02:58:41.5392003Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+2025-12-24T02:58:41.5754439Z Processing triggers for libc-bin (2.39-0ubuntu8.6) ...
+2025-12-24T02:58:41.8122248Z Processing triggers for man-db (2.12.0-4build2) ...
+2025-12-24T02:58:41.8234402Z Not building database; man-db/auto-update is not 'true'.
+2025-12-24T02:58:41.8245636Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+2025-12-24T02:58:42.4785629Z
+2025-12-24T02:58:42.4786597Z Running kernel seems to be up-to-date.
+2025-12-24T02:58:42.4787256Z
+2025-12-24T02:58:42.4787577Z Restarting services...
+2025-12-24T02:58:42.5221960Z  systemctl restart packagekit.service php8.3-fpm.service polkit.service udisks2.service
+2025-12-24T02:58:42.7161432Z
+2025-12-24T02:58:42.7162328Z Service restarts being deferred:
+2025-12-24T02:58:42.7163069Z  systemctl restart ModemManager.service
+2025-12-24T02:58:42.7164736Z  systemctl restart networkd-dispatcher.service
+2025-12-24T02:58:42.7165110Z
+2025-12-24T02:58:42.7165371Z No containers need to be restarted.
+2025-12-24T02:58:42.7165670Z
+2025-12-24T02:58:42.7165960Z No user sessions are running outdated binaries.
+2025-12-24T02:58:42.7166294Z
+2025-12-24T02:58:42.7166769Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2025-12-24T02:58:43.6189733Z Downloading Chromium 143.0.7499.4 (playwright build v1200) from https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1200/chromium-linux.zip
+2025-12-24T02:58:43.8240788Z |                                                                                |   0% of 164.7 MiB
+2025-12-24T02:58:44.0614617Z |■■■■■■■■                                                                        |  10% of 164.7 MiB
+2025-12-24T02:58:44.2258712Z |■■■■■■■■■■■■■■■■                                                                |  20% of 164.7 MiB
+2025-12-24T02:58:44.3603425Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 164.7 MiB
+2025-12-24T02:58:44.4800782Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 164.7 MiB
+2025-12-24T02:58:44.5972400Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 164.7 MiB
+2025-12-24T02:58:44.7120286Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 164.7 MiB
+2025-12-24T02:58:44.8219030Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 164.7 MiB
+2025-12-24T02:58:44.9335653Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 164.7 MiB
+2025-12-24T02:58:45.0441873Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 164.7 MiB
+2025-12-24T02:58:45.1511133Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 164.7 MiB
+2025-12-24T02:58:48.9328108Z Chromium 143.0.7499.4 (playwright build v1200) downloaded to /home/runner/.cache/ms-playwright/chromium-1200
+2025-12-24T02:58:48.9333490Z Downloading FFMPEG playwright build v1011 from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+2025-12-24T02:58:49.1873247Z |                                                                                |   0% of 2.3 MiB
+2025-12-24T02:58:49.1993880Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+2025-12-24T02:58:49.2054962Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+2025-12-24T02:58:49.2094117Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+2025-12-24T02:58:49.2120999Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+2025-12-24T02:58:49.2157726Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+2025-12-24T02:58:49.2185894Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+2025-12-24T02:58:49.2211057Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+2025-12-24T02:58:49.2236404Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+2025-12-24T02:58:49.2263863Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+2025-12-24T02:58:49.2285980Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+2025-12-24T02:58:49.3082873Z FFMPEG playwright build v1011 downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+2025-12-24T02:58:49.3086373Z Downloading Chromium Headless Shell 143.0.7499.4 (playwright build v1200) from https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1200/chromium-headless-shell-linux.zip
+2025-12-24T02:58:49.5162435Z |                                                                                |   0% of 109.7 MiB
+2025-12-24T02:58:49.7026099Z |■■■■■■■■                                                                        |  10% of 109.7 MiB
+2025-12-24T02:58:49.8232033Z |■■■■■■■■■■■■■■■■                                                                |  20% of 109.7 MiB
+2025-12-24T02:58:49.9287053Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 109.7 MiB
+2025-12-24T02:58:50.0264436Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 109.7 MiB
+2025-12-24T02:58:50.1066932Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 109.7 MiB
+2025-12-24T02:58:50.1862635Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 109.7 MiB
+2025-12-24T02:58:50.2668146Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 109.7 MiB
+2025-12-24T02:58:50.3402384Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 109.7 MiB
+2025-12-24T02:58:50.4145781Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 109.7 MiB
+2025-12-24T02:58:50.4880972Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 109.7 MiB
+2025-12-24T02:58:53.2707223Z Chromium Headless Shell 143.0.7499.4 (playwright build v1200) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1200
+2025-12-24T02:58:53.2940977Z ##[group]Run npx playwright test
+2025-12-24T02:58:53.2941817Z [36;1mnpx playwright test[0m
+2025-12-24T02:58:53.2977804Z shell: /usr/bin/bash -e {0}
+2025-12-24T02:58:53.2978182Z env:
+2025-12-24T02:58:53.2978459Z   REDIAI_MODE: mock
+2025-12-24T02:58:53.2979241Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T02:58:53.2979824Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:53.2980676Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T02:58:53.2981108Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:53.2981454Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:53.2981797Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:53.2982141Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T02:58:53.2982419Z ##[endgroup]
+2025-12-24T02:58:55.4023565Z [WebServer] INFO:     Started server process [3473]
+2025-12-24T02:58:55.4027936Z [WebServer] INFO:     Waiting for application startup.
+2025-12-24T02:58:55.4028665Z [WebServer] INFO:     Application startup complete.
+2025-12-24T02:58:55.4029366Z [WebServer] INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2025-12-24T02:58:56.2655871Z
+2025-12-24T02:58:56.2661519Z Running 8 tests using 1 worker
+2025-12-24T02:58:57.6132410Z [WebServer] INFO:__main__:Tunix worker started
+2025-12-24T02:59:01.7631114Z [WebServer] INFO:__main__:Claimed run fd5d29c2-3e7a-4f98-9f93-f5ea15e4fb1b
+2025-12-24T02:59:01.7672312Z [WebServer] INFO:__main__:Completed run fd5d29c2-3e7a-4f98-9f93-f5ea15e4fb1b with status failed
+2025-12-24T02:59:09.7916782Z [WebServer] INFO:__main__:Claimed run d30c0246-b473-4cbe-aa2b-740e596b62ab
+2025-12-24T02:59:09.7939422Z [WebServer] INFO:__main__:Completed run d30c0246-b473-4cbe-aa2b-740e596b62ab with status failed
+2025-12-24T02:59:15.8254179Z ×F·······
+2025-12-24T02:59:15.8273878Z
+2025-12-24T02:59:15.8293328Z   1) [chromium] › tests/async_run.spec.ts:3:5 › async run flow: enqueue, poll, terminal state ──────
+2025-12-24T02:59:15.8293984Z
+2025-12-24T02:59:15.8294551Z     Error: Async run reached terminal state 'failed'. Message: Message: Dry-run execution failed
+2025-12-24T02:59:15.8295144Z
+2025-12-24T02:59:15.8295640Z       39 |     // Expand details if possible to see stderr (optional but good for screenshots)
+2025-12-24T02:59:15.8296411Z       40 |     // For now, just throw informative error
+2025-12-24T02:59:15.8297233Z     > 41 |     throw new Error(`Async run reached terminal state 'failed'. Message: ${message}`);
+2025-12-24T02:59:15.8297912Z          |           ^
+2025-12-24T02:59:15.8298388Z       42 |   } else if (statusText.includes('cancelled')) {
+2025-12-24T02:59:15.8299050Z       43 |       throw new Error(`Async run was cancelled unexpectedly.`);
+2025-12-24T02:59:15.8299543Z       44 |   }
+2025-12-24T02:59:15.8300198Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/async_run.spec.ts:41:11
+2025-12-24T02:59:15.8303698Z
+2025-12-24T02:59:15.8304591Z     Error Context: test-results/async_run-async-run-flow-enqueue-poll-terminal-state-chromium/error-context.md
+2025-12-24T02:59:15.8305523Z
+2025-12-24T02:59:15.8306218Z     Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+2025-12-24T02:59:15.8306666Z
+2025-12-24T02:59:15.8307188Z     Error: Async run reached terminal state 'failed'. Message: Message: Dry-run execution failed
+2025-12-24T02:59:15.8307771Z
+2025-12-24T02:59:15.8308455Z       39 |     // Expand details if possible to see stderr (optional but good for screenshots)
+2025-12-24T02:59:15.8309280Z       40 |     // For now, just throw informative error
+2025-12-24T02:59:15.8311476Z     > 41 |     throw new Error(`Async run reached terminal state 'failed'. Message: ${message}`);
+2025-12-24T02:59:15.8313077Z          |           ^
+2025-12-24T02:59:15.8313551Z       42 |   } else if (statusText.includes('cancelled')) {
+2025-12-24T02:59:15.8314661Z       43 |       throw new Error(`Async run was cancelled unexpectedly.`);
+2025-12-24T02:59:15.8315230Z       44 |   }
+2025-12-24T02:59:15.8316173Z         at /home/runner/work/tunix-rt/tunix-rt/e2e/tests/async_run.spec.ts:41:11
+2025-12-24T02:59:15.8316675Z
+2025-12-24T02:59:15.8317448Z     Error Context: test-results/async_run-async-run-flow-enqueue-poll-terminal-state-chromium-retry1/error-context.md
+2025-12-24T02:59:15.8318308Z
+2025-12-24T02:59:15.8319078Z     attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+2025-12-24T02:59:15.8320294Z     test-results/async_run-async-run-flow-enqueue-poll-terminal-state-chromium-retry1/trace.zip
+2025-12-24T02:59:15.8321476Z     Usage:
+2025-12-24T02:59:15.8321667Z
+2025-12-24T02:59:15.8322511Z         npx playwright show-trace test-results/async_run-async-run-flow-enqueue-poll-terminal-state-chromium-retry1/trace.zip
+2025-12-24T02:59:15.8323384Z
+2025-12-24T02:59:15.8324063Z     ────────────────────────────────────────────────────────────────────────────────────────────────
+2025-12-24T02:59:15.8324503Z
+2025-12-24T02:59:15.8324626Z   1 failed
+2025-12-24T02:59:15.8325548Z     [chromium] › tests/async_run.spec.ts:3:5 › async run flow: enqueue, poll, terminal state ───────
+2025-12-24T02:59:15.8326284Z   7 passed (21.2s)
+2025-12-24T02:59:15.8817427Z ##[error]Process completed with exit code 1.
+2025-12-24T02:59:15.8860298Z ##[group]Run actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b
+2025-12-24T02:59:15.8860994Z with:
+2025-12-24T02:59:15.8861172Z   name: playwright-report
+2025-12-24T02:59:15.8861388Z   path: e2e/playwright-report/
+2025-12-24T02:59:15.8861603Z   retention-days: 7
+2025-12-24T02:59:15.8861786Z   if-no-files-found: warn
+2025-12-24T02:59:15.8861977Z   compression-level: 6
+2025-12-24T02:59:15.8862164Z   overwrite: false
+2025-12-24T02:59:15.8862344Z   include-hidden-files: false
+2025-12-24T02:59:15.8862546Z env:
+2025-12-24T02:59:15.8862692Z   REDIAI_MODE: mock
+2025-12-24T02:59:15.8863156Z   DATABASE_URL: ***localhost:5432/postgres
+2025-12-24T02:59:15.8863464Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:59:15.8863867Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T02:59:15.8864234Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:59:15.8864593Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:59:15.8864924Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:59:15.8865262Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T02:59:15.8865537Z ##[endgroup]
+2025-12-24T02:59:16.1227172Z With the provided path, there will be 20 files uploaded
+2025-12-24T02:59:16.1231033Z Artifact name is valid!
+2025-12-24T02:59:16.1231555Z Root directory input is valid!
+2025-12-24T02:59:16.2151834Z Beginning upload of artifact content to blob storage
+2025-12-24T02:59:16.4306061Z Uploaded bytes 812267
+2025-12-24T02:59:16.4517147Z Finished uploading artifact content to blob storage!
+2025-12-24T02:59:16.4521402Z SHA256 hash of uploaded artifact zip is 85961cdc69a46a2d12f676623407235ec5b50e313426387166c7ab1fe7703a65
+2025-12-24T02:59:16.4525628Z Finalizing artifact upload
+2025-12-24T02:59:16.5350728Z Artifact playwright-report.zip successfully finalized. Artifact ID 4958547842
+2025-12-24T02:59:16.5353248Z Artifact playwright-report has been successfully uploaded! Final size is 812267 bytes. Artifact ID is 4958547842
+2025-12-24T02:59:16.5359566Z Artifact download URL: https://github.com/m-cahill/tunix-rt/actions/runs/20476936986/artifacts/4958547842
+2025-12-24T02:59:16.5515637Z Post job cleanup.
+2025-12-24T02:59:16.6459511Z [command]/usr/bin/git version
+2025-12-24T02:59:16.6531007Z git version 2.52.0
+2025-12-24T02:59:16.6598257Z Temporarily overriding HOME='/home/runner/work/_temp/60ff826b-8583-42e9-ad05-4e6ad1b70c36' before making global git config changes
+2025-12-24T02:59:16.6605034Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-24T02:59:16.6617645Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tunix-rt/tunix-rt
+2025-12-24T02:59:16.6693492Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-24T02:59:16.6753068Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-24T02:59:16.7110514Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-24T02:59:16.7133251Z http.https://github.com/.extraheader
+2025-12-24T02:59:16.7148100Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-12-24T02:59:16.7181863Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-24T02:59:16.7509934Z Print service container logs: 8bbe0983d7f8440997a3b31d66bba1d9_postgres15alpine_f8f132
+2025-12-24T02:59:16.7515007Z ##[command]/usr/bin/docker logs --details 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:59:16.7651831Z  The files belonging to this database system will be owned by user "postgres".
+2025-12-24T02:59:16.7654822Z  sh: locale: not found
+2025-12-24T02:59:16.7655219Z  This user must also own the server process.
+2025-12-24T02:59:16.7657718Z  2025-12-24 02:57:43.230 UTC [34] WARNING:  no usable system locales were found
+2025-12-24T02:59:16.7658450Z  initdb: warning: enabling "trust" authentication for local connections
+2025-12-24T02:59:16.7659494Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2025-12-24T02:59:16.7661040Z  2025-12-24 02:57:44.007 UTC [1] LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2025-12-24T02:59:16.7661989Z  2025-12-24 02:57:44.007 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2025-12-24T02:59:16.7662679Z  2025-12-24 02:57:44.007 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2025-12-24T02:59:16.7663464Z  2025-12-24 02:57:44.008 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2025-12-24T02:59:16.7664308Z  2025-12-24 02:57:44.011 UTC [54] LOG:  database system was shut down at 2025-12-24 02:57:43 UTC
+2025-12-24T02:59:16.7665071Z  2025-12-24 02:57:44.015 UTC [1] LOG:  database system is ready to accept connections
+2025-12-24T02:59:16.7665735Z  2025-12-24 02:57:52.791 UTC [64] FATAL:  role "root" does not exist
+2025-12-24T02:59:16.7666314Z  2025-12-24 02:58:02.848 UTC [72] FATAL:  role "root" does not exist
+2025-12-24T02:59:16.7666893Z  2025-12-24 02:58:12.945 UTC [80] FATAL:  role "root" does not exist
+2025-12-24T02:59:16.7669918Z  2025-12-24 02:58:23.004 UTC [88] FATAL:  role "root" does not exist
+2025-12-24T02:59:16.7670558Z  2025-12-24 02:58:33.088 UTC [95] FATAL:  role "root" does not exist
+2025-12-24T02:59:16.7670933Z  2025-12-24 02:58:43.150 UTC [101] FATAL:  role "root" does not exist
+2025-12-24T02:59:16.7671273Z  2025-12-24 02:58:53.210 UTC [109] FATAL:  role "root" does not exist
+2025-12-24T02:59:16.7671609Z  2025-12-24 02:59:03.254 UTC [118] FATAL:  role "root" does not exist
+2025-12-24T02:59:16.7671938Z  2025-12-24 02:59:13.296 UTC [125] FATAL:  role "root" does not exist
+2025-12-24T02:59:16.7672208Z
+2025-12-24T02:59:16.7672466Z  The database cluster will be initialized with locale "en_US.utf8".
+2025-12-24T02:59:16.7672884Z  The default database encoding has accordingly been set to "UTF8".
+2025-12-24T02:59:16.7673281Z  The default text search configuration will be set to "english".
+2025-12-24T02:59:16.7673574Z
+2025-12-24T02:59:16.7673752Z  Data page checksums are disabled.
+2025-12-24T02:59:16.7673973Z
+2025-12-24T02:59:16.7674237Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
+2025-12-24T02:59:16.7674587Z  creating subdirectories ... ok
+2025-12-24T02:59:16.7674871Z  selecting dynamic shared memory implementation ... posix
+2025-12-24T02:59:16.7675406Z  selecting default max_connections ... 100
+2025-12-24T02:59:16.7675665Z  selecting default shared_buffers ... 128MB
+2025-12-24T02:59:16.7675925Z  selecting default time zone ... UTC
+2025-12-24T02:59:16.7676159Z  creating configuration files ... ok
+2025-12-24T02:59:16.7676397Z  running bootstrap script ... ok
+2025-12-24T02:59:16.7676670Z  performing post-bootstrap initialization ... ok
+2025-12-24T02:59:16.7676937Z  syncing data to disk ... ok
+2025-12-24T02:59:16.7677132Z
+2025-12-24T02:59:16.7677266Z
+2025-12-24T02:59:16.7677465Z  Success. You can now start the database server using:
+2025-12-24T02:59:16.7677726Z
+2025-12-24T02:59:16.7677921Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
+2025-12-24T02:59:16.7678180Z
+2025-12-24T02:59:16.7678820Z  waiting for server to start....2025-12-24 02:57:43.788 UTC [40] LOG:  starting PostgreSQL 15.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2025-12-24T02:59:16.7679506Z  2025-12-24 02:57:43.789 UTC [40] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2025-12-24T02:59:16.7679995Z  2025-12-24 02:57:43.791 UTC [43] LOG:  database system was shut down at 2025-12-24 02:57:43 UTC
+2025-12-24T02:59:16.7680622Z  2025-12-24 02:57:43.796 UTC [40] LOG:  database system is ready to accept connections
+2025-12-24T02:59:16.7680953Z   done
+2025-12-24T02:59:16.7681110Z  server started
+2025-12-24T02:59:16.7681270Z
+2025-12-24T02:59:16.7681554Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+2025-12-24T02:59:16.7681897Z
+2025-12-24T02:59:16.7682199Z  waiting for server to shut down...2025-12-24 02:57:43.887 UTC [40] LOG:  received fast shutdown request
+2025-12-24T02:59:16.7682648Z  .2025-12-24 02:57:43.888 UTC [40] LOG:  aborting any active transactions
+2025-12-24T02:59:16.7683132Z  2025-12-24 02:57:43.890 UTC [40] LOG:  background worker "logical replication launcher" (PID 46) exited with exit code 1
+2025-12-24T02:59:16.7683585Z  2025-12-24 02:57:43.893 UTC [41] LOG:  shutting down
+2025-12-24T02:59:16.7683916Z  2025-12-24 02:57:43.894 UTC [41] LOG:  checkpoint starting: shutdown immediate
+2025-12-24T02:59:16.7684722Z  2025-12-24 02:57:43.897 UTC [41] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.004 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB
+2025-12-24T02:59:16.7685503Z  2025-12-24 02:57:43.901 UTC [40] LOG:  database system is shut down
+2025-12-24T02:59:16.7685782Z   done
+2025-12-24T02:59:16.7685931Z  server stopped
+2025-12-24T02:59:16.7686093Z
+2025-12-24T02:59:16.7686298Z  PostgreSQL init process complete; ready for start up.
+2025-12-24T02:59:16.7686557Z
+2025-12-24T02:59:16.7692723Z Stop and remove container: 8bbe0983d7f8440997a3b31d66bba1d9_postgres15alpine_f8f132
+2025-12-24T02:59:16.7697407Z ##[command]/usr/bin/docker rm --force 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:59:19.4467593Z 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:59:19.4497440Z Remove container network: github_network_70d7a57e4ead4fa589bba37d537818e6
+2025-12-24T02:59:19.4502305Z ##[command]/usr/bin/docker network rm github_network_70d7a57e4ead4fa589bba37d537818e6
+2025-12-24T02:59:19.5315087Z github_network_70d7a57e4ead4fa589bba37d537818e6
+2025-12-24T02:59:19.5391797Z Cleaning up orphan processes

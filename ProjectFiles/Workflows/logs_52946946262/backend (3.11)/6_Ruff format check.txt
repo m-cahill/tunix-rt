@@ -1,0 +1,14 @@
+﻿2025-12-24T02:57:53.6690617Z ##[group]Run ruff format --check .
+2025-12-24T02:57:53.6691273Z [36;1mruff format --check .[0m
+2025-12-24T02:57:53.6726008Z shell: /usr/bin/bash -e {0}
+2025-12-24T02:57:53.6726233Z env:
+2025-12-24T02:57:53.6726470Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:57:53.6727058Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T02:57:53.6727447Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:57:53.6727785Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:57:53.6728132Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:57:53.6728466Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T02:57:53.6728754Z ##[endgroup]
+2025-12-24T02:57:53.7066903Z Would reformat: tests/test_tunix_registry.py
+2025-12-24T02:57:53.7067492Z 1 file would be reformatted, 83 files already formatted
+2025-12-24T02:57:53.7082089Z ##[error]Process completed with exit code 1.

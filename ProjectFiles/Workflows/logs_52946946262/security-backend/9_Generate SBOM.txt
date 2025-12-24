@@ -1,0 +1,14 @@
+﻿2025-12-24T02:58:03.5491621Z ##[group]Run cd ../backend
+2025-12-24T02:58:03.5492077Z [36;1mcd ../backend[0m
+2025-12-24T02:58:03.5492611Z [36;1mcyclonedx-py requirements -i pyproject.toml -o sbom.json[0m
+2025-12-24T02:58:03.5541857Z shell: /usr/bin/bash -e {0}
+2025-12-24T02:58:03.5542245Z env:
+2025-12-24T02:58:03.5542646Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:03.5543366Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2025-12-24T02:58:03.5544058Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:03.5544684Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:03.5545324Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2025-12-24T02:58:03.5545942Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2025-12-24T02:58:03.5546464Z ##[endgroup]
+2025-12-24T02:58:03.7507256Z CRITICAL | CDX > Could not open requirements file: requirements.txt|n[Errno 2] No such file or directory: 'requirements.txt'
+2025-12-24T02:58:03.7979623Z ##[error]Process completed with exit code 1.

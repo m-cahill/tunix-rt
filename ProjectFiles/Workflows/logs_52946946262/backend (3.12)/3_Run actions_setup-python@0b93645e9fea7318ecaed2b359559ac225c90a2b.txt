@@ -1,0 +1,17 @@
+﻿2025-12-24T02:57:40.7676150Z ##[group]Run actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+2025-12-24T02:57:40.7676604Z with:
+2025-12-24T02:57:40.7676794Z   python-version: 3.12
+2025-12-24T02:57:40.7676996Z   cache: pip
+2025-12-24T02:57:40.7677224Z   cache-dependency-path: backend/pyproject.toml
+2025-12-24T02:57:40.7677496Z   check-latest: false
+2025-12-24T02:57:40.7677812Z   token: ***
+2025-12-24T02:57:40.7677995Z   update-environment: true
+2025-12-24T02:57:40.7678216Z   allow-prereleases: false
+2025-12-24T02:57:40.7678420Z ##[endgroup]
+2025-12-24T02:57:40.9445341Z ##[group]Installed versions
+2025-12-24T02:57:41.0182757Z Successfully set up CPython (3.12.12)
+2025-12-24T02:57:41.0186743Z ##[endgroup]
+2025-12-24T02:57:41.0607994Z [command]/opt/hostedtoolcache/Python/3.12.12/x64/bin/pip cache dir
+2025-12-24T02:57:43.3447033Z /home/runner/.cache/pip
+2025-12-24T02:57:43.4806289Z ##[warning]Failed to restore: Cache service responded with 400
+2025-12-24T02:57:43.4817150Z pip cache is not found

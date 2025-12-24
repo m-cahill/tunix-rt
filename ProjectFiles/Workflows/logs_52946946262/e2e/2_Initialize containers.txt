@@ -1,0 +1,97 @@
+﻿2025-12-24T02:57:37.4795337Z ##[group]Checking docker version
+2025-12-24T02:57:37.4807624Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2025-12-24T02:57:37.5632023Z '1.48'
+2025-12-24T02:57:37.5647281Z Docker daemon API version: '1.48'
+2025-12-24T02:57:37.5647780Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2025-12-24T02:57:37.5810207Z '1.48'
+2025-12-24T02:57:37.5823562Z Docker client API version: '1.48'
+2025-12-24T02:57:37.5828978Z ##[endgroup]
+2025-12-24T02:57:37.5832322Z ##[group]Clean up resources from previous jobs
+2025-12-24T02:57:37.5837018Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=28fd72"
+2025-12-24T02:57:37.5998026Z ##[command]/usr/bin/docker network prune --force --filter "label=28fd72"
+2025-12-24T02:57:37.6135989Z ##[endgroup]
+2025-12-24T02:57:37.6136352Z ##[group]Create local container network
+2025-12-24T02:57:37.6145401Z ##[command]/usr/bin/docker network create --label 28fd72 github_network_70d7a57e4ead4fa589bba37d537818e6
+2025-12-24T02:57:37.6811382Z 7c352d5d875126f0cb174ee4aa327fc8a4b303cd69aa0cd74a9a13c96d09238c
+2025-12-24T02:57:37.6823681Z ##[endgroup]
+2025-12-24T02:57:37.6846975Z ##[group]Starting postgres service container
+2025-12-24T02:57:37.6866353Z ##[command]/usr/bin/docker pull postgres:15-alpine
+2025-12-24T02:57:37.9649810Z 15-alpine: Pulling from library/postgres
+2025-12-24T02:57:38.0537820Z 1074353eec0d: Pulling fs layer
+2025-12-24T02:57:38.0538335Z d2e5feb410e8: Pulling fs layer
+2025-12-24T02:57:38.0618293Z ff7ac73e977d: Pulling fs layer
+2025-12-24T02:57:38.0619344Z 25fbe13bb576: Pulling fs layer
+2025-12-24T02:57:38.0620170Z 060e3656c186: Pulling fs layer
+2025-12-24T02:57:38.0621482Z 9fa3a17171bc: Pulling fs layer
+2025-12-24T02:57:38.0622535Z 1de01a2b564f: Pulling fs layer
+2025-12-24T02:57:38.0623179Z 141979064465: Pulling fs layer
+2025-12-24T02:57:38.0624040Z 86a96880bc80: Pulling fs layer
+2025-12-24T02:57:38.0624747Z c5fd49a04d70: Pulling fs layer
+2025-12-24T02:57:38.0625386Z 9bb1b164157a: Pulling fs layer
+2025-12-24T02:57:38.0626364Z 1de01a2b564f: Waiting
+2025-12-24T02:57:38.0627140Z 141979064465: Waiting
+2025-12-24T02:57:38.0628160Z 86a96880bc80: Waiting
+2025-12-24T02:57:38.0629042Z c5fd49a04d70: Waiting
+2025-12-24T02:57:38.0629907Z 9bb1b164157a: Waiting
+2025-12-24T02:57:38.0631026Z 060e3656c186: Waiting
+2025-12-24T02:57:38.0631915Z 9fa3a17171bc: Waiting
+2025-12-24T02:57:38.0632749Z 25fbe13bb576: Waiting
+2025-12-24T02:57:38.1449694Z d2e5feb410e8: Download complete
+2025-12-24T02:57:38.1661080Z ff7ac73e977d: Verifying Checksum
+2025-12-24T02:57:38.1681395Z ff7ac73e977d: Download complete
+2025-12-24T02:57:38.2025296Z 1074353eec0d: Verifying Checksum
+2025-12-24T02:57:38.2043449Z 1074353eec0d: Download complete
+2025-12-24T02:57:38.2232692Z 25fbe13bb576: Verifying Checksum
+2025-12-24T02:57:38.2235816Z 25fbe13bb576: Download complete
+2025-12-24T02:57:38.2579103Z 060e3656c186: Verifying Checksum
+2025-12-24T02:57:38.2581438Z 060e3656c186: Download complete
+2025-12-24T02:57:38.3296766Z 1de01a2b564f: Verifying Checksum
+2025-12-24T02:57:38.3300245Z 1de01a2b564f: Download complete
+2025-12-24T02:57:38.3337772Z 141979064465: Verifying Checksum
+2025-12-24T02:57:38.3340264Z 141979064465: Download complete
+2025-12-24T02:57:38.3773470Z 1074353eec0d: Pull complete
+2025-12-24T02:57:38.4147863Z d2e5feb410e8: Pull complete
+2025-12-24T02:57:38.4165765Z c5fd49a04d70: Verifying Checksum
+2025-12-24T02:57:38.4171610Z c5fd49a04d70: Download complete
+2025-12-24T02:57:38.4194369Z 86a96880bc80: Verifying Checksum
+2025-12-24T02:57:38.4195643Z 86a96880bc80: Download complete
+2025-12-24T02:57:38.4742071Z ff7ac73e977d: Pull complete
+2025-12-24T02:57:38.5081625Z 9bb1b164157a: Verifying Checksum
+2025-12-24T02:57:38.5084931Z 9bb1b164157a: Download complete
+2025-12-24T02:57:38.5114304Z 25fbe13bb576: Pull complete
+2025-12-24T02:57:38.5289863Z 060e3656c186: Pull complete
+2025-12-24T02:57:39.2955069Z 9fa3a17171bc: Verifying Checksum
+2025-12-24T02:57:39.2956005Z 9fa3a17171bc: Download complete
+2025-12-24T02:57:42.4053896Z 9fa3a17171bc: Pull complete
+2025-12-24T02:57:42.4221844Z 1de01a2b564f: Pull complete
+2025-12-24T02:57:42.4444461Z 141979064465: Pull complete
+2025-12-24T02:57:42.4608046Z 86a96880bc80: Pull complete
+2025-12-24T02:57:42.4738424Z c5fd49a04d70: Pull complete
+2025-12-24T02:57:42.4862086Z 9bb1b164157a: Pull complete
+2025-12-24T02:57:42.4918641Z Digest: sha256:b3968e348b48f1198cc6de6611d055dbad91cd561b7990c406c3fc28d7095b21
+2025-12-24T02:57:42.4935694Z Status: Downloaded newer image for postgres:15-alpine
+2025-12-24T02:57:42.4952568Z docker.io/library/postgres:15-alpine
+2025-12-24T02:57:42.5022770Z ##[command]/usr/bin/docker create --name 8bbe0983d7f8440997a3b31d66bba1d9_postgres15alpine_f8f132 --label 28fd72 --network github_network_70d7a57e4ead4fa589bba37d537818e6 --network-alias postgres -p 5432:5432 --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5 -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres" -e "POSTGRES_DB=postgres" -e GITHUB_ACTIONS=true -e CI=true postgres:15-alpine
+2025-12-24T02:57:42.5289335Z 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:42.5313631Z ##[command]/usr/bin/docker start 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:42.7478874Z 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:42.7513406Z ##[command]/usr/bin/docker ps --all --filter id=89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2025-12-24T02:57:42.7671932Z 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f Up Less than a second (health: starting)
+2025-12-24T02:57:42.7703743Z ##[command]/usr/bin/docker port 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:42.7883923Z 5432/tcp -> 0.0.0.0:5432
+2025-12-24T02:57:42.7890741Z 5432/tcp -> [::]:5432
+2025-12-24T02:57:42.7959443Z ##[endgroup]
+2025-12-24T02:57:42.7970941Z ##[group]Waiting for all services to be ready
+2025-12-24T02:57:42.7987833Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:42.8204610Z starting
+2025-12-24T02:57:42.8241035Z postgres service is starting, waiting 2 seconds before checking again.
+2025-12-24T02:57:44.8242980Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:44.8376970Z starting
+2025-12-24T02:57:44.8390669Z postgres service is starting, waiting 3 seconds before checking again.
+2025-12-24T02:57:48.7232376Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:48.7362293Z starting
+2025-12-24T02:57:48.7375711Z postgres service is starting, waiting 7 seconds before checking again.
+2025-12-24T02:57:56.0057772Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 89348d5abb472ec97c11c2e65734244e4dbb211abe7e2798706f9f9f35f39c4f
+2025-12-24T02:57:56.0184876Z healthy
+2025-12-24T02:57:56.0203381Z postgres service is healthy.
+2025-12-24T02:57:56.0204512Z ##[endgroup]
