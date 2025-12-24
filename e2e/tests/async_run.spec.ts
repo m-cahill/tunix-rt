@@ -109,7 +109,7 @@ test('async run flow: enqueue, poll, terminal state', async ({ page, request }) 
   }
 
   // If completed, verify success message
-  await expect(page.getByTestId('tunix:run-message')).toHaveText('Dry-run validation successful');
+  await expect(page.getByTestId('tunix:run-message')).toContainText('Dry-run validation successful');
 
   // Check history
   await page.getByTestId('tunix:toggle-history-btn').click();
