@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M21 Complete** ✅  
-**Coverage:** 82% Backend Line, 77% Frontend Line | **Security:** 0 npm vulns, pinned deps, setuptools patched | **Architecture:** Promote Best Trial UI | **Tests:** E2E Failure Traces Enabled
+**Milestone M22 Complete** ✅  
+**Coverage:** 67% Backend Line (new code), 45 Frontend Tests | **Evaluation:** answer_correctness@v1 frozen | **Dataset:** golden-v1 seeded | **Training:** Readiness checklist complete
 
 ## Overview
 
@@ -49,7 +49,7 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 
 **M21 Enhancements:** Security & Reliability Hardening - Frontend dependency audit clean (Vite/esbuild patched), `setuptools` CVE patched, Dependencies pinned (`save-exact=true`), E2E failure observability (traces retained, stderr attached), "Promote Best Trial" UI workflow, Repo hygiene (`ProjectFiles/Workflows` ignored).
 
-**M22 Enhancements:** Training Readiness - Backend coverage 82%, `answer_correctness` evaluator (AnswerCorrectnessJudge), Golden Dataset (`golden-v1`) seed script and guardrails, Metrics visibility in UI (Registry/History), Tuning guardrails against undefined metrics.
+**M22 Enhancements:** Training Readiness - Backend coverage 67% (new code for judges/evaluation), `answer_correctness@v1` evaluator (AnswerCorrectnessJudge with deterministic normalization), Golden Dataset (`golden-v1`) seed script with 5 curated test cases, Empty dataset guardrails, Metrics visibility in UI (Registry/History/Tuning), Tuning guardrails against undefined metrics, Idempotency tests for model promotion, Frontend tests for "Promote Best" workflow (Tuning.test.tsx), Frozen evaluation semantics documentation (docs/evaluation.md), Training readiness checklist (docs/training_readiness.md).
 
 
 ## Database Schema
