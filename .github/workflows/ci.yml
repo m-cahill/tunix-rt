@@ -194,9 +194,7 @@ jobs:
 
       - name: Generate SBOM
         # Generate SBOM from current environment (packages already installed)
-        run: |
-          cd ../backend
-          uv run cyclonedx-py environment --output-format json --outfile sbom.json
+        run: uv run cyclonedx-py environment --output-format JSON --output-file sbom.json
         continue-on-error: true
 
       - name: Upload SBOM
