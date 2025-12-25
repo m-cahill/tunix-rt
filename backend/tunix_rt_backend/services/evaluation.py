@@ -33,7 +33,7 @@ class EvaluationService:
         # Default to MockRediClient if not provided (e.g. in tests)
         if redi_client is None:
             redi_client = MockRediClient()
-        self.judge_factory = JudgeFactory(redi_client)
+        self.judge_factory = JudgeFactory(redi_client, db)
 
     async def get_evaluation(self, run_id: uuid.UUID) -> EvaluationResponse | None:
         """Get existing evaluation for a run."""

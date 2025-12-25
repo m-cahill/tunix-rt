@@ -188,6 +188,16 @@ export const ModelRegistry = () => {
                         <p><strong>SHA256:</strong> {selectedArtifactDetail.latest_version.sha256}</p>
                         <p><strong>Size:</strong> {selectedArtifactDetail.latest_version.size_bytes} bytes</p>
                         <p><strong>Source Run:</strong> {selectedArtifactDetail.latest_version.source_run_id}</p>
+
+                        {selectedArtifactDetail.latest_version.metrics_json && Object.keys(selectedArtifactDetail.latest_version.metrics_json).length > 0 && (
+                            <div style={{ marginTop: '10px', padding: '10px', background: '#f9f9f9', borderRadius: '4px' }}>
+                                <h5 style={{ margin: '0 0 5px 0' }}>Metrics</h5>
+                                <pre style={{ fontSize: '0.85em', margin: 0, whiteSpace: 'pre-wrap' }}>
+                                    {JSON.stringify(selectedArtifactDetail.latest_version.metrics_json, null, 2)}
+                                </pre>
+                            </div>
+                        )}
+
                         <a
                             href={getModelDownloadUrl(selectedArtifactDetail.latest_version.id)}
                             target="_blank"

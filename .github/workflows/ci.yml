@@ -195,10 +195,10 @@ jobs:
         run: pip install cyclonedx-bom
 
       - name: Generate SBOM
-        # NOTE: cyclonedx-py infers output format from -o filename
+        # Generate SBOM from current environment (packages already installed)
         run: |
           cd ../backend
-          cyclonedx-py requirements -i pyproject.toml -o sbom.json
+          cyclonedx-py environment --output-format json --outfile sbom.json
         continue-on-error: true
 
       - name: Upload SBOM

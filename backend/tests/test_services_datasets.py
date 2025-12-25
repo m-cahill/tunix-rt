@@ -185,7 +185,7 @@ class TestDatasetBuilderService:
 
     @pytest.mark.asyncio
     async def test_build_dataset_empty_result(self, test_db: AsyncSession):
-        """Building dataset with no matching traces should work."""
+        """Building dataset with no matching traces should fail (guardrail)."""
         request = DatasetBuildRequest(
             dataset_name="empty",
             dataset_version="v1",
@@ -194,10 +194,5 @@ class TestDatasetBuilderService:
             selection_strategy="latest",
         )
 
-        dataset_key, build_id, trace_count, manifest_path = await build_dataset_manifest(
-            request, test_db
-        )
-
-        # Should create manifest even with 0 traces
-        assert trace_count == 0
-        assert manifest_path.exists()
+        with pytest.raises(ValueError, match="Dataset is empty"):
+            await build_dataset_manifest(request, test_db)

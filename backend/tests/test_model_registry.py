@@ -151,18 +151,116 @@ async def test_version_auto_increment(test_db: AsyncSession, registry_root: str)
         assert v1.version == "v1"
 
         # Promote v2 (using same run is allowed for testing logic)
-        # Idempotency logic isn't strictly enforced except version uniqueness
-        # But if I don't check SHA, I can create multiple versions from same run?
-        # My implementation:
-        # "If exact same sha256 already exists... return existing ModelVersion"
-        # Wait, I implemented:
-        # "Check idempotency... Plan says... M20 answers implies idempotency."
-        # But I didn't actually implement the check in code! I wrote comments.
-
-        # Let's fix implementation to check SHA uniqueness for idempotency
-        # But for this test, I want to force new version.
-        # I'll modify file to change SHA.
+        # We need to change content to avoid idempotency returning v1
         (output_dir / "pytorch_model.bin").write_bytes(b"new bytes")
 
         v2 = await service.promote_run(artifact.id, ModelPromotionRequest(source_run_id=run_id))
         assert v2.version == "v2"
+
+
+@pytest.mark.asyncio
+async def test_promote_from_failed_run(test_db: AsyncSession, registry_root: str) -> None:
+    """Ensure we cannot promote a failed run."""
+    run_id = uuid.uuid4()
+    run = TunixRun(
+        run_id=run_id,
+        dataset_key="ds",
+        model_id="m",
+        status="failed",
+        mode="local",
+        started_at=datetime.now(),
+        completed_at=datetime.now(),
+        created_at=datetime.now(),
+    )
+    test_db.add(run)
+    await test_db.commit()
+
+    service = ModelRegistryService(test_db)
+    artifact = await service.create_artifact(ModelArtifactCreate(name="fail-test"))
+
+    with pytest.raises(ValueError, match="must be completed"):
+        await service.promote_run(artifact.id, ModelPromotionRequest(source_run_id=run_id))
+
+
+@pytest.mark.asyncio
+async def test_idempotency_same_sha(test_db: AsyncSession, registry_root: str) -> None:
+    """Ensure promoting identical content returns existing version."""
+    run_id = uuid.uuid4()
+    output_dir = Path(registry_root) / "run_output_idem"
+    output_dir.mkdir()
+    (output_dir / "config.json").write_text("{}")
+    (output_dir / "pytorch_model.bin").write_bytes(b"identical")
+
+    run = TunixRun(
+        run_id=run_id,
+        dataset_key="ds",
+        model_id="m",
+        status="completed",
+        mode="local",
+        config={"output_dir": str(output_dir)},
+        created_at=datetime.now(),
+        started_at=datetime.now(),
+        completed_at=datetime.now(),
+    )
+    test_db.add(run)
+    await test_db.commit()
+
+    with patch("tunix_rt_backend.settings.settings.model_registry_path", registry_root):
+        service = ModelRegistryService(test_db)
+        artifact = await service.create_artifact(ModelArtifactCreate(name="idempotent"))
+
+        # First promotion -> v1
+        v1 = await service.promote_run(artifact.id, ModelPromotionRequest(source_run_id=run_id))
+        assert v1.version == "v1"
+
+        # Second promotion (same content) -> should return v1
+        v1_again = await service.promote_run(
+            artifact.id, ModelPromotionRequest(source_run_id=run_id)
+        )
+        assert v1_again.id == v1.id
+        assert v1_again.version == "v1"
+
+        # Third promotion with EXPLICIT version -> should fail uniqueness check or return error?
+        # Logic says: if explicit version, we check uniqueness of version label.
+        # But if content is same, do we create a new version with same content?
+        # Yes, if version label is different (e.g. v2 alias).
+        # Let's test that behavior:
+        v2 = await service.promote_run(
+            artifact.id, ModelPromotionRequest(source_run_id=run_id, version_label="v2")
+        )
+        assert v2.version == "v2"
+        assert v2.id != v1.id
+        assert v2.sha256 == v1.sha256
+
+
+@pytest.mark.asyncio
+async def test_promote_missing_artifacts_specific(
+    test_db: AsyncSession, registry_root: str
+) -> None:
+    """Test specific error message for missing files."""
+    run_id = uuid.uuid4()
+    output_dir = Path(registry_root) / "run_empty"
+    output_dir.mkdir()
+    # Create just one file, but not enough
+    (output_dir / "random.txt").write_text("hi")
+
+    run = TunixRun(
+        run_id=run_id,
+        dataset_key="ds",
+        model_id="m",
+        status="completed",
+        mode="local",
+        started_at=datetime.now(),
+        completed_at=datetime.now(),
+        config={"output_dir": str(output_dir)},
+        created_at=datetime.now(),
+    )
+    test_db.add(run)
+    await test_db.commit()
+
+    with patch("tunix_rt_backend.settings.settings.model_registry_path", registry_root):
+        service = ModelRegistryService(test_db)
+        artifact = await service.create_artifact(ModelArtifactCreate(name="missing"))
+
+        with pytest.raises(ValueError, match="Invalid artifacts"):
+            await service.promote_run(artifact.id, ModelPromotionRequest(source_run_id=run_id))

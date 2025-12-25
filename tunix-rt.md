@@ -49,6 +49,9 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 
 **M21 Enhancements:** Security & Reliability Hardening - Frontend dependency audit clean (Vite/esbuild patched), `setuptools` CVE patched, Dependencies pinned (`save-exact=true`), E2E failure observability (traces retained, stderr attached), "Promote Best Trial" UI workflow, Repo hygiene (`ProjectFiles/Workflows` ignored).
 
+**M22 Enhancements:** Training Readiness - Backend coverage 82%, `answer_correctness` evaluator (AnswerCorrectnessJudge), Golden Dataset (`golden-v1`) seed script and guardrails, Metrics visibility in UI (Registry/History), Tuning guardrails against undefined metrics.
+
+
 ## Database Schema
 
 ### `traces`

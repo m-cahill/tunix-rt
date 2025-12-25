@@ -126,7 +126,14 @@ def tunix_trainable(
                 # We need the run_id from response
                 run_uuid = uuid.UUID(response.run_id)
 
-                eval_response = await eval_service.evaluate_run(run_uuid)
+                # M22: Select judge based on metric name
+                judge_override = None
+                if tunix_metric_name == "answer_correctness":
+                    judge_override = "answer_correctness"
+
+                eval_response = await eval_service.evaluate_run(
+                    run_uuid, judge_override=judge_override
+                )
 
                 # Extract metric
                 # metric_name typically "score" or something from metrics dict
@@ -243,6 +250,12 @@ class TuningService:
         job.status = "running"
         job.started_at = datetime.now(timezone.utc)
         await self.db.commit()
+
+        # Guardrail (M22)
+        if job.metric_name == "score":
+            logger.warning(f"Job {job.id} using mock metric 'score'. Results will be random.")
+        elif job.metric_name != "answer_correctness":
+            logger.warning(f"Job {job.id} using unknown metric '{job.metric_name}'.")
 
         asyncio.create_task(self._run_ray_tune(job.id))
 

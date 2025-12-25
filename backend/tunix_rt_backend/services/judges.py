@@ -3,11 +3,16 @@
 import hashlib
 import json
 import logging
+import uuid
+from pathlib import Path
 from typing import Literal, Protocol
 
 from pydantic import BaseModel
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from tunix_rt_backend.db.models import TunixRun
+from tunix_rt_backend.db.models import Trace, TunixRun
+from tunix_rt_backend.helpers.datasets import get_datasets_dir
 from tunix_rt_backend.redi_client import RediClientProtocol
 from tunix_rt_backend.schemas.evaluation import EvaluationJudgeInfo, EvaluationMetric
 
@@ -120,6 +125,155 @@ class MockJudge:
             detailed_metrics=detailed_metrics,
             judge_info=EvaluationJudgeInfo(name=self.name, version=self.version),
             raw_output=f"Run failed with status: {run.status}",
+        )
+
+
+class AnswerCorrectnessJudge:
+    """Judge that checks answer correctness against ground truth."""
+
+    def __init__(self, db: AsyncSession | None = None) -> None:
+        self.db = db
+        self.name = "answer_correctness"
+        self.version = "v1"
+
+    async def evaluate(self, run: TunixRun) -> JudgeResult:
+        """Evaluate correctness by comparing run output with dataset ground truth."""
+        if run.status != "completed":
+            mock = MockJudge()
+            res = mock._evaluate_failed_run(run)
+            res.judge_info = EvaluationJudgeInfo(name=self.name, version=self.version)
+            return res
+
+        if not self.db:
+            raise RuntimeError("AnswerCorrectnessJudge requires database session")
+
+        # 1. Load Manifest
+        manifest_path = get_datasets_dir() / run.dataset_key / "manifest.json"
+        if not manifest_path.exists():
+            # Fail gracefully if dataset not found locally
+            return self._fail(f"Dataset manifest not found: {run.dataset_key}")
+
+        try:
+            with open(manifest_path) as f:
+                manifest_data = json.load(f)
+                trace_ids = [uuid.UUID(tid) for tid in manifest_data["trace_ids"]]
+        except Exception as e:
+            return self._fail(f"Failed to read manifest: {e}")
+
+        if not trace_ids:
+            return self._fail("Dataset is empty")
+
+        # 2. Fetch Traces (Ground Truth)
+        try:
+            stmt = select(Trace).where(Trace.id.in_(trace_ids))
+            result = await self.db.execute(stmt)
+            traces = result.scalars().all()
+            trace_map = {t.id: t for t in traces}
+        except Exception as e:
+            return self._fail(f"Failed to fetch traces: {e}")
+
+        # 3. Load Predictions
+        # Try to find predictions.jsonl
+        predictions: dict[uuid.UUID, str] = {}
+
+        # Determine output dir
+        output_dir = None
+        if run.config and "output_dir" in run.config:
+            output_dir = Path(run.config["output_dir"])
+
+        # If output_dir is not absolute, it might be relative to cwd?
+        # Usually it's handled by worker. Assuming absolute path or resolving.
+        # If not set, maybe fallback to stdout parsing?
+
+        preds_loaded = False
+        if output_dir and output_dir.exists():
+            pred_file = output_dir / "predictions.jsonl"
+            if pred_file.exists():
+                try:
+                    with open(pred_file) as f:
+                        for line in f:
+                            rec = json.loads(line)
+                            # Assume record has 'id' (trace_id) and 'prediction'
+                            if "id" in rec and "prediction" in rec:
+                                try:
+                                    tid = uuid.UUID(rec["id"])
+                                    predictions[tid] = rec["prediction"]
+                                except ValueError:
+                                    pass  # Invalid UUID
+                    preds_loaded = True
+                except Exception as e:
+                    logger.warning(f"Failed to read predictions.jsonl: {e}")
+
+        if not preds_loaded:
+            # Fallback: Parse stdout (Naive assumption for M22 MVP if file missing)
+            # Or just fail? "Missing predictions artifact"
+            # For now, let's just score based on what we have (empty = 0)
+            logger.warning(f"No predictions found for run {run.run_id}")
+
+        # 4. Compare
+        correct_count = 0
+        total_count = len(trace_ids)
+        detailed_metrics = []
+
+        for trace_id in trace_ids:
+            trace = trace_map.get(trace_id)
+            if not trace:
+                continue  # Should not happen if DB consistent
+
+            ground_truth = trace.payload.get("final_answer", "")
+            prediction = predictions.get(trace_id, "")
+
+            is_correct = self._compare(ground_truth, prediction)
+            if is_correct:
+                correct_count += 1
+
+            detailed_metrics.append(
+                EvaluationMetric(
+                    name=f"item_{str(trace_id)[:8]}",
+                    score=1.0 if is_correct else 0.0,
+                    max_score=1.0,
+                    details={
+                        "trace_id": str(trace_id),
+                        "ground_truth": ground_truth,
+                        "prediction": prediction,
+                        "correct": is_correct,
+                    },
+                )
+            )
+
+        score = (correct_count / total_count) * 100.0 if total_count > 0 else 0.0
+
+        return JudgeResult(
+            score=score,
+            verdict="pass" if score == 100.0 else "fail",  # Strict pass? Or threshold?
+            # M22 plan says "scale 0/1 (MVP)". "Aggregation: mean".
+            # So score is percentage.
+            # Verdict: maybe > 0? Let's say pass if score > 0 for now or whatever threshold.
+            # If 100% required, use 100. Let's use standard 70? Or just "uncertain" if mixed.
+            # I'll use 100 for golden pass.
+            metrics={"answer_correctness": score / 100.0},
+            detailed_metrics=detailed_metrics,
+            judge_info=EvaluationJudgeInfo(name=self.name, version=self.version),
+            raw_output=f"Evaluated {total_count} items. Correct: {correct_count}.",
+        )
+
+    def _compare(self, ground_truth: str, prediction: str) -> bool:
+        """Normalize and compare."""
+
+        def normalize(s: str) -> str:
+            return s.strip().lower()
+
+        return normalize(ground_truth) == normalize(prediction)
+
+    def _fail(self, reason: str) -> JudgeResult:
+        """Return failure result."""
+        return JudgeResult(
+            score=0.0,
+            verdict="fail",
+            metrics={"answer_correctness": 0.0},
+            detailed_metrics=[],
+            judge_info=EvaluationJudgeInfo(name=self.name, version=self.version),
+            raw_output=f"Evaluation failed: {reason}",
         )
 
 
@@ -245,12 +399,15 @@ JSON RESPONSE:
 class JudgeFactory:
     """Factory to get judge instances."""
 
-    def __init__(self, redi_client: RediClientProtocol) -> None:
+    def __init__(self, redi_client: RediClientProtocol, db: AsyncSession | None = None) -> None:
         self.redi_client = redi_client
+        self.db = db
 
     def get_judge(self, name: str | None = None) -> Judge:
         """Get judge by name. Defaults to MockJudge."""
         if name == "gemma-judge":
             return GemmaJudge(self.redi_client)
+        if name == "answer_correctness":
+            return AnswerCorrectnessJudge(self.db)
         # Default to MockJudge
         return MockJudge()

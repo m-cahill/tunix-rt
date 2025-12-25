@@ -99,20 +99,6 @@ class ModelRegistryService:
         # 4. Validate Files (M20 requirement)
         self._validate_run_artifacts(output_dir)
 
-        # 5. Determine Version Label
-        version_label = request.version_label
-        if not version_label:
-            version_label = await self._generate_next_version(artifact_id)
-
-        # Check uniqueness
-        stmt_ver = select(ModelVersion).where(
-            ModelVersion.artifact_id == artifact_id, ModelVersion.version == version_label
-        )
-        if (await self.db.execute(stmt_ver)).scalar_one_or_none():
-            raise ValueError(
-                f"Version '{version_label}' already exists for artifact {artifact.name}"
-            )
-
         # 6. Store Artifacts
         try:
             storage_uri, sha256, size_bytes = await self._store_artifacts(output_dir)
@@ -121,11 +107,32 @@ class ModelRegistryService:
             raise RuntimeError(f"Failed to store artifacts: {e}")
 
         # 7. Check idempotency
-        # Plan says: "If exact same sha256 exists for same run, return existing ModelVersion"
-        # But we check version uniqueness first.
-        # If explicit version matches, we fail.
-        # If sha matches but version is different, it's a new version.
-        # M20 answers implies idempotency.
+        # If version was not explicit, check if we already have this content
+        if not request.version_label:
+            stmt_exist = select(ModelVersion).where(
+                ModelVersion.artifact_id == artifact_id, ModelVersion.sha256 == sha256
+            )
+            existing = (await self.db.execute(stmt_exist)).scalars().first()
+            if existing:
+                logger.info(
+                    f"Returning existing version {existing.version} "
+                    f"for identical content (sha256: {sha256})"
+                )
+                return existing
+
+        # 5. Determine Version Label (delayed to after idempotency check)
+        version_label = request.version_label
+        if not version_label:
+            version_label = await self._generate_next_version(artifact_id)
+
+        # Check uniqueness of version label
+        stmt_ver = select(ModelVersion).where(
+            ModelVersion.artifact_id == artifact_id, ModelVersion.version == version_label
+        )
+        if (await self.db.execute(stmt_ver)).scalar_one_or_none():
+            raise ValueError(
+                f"Version '{version_label}' already exists for artifact {artifact.name}"
+            )
 
         # 8. Create Version
         # Gather metadata

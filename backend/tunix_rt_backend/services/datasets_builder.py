@@ -84,6 +84,9 @@ async def build_dataset_manifest(
     trace_ids = [trace.id for trace in selected_traces]
     trace_payloads = [trace.payload for trace in selected_traces]
 
+    if not trace_ids:
+        raise ValueError("Dataset is empty. No traces matched the filters.")
+
     # Compute stats
     stats = compute_dataset_stats(trace_payloads)
 
