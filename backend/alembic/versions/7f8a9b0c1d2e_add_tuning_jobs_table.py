@@ -20,6 +20,9 @@ down_revision: Union[str, Sequence[str], None] = "6e7f8a9b0c1d"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
+# Dialect-agnostic JSON type: JSONB for PostgreSQL, JSON for SQLite
+json_type = JSONB().with_variant(sa.JSON(), "sqlite")
+
 
 def upgrade() -> None:
     # Create tunix_tuning_jobs table
@@ -35,9 +38,9 @@ def upgrade() -> None:
         sa.Column("metric_mode", sa.String(length=16), nullable=False),
         sa.Column("num_samples", sa.Integer(), nullable=False, server_default="1"),
         sa.Column("max_concurrent_trials", sa.Integer(), nullable=False, server_default="1"),
-        sa.Column("search_space_json", JSONB(), nullable=False),
+        sa.Column("search_space_json", json_type, nullable=False),
         sa.Column("best_run_id", sa.UUID(), nullable=True),
-        sa.Column("best_params_json", JSONB(), nullable=True),
+        sa.Column("best_params_json", json_type, nullable=True),
         sa.Column("ray_storage_path", sa.Text(), nullable=True),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
         sa.Column("started_at", sa.DateTime(timezone=True), nullable=True),
@@ -52,7 +55,7 @@ def upgrade() -> None:
         sa.Column("id", sa.String(length=64), nullable=False),
         sa.Column("tuning_job_id", sa.UUID(), nullable=False),
         sa.Column("run_id", sa.UUID(), nullable=True),
-        sa.Column("params_json", JSONB(), nullable=False),
+        sa.Column("params_json", json_type, nullable=False),
         sa.Column("metric_value", sa.Float(), nullable=True),
         sa.Column("status", sa.String(length=64), nullable=False),
         sa.Column("error", sa.Text(), nullable=True),
