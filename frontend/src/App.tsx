@@ -1027,6 +1027,7 @@ function App() {
                         <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Dataset</th>
                         <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Model</th>
                         <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Duration</th>
+                        <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Score</th>
                         <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Started</th>
                         <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Actions</th>
                       </tr>
@@ -1052,6 +1053,9 @@ function App() {
                             <td style={{ padding: '0.5em', borderBottom: '1px solid #eee' }} data-testid={`tunix:history-duration-${run.run_id}`}>
                               {run.duration_seconds ? `${run.duration_seconds.toFixed(2)}s` : 'N/A'}
                             </td>
+                            <td style={{ padding: '0.5em', borderBottom: '1px solid #eee' }} data-testid={`tunix:history-score-${run.run_id}`}>
+                              {run.metrics?.answer_correctness ? Number(run.metrics.answer_correctness).toFixed(2) : '-'}
+                            </td>
                             <td style={{ padding: '0.5em', borderBottom: '1px solid #eee', fontSize: '0.9em' }} data-testid={`tunix:history-started-${run.run_id}`}>
                               {new Date(run.started_at).toLocaleString()}
                             </td>
@@ -1067,7 +1071,7 @@ function App() {
                           </tr>
                           {selectedRunId === run.run_id && selectedRunDetail && (
                             <tr key={`${run.run_id}-detail`}>
-                              <td colSpan={7} style={{ padding: '1em', backgroundColor: '#f9f9f9' }}>
+                              <td colSpan={8} style={{ padding: '1em', backgroundColor: '#f9f9f9' }}>
                                 <div className="run-detail" data-testid={`tunix:run-detail-${run.run_id}`}>
                                   <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                                     <h4>Run Details</h4>

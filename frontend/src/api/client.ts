@@ -484,6 +484,7 @@ export interface TunixRunListItem {
   status: 'pending' | 'running' | 'completed' | 'failed' | 'timeout' | 'cancel_requested' | 'cancelled'
   started_at: string
   duration_seconds: number | null
+  metrics?: Record<string, number | string | null> | null
 }
 
 /**

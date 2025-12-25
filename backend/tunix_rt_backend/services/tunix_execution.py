@@ -26,7 +26,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from tunix_rt_backend.db.base import async_session_maker
 from tunix_rt_backend.db.models import TunixRun, TunixRunLogChunk
 from tunix_rt_backend.helpers.datasets import load_manifest
-from tunix_rt_backend.integrations.tunix.availability import check_tunix_cli
 from tunix_rt_backend.integrations.tunix.manifest import build_sft_manifest
 
 # M15: Observability
@@ -483,7 +482,7 @@ async def execute_local(
     started_at: str,
     db: AsyncSession,
 ) -> TunixRunResponse:
-    """Execute local mode (run tunix CLI via subprocess).
+    """Execute local mode (run training script via subprocess).
 
     Args:
         run_id: Unique run identifier
@@ -495,24 +494,9 @@ async def execute_local(
     Returns:
         TunixRunResponse with execution results
     """
-    # Check Tunix CLI availability
-    cli_status = check_tunix_cli()
-    if not cli_status["accessible"]:
-        return TunixRunResponse(
-            run_id=run_id,
-            status="failed",
-            mode="local",
-            dataset_key=request.dataset_key,
-            model_id=request.model_id,
-            output_dir=output_dir,
-            exit_code=None,
-            stdout="",
-            stderr=f"Tunix CLI not accessible: {cli_status['error']}",
-            duration_seconds=0.0,
-            started_at=started_at,
-            completed_at=datetime.now(timezone.utc).isoformat(),
-            message="Local execution failed: Tunix CLI not found",
-        )
+    # M24 Update: We now execute the internal training script (training/train_sft_tunix.py)
+    # instead of expecting a 'tunix' CLI to be on the PATH.
+    # This allows fallback to PyTorch/Transformers if JAX/Tunix is missing.
 
     # Step 1: Prepare temporary files (manifest + dataset)
     try:
@@ -570,19 +554,38 @@ async def execute_local(
             message="Local execution failed: file preparation error",
         )
 
-    # Step 2: Execute tunix CLI with log streaming (M16)
+    # Step 2: Execute training script with log streaming (M16)
     log_manager = LogManager(db, uuid.UUID(run_id))
 
     try:
+        # Determine script path (assume relative to backend root or repo root)
+        # We are running from 'backend' directory in CI/Dev usually.
+        # But uvicorn might be running from repo root or backend.
+        # Let's find the script.
+        script_path = Path("training/train_sft_tunix.py")
+        if not script_path.exists():
+            # Try ../training/train_sft_tunix.py if in backend
+            script_path = Path("../training/train_sft_tunix.py")
+
+        if not script_path.exists():
+            raise FileNotFoundError(f"Training script not found at {script_path}")
+
         # Use asyncio.create_subprocess_exec for async stream reading
+        # Command: python script.py --config ... --data ... --output ...
         process = await asyncio.create_subprocess_exec(
-            "tunix",
-            "train",
+            "python",
+            str(script_path),
             "--config",
-            str(manifest_path),
+            str(manifest_path.absolute()),
+            "--data",
+            str(Path(dataset_path_str).absolute()),
+            "--output",
+            str(Path(output_dir).absolute()),
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
-            cwd=str(temp_dir),
+            # Run in current directory (backend or repo root) so script can find its imports
+            # if needed, or use temp_dir? The script is standalone-ish but imports yaml.
+            # Using repo root/backend root is safer for python path.
             env={**os.environ, "PYTHONUNBUFFERED": "1"},
         )
 
@@ -813,53 +816,132 @@ def truncate_output(output: str, max_bytes: int | None = None) -> str:
 
 
 async def generate_predictions(dataset_path: Path, output_dir: Path) -> None:
-    """Generate predictions.jsonl from dataset (M23).
+    """Generate predictions.jsonl from dataset (M23/M24).
 
-    This acts as a lightweight inference step after training.
-    For now, it generates placeholder predictions to satisfy the evaluation contract.
+    M24: Replaced placeholder with real inference using distilgpt2.
     """
     logger.info(f"Generating predictions from {dataset_path} to {output_dir}")
-    predictions = []
 
     # Ensure dataset exists
     if not dataset_path.exists():
         logger.warning(f"Dataset not found for inference: {dataset_path}")
         return
 
+    # M24: Run inference in a separate thread to avoid blocking the event loop
     try:
-        with open(dataset_path, "r", encoding="utf-8") as f:
-            for line in f:
-                if not line.strip():
-                    continue
-                try:
-                    item = json.loads(line)
-                    trace_id = item.get("id")
-                    if not trace_id:
-                        continue
-
-                    # M23 Placeholder: In a real system, this would invoke the model.
-                    # For now, we generate a dummy prediction.
-                    # If using golden-v1, we might want to peek at 'final_answer'
-                    # if we want to force a pass, but for robust testing,
-                    # a distinct prediction is better.
-                    pred = {
-                        "trace_id": trace_id,
-                        "prediction": "Model prediction placeholder",
-                    }
-                    predictions.append(pred)
-                except json.JSONDecodeError:
-                    continue
-
-        output_path = output_dir / "predictions.jsonl"
-        # Ensure output dir exists (it should)
-        output_dir.mkdir(parents=True, exist_ok=True)
-
-        with open(output_path, "w", encoding="utf-8") as f:
-            for p in predictions:
-                f.write(json.dumps(p) + "\n")
-
-        logger.info(f"Generated {len(predictions)} predictions to {output_path}")
-
+        await asyncio.to_thread(_run_inference_sync, dataset_path, output_dir)
     except Exception as e:
         logger.error(f"Error during prediction generation: {e}")
+        # We don't raise here to avoid crashing the whole run flow,
+        # but the Judge will fail if predictions.jsonl is missing/empty.
         raise
+
+
+def _run_inference_sync(
+    dataset_path: Path, output_dir: Path, model_name: str = "distilgpt2"
+) -> None:
+    """Synchronous inference logic (M24)."""
+    try:
+        import torch  # type: ignore
+        from transformers import AutoModelForCausalLM, AutoTokenizer  # type: ignore
+    except ImportError:
+        logger.warning("Transformers/Torch not installed. Skipping real inference.")
+        # Fallback to placeholder if dependencies are missing (e.g. in minimal env)
+        _generate_placeholder_predictions(dataset_path, output_dir)
+        return
+
+    logger.info(f"Loading model {model_name} for inference...")
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        model = AutoModelForCausalLM.from_pretrained(model_name)
+
+        # Use CPU for deterministic CI smoke
+        device = torch.device("cpu")
+        model.to(device)
+        model.eval()
+    except Exception as e:
+        logger.error(f"Failed to load model {model_name}: {e}")
+        raise
+
+    predictions = []
+
+    with open(dataset_path, "r", encoding="utf-8") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            try:
+                item = json.loads(line)
+                trace_id = item.get("id")
+                # M24: Support both 'prompts' (Tunix) and 'prompt' (Legacy) keys
+                prompt_text = item.get("prompts") or item.get("prompt") or ""
+
+                if not trace_id or not prompt_text.strip():
+                    continue
+
+                # M24: Simple logic to extract user prompt if possible
+                # Default Tunix format: <start_of_turn>user\n...\n<start_of_turn>model
+                input_text = prompt_text
+                if "<start_of_turn>model" in prompt_text:
+                    parts = prompt_text.split("<start_of_turn>model")
+                    input_text = parts[0] + "<start_of_turn>model"
+
+                # Tokenize
+                inputs = tokenizer(input_text, return_tensors="pt").to(device)
+
+                # Generate (Greedy, Deterministic)
+                with torch.no_grad():
+                    outputs = model.generate(
+                        **inputs,
+                        max_new_tokens=50,
+                        do_sample=False,
+                        num_beams=1,
+                        pad_token_id=tokenizer.eos_token_id,
+                    )
+
+                # Decode only the new tokens
+                new_tokens = outputs[0][inputs.input_ids.shape[1] :]
+                prediction_text = tokenizer.decode(new_tokens, skip_special_tokens=True)
+
+                predictions.append({"trace_id": trace_id, "prediction": prediction_text})
+
+            except json.JSONDecodeError:
+                continue
+            except Exception as e:
+                logger.warning(f"Inference failed for item {trace_id}: {e}")
+                continue
+
+    output_path = output_dir / "predictions.jsonl"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        for p in predictions:
+            f.write(json.dumps(p) + "\n")
+
+    logger.info(f"Generated {len(predictions)} predictions to {output_path}")
+
+
+def _generate_placeholder_predictions(dataset_path: Path, output_dir: Path) -> None:
+    """Fallback placeholder generation (M23 logic)."""
+    predictions = []
+    with open(dataset_path, "r", encoding="utf-8") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            try:
+                item = json.loads(line)
+                trace_id = item.get("id")
+                if trace_id:
+                    predictions.append(
+                        {
+                            "trace_id": trace_id,
+                            "prediction": "Model prediction placeholder (transformers missing)",
+                        }
+                    )
+            except Exception:
+                continue
+
+    output_path = output_dir / "predictions.jsonl"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        for p in predictions:
+            f.write(json.dumps(p) + "\n")

@@ -73,33 +73,36 @@ jobs:
       - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'pip'
-          cache-dependency-path: 'backend/pyproject.toml'
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "backend/uv.lock"
 
       - name: Install dependencies
-        run: python -m pip install -e ".[dev]"
+        run: uv sync --locked --extra dev
 
       - name: Ruff check
-        run: ruff check .
+        run: uv run ruff check .
 
       - name: Ruff format check
-        run: ruff format --check .
+        run: uv run ruff format --check .
 
       - name: mypy type check
-        run: mypy tunix_rt_backend
+        run: uv run mypy tunix_rt_backend
 
       - name: Validate dataset schemas
         run: |
           # Validate dataset schemas can be imported
-          python -c "from tunix_rt_backend.schemas.dataset import DatasetManifest, DatasetBuildRequest; print('✅ Dataset schemas valid')"
+          uv run python -c "from tunix_rt_backend.schemas.dataset import DatasetManifest, DatasetBuildRequest; print('✅ Dataset schemas valid')"
           # Validate renderer works
-          python -c "from tunix_rt_backend.training.renderers import render_tunix_sft_prompt; trace={'prompt':'test','trace_steps':['step'],'final_answer':'answer'}; result=render_tunix_sft_prompt(trace); assert '<start_of_turn>' in result; print('✅ Renderer works')"
+          uv run python -c "from tunix_rt_backend.training.renderers import render_tunix_sft_prompt; trace={'prompt':'test','trace_steps':['step'],'final_answer':'answer'}; result=render_tunix_sft_prompt(trace); assert '<start_of_turn>' in result; print('✅ Renderer works')"
 
       - name: pytest with coverage
-        run: pytest -q --cov=tunix_rt_backend --cov-branch --cov-config=.coveragerc --cov-report=term --cov-report=xml --cov-report=json:coverage.json
+        run: uv run pytest -q --cov=tunix_rt_backend --cov-branch --cov-config=.coveragerc --cov-report=term --cov-report=xml --cov-report=json:coverage.json
 
       - name: Enforce coverage gates (line ≥80%, branch ≥68%)
-        run: python tools/coverage_gate.py
+        run: uv run python tools/coverage_gate.py
 
       - name: Upload coverage
         uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
@@ -110,7 +113,7 @@ jobs:
       - name: Migration smoke test
         run: |
           export DATABASE_URL="sqlite+aiosqlite:///./test_migrations.db"
-          alembic upgrade head
+          uv run alembic upgrade head
         env:
           DATABASE_URL: "sqlite+aiosqlite:///./test_migrations.db"
 
@@ -161,25 +164,20 @@ jobs:
       - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
           python-version: '3.11'
-          cache: 'pip'
-          cache-dependency-path: 'backend/pyproject.toml'
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "backend/uv.lock"
 
       - name: Install dependencies
-        run: python -m pip install -e ".[dev]"
-
-      - name: Cache security tools
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-        with:
-          path: ~/.cache/pip
-          key: security-tools-${{ runner.os }}-${{ hashFiles('backend/pyproject.toml') }}
-          restore-keys: |
-            security-tools-${{ runner.os }}-
+        run: uv sync --locked --extra dev
 
       - name: Run pip-audit
         run: |
-          pip install pip-audit
-          pip-audit --desc --format json --output pip-audit-report.json || true
-          pip-audit --desc || true
+          uv run pip install pip-audit
+          uv run pip-audit --desc --format json --output pip-audit-report.json || true
+          uv run pip-audit --desc || true
         continue-on-error: true
 
       - name: Upload pip-audit report
@@ -192,13 +190,13 @@ jobs:
 
       # M11 Phase 1: SBOM generation re-enabled using cyclonedx-py CLI
       - name: Install SBOM tool
-        run: pip install cyclonedx-bom
+        run: uv run pip install cyclonedx-bom
 
       - name: Generate SBOM
         # Generate SBOM from current environment (packages already installed)
         run: |
           cd ../backend
-          cyclonedx-py environment --output-format json --outfile sbom.json
+          uv run cyclonedx-py environment --output-format json --outfile sbom.json
         continue-on-error: true
 
       - name: Upload SBOM
@@ -299,15 +297,22 @@ jobs:
       - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
           python-version: '3.11'
-          cache: 'pip'
-          cache-dependency-path: 'backend/pyproject.toml'
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "backend/uv.lock"
 
       - name: Install backend dependencies
-        run: cd ../backend && python -m pip install -e ".[dev]"
+        run: |
+          cd ../backend
+          uv sync --locked --extra dev
+          # Add venv to PATH so Playwright picks up uvicorn/python
+          echo "$PWD/.venv/bin" >> $GITHUB_PATH
 
       # M4: Run migrations before starting servers
       - name: Run database migrations
-        run: cd ../backend && alembic upgrade head
+        run: cd ../backend && uv run alembic upgrade head
         env:
           DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/postgres
 

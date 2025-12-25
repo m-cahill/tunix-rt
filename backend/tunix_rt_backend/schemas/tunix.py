@@ -267,6 +267,7 @@ class TunixRunListItem(BaseModel):
         status: Execution status
         started_at: ISO-8601 timestamp when execution started
         duration_seconds: Execution duration in seconds (None if not completed)
+        metrics: Run metrics (e.g. evaluation scores) (M24)
     """
 
     run_id: str = Field(..., description="Unique run identifier (UUID)")
@@ -276,6 +277,7 @@ class TunixRunListItem(BaseModel):
     status: ExecutionStatus = Field(..., description="Execution status")
     started_at: str = Field(..., description="Start timestamp (ISO-8601)")
     duration_seconds: float | None = Field(None, description="Execution duration")
+    metrics: dict[str, float | int | str | None] | None = Field(None, description="Run metrics")
 
 
 class TunixRunListResponse(BaseModel):

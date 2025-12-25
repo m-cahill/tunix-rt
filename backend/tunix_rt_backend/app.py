@@ -1007,6 +1007,7 @@ async def list_tunix_runs(
             status=run.status,  # type: ignore[arg-type]
             started_at=run.started_at.isoformat(),
             duration_seconds=run.duration_seconds,
+            metrics=run.metrics,
         )
         for run in runs_to_return
     ]

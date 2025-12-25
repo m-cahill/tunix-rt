@@ -51,6 +51,7 @@ class TunixRun(Base):
         String(16), nullable=False
     )  # 'pending', 'running', 'completed', 'failed', 'timeout'
     exit_code: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    metrics: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
     config: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
     started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
