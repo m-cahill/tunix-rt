@@ -7,7 +7,10 @@ import pytest
 pytest.importorskip("transformers")
 pytest.importorskip("torch")
 
-from tunix_rt_backend.services.tunix_execution import _run_inference_sync, generate_predictions
+from tunix_rt_backend.services.tunix_execution import (  # noqa: E402
+    _run_inference_sync,
+    generate_predictions,
+)
 
 
 @pytest.mark.asyncio

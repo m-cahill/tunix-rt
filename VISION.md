@@ -312,6 +312,7 @@ Validation tests for token bounds and schema
 **Output:**  
 – Final checkpoint trained in ≤9 hours  
 – Tunix job history + artifacts  
+– Closed-loop Training + Evaluation + Results (M27+)  
 – Notebook output logs
 
 **Verifiable:** Kaggle session validation

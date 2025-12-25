@@ -164,6 +164,16 @@ function App() {
           }
         })
 
+        // Poll metrics if running
+        if (status.status === 'running') {
+            try {
+                const metrics = await getTunixRunMetrics(runId)
+                setRunMetrics(metrics)
+            } catch (e) {
+                console.warn('Metrics poll failed', e)
+            }
+        }
+
         if (['completed', 'failed', 'timeout'].includes(status.status)) {
           if (pollingIntervalRef.current) clearInterval(pollingIntervalRef.current)
           pollingIntervalRef.current = null

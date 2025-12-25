@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M26 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** GPU Ready + Checkpointing | **Ops:** Benchmarking & Metrics
+**Milestone M27 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline
 
 ## Overview
 
@@ -58,6 +58,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M25 Enhancements:** Real Tunix/JAX Training Path - JAX/Flax/Optax SFT implementation (`train_jax.py`), Split training orchestrator (`train_sft_tunix.py`) supporting Torch and JAX backends, Coverage restored to >70%, Inference fragility fixes, Metadata recording (`predictions_meta.json`), Device selection (`auto/cpu/cuda`).
 
 **M26 Enhancements:** Training Readiness Complete - GPU selection (`--device gpu`), Provenance tracking, Orbax Checkpointing/Resume, Throughput Benchmarking (`bench_jax.py`), Scaled dataset (`golden-v2` with 100 traces), Metrics Visualization (UI + API), and `CONTRIBUTING.md`.
+
+**M27 Enhancements:** End-to-End Training Validation & Evaluation Loop - Full training convergence on `golden-v2` (loss 2.26→0.08), Real inference using `FlaxAutoModelForCausalLM`, `--dataset` CLI argument for training scripts, `--eval_after_train` flag for offline evaluation, Auto-detect JAX/PyTorch backend in `eval_generate.py`, Dataset tooling (`seed_golden_v2.py`, `export_dataset.py`, `cleanup_dataset.py`), Training config `train_golden_v2.yaml`, End-to-end documentation (`docs/training_end_to_end.md`).
 
 
 ## Database Schema

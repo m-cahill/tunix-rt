@@ -825,6 +825,7 @@ async def generate_predictions(dataset_path: Path, output_dir: Path) -> None:
     """Generate predictions.jsonl from dataset (M23/M24).
 
     M24: Replaced placeholder with real inference using distilgpt2.
+    M27: Use trained model if available.
     """
     logger.info(f"Generating predictions from {dataset_path} to {output_dir}")
 
@@ -833,9 +834,16 @@ async def generate_predictions(dataset_path: Path, output_dir: Path) -> None:
         logger.warning(f"Dataset not found for inference: {dataset_path}")
         return
 
+    # Determine model to use
+    model_name = "distilgpt2"
+    final_model_dir = output_dir / "final_model"
+    if final_model_dir.exists():
+        logger.info(f"Found trained model at {final_model_dir}")
+        model_name = str(final_model_dir)
+
     # M24: Run inference in a separate thread to avoid blocking the event loop
     try:
-        await asyncio.to_thread(_run_inference_sync, dataset_path, output_dir)
+        await asyncio.to_thread(_run_inference_sync, dataset_path, output_dir, model_name)
     except Exception as e:
         logger.error(f"Error during prediction generation: {e}")
         # We don't raise here to avoid crashing the whole run flow,
@@ -866,15 +874,35 @@ def _run_inference_sync(  # pragma: no cover
     logger.info(f"Loading model {model_name} for inference...")
     try:
         tokenizer = AutoTokenizer.from_pretrained(model_name)  # type: ignore
-        model = AutoModelForCausalLM.from_pretrained(model_name)  # type: ignore
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
 
-        # Use CPU for deterministic CI smoke
-        device = torch.device("cpu")
+        # Try loading (handling Flax weights if needed)
+        try:
+            model = AutoModelForCausalLM.from_pretrained(model_name)  # type: ignore
+        except OSError:
+            logger.info("Standard load failed, trying from_flax=True...")
+            model = AutoModelForCausalLM.from_pretrained(model_name, from_flax=True)  # type: ignore
+
+        # Use CPU for deterministic CI smoke or if no GPU
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         model.to(device)  # type: ignore
         model.eval()  # type: ignore
     except Exception as e:
         logger.error(f"Failed to load model {model_name}: {e}")
-        raise
+        # Fallback to base model if loading trained model fails?
+        # Only if we tried to load a path. If distilgpt2 failed, we are toast.
+        if Path(model_name).exists():
+            logger.warning("Falling back to distilgpt2")
+            try:
+                tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
+                model = AutoModelForCausalLM.from_pretrained("distilgpt2")
+                model.to(device)
+                model.eval()
+            except Exception:
+                raise e
+        else:
+            raise
 
     predictions = []
 
@@ -941,9 +969,10 @@ def _run_inference_sync(  # pragma: no cover
     try:
         import torch
 
-        if "device" in locals() and isinstance(locals()["device"], torch.device):
+        device_type = torch.device  # Cache the type for isinstance check
+        if "device" in locals() and isinstance(locals()["device"], device_type):
             device_str = str(locals()["device"])
-    except (ImportError, NameError):
+    except (ImportError, NameError, TypeError):
         pass
 
     meta = {

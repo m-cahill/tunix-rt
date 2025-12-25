@@ -4,11 +4,21 @@ import json
 import logging
 import sys
 import time
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 import numpy as np
+
+# Configure stdout for UTF-8 on Windows
+if sys.platform == "win32":
+    import codecs
+    try:
+        sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
+        sys.stderr = codecs.getwriter("utf-8")(sys.stderr.detach())
+    except Exception:
+        pass
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +32,8 @@ def run_jax_sft_training(
     checkpoint_dir: Path | None = None,
     resume_from: str | None = None,
     save_every_steps: int | None = None,
+    eval_after_train: bool = False,
+    eval_set: Path | None = None,
 ) -> None:
     """Run SFT training using JAX/Flax/Optax."""
     print("\n🚀 Starting SFT Training (JAX/Flax)...")
@@ -295,18 +307,46 @@ def run_jax_sft_training(
     print(f"✅ Saved model to: {final_dir}")
     print(f"✅ Saved metrics: {metrics_path}")
 
+    # 6. Evaluation (Optional)
+    if eval_after_train:
+        print("\n🔍 Running post-training evaluation...")
+        if not eval_set or not eval_set.exists():
+             print(f"⚠️  Eval set not found: {eval_set}. Skipping evaluation.")
+        else:
+            eval_script = Path(__file__).parent / "eval_generate.py"
+            cmd = [
+                sys.executable,
+                str(eval_script),
+                "--model", str(final_dir),
+                "--eval-set", str(eval_set),
+                "--output", str(output_dir / "eval_results.jsonl"),
+            ]
+            print(f"   Running: {' '.join(cmd)}")
+            try:
+                subprocess.run(cmd, check=True)
+                print(f"✅ Evaluation complete. Results: {output_dir / 'eval_results.jsonl'}")
+            except subprocess.CalledProcessError as e:
+                print(f"❌ Evaluation failed: {e}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Tunix JAX SFT Training")
     parser.add_argument("--config", type=Path, required=True, help="Path to config YAML")
-    parser.add_argument("--data", type=Path, required=True, help="Path to JSONL dataset")
     parser.add_argument("--output", type=Path, required=True, help="Output directory")
+
+    # Dataset arguments (mutually exclusive)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--data", type=Path, help="Path to JSONL dataset file (legacy)")
+    group.add_argument("--dataset", type=str, help="Dataset key (e.g., golden-v2)")
+
     parser.add_argument("--device", type=str, choices=["auto", "cpu", "gpu"], default=None)
     parser.add_argument("--device_index", type=int, default=0)
     parser.add_argument("--smoke_steps", type=int, default=None)
     parser.add_argument("--checkpoint_dir", type=Path, default=None)
     parser.add_argument("--resume_from", type=str, default=None)
     parser.add_argument("--save_every_steps", type=int, default=None)
+    parser.add_argument("--eval_after_train", action="store_true", help="Run evaluation after training (offline mode)")
+    parser.add_argument("--eval_set", type=Path, default=Path("training/evalsets/eval_v1.jsonl"), help="Path to evaluation dataset")
 
     args = parser.parse_args()
 
@@ -319,9 +359,55 @@ def main():
         print("❌ PyYAML not found. Install backend[training] or pyyaml.")
         sys.exit(1)
 
+    # Resolve dataset path
+    dataset_path = None
+    if args.data:
+        dataset_path = args.data
+    elif args.dataset:
+        # Resolve key to backend/datasets/{key}/dataset.jsonl or datasets/{key}/dataset.jsonl
+        # Try local paths first
+        candidates = [
+            Path("backend/datasets") / args.dataset / f"{args.dataset}.jsonl",
+            Path("datasets") / args.dataset / f"{args.dataset}.jsonl",
+            Path("backend/datasets") / args.dataset / "dataset.jsonl", # Fallback naming?
+            Path("datasets") / args.dataset / "dataset.jsonl",
+        ]
+
+        # M26 standardizes on manifest.json but raw file might be dataset.jsonl or {key}.jsonl
+        # Let's try to find manifest and read 'path'? Or just check file existence.
+        # tools/seed_dataset.py writes to datasets/{key}/manifest.json.
+        # But where is the JSONL? Usually kept alongside or in database?
+        # seed_golden_v2.py wrote: "Created dataset golden-v2 at .../manifest.json"
+        # The actual traces are in DB.
+        # But train_jax.py needs a JSONL file.
+        # The build_dataset_manifest logic in backend DOES NOT write a JSONL by default, it writes manifest.json.
+        # However, `tunix_execution.py` handles EXPORTING the dataset to JSONL before training.
+        # Offline training (manual) expects a JSONL file.
+        # If I use --dataset, I should probably fail if JSONL doesn't exist, OR implicitly export it?
+        # Exporting requires DB access which `train_jax.py` might not have (it's a training script).
+        # So --dataset implies expecting a pre-exported file at a standard location.
+        # seed_golden_v2.py log said: "Created dataset golden-v2 at D:\Coding\tunix-rt\backend\datasets\golden-v2\manifest.json".
+        # It doesn't seem to export JSONL.
+        # So for offline training, the user might need to export it first?
+        # OR `train_jax.py` could assume there's a file.
+        # For M27 manual run, I will assume the user exports it or I point --data to it.
+        # But the prompt says "Add --dataset support... resolves to backend/datasets/golden-v2/dataset.jsonl".
+        # So I will check for that file.
+
+        for cand in candidates:
+            if cand.exists():
+                dataset_path = cand
+                break
+
+        if not dataset_path:
+             print(f"❌ Could not find dataset file for key '{args.dataset}'")
+             print(f"   Checked: {[str(c) for c in candidates]}")
+             print("   Make sure to export the dataset to JSONL first.")
+             sys.exit(1)
+
     # Load data
     dataset = []
-    with open(args.data, "r", encoding="utf-8") as f:
+    with open(dataset_path, "r", encoding="utf-8") as f:
         for line in f:
             try:
                 dataset.append(json.loads(line))
@@ -329,17 +415,20 @@ def main():
                 pass
 
     args.output.mkdir(parents=True, exist_ok=True)
+    output_dir_abs = args.output.resolve()
 
     run_jax_sft_training(
         config=config,
         dataset=dataset,
-        output_dir=args.output,
+        output_dir=output_dir_abs,
         device=args.device,
         device_index=args.device_index,
         smoke_steps=args.smoke_steps,
-        checkpoint_dir=args.checkpoint_dir,
+        checkpoint_dir=args.checkpoint_dir.resolve() if args.checkpoint_dir else None,
         resume_from=args.resume_from,
         save_every_steps=args.save_every_steps,
+        eval_after_train=args.eval_after_train,
+        eval_set=args.eval_set,
     )
 
 if __name__ == "__main__":

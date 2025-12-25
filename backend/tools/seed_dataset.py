@@ -64,8 +64,11 @@ def generate_golden_v2(count: int = 100) -> list[dict[str, Any]]:
         b = rng.randint(1, 100)
         traces.append(
             {
+                "trace_version": "1.0",
                 "prompt": f"What is {a} + {b}?",
-                "steps": [{"content": f"Calculating {a} + {b} = {a + b}"}],
+                "steps": [
+                    {"i": 0, "type": "calculation", "content": f"Calculating {a} + {b} = {a + b}"}
+                ],
                 "final_answer": str(a + b),
                 "meta": {"golden": "v2", "case": "math_gen", "idx": i},
             }
@@ -78,8 +81,9 @@ def generate_golden_v2(count: int = 100) -> list[dict[str, Any]]:
         n = rng.randint(2, 5)
         traces.append(
             {
+                "trace_version": "1.0",
                 "prompt": f"Repeat '{w}' {n} times",
-                "steps": [{"content": f"Repeating {w} {n} times"}],
+                "steps": [{"i": 0, "type": "reasoning", "content": f"Repeating {w} {n} times"}],
                 "final_answer": " ".join([w] * n),
                 "meta": {"golden": "v2", "case": "text_gen", "idx": i},
             }
