@@ -59,6 +59,16 @@ const mockHealthFetchesWithUngarAvailable = () => {
     })
 }
 
+// Helper to wait for all health fetches to complete
+const waitForInitialLoad = async () => {
+  await waitFor(() => {
+    expect(screen.getByTestId('sys:api-status')).toBeInTheDocument()
+    expect(screen.getByTestId('sys:redi-status')).toBeInTheDocument()
+    expect(screen.getByTestId('ungar:status')).toBeInTheDocument()
+    expect(screen.getByTestId('tunix:status')).toBeInTheDocument()
+  })
+}
+
 describe('App', () => {
   beforeEach(() => {
     vi.clearAllMocks()
@@ -148,6 +158,7 @@ describe('App', () => {
     mockAllHealthFetches()
 
     render(<App />)
+    await waitForInitialLoad()
 
     const loadExampleButton = screen.getByText('Load Example')
     await user.click(loadExampleButton)
@@ -175,6 +186,7 @@ describe('App', () => {
     })
 
     render(<App />)
+    await waitForInitialLoad()
 
     // Load example trace
     const loadExampleButton = screen.getByText('Load Example')
@@ -227,6 +239,7 @@ describe('App', () => {
       })
 
     render(<App />)
+    await waitForInitialLoad()
 
     // Load example, upload, then fetch
     const loadExampleButton = screen.getByText('Load Example')
@@ -299,6 +312,7 @@ describe('App', () => {
     })
 
     render(<App />)
+    await waitForInitialLoad()
 
     // Fill in trace IDs
     const baseInput = screen.getByPlaceholderText(/Enter base trace UUID/i) as HTMLInputElement
@@ -346,6 +360,7 @@ describe('App', () => {
     })
 
     render(<App />)
+    await waitForInitialLoad()
 
     const baseInput = screen.getByPlaceholderText(/Enter base trace UUID/i) as HTMLInputElement
     const otherInput = screen.getByPlaceholderText(/Enter other trace UUID/i) as HTMLInputElement
@@ -367,9 +382,7 @@ describe('App', () => {
     render(<App />)
 
     // Wait for initial health check
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toBeInTheDocument()
-    })
+    await waitForInitialLoad()
 
     const compareButton = screen.getByText('Fetch & Compare') as HTMLButtonElement
     expect(compareButton.disabled).toBe(true)
@@ -380,12 +393,12 @@ describe('App', () => {
 
     render(<App />)
 
-    await waitFor(() => {
-      const statusElement = screen.getByTestId('ungar:status')
-      expect(statusElement).toHaveTextContent('Status:')
-      expect(statusElement).toHaveTextContent('Available')
-      expect(screen.getByTestId('ungar:version')).toHaveTextContent('0.1.0')
-    })
+    await waitForInitialLoad()
+
+    const statusElement = screen.getByTestId('ungar:status')
+    expect(statusElement).toHaveTextContent('Status:')
+    expect(statusElement).toHaveTextContent('Available')
+    expect(screen.getByTestId('ungar:version')).toHaveTextContent('0.1.0')
   })
 
   it('generates UNGAR traces successfully', async () => {
@@ -410,9 +423,7 @@ describe('App', () => {
     render(<App />)
 
     // Wait for UNGAR to be available and button to appear
-    await waitFor(() => {
-      expect(screen.getByTestId('ungar:status')).toHaveTextContent('Available')
-    })
+    await waitForInitialLoad()
 
     // Click generate button
     const generateButton = screen.getByTestId('ungar:generate-btn')
@@ -437,9 +448,7 @@ describe('App', () => {
 
     render(<App />)
 
-    await waitFor(() => {
-      expect(screen.getByTestId('ungar:status')).toHaveTextContent('Available')
-    })
+    await waitForInitialLoad()
 
     const generateButton = screen.getByTestId('ungar:generate-btn')
     await user.click(generateButton)
@@ -465,6 +474,7 @@ describe('App', () => {
     })
 
     render(<App />)
+    await waitForInitialLoad()
 
     const loadExampleButton = screen.getByTestId('trace:load-example')
     await user.click(loadExampleButton)
@@ -504,6 +514,7 @@ describe('App', () => {
       })
 
     render(<App />)
+    await waitForInitialLoad()
 
     const loadExampleButton = screen.getByTestId('trace:load-example')
     await user.click(loadExampleButton)
@@ -532,10 +543,10 @@ describe('App', () => {
 
     render(<App />)
 
-    await waitFor(() => {
-      const statusElement = screen.getByTestId('tunix:status')
-      expect(statusElement).toHaveTextContent('Tunix artifacts')
-    })
+    await waitForInitialLoad()
+
+    const statusElement = screen.getByTestId('tunix:status')
+    expect(statusElement).toHaveTextContent('Tunix artifacts')
   })
 
   it('displays runtime not required for Tunix', async () => {
@@ -543,10 +554,10 @@ describe('App', () => {
 
     render(<App />)
 
-    await waitFor(() => {
-      const runtimeElement = screen.getByTestId('tunix:runtime-required')
-      expect(runtimeElement).toHaveTextContent('No (Artifact-based)')
-    })
+    await waitForInitialLoad()
+
+    const runtimeElement = screen.getByTestId('tunix:runtime-required')
+    expect(runtimeElement).toHaveTextContent('No (Artifact-based)')
   })
 
   it('exports Tunix JSONL when dataset key provided', async () => {
@@ -556,13 +567,7 @@ describe('App', () => {
     render(<App />)
 
     // Wait for health fetches to complete
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
-    })
-
-    await waitFor(() => {
-      expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
-    })
+    await waitForInitialLoad()
 
     // Mock export response
     ;(global.fetch as any).mockResolvedValueOnce({
@@ -593,13 +598,7 @@ describe('App', () => {
     render(<App />)
 
     // Wait for health fetches to complete
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
-    })
-
-    await waitFor(() => {
-      expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
-    })
+    await waitForInitialLoad()
 
     // Mock manifest response
     ;(global.fetch as any).mockResolvedValueOnce({
@@ -634,13 +633,7 @@ describe('App', () => {
     render(<App />)
 
     // Wait for health fetches to complete
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
-    })
-
-    await waitFor(() => {
-      expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
-    })
+    await waitForInitialLoad()
 
     // Mock failed export
     ;(global.fetch as any).mockResolvedValueOnce({
@@ -671,13 +664,7 @@ describe('App', () => {
     render(<App />)
 
     // Wait for health fetches to complete
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
-    })
-
-    await waitFor(() => {
-      expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
-    })
+    await waitForInitialLoad()
 
     // Mock run response
     ;(global.fetch as any).mockResolvedValueOnce({
@@ -723,13 +710,7 @@ describe('App', () => {
     render(<App />)
 
     // Wait for health fetches to complete
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
-    })
-
-    await waitFor(() => {
-      expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
-    })
+    await waitForInitialLoad()
 
     // Mock 501 response
     ;(global.fetch as any).mockResolvedValueOnce({
@@ -760,13 +741,7 @@ describe('App', () => {
     render(<App />)
 
     // Wait for health fetches to complete
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
-    })
-
-    await waitFor(() => {
-      expect(screen.getByTestId('tunix:dataset-key')).toBeInTheDocument()
-    })
+    await waitForInitialLoad()
 
     // Mock run response
     ;(global.fetch as any).mockResolvedValueOnce({
@@ -813,9 +788,7 @@ describe('App', () => {
     render(<App />)
 
     // Wait for initial health check
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toBeInTheDocument()
-    })
+    await waitForInitialLoad()
 
     const dryRunButton = screen.getByTestId('tunix:run-dry-btn') as HTMLButtonElement
     const localRunButton = screen.getByTestId('tunix:run-local-btn') as HTMLButtonElement
@@ -830,9 +803,7 @@ describe('App', () => {
 
     render(<App />)
 
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
-    })
+    await waitForInitialLoad()
 
     const historySection = screen.getByTestId('tunix:run-history-section')
     expect(historySection).toBeInTheDocument()
@@ -850,9 +821,7 @@ describe('App', () => {
 
     render(<App />)
 
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
-    })
+    await waitForInitialLoad()
 
     // Mock the run history list response
     ;(global.fetch as any).mockResolvedValueOnce({
@@ -912,9 +881,7 @@ describe('App', () => {
 
     render(<App />)
 
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
-    })
+    await waitForInitialLoad()
 
     // Mock empty run history
     ;(global.fetch as any).mockResolvedValueOnce({
@@ -944,9 +911,7 @@ describe('App', () => {
 
     render(<App />)
 
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
-    })
+    await waitForInitialLoad()
 
     // Mock initial run history
     ;(global.fetch as any).mockResolvedValueOnce({
@@ -1025,9 +990,7 @@ describe('App', () => {
 
     render(<App />)
 
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
-    })
+    await waitForInitialLoad()
 
     // Mock run history list
     ;(global.fetch as any).mockResolvedValueOnce({
@@ -1101,9 +1064,7 @@ describe('App', () => {
 
     render(<App />)
 
-    await waitFor(() => {
-      expect(screen.getByTestId('sys:api-status')).toHaveTextContent('API: healthy')
-    })
+    await waitForInitialLoad()
 
     // Mock error response
     ;(global.fetch as any).mockResolvedValueOnce({

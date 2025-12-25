@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M22 Complete** ✅  
-**Coverage:** 67% Backend Line (new code), 45 Frontend Tests | **Evaluation:** answer_correctness@v1 frozen | **Dataset:** golden-v1 seeded | **Training:** Readiness checklist complete
+**Milestone M23 Complete** ✅  
+**Coverage:** 70% Backend Line (Gate Restored), Clean Frontend Tests | **Evaluation:** Real predictions & scoring | **Training:** Pipeline ready
 
 ## Overview
 
@@ -50,6 +50,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M21 Enhancements:** Security & Reliability Hardening - Frontend dependency audit clean (Vite/esbuild patched), `setuptools` CVE patched, Dependencies pinned (`save-exact=true`), E2E failure observability (traces retained, stderr attached), "Promote Best Trial" UI workflow, Repo hygiene (`ProjectFiles/Workflows` ignored).
 
 **M22 Enhancements:** Training Readiness - Backend coverage 67% (new code for judges/evaluation), `answer_correctness@v1` evaluator (AnswerCorrectnessJudge with deterministic normalization), Golden Dataset (`golden-v1`) seed script with 5 curated test cases, Empty dataset guardrails, Metrics visibility in UI (Registry/History/Tuning), Tuning guardrails against undefined metrics, Idempotency tests for model promotion, Frontend tests for "Promote Best" workflow (Tuning.test.tsx), Frozen evaluation semantics documentation (docs/evaluation.md), Training readiness checklist (docs/training_readiness.md).
+
+**M23 Enhancements:** Evaluation Engine Completion - Real scoring via `AnswerCorrectnessJudge` with `predictions.jsonl` contract, generation step in execution pipeline, Strict `LOCKED_METRICS` enforcement (`answer_correctness`), Backend coverage restored to 70%+, Frontend test stability fixes (`act()` warnings eliminated), Judge validation tests.
 
 
 ## Database Schema
