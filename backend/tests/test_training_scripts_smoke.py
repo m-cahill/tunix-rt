@@ -117,6 +117,9 @@ class TestTrainingScriptSmoke:
     @pytest.mark.training
     def test_train_script_dry_run_validates_config(self):
         """Test that --dry-run catches missing config file."""
+        if not jax_available():
+            pytest.skip("JAX not installed; use: pip install -e '.[training]'")
+
         result = subprocess.run(
             [
                 sys.executable,
@@ -142,6 +145,9 @@ class TestTrainingScriptSmoke:
     @pytest.mark.training
     def test_train_script_dry_run_validates_data(self, tmp_path):
         """Test that --dry-run catches missing dataset file."""
+        if not jax_available():
+            pytest.skip("JAX not installed; use: pip install -e '.[training]'")
+
         result = subprocess.run(
             [
                 sys.executable,

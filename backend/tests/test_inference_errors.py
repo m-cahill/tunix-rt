@@ -1,5 +1,9 @@
 import pytest
 
+# Skip entire module if optional ML dependencies are not installed
+pytest.importorskip("transformers")
+pytest.importorskip("torch")
+
 
 @pytest.mark.asyncio
 async def test_generate_predictions_missing_dataset(tmp_path):

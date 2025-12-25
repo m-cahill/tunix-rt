@@ -3,6 +3,10 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
+# Skip entire module if optional ML dependencies are not installed
+pytest.importorskip("transformers")
+pytest.importorskip("torch")
+
 from tunix_rt_backend.services.tunix_execution import _run_inference_sync, generate_predictions
 
 
