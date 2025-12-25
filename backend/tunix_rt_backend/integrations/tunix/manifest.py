@@ -63,6 +63,7 @@ def build_sft_manifest(request: TunixManifestRequest, dataset_path: str) -> str:
         },
         "training": {
             "learning_rate": request.learning_rate,
+            "weight_decay": request.weight_decay,
             "num_epochs": request.num_epochs,
             "batch_size": request.batch_size,
             "max_seq_length": request.max_seq_length,

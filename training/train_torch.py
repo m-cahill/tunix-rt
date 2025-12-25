@@ -98,6 +98,8 @@ def run_torch_sft_training(
 
     args = TrainingArguments(
         output_dir=str(output_dir / "checkpoints"),
+        learning_rate=float(training_args_config.get("learning_rate", 2e-5)),
+        weight_decay=float(training_args_config.get("weight_decay", 1e-4)),
         num_train_epochs=float(training_args_config.get("num_epochs", 1.0)),
         per_device_train_batch_size=int(training_args_config.get("batch_size", 4)),
         logging_dir=str(output_dir / "logs"),

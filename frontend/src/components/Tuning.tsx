@@ -60,7 +60,8 @@ export function Tuning() {
         max_concurrent_trials: 1,
         search_space: {
           learning_rate: { type: 'loguniform', min: 1e-5, max: 1e-3 },
-          batch_size: { type: 'choice', values: [4, 8] }
+          batch_size: { type: 'choice', values: [4, 8] },
+          weight_decay: { type: 'uniform', min: 0.0, max: 0.1 }
         }
       }
 
@@ -156,7 +157,7 @@ export function Tuning() {
             <label>Samples: </label>
             <input type="number" value={numSamples} onChange={e => setNumSamples(parseInt(e.target.value))} />
           </div>
-          <p><em>Search space is hardcoded to LR (1e-5..1e-3) + Batch Size [4,8] for demo.</em></p>
+          <p><em>Search space is hardcoded to LR (1e-5..1e-3) + Batch Size [4,8] + Weight Decay (0..0.1) for demo.</em></p>
           <button onClick={handleCreate} disabled={loading}>Create Job</button>
         </div>
       )}

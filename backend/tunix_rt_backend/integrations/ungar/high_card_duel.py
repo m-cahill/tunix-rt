@@ -109,9 +109,19 @@ def _convert_episode_to_trace(
     # a minimal reasoning trace
 
     # Parse the episode result (structure depends on UNGAR's play_random_episode output)
-    # Based on UNGAR docs, we expect: initial_state, actions, final_state, returns
-    initial_state = episode_result.get("initial_state")
-    returns = episode_result.get("returns", [0, 0])
+    # UNGAR 0.2+ returns an Episode object, not a dict
+    # Expected Episode attributes: states, moves, rewards
+
+    # Handle Episode object (new API)
+    if hasattr(episode_result, "states"):
+        states = episode_result.states
+        initial_state = states[0] if states else None
+        # rewards is a tuple/list
+        returns = episode_result.rewards if hasattr(episode_result, "rewards") else [0, 0]
+    else:
+        # Handle legacy dict format (fallback)
+        initial_state = episode_result.get("initial_state")
+        returns = episode_result.get("returns", [0, 0])
 
     # Extract card information (this is game-specific logic)
     # High Card Duel: each player has exactly 1 card
@@ -119,7 +129,8 @@ def _convert_episode_to_trace(
     opponent_card_str = _extract_opponent_card(episode_result)
 
     # Determine result
-    my_return = returns[0]
+    # rewards is often a tuple of (p1_reward, p2_reward)
+    my_return = returns[0] if returns else 0
     result = "win" if my_return > 0 else ("loss" if my_return < 0 else "tie")
 
     # Construct trace steps (minimal, deterministic)
@@ -165,8 +176,8 @@ def _extract_my_card(state: Any) -> str:
     # High Card Duel stores cards in my_hand plane of the tensor
     # For now, return a placeholder - this will be implemented when UNGAR is available
     try:
-        # Get my hand cards from the state
-        my_hand = state.to_tensor().cards_in_plane("my_hand")
+        # Get my hand cards from the state (Player 0 perspective)
+        my_hand = state.to_tensor(player=0).cards_in_plane("my_hand")
         if my_hand:
             card = list(my_hand)[0]  # Get first (and only) card
             return _format_card(card)
@@ -177,23 +188,33 @@ def _extract_my_card(state: Any) -> str:
         return "??"
 
 
-def _extract_opponent_card(episode_result: dict[str, Any]) -> str:
+def _extract_opponent_card(episode_result: Any) -> str:
     """Extract opponent's card from final state.
 
     Args:
-        episode_result: Complete episode result
+        episode_result: Complete episode result (Episode object or dict)
 
     Returns:
         Card string in short format
     """
     try:
-        final_state = episode_result.get("final_state")
+        final_state = None
+
+        # Handle Episode object
+        if hasattr(episode_result, "states"):
+            if episode_result.states:
+                final_state = episode_result.states[-1]
+        # Handle legacy dict
+        elif isinstance(episode_result, dict):
+            final_state = episode_result.get("final_state")
+
         if final_state is None:
             logger.warning("Failed to extract opponent_card: final_state is None")
             return "??"
 
         # In High Card Duel, opponent's card is revealed in final state
-        opponent_hand = final_state.to_tensor().cards_in_plane("opponent_hand")
+        # We view from Player 0's perspective
+        opponent_hand = final_state.to_tensor(player=0).cards_in_plane("opponent_hand")
         if opponent_hand:
             card = list(opponent_hand)[0]
             return _format_card(card)

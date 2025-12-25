@@ -92,6 +92,12 @@ class TunixManifestRequest(BaseModel):
         le=1.0,
         description="Learning rate",
     )
+    weight_decay: float = Field(
+        default=0.01,
+        ge=0,
+        le=1.0,
+        description="Weight decay",
+    )
     num_epochs: int = Field(
         default=3,
         ge=1,
@@ -182,6 +188,12 @@ class TunixRunRequest(BaseModel):
         gt=0,
         le=1.0,
         description="Learning rate",
+    )
+    weight_decay: float = Field(
+        default=0.01,
+        ge=0,
+        le=1.0,
+        description="Weight decay",
     )
     num_epochs: int = Field(
         default=3,

@@ -85,6 +85,9 @@ dist-ssr/
 backend/datasets/
 !backend/datasets/test-v1/
 
+# Backend artifacts (tuning runs, model registry)
+backend/artifacts/
+
 # Docker
 .dockerignore
 

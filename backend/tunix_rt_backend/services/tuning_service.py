@@ -84,7 +84,18 @@ def tunix_trainable(
     async def _execute_trial() -> None:
         async with async_session_maker() as db:
             # Create Trial Record
-            trial_id = train.get_context().get_trial_id()
+            # M28 Fix: Use tune.get_context() or tune.get_trial_id()
+            try:
+                trial_id = tune.get_trial_id()
+            except Exception:
+                # Fallback or older ray versions
+                # In Ray 2.9+, tune.get_trial_id() works
+                # If not, try tune.get_context().get_trial_id()
+                try:
+                    trial_id = tune.get_context().get_trial_id()
+                except Exception:
+                    trial_id = "unknown_trial"
+
             job_id = uuid.UUID(tunix_job_id)
 
             # Create or update trial record
@@ -110,7 +121,7 @@ def tunix_trainable(
                 run_request = TunixRunRequest(**run_req_data)  # type: ignore[arg-type]
             except Exception as e:
                 # Invalid params
-                train.report({tunix_metric_name: 0.0, "error": str(e), "done": True})
+                tune.report({tunix_metric_name: 0.0, "error": str(e), "done": True})
                 return
 
             # Execute Run
@@ -119,7 +130,7 @@ def tunix_trainable(
                 response = await execute_tunix_run(run_request, db, async_mode=False)
 
                 if response.status != "completed":
-                    train.report(
+                    tune.report(
                         {tunix_metric_name: 0.0, "done": True, "run_status": response.status}
                     )
                     return
@@ -163,11 +174,11 @@ def tunix_trainable(
                 await db.commit()
 
                 # Report to Ray
-                train.report({tunix_metric_name: score, "run_id": response.run_id, "done": True})
+                tune.report({tunix_metric_name: score, "run_id": response.run_id, "done": True})
 
             except Exception as e:
                 logger.error(f"Trial execution failed: {e}")
-                train.report({tunix_metric_name: 0.0, "error": str(e), "done": True})
+                tune.report({tunix_metric_name: 0.0, "error": str(e), "done": True})
 
                 # Log failure to DB
                 trial = TunixTuningTrial(
@@ -282,8 +293,9 @@ class TuningService:
                 )
 
                 # Configure Tuner
-                # Set local directory for artifacts
-                # storage_path = f"./artifacts/tuning/{job.id}" # Not used directly in Tuner init
+                import os
+
+                storage_root = os.path.abspath("./artifacts/tuning")
 
                 tuner = tune.Tuner(
                     trainable_with_params,
@@ -294,12 +306,9 @@ class TuningService:
                         num_samples=job.num_samples,
                         max_concurrent_trials=job.max_concurrent_trials,
                     ),
-                    run_config=train.RunConfig(
+                    run_config=tune.RunConfig(
                         name=f"tunix_job_{job.id}",
-                        storage_path=str(
-                            uuid.uuid4()
-                        ),  # Placeholder, actually need absolute path or handle relative carefully
-                        # Ray storage can be tricky. Let's rely on default or simple path.
+                        storage_path=storage_root,
                     ),
                 )
 
@@ -329,6 +338,8 @@ class TuningService:
                 await db.commit()
 
             except Exception as e:
-                logger.error(f"Tuning job {job_id} failed: {e}")
+                import traceback
+
+                logger.error(f"Tuning job {job_id} failed: {e}\n{traceback.format_exc()}")
                 job.status = "failed"
                 await db.commit()

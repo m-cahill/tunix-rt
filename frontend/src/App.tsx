@@ -39,6 +39,7 @@ import { LiveLogs } from './components/LiveLogs'
 import { Leaderboard } from './components/Leaderboard'
 import { Tuning } from './components/Tuning'
 import { ModelRegistry } from './components/ModelRegistry'
+import { RunComparison } from './components/RunComparison'
 
 function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'leaderboard' | 'tuning' | 'registry'>('home')
@@ -101,7 +102,20 @@ function App() {
   // M26: Metrics state
   const [runMetrics, setRunMetrics] = useState<TunixRunMetric[] | null>(null)
 
+  // M28: Comparison state
+  const [compareSelection, setCompareSelection] = useState<string[]>([])
+  const [showComparison, setShowComparison] = useState(false)
+
   useEffect(() => {
+    // Check deep link for comparison
+    const params = new URLSearchParams(window.location.search)
+    const runA = params.get('runA')
+    const runB = params.get('runB')
+    if (runA && runB) {
+      setCompareSelection([runA, runB])
+      setShowComparison(true)
+    }
+
     const fetchHealth = async () => {
       // Don't set global loading true on poll, only initial
       if (!apiHealth) setLoading(true)
@@ -521,6 +535,33 @@ function App() {
     }
   }
 
+  const handleToggleCompareSelection = (runId: string) => {
+    setCompareSelection(prev => {
+      if (prev.includes(runId)) {
+        return prev.filter(id => id !== runId)
+      }
+      if (prev.length >= 2) {
+        // Replace first one if full (FIFOish or just block? Replace is friendlier)
+        return [prev[1], runId]
+      }
+      return [...prev, runId]
+    })
+  }
+
+  const handleShowComparison = () => {
+    if (compareSelection.length === 2) {
+      setShowComparison(true)
+      // Update URL without reload
+      const newUrl = `${window.location.pathname}?runA=${compareSelection[0]}&runB=${compareSelection[1]}`
+      window.history.pushState({}, '', newUrl)
+    }
+  }
+
+  const handleCloseComparison = () => {
+    setShowComparison(false)
+    window.history.pushState({}, '', window.location.pathname)
+  }
+
   const renderMetricsChart = () => {
     if (!runMetrics || runMetrics.length === 0) return null
 
@@ -634,6 +675,14 @@ function App() {
         </nav>
       </div>
       <p>Reasoning-Trace Framework with RediAI Integration</p>
+
+      {showComparison && compareSelection.length === 2 && (
+        <RunComparison
+          runAId={compareSelection[0]}
+          runBId={compareSelection[1]}
+          onClose={handleCloseComparison}
+        />
+      )}
 
       {currentPage === 'leaderboard' ? (
         <Leaderboard />
@@ -1084,6 +1133,29 @@ function App() {
 
           {runHistoryExpanded && (
             <div className="run-history-content" data-testid="tunix:run-history-content">
+              {compareSelection.length > 0 && (
+                <div style={{ marginBottom: '10px', padding: '10px', background: '#e3f2fd', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span>
+                    <strong>Compare Runs:</strong> {compareSelection.length}/2 selected
+                  </span>
+                  <div>
+                    <button
+                        onClick={() => setCompareSelection([])}
+                        style={{ marginRight: '10px', fontSize: '0.9em' }}
+                    >
+                        Clear
+                    </button>
+                    <button
+                        onClick={handleShowComparison}
+                        disabled={compareSelection.length !== 2}
+                        style={{ fontWeight: 'bold' }}
+                    >
+                        Compare
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {runHistoryLoading && <p>Loading run history...</p>}
 
               {runHistoryError && (
@@ -1101,6 +1173,7 @@ function App() {
                   <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <thead>
                       <tr>
+                        <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}></th>
                         <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Status</th>
                         <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Mode</th>
                         <th style={{ textAlign: 'left', padding: '0.5em', borderBottom: '2px solid #ccc' }}>Dataset</th>
@@ -1115,6 +1188,13 @@ function App() {
                       {runHistory.data.map((run) => (
                         <>
                           <tr key={run.run_id} data-testid={`tunix:history-row-${run.run_id}`}>
+                            <td style={{ padding: '0.5em', borderBottom: '1px solid #eee' }}>
+                                <input
+                                    type="checkbox"
+                                    checked={compareSelection.includes(run.run_id)}
+                                    onChange={() => handleToggleCompareSelection(run.run_id)}
+                                />
+                            </td>
                             <td style={{ padding: '0.5em', borderBottom: '1px solid #eee' }}>
                               <span className={`status-badge status-${run.status}`} data-testid={`tunix:history-status-${run.run_id}`}>
                                 {run.status}
@@ -1150,7 +1230,7 @@ function App() {
                           </tr>
                           {selectedRunId === run.run_id && selectedRunDetail && (
                             <tr key={`${run.run_id}-detail`}>
-                              <td colSpan={8} style={{ padding: '1em', backgroundColor: '#f9f9f9' }}>
+                              <td colSpan={9} style={{ padding: '1em', backgroundColor: '#f9f9f9' }}>
                                 <div className="run-detail" data-testid={`tunix:run-detail-${run.run_id}`}>
                                   <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                                     <h4>Run Details</h4>

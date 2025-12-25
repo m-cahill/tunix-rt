@@ -61,6 +61,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 
 **M27 Enhancements:** End-to-End Training Validation & Evaluation Loop - Full training convergence on `golden-v2` (loss 2.26→0.08), Real inference using `FlaxAutoModelForCausalLM`, `--dataset` CLI argument for training scripts, `--eval_after_train` flag for offline evaluation, Auto-detect JAX/PyTorch backend in `eval_generate.py`, Dataset tooling (`seed_golden_v2.py`, `export_dataset.py`, `cleanup_dataset.py`), Training config `train_golden_v2.yaml`, End-to-end documentation (`docs/training_end_to_end.md`).
 
+**M28 Enhancements:** Hyperparameter Tuning & Leaderboard - M28 enables hyperparameter sweeps with Ray Tune, adds a "Compare Runs" UI for side-by-side analysis, standardizes `answer_correctness` scoring on the leaderboard, and includes fixes for UNGAR integration.
+
 
 ## Database Schema
 

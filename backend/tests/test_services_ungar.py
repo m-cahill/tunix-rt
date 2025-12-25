@@ -2,6 +2,7 @@
 
 import uuid
 from typing import AsyncGenerator
+from unittest.mock import patch
 
 import pytest
 import pytest_asyncio
@@ -75,8 +76,12 @@ class TestUngarGeneratorService:
         """Generating traces without UNGAR should raise ValueError."""
         request = UngarGenerateRequest(count=5, seed=42, persist=False)
 
-        with pytest.raises(ValueError, match="UNGAR is not installed"):
-            await generate_high_card_duel_traces(request, test_db)
+        # Mock ungar_available to return False regardless of installation
+        with patch(
+            "tunix_rt_backend.integrations.ungar.availability.ungar_available", return_value=False
+        ):
+            with pytest.raises(ValueError, match="UNGAR is not installed"):
+                await generate_high_card_duel_traces(request, test_db)
 
     @pytest.mark.asyncio
     @pytest.mark.ungar
