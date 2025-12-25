@@ -476,7 +476,7 @@ To execute this run, set dry_run=false in the request.
     )
 
 
-async def execute_local(
+async def execute_local(  # pragma: no cover
     run_id: str,
     request: TunixRunRequest,
     output_dir: str,
@@ -494,6 +494,9 @@ async def execute_local(
 
     Returns:
         TunixRunResponse with execution results
+
+    Note: This function spawns the training script as a subprocess.
+    It is excluded from coverage in base CI where training deps are not installed.
     """
     # M24 Update: We now execute the internal training script (training/train_sft_tunix.py)
     # instead of expecting a 'tunix' CLI to be on the PATH.
@@ -839,10 +842,14 @@ async def generate_predictions(dataset_path: Path, output_dir: Path) -> None:
         raise
 
 
-def _run_inference_sync(
+def _run_inference_sync(  # pragma: no cover
     dataset_path: Path, output_dir: Path, model_name: str = "distilgpt2"
 ) -> None:
-    """Synchronous inference logic (M24)."""
+    """Synchronous inference logic (M24).
+
+    Note: This function requires optional ML dependencies (torch, transformers).
+    It is excluded from coverage in base CI where those deps are not installed.
+    """
     try:
         import torch  # type: ignore[import-not-found]
         from transformers import (  # type: ignore[import-not-found]
