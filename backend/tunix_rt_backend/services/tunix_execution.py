@@ -10,6 +10,7 @@ M14 Enhancement: Persist all runs to database for audit trail and history.
 
 The service handles optional Tunix dependency gracefully via lazy imports.
 """
+# mypy: disable-error-code="unused-ignore"
 
 import asyncio
 import json
@@ -864,13 +865,13 @@ def _run_inference_sync(  # pragma: no cover
 
     logger.info(f"Loading model {model_name} for inference...")
     try:
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
-        model = AutoModelForCausalLM.from_pretrained(model_name)
+        tokenizer = AutoTokenizer.from_pretrained(model_name)  # type: ignore
+        model = AutoModelForCausalLM.from_pretrained(model_name)  # type: ignore
 
         # Use CPU for deterministic CI smoke
         device = torch.device("cpu")
-        model.to(device)
-        model.eval()
+        model.to(device)  # type: ignore
+        model.eval()  # type: ignore
     except Exception as e:
         logger.error(f"Failed to load model {model_name}: {e}")
         raise

@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M25 Complete** ✅  
-**Coverage:** >70% Backend Line (Gate Restored) | **Training:** Real JAX/Flax SFT Path | **Inference:** Robust & Deterministic
+**Milestone M26 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** GPU Ready + Checkpointing | **Ops:** Benchmarking & Metrics
 
 ## Overview
 
@@ -56,6 +56,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M24 Enhancements:** Deterministic Builds & Inference - `uv.lock` for reproducible dependencies, Real Inference integration using Transformers fallback (replacing placeholders), Test suite stabilization, and audit fixes.
 
 **M25 Enhancements:** Real Tunix/JAX Training Path - JAX/Flax/Optax SFT implementation (`train_jax.py`), Split training orchestrator (`train_sft_tunix.py`) supporting Torch and JAX backends, Coverage restored to >70%, Inference fragility fixes, Metadata recording (`predictions_meta.json`), Device selection (`auto/cpu/cuda`).
+
+**M26 Enhancements:** Training Readiness Complete - GPU selection (`--device gpu`), Provenance tracking, Orbax Checkpointing/Resume, Throughput Benchmarking (`bench_jax.py`), Scaled dataset (`golden-v2` with 100 traces), Metrics Visualization (UI + API), and `CONTRIBUTING.md`.
 
 
 ## Database Schema

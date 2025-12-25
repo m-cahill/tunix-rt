@@ -35,6 +35,7 @@ repos:
           - sqlalchemy[asyncio]>=2.0.0
           - httpx>=0.25.0
           - types-pyyaml
+          - prometheus-client
         pass_filenames: false
 
   # General file hygiene

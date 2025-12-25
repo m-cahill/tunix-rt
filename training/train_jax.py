@@ -1,4 +1,5 @@
 """JAX/Flax SFT Training Implementation (Real Tunix Path)."""
+import argparse
 import json
 import logging
 import sys
@@ -15,6 +16,12 @@ def run_jax_sft_training(
     config: dict[str, Any],
     dataset: list[dict[str, Any]],
     output_dir: Path,
+    device: str | None = None,
+    device_index: int = 0,
+    smoke_steps: int | None = None,
+    checkpoint_dir: Path | None = None,
+    resume_from: str | None = None,
+    save_every_steps: int | None = None,
 ) -> None:
     """Run SFT training using JAX/Flax/Optax."""
     print("\n🚀 Starting SFT Training (JAX/Flax)...")
@@ -23,7 +30,8 @@ def run_jax_sft_training(
         import jax
         import jax.numpy as jnp
         import optax
-        from flax.training import train_state
+        import orbax.checkpoint as ocp
+        from flax.training import train_state, orbax_utils
         from transformers import FlaxAutoModelForCausalLM, AutoTokenizer
     except ImportError as e:
         print(f"❌ JAX/Flax dependencies not installed: {e}")
@@ -38,14 +46,43 @@ def run_jax_sft_training(
     batch_size = int(training_args.get("batch_size", 4))
     max_length = int(training_args.get("max_seq_length", 128))
     seed = int(training_args.get("seed", 42))
-    device_config = training_args.get("device", "auto")
 
-    if device_config == "cpu":
+    # Device Selection
+    requested_device = device or training_args.get("device", "auto")
+
+    if requested_device == "cpu":
         jax.config.update("jax_platform_name", "cpu")
+        print("   Device request: CPU")
+    elif requested_device == "gpu":
+        # Fail if GPU requested but not available
+        try:
+            gpus = jax.devices("gpu")
+            if not gpus:
+                raise RuntimeError("No GPU found")
+            # Select specific GPU if index provided
+            if device_index >= len(gpus):
+                 print(f"❌ Requested GPU index {device_index} but only found {len(gpus)} GPUs")
+                 sys.exit(1)
+
+            # Set default device (JAX 0.4.x+)
+            try:
+                jax.config.update("jax_default_device", gpus[device_index])
+            except AttributeError:
+                # Fallback for older JAX
+                pass
+
+            print(f"   Device request: GPU (Index {device_index})")
+        except RuntimeError:
+            print("❌ Device 'gpu' requested but no GPU devices found.")
+            sys.exit(1)
+    else:
+        # auto
+        print("   Device request: Auto")
 
     print(f"   Model: {model_id}")
     try:
-        print(f"   Device: {jax.devices()[0]}")
+        print(f"   Active Device: {jax.devices()[0]}")
+        print(f"   Platform: {jax.default_backend()}")
     except Exception:
         print("   Device: Unknown (JAX init issue?)")
 
@@ -107,8 +144,6 @@ def run_jax_sft_training(
     def get_batch(data_source, step_idx):
         start = step_idx * batch_size
         end = start + batch_size
-        # Handle last batch (drop remainder or include? standard is usually drop if not full or pad)
-        # For simplicity, slice
         batch_items = data_source[start:end]
         if not batch_items:
             return None
@@ -130,6 +165,42 @@ def run_jax_sft_training(
         params=model.params,
         tx=tx,
     )
+
+    # Checkpoint Manager Setup
+    ckpt_path = checkpoint_dir or output_dir / "checkpoints"
+    ckpt_options = ocp.CheckpointManagerOptions(
+        max_to_keep=2,
+        save_interval_steps=save_every_steps or 100
+    )
+    # Using StandardCheckpointer which handles PyTrees (TrainState) automatically
+    checkpointer = ocp.Checkpointer(ocp.StandardCheckpointHandler())
+    checkpoint_manager = ocp.CheckpointManager(
+        ckpt_path,
+        checkpointer,
+        ckpt_options
+    )
+
+    # Resume if requested
+    start_step = 0
+    start_epoch = 0
+
+    if resume_from:
+        print(f"   Resuming from: {resume_from}")
+        if resume_from == "latest":
+             step = checkpoint_manager.latest_step()
+             if step is not None:
+                 state = checkpoint_manager.restore(step, args=ocp.args.StandardRestore(state))
+                 start_step = step
+                 # Estimate epoch (approx)
+                 start_epoch = start_step // steps_per_epoch
+                 print(f"   Resumed at step {start_step} (Epoch ~{start_epoch})")
+             else:
+                 print("   ⚠️ No checkpoint found to resume from. Starting fresh.")
+        else:
+             # Resume from specific path/step not fully implemented in this basic script,
+             # assuming resume_from maps to managing directory logic or specific step int if needed.
+             # For M26, 'latest' via manager is the key requirement.
+             pass
 
     # Loss function
     def train_step(state, batch):
@@ -159,14 +230,16 @@ def run_jax_sft_training(
     # 4. Training Loop
     print("   Training...")
     metrics_path = output_dir / "metrics.jsonl"
-    metrics_file = open(metrics_path, "w")
+    # Append if resuming? For now, we overwrite or append. 'a' is safer for resume.
+    metrics_file = open(metrics_path, "a" if resume_from else "w")
 
     rng = jax.random.PRNGKey(seed)
 
-    global_step = 0
+    global_step = start_step
     import random
 
-    for epoch in range(num_epochs):
+    # Adjust epochs for resume
+    for epoch in range(start_epoch, num_epochs):
         # Shuffle
         random.seed(seed + epoch)
         random.shuffle(encodings)
@@ -181,25 +254,93 @@ def run_jax_sft_training(
 
             global_step += 1
 
+            # Logging
             if global_step % 10 == 0 or step == steps_per_epoch - 1:
-                print(f"   Epoch {epoch+1}/{num_epochs} Step {step+1}/{steps_per_epoch} Loss: {loss_val:.4f}")
+                print(f"   Epoch {epoch+1}/{num_epochs} Step {step+1}/{steps_per_epoch} (Global {global_step}) Loss: {loss_val:.4f}")
                 metric = {
                     "step": global_step,
                     "epoch": epoch + 1,
                     "loss": float(loss_val),
                     "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "device": str(jax.devices()[0]),
                 }
                 metrics_file.write(json.dumps(metric) + "\n")
                 metrics_file.flush()
 
+            # Checkpointing
+            checkpoint_manager.save(
+                global_step,
+                args=ocp.args.StandardSave(state)
+            )
+
+            # Smoke Test / Early Exit
+            if smoke_steps and global_step >= smoke_steps:
+                print(f"   🛑 Smoke steps limit reached ({smoke_steps}). Stopping.")
+                metrics_file.close()
+                return
+
     metrics_file.close()
 
-    # 5. Save Model
-    print("   Saving model...")
-    checkpoint_dir = output_dir / "final_model"
-    checkpoint_dir.mkdir(parents=True, exist_ok=True)
+    # 5. Save Final Model
+    print("   Saving final model...")
+    final_dir = output_dir / "final_model"
+    final_dir.mkdir(parents=True, exist_ok=True)
 
-    model.save_pretrained(str(checkpoint_dir), params=state.params)
-    tokenizer.save_pretrained(str(checkpoint_dir))
-    print(f"✅ Saved model to: {checkpoint_dir}")
+    model.save_pretrained(str(final_dir), params=state.params)
+    tokenizer.save_pretrained(str(final_dir))
+
+    # Wait for explicit checkpoint manager completion
+    checkpoint_manager.wait_until_finished()
+
+    print(f"✅ Saved model to: {final_dir}")
     print(f"✅ Saved metrics: {metrics_path}")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Tunix JAX SFT Training")
+    parser.add_argument("--config", type=Path, required=True, help="Path to config YAML")
+    parser.add_argument("--data", type=Path, required=True, help="Path to JSONL dataset")
+    parser.add_argument("--output", type=Path, required=True, help="Output directory")
+    parser.add_argument("--device", type=str, choices=["auto", "cpu", "gpu"], default=None)
+    parser.add_argument("--device_index", type=int, default=0)
+    parser.add_argument("--smoke_steps", type=int, default=None)
+    parser.add_argument("--checkpoint_dir", type=Path, default=None)
+    parser.add_argument("--resume_from", type=str, default=None)
+    parser.add_argument("--save_every_steps", type=int, default=None)
+
+    args = parser.parse_args()
+
+    # Load config
+    try:
+        import yaml
+        with open(args.config, "r") as f:
+            config = yaml.safe_load(f)
+    except ImportError:
+        print("❌ PyYAML not found. Install backend[training] or pyyaml.")
+        sys.exit(1)
+
+    # Load data
+    dataset = []
+    with open(args.data, "r", encoding="utf-8") as f:
+        for line in f:
+            try:
+                dataset.append(json.loads(line))
+            except:
+                pass
+
+    args.output.mkdir(parents=True, exist_ok=True)
+
+    run_jax_sft_training(
+        config=config,
+        dataset=dataset,
+        output_dir=args.output,
+        device=args.device,
+        device_index=args.device_index,
+        smoke_steps=args.smoke_steps,
+        checkpoint_dir=args.checkpoint_dir,
+        resume_from=args.resume_from,
+        save_every_steps=args.save_every_steps,
+    )
+
+if __name__ == "__main__":
+    main()

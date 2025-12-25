@@ -18,6 +18,7 @@ import {
   cancelRun,
   getEvaluation,
   evaluateRun,
+  getTunixRunMetrics,
   type HealthResponse,
   type RediHealthResponse,
   type TraceDetail,
@@ -30,6 +31,7 @@ import {
   type TunixRunListResponse,
   type ArtifactListResponse,
   type EvaluationResponse,
+  type TunixRunMetric,
   ApiError,
 } from './api/client'
 import { EXAMPLE_TRACE } from './exampleTrace'
@@ -95,6 +97,9 @@ function App() {
   // M17: Evaluation state
   const [selectedRunEvaluation, setSelectedRunEvaluation] = useState<EvaluationResponse | null>(null)
   const [evaluationLoading, setEvaluationLoading] = useState(false)
+
+  // M26: Metrics state
+  const [runMetrics, setRunMetrics] = useState<TunixRunMetric[] | null>(null)
 
   useEffect(() => {
     const fetchHealth = async () => {
@@ -428,6 +433,7 @@ function App() {
     setSelectedRunDetail(null)
     setArtifacts(null)
     setSelectedRunEvaluation(null)
+    setRunMetrics(null)
     setRunHistoryError(null)
 
     try {
@@ -443,6 +449,15 @@ function App() {
         } catch (e) {
             setSelectedRunEvaluation(null)
         }
+      }
+
+      // M26: Fetch metrics
+      try {
+          const metrics = await getTunixRunMetrics(runId)
+          setRunMetrics(metrics)
+      } catch (e) {
+          console.warn('Failed to load metrics', e)
+          setRunMetrics(null)
       }
     } catch (error) {
       if (error instanceof ApiError) {
@@ -494,6 +509,60 @@ function App() {
     } finally {
         setArtifactsLoading(false)
     }
+  }
+
+  const renderMetricsChart = () => {
+    if (!runMetrics || runMetrics.length === 0) return null
+
+    const width = 600
+    const height = 200
+    const padding = 25
+
+    const steps = runMetrics.map(m => m.step)
+    const losses = runMetrics.map(m => m.loss)
+
+    const maxStep = Math.max(...steps)
+    const minStep = Math.min(...steps)
+    const maxLoss = Math.max(...losses) * 1.1 // Add 10% headroom
+
+    const points = runMetrics.map(m => {
+        const x = padding + ((m.step - minStep) / (maxStep - minStep || 1)) * (width - 2 * padding)
+        // Invert Y because SVG y=0 is top
+        const y = height - padding - (m.loss / (maxLoss || 1)) * (height - 2 * padding)
+        return `${x},${y}`
+    }).join(' ')
+
+    return (
+        <div style={{ marginTop: '10px', padding: '15px', border: '1px solid #e0e0e0', borderRadius: '4px', backgroundColor: '#fff' }}>
+            <h5 style={{ marginTop: 0 }}>Training Loss</h5>
+            <div style={{ overflowX: 'auto' }}>
+                <svg width={width} height={height} style={{ background: '#fafafa', border: '1px solid #eee' }}>
+                    {/* X Axis */}
+                    <line x1={padding} y1={height - padding} x2={width - padding} y2={height - padding} stroke="#ccc" />
+                    {/* Y Axis */}
+                    <line x1={padding} y1={padding} x2={padding} y2={height - padding} stroke="#ccc" />
+
+                    {/* Data Line */}
+                    <polyline points={points} fill="none" stroke="#2196f3" strokeWidth="2" strokeLinejoin="round" />
+
+                    {/* X Label */}
+                    <text x={width / 2} y={height - 5} textAnchor="middle" fontSize="10" fill="#666">
+                        Step ({minStep} - {maxStep})
+                    </text>
+
+                    {/* Y Label (Latest Loss) */}
+                    <text x={width - padding} y={padding} textAnchor="end" fontSize="10" fill="#666">
+                        Loss
+                    </text>
+                </svg>
+            </div>
+            <div style={{ fontSize: '0.9em', marginTop: '10px', display: 'flex', gap: '20px' }}>
+                <span><strong>Latest Step:</strong> {runMetrics[runMetrics.length - 1].step}</span>
+                <span><strong>Latest Loss:</strong> {runMetrics[runMetrics.length - 1].loss.toFixed(4)}</span>
+                {runMetrics[0].device && <span><strong>Device:</strong> {runMetrics[0].device}</span>}
+            </div>
+        </div>
+    )
   }
 
   return (
@@ -1123,6 +1192,9 @@ function App() {
                                         )}
                                     </div>
                                   )}
+
+                                  {/* M26: Metrics Chart */}
+                                  {renderMetricsChart()}
 
                                   {['pending', 'running'].includes(selectedRunDetail.status) ? (
                                     <LiveLogs

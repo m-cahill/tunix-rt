@@ -10,7 +10,7 @@ import uuid
 from collections.abc import AsyncGenerator
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Any
 
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -1328,6 +1328,60 @@ async def download_artifact(
         )
 
     return FileResponse(path=file_path, filename=filename)
+
+
+@app.get("/api/tunix/runs/{run_id}/metrics")
+async def get_tunix_run_metrics(
+    run_id: uuid.UUID,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> list[dict[str, Any]]:
+    """Get time-series metrics for a Tunix run.
+
+    Reads from the metrics.jsonl artifact in the run's output directory.
+    Returns a list of metric points (step, loss, etc.).
+
+    Args:
+        run_id: UUID of the run
+        db: Database session
+
+    Returns:
+        List of metric dictionaries
+    """
+    from tunix_rt_backend.db.models import TunixRun
+
+    run = await db.get(TunixRun, run_id)
+    if not run:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Run not found",
+        )
+
+    # Determine output_dir (replicate logic from other endpoints)
+    if not run.config or "output_dir" not in run.config:
+        output_dir = f"./output/tunix_run_{str(run.run_id)[:8]}"
+    else:
+        output_dir = run.config["output_dir"] or f"./output/tunix_run_{str(run.run_id)[:8]}"
+
+    metrics_path = Path(output_dir) / "metrics.jsonl"
+
+    if not metrics_path.exists():
+        return []
+
+    metrics = []
+    try:
+        with open(metrics_path, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    try:
+                        metrics.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        pass
+    except Exception as e:
+        logger.warning(f"Failed to read metrics for {run_id}: {e}")
+        # Return what we have
+        pass
+
+    return metrics
 
 
 # ================================================================================

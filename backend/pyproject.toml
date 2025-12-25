@@ -44,6 +44,7 @@ training = [
     "jax[cpu]>=0.4.20",
     "flax>=0.7.0",
     "optax>=0.1.7",
+    "orbax-checkpoint>=0.5.0",
     # M24: Inference dependencies
     "transformers>=4.30.0",
     "torch>=2.0.0",
