@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Tunix SFT Training Script for tunix-rt.
+"""Tunix SFT Training Orchestrator.
 
-This script runs Supervised Fine-Tuning.
-M24 Update: Supports fallback to PyTorch/Transformers if JAX/Tunix is missing.
-
-Usage:
-    python training/train_sft_tunix.py \
-        --config training/configs/sft_tiny.yaml \
-        --data path/to/dataset.jsonl \
-        --output artifacts/training_runs/my_run
-
-Requirements:
-    - Tunix/JAX (preferred)
-    - OR Transformers/PyTorch (fallback for M24 smoke/tiny training)
+Routes training requests to the appropriate backend:
+- JAX (Preferred): Real Flax/Optax implementation
+- PyTorch (Fallback): Transformers Trainer implementation
 """
 
 import argparse
@@ -38,19 +29,12 @@ except ImportError:
     sys.exit(1)
 
 
-def check_tunix_available() -> bool:
-    """Check if Tunix is installed."""
-    try:
-        import tunix  # noqa: F401
-        return True
-    except ImportError:
-        return False
-
-
 def check_jax_available() -> bool:
     """Check if JAX is installed."""
     try:
         import jax  # noqa: F401
+        import flax  # noqa: F401
+        import optax  # noqa: F401
         return True
     except ImportError:
         return False
@@ -137,131 +121,6 @@ def save_manifest(manifest: dict[str, Any], output_dir: Path) -> None:
     print(f"✅ Saved run manifest: {manifest_path}")
 
 
-def run_tunix_sft_training(
-    config: dict[str, Any],
-    dataset: list[dict[str, Any]],
-    output_dir: Path,
-) -> None:
-    """Run Tunix SFT training (JAX)."""
-    print("\n🚀 Starting Tunix SFT Training (JAX)...")
-    print("⚠️  Note: Actual Tunix training integration is a placeholder (M24)")
-    # (Placeholder logic omitted for brevity, focusing on Torch impl below)
-    # If JAX implementation was real, it would go here.
-    # For now, create dummy artifacts to satisfy contract if Tunix selected.
-    metrics_path = output_dir / "metrics.jsonl"
-    with open(metrics_path, "w") as f:
-        metric = {
-            "step": 0,
-            "loss": 2.5,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-        }
-        f.write(json.dumps(metric) + "\n")
-
-
-def run_torch_sft_training(
-    config: dict[str, Any],
-    dataset: list[dict[str, Any]],
-    output_dir: Path,
-) -> None:
-    """Run SFT training using PyTorch/Transformers (M24 Real Tiny Training)."""
-    print("\n🚀 Starting SFT Training (PyTorch/Transformers)...")
-    import torch
-    from transformers import (
-        AutoModelForCausalLM,
-        AutoTokenizer,
-        Trainer,
-        TrainingArguments,
-        DataCollatorForLanguageModeling
-    )
-    from torch.utils.data import Dataset
-
-    model_id = config.get("model", {}).get("model_id", "distilgpt2")
-    training_args = config.get("training", {})
-
-    print(f"   Model: {model_id}")
-    print(f"   Steps: {training_args.get('num_epochs', 1)} epochs (or max_steps)")
-
-    # Load Tokenizer & Model
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
-
-    model = AutoModelForCausalLM.from_pretrained(model_id)
-
-    # Simple Dataset Wrapper
-    class SFTDataset(Dataset):
-        def __init__(self, samples, tokenizer, max_length=128):
-            self.encodings = []
-            for s in samples:
-                # Use 'prompts' as text. In Tunix format, this contains the full turn usually.
-                # If 'final_answer' exists, we might append it?
-                # Assuming 'prompts' contains the training text.
-                text = s.get("prompts", "")
-                if not text:
-                    continue
-                enc = tokenizer(
-                    text,
-                    truncation=True,
-                    max_length=max_length,
-                    padding="max_length"
-                )
-                self.encodings.append(enc)
-
-        def __getitem__(self, idx):
-            item = {key: torch.tensor(val) for key, val in self.encodings[idx].items()}
-            item["labels"] = item["input_ids"].clone()
-            return item
-
-        def __len__(self):
-            return len(self.encodings)
-
-    train_dataset = SFTDataset(
-        dataset,
-        tokenizer,
-        max_length=training_args.get("max_seq_length", 128)
-    )
-
-    # Training Arguments
-    args = TrainingArguments(
-        output_dir=str(output_dir / "checkpoints"),
-        num_train_epochs=float(training_args.get("num_epochs", 1.0)),
-        per_device_train_batch_size=int(training_args.get("batch_size", 4)),
-        logging_dir=str(output_dir / "logs"),
-        logging_steps=10,
-        save_strategy="epoch",
-        use_cpu=not torch.cuda.is_available(),
-        report_to="none",  # Disable wandb etc for smoke
-    )
-
-    trainer = Trainer(
-        model=model,
-        args=args,
-        train_dataset=train_dataset,
-        data_collator=DataCollatorForLanguageModeling(tokenizer, mlm=False),
-    )
-
-    print("   Training...")
-    train_result = trainer.train()
-
-    # Save Model
-    checkpoint_dir = output_dir / "final_model"
-    trainer.save_model(str(checkpoint_dir))
-    tokenizer.save_pretrained(str(checkpoint_dir))
-    print(f"✅ Saved model to: {checkpoint_dir}")
-
-    # Save Metrics
-    metrics_path = output_dir / "metrics.jsonl"
-    with open(metrics_path, "w") as f:
-        # Log final loss
-            metric = {
-            "step": train_result.global_step,
-            "loss": train_result.training_loss,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            }
-            f.write(json.dumps(metric) + "\n")
-    print(f"✅ Saved metrics: {metrics_path}")
-
-
 def main():
     """Main entry point."""
     parser = argparse.ArgumentParser(
@@ -272,27 +131,37 @@ def main():
     parser.add_argument("--output", type=Path, required=True, help="Output directory")
     parser.add_argument("--max-samples", type=int, default=None)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--backend", type=str, choices=["auto", "jax", "torch"], default="auto")
 
     args = parser.parse_args()
 
-    print("🔥 Tunix RT - SFT Training Script")
+    print("🔥 Tunix RT - SFT Training Orchestrator")
     print("=" * 70)
 
     # Detect Backend
-    tunix_available = check_tunix_available()
     jax_available = check_jax_available()
     torch_available = check_torch_available()
 
-    if tunix_available and jax_available:
-        backend = "tunix"
-        print("✅ Backend: Tunix (JAX)")
-    elif torch_available:
-        backend = "torch"
-        print("✅ Backend: PyTorch/Transformers (Fallback)")
-    else:
-        print("❌ No suitable backend found (Tunix/JAX or PyTorch)")
-        print("   Install 'backend[training]' dependencies.")
+    backend = args.backend
+    if backend == "auto":
+        if jax_available:
+            backend = "jax"
+        elif torch_available:
+            backend = "torch"
+        else:
+            print("❌ No suitable backend found (JAX or PyTorch)")
+            print("   Install 'backend[training]' dependencies.")
+            sys.exit(1)
+
+    if backend == "jax" and not jax_available:
+        print("❌ JAX requested but not installed.")
         sys.exit(1)
+
+    if backend == "torch" and not torch_available:
+        print("❌ PyTorch requested but not installed.")
+        sys.exit(1)
+
+    print(f"✅ Backend: {backend.upper()}")
 
     # Load config & data
     if not args.config.exists():
@@ -323,10 +192,31 @@ def main():
     save_manifest(manifest, args.output)
 
     # Run Training
-    if backend == "tunix":
-    run_tunix_sft_training(config, dataset, args.output)
-    else:
-        run_torch_sft_training(config, dataset, args.output)
+    if backend == "jax":
+        try:
+             # Try local import first (when running as script from training dir)
+             import train_jax
+             train_jax.run_jax_sft_training(config, dataset, args.output)
+        except ImportError:
+             try:
+                 # Try package import (when running from root)
+                 from training.train_jax import run_jax_sft_training
+                 run_jax_sft_training(config, dataset, args.output)
+             except ImportError as e:
+                 print(f"❌ Failed to import JAX backend: {e}")
+                 sys.exit(1)
+
+    elif backend == "torch":
+        try:
+             import train_torch
+             train_torch.run_torch_sft_training(config, dataset, args.output)
+        except ImportError:
+             try:
+                 from training.train_torch import run_torch_sft_training
+                 run_torch_sft_training(config, dataset, args.output)
+             except ImportError as e:
+                 print(f"❌ Failed to import Torch backend: {e}")
+                 sys.exit(1)
 
     print("\n✅ Training Complete!")
 

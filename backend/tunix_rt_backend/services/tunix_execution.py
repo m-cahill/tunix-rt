@@ -366,6 +366,7 @@ async def execute_dry_run(
             num_epochs=request.num_epochs,
             batch_size=request.batch_size,
             max_seq_length=request.max_seq_length,
+            device=request.device,
         )
         dataset_path = f"./datasets/{request.dataset_key}.jsonl"
         manifest_yaml = build_sft_manifest(manifest_request, dataset_path)
@@ -514,6 +515,7 @@ async def execute_local(
             num_epochs=request.num_epochs,
             batch_size=request.batch_size,
             max_seq_length=request.max_seq_length,
+            device=request.device,
         )
         dataset_path = f"./datasets/{request.dataset_key}.jsonl"
         manifest_yaml = build_sft_manifest(manifest_request, dataset_path)
@@ -910,12 +912,31 @@ def _run_inference_sync(
                 logger.warning(f"Inference failed for item {trace_id}: {e}")
                 continue
 
+    if not predictions:
+        logger.error("No predictions generated. Skipping file creation.")
+        raise RuntimeError("Inference failed for all items (no predictions generated)")
+
     output_path = output_dir / "predictions.jsonl"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     with open(output_path, "w", encoding="utf-8") as f:
         for p in predictions:
             f.write(json.dumps(p) + "\n")
+
+    # M25: Save inference metadata
+    meta = {
+        "model_id": model_name,
+        "dataset_path": str(dataset_path),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "generation_config": {
+            "do_sample": False,
+            "num_beams": 1,
+            "max_new_tokens": 50,
+            "device": str(device),
+        },
+    }
+    with open(output_dir / "predictions_meta.json", "w") as f:
+        json.dump(meta, f, indent=2)
 
     logger.info(f"Generated {len(predictions)} predictions to {output_path}")
 
@@ -939,6 +960,10 @@ def _generate_placeholder_predictions(dataset_path: Path, output_dir: Path) -> N
                     )
             except Exception:
                 continue
+
+    if not predictions:
+        # If no items found, don't write empty file
+        return
 
     output_path = output_dir / "predictions.jsonl"
     output_dir.mkdir(parents=True, exist_ok=True)

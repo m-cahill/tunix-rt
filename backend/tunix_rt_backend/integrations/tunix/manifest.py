@@ -66,6 +66,7 @@ def build_sft_manifest(request: TunixManifestRequest, dataset_path: str) -> str:
             "num_epochs": request.num_epochs,
             "batch_size": request.batch_size,
             "max_seq_length": request.max_seq_length,
+            "device": request.device,
         },
         "output": {
             "output_dir": request.output_dir,

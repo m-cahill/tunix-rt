@@ -25,9 +25,11 @@ CONFIG_FILE = TRAINING_DIR / "configs" / "sft_tiny.yaml"
 
 
 def jax_available() -> bool:
-    """Check if JAX is installed (required for training tests)."""
+    """Check if JAX/Flax/Optax are installed (required for training tests)."""
     try:
+        import flax  # noqa: F401
         import jax  # noqa: F401
+        import optax  # noqa: F401
 
         return True
     except ImportError:
@@ -198,3 +200,53 @@ class TestTrainingScriptSmoke:
 
         assert result.returncode == 0
         assert duration < 10, f"Dry-run took {duration:.2f}s, should be <10s"
+
+    @pytest.mark.training
+    def test_train_script_jax_smoke(self, tmp_path):
+        """Test real JAX training smoke run (tiny dataset)."""
+        if not jax_available():
+            pytest.skip("JAX/Flax/Optax not installed")
+
+        import json
+
+        test_data = tmp_path / "smoke.jsonl"
+        # Create a few samples
+        with open(test_data, "w") as f:
+            for i in range(5):
+                f.write(json.dumps({"prompts": f"Test {i}", "response": f"Response {i}"}) + "\n")
+
+        output_dir = tmp_path / "jax_smoke"
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(TRAIN_SCRIPT),
+                "--config",
+                str(CONFIG_FILE),
+                "--data",
+                str(test_data),
+                "--output",
+                str(output_dir),
+                "--backend",
+                "jax",
+            ],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            timeout=120,  # Give it time to load models
+        )
+
+        if result.returncode != 0:
+            print(f"JAX smoke run failed:\nStdout: {result.stdout}\nStderr: {result.stderr}")
+
+        assert result.returncode == 0
+        assert "Backend: JAX" in result.stdout
+        assert (output_dir / "final_model").exists()
+        assert (output_dir / "metrics.jsonl").exists()
+
+        # Verify metrics content
+        with open(output_dir / "metrics.jsonl", "r") as f:
+            lines = f.readlines()
+            assert len(lines) > 0
+            last_metric = json.loads(lines[-1])
+            assert "loss" in last_metric

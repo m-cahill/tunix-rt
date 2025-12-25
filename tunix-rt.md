@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M23 Complete** ✅  
-**Coverage:** 70% Backend Line (Gate Restored), Clean Frontend Tests | **Evaluation:** Real predictions & scoring | **Training:** Pipeline ready
+**Milestone M25 Complete** ✅  
+**Coverage:** >70% Backend Line (Gate Restored) | **Training:** Real JAX/Flax SFT Path | **Inference:** Robust & Deterministic
 
 ## Overview
 
@@ -52,6 +52,10 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M22 Enhancements:** Training Readiness - Backend coverage 67% (new code for judges/evaluation), `answer_correctness@v1` evaluator (AnswerCorrectnessJudge with deterministic normalization), Golden Dataset (`golden-v1`) seed script with 5 curated test cases, Empty dataset guardrails, Metrics visibility in UI (Registry/History/Tuning), Tuning guardrails against undefined metrics, Idempotency tests for model promotion, Frontend tests for "Promote Best" workflow (Tuning.test.tsx), Frozen evaluation semantics documentation (docs/evaluation.md), Training readiness checklist (docs/training_readiness.md).
 
 **M23 Enhancements:** Evaluation Engine Completion - Real scoring via `AnswerCorrectnessJudge` with `predictions.jsonl` contract, generation step in execution pipeline, Strict `LOCKED_METRICS` enforcement (`answer_correctness`), Backend coverage restored to 70%+, Frontend test stability fixes (`act()` warnings eliminated), Judge validation tests.
+
+**M24 Enhancements:** Deterministic Builds & Inference - `uv.lock` for reproducible dependencies, Real Inference integration using Transformers fallback (replacing placeholders), Test suite stabilization, and audit fixes.
+
+**M25 Enhancements:** Real Tunix/JAX Training Path - JAX/Flax/Optax SFT implementation (`train_jax.py`), Split training orchestrator (`train_sft_tunix.py`) supporting Torch and JAX backends, Coverage restored to >70%, Inference fragility fixes, Metadata recording (`predictions_meta.json`), Device selection (`auto/cpu/cuda`).
 
 
 ## Database Schema

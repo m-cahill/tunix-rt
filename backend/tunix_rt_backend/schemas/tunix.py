@@ -110,6 +110,10 @@ class TunixManifestRequest(BaseModel):
         le=32768,
         description="Maximum sequence length",
     )
+    device: Literal["cpu", "cuda", "auto"] = Field(
+        default="auto",
+        description="Device to use for training (cpu, cuda, auto)",
+    )
 
 
 class TunixManifestResponse(BaseModel):
@@ -196,6 +200,10 @@ class TunixRunRequest(BaseModel):
         ge=128,
         le=32768,
         description="Maximum sequence length",
+    )
+    device: Literal["cpu", "cuda", "auto"] = Field(
+        default="auto",
+        description="Device to use for training (cpu, cuda, auto)",
     )
 
 

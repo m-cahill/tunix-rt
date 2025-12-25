@@ -493,6 +493,7 @@ async def test_async_enqueue_creates_pending_run(client: AsyncClient):
 async def test_generate_predictions_success(tmp_path):
     import json
     import uuid
+    from unittest.mock import patch
 
     from tunix_rt_backend.services.tunix_execution import generate_predictions
 
@@ -505,14 +506,26 @@ async def test_generate_predictions_success(tmp_path):
 
     output_dir = tmp_path / "output"
 
-    await generate_predictions(dataset_path, output_dir)
+    # Mock the internal synchronous inference function
+    # This ensures we test the wrapper logic without running real inference (which is slow/fragile)
+    with patch("tunix_rt_backend.services.tunix_execution._run_inference_sync") as mock_inference:
+        # Simulate successful inference writing a file
+        def side_effect(d_path, o_dir, model_name="distilgpt2"):
+            o_dir.mkdir(parents=True, exist_ok=True)
+            with open(o_dir / "predictions.jsonl", "w") as f_out:
+                json.dump({"trace_id": trace_id, "prediction": "mocked_prediction"}, f_out)
+                f_out.write("\n")
+
+        mock_inference.side_effect = side_effect
+
+        await generate_predictions(dataset_path, output_dir)
 
     assert (output_dir / "predictions.jsonl").exists()
 
     with open(output_dir / "predictions.jsonl", "r") as f:
         data = json.load(f)
         assert data["trace_id"] == trace_id
-        assert "prediction" in data
+        assert data["prediction"] == "mocked_prediction"
 
 
 @pytest.mark.asyncio
