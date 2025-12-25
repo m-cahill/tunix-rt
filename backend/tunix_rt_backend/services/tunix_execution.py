@@ -924,6 +924,17 @@ def _run_inference_sync(
             f.write(json.dumps(p) + "\n")
 
     # M25: Save inference metadata
+    device_str = "cpu"
+    # Try to capture device string if available in local scope (from try block above)
+    # Using a safer check that doesn't trigger type errors on 'device' variable
+    try:
+        import torch
+
+        if "device" in locals() and isinstance(locals()["device"], torch.device):
+            device_str = str(locals()["device"])
+    except (ImportError, NameError):
+        pass
+
     meta = {
         "model_id": model_name,
         "dataset_path": str(dataset_path),
@@ -932,7 +943,7 @@ def _run_inference_sync(
             "do_sample": False,
             "num_beams": 1,
             "max_new_tokens": 50,
-            "device": str(device),
+            "device": device_str,
         },
     }
     with open(output_dir / "predictions_meta.json", "w") as f:
