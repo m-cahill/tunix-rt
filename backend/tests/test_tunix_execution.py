@@ -487,3 +487,58 @@ async def test_async_enqueue_creates_pending_run(client: AsyncClient):
     assert status_data["status"] == "pending"
     assert status_data["run_id"] == run_id
     assert status_data["queued_at"] is not None
+
+
+@pytest.mark.asyncio
+async def test_generate_predictions_success(tmp_path):
+    import json
+    import uuid
+
+    from tunix_rt_backend.services.tunix_execution import generate_predictions
+
+    # Setup dataset
+    dataset_path = tmp_path / "dataset.jsonl"
+    trace_id = str(uuid.uuid4())
+    with open(dataset_path, "w") as f:
+        json.dump({"id": trace_id, "prompt": "test"}, f)
+        f.write("\n")
+
+    output_dir = tmp_path / "output"
+
+    await generate_predictions(dataset_path, output_dir)
+
+    assert (output_dir / "predictions.jsonl").exists()
+
+    with open(output_dir / "predictions.jsonl", "r") as f:
+        data = json.load(f)
+        assert data["trace_id"] == trace_id
+        assert "prediction" in data
+
+
+@pytest.mark.asyncio
+async def test_cancel_tunix_run_pending(db_session):
+    import uuid
+    from datetime import datetime, timezone
+
+    from tunix_rt_backend.db.models import TunixRun
+    from tunix_rt_backend.services.tunix_execution import cancel_tunix_run
+
+    run_id = uuid.uuid4()
+    run = TunixRun(
+        run_id=run_id,
+        status="pending",
+        dataset_key="d",
+        model_id="m",
+        mode="dry-run",
+        started_at=datetime.now(timezone.utc),
+        stdout="",
+        stderr="",
+    )
+    db_session.add(run)
+    await db_session.commit()
+
+    await cancel_tunix_run(run_id, db_session)
+
+    await db_session.refresh(run)
+    assert run.status == "cancelled"
+    assert "cancelled before starting" in run.stderr

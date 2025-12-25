@@ -30,6 +30,9 @@ except ImportError:
     tune = None
     logger.warning("Ray Tune not installed. Tuning features will be disabled.")
 
+# M23: Guardrail - only allow trusted metrics for tuning
+LOCKED_METRICS = {"answer_correctness"}
+
 
 def _convert_search_space(search_space_json: Dict[str, Any]) -> Dict[str, Any]:
     """Convert JSON schema to Ray Tune search space objects."""
@@ -246,16 +249,14 @@ class TuningService:
         if job.status not in ["created", "failed"]:
             raise ValueError(f"Job is in {job.status} state, cannot start")
 
+        # Guardrail (M23): Check locked metrics BEFORE starting
+        if job.metric_name not in LOCKED_METRICS:
+            raise ValueError(f"Only locked metrics allowed: {', '.join(sorted(LOCKED_METRICS))}")
+
         # Update status
         job.status = "running"
         job.started_at = datetime.now(timezone.utc)
         await self.db.commit()
-
-        # Guardrail (M22)
-        if job.metric_name == "score":
-            logger.warning(f"Job {job.id} using mock metric 'score'. Results will be random.")
-        elif job.metric_name != "answer_correctness":
-            logger.warning(f"Job {job.id} using unknown metric '{job.metric_name}'.")
 
         asyncio.create_task(self._run_ray_tune(job.id))
 

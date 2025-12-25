@@ -181,34 +181,33 @@ class AnswerCorrectnessJudge:
         if run.config and "output_dir" in run.config:
             output_dir = Path(run.config["output_dir"])
 
-        # If output_dir is not absolute, it might be relative to cwd?
-        # Usually it's handled by worker. Assuming absolute path or resolving.
-        # If not set, maybe fallback to stdout parsing?
+        if not output_dir or not output_dir.exists():
+            return self._fail("Run output directory not found")
 
-        preds_loaded = False
-        if output_dir and output_dir.exists():
-            pred_file = output_dir / "predictions.jsonl"
-            if pred_file.exists():
-                try:
-                    with open(pred_file) as f:
-                        for line in f:
-                            rec = json.loads(line)
-                            # Assume record has 'id' (trace_id) and 'prediction'
-                            if "id" in rec and "prediction" in rec:
-                                try:
-                                    tid = uuid.UUID(rec["id"])
-                                    predictions[tid] = rec["prediction"]
-                                except ValueError:
-                                    pass  # Invalid UUID
-                    preds_loaded = True
-                except Exception as e:
-                    logger.warning(f"Failed to read predictions.jsonl: {e}")
+        pred_file = output_dir / "predictions.jsonl"
+        if not pred_file.exists():
+            return self._fail(f"Predictions file not found: {pred_file}")
 
-        if not preds_loaded:
-            # Fallback: Parse stdout (Naive assumption for M22 MVP if file missing)
-            # Or just fail? "Missing predictions artifact"
-            # For now, let's just score based on what we have (empty = 0)
-            logger.warning(f"No predictions found for run {run.run_id}")
+        try:
+            with open(pred_file) as f:
+                for line in f:
+                    if not line.strip():
+                        continue
+                    try:
+                        rec = json.loads(line)
+                        # Assume record has 'trace_id' (or 'id') and 'prediction'
+                        # M23: Support both 'id' (legacy/trace) and 'trace_id' (contract)
+                        tid_str = rec.get("trace_id") or rec.get("id")
+                        if tid_str and "prediction" in rec:
+                            tid = uuid.UUID(tid_str)
+                            predictions[tid] = rec["prediction"]
+                    except (ValueError, json.JSONDecodeError):
+                        continue  # Skip invalid lines
+        except Exception as e:
+            return self._fail(f"Failed to read predictions: {e}")
+
+        if not predictions:
+            return self._fail("Predictions file is empty or contains no valid predictions")
 
         # 4. Compare
         correct_count = 0

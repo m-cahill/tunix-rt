@@ -152,3 +152,80 @@ async def test_run_ray_tune_failure_handling(test_db: AsyncSession) -> None:
                 # Refresh job from DB
                 await test_db.refresh(job)
                 assert job.status == "failed"
+
+
+@pytest.mark.asyncio
+async def test_start_job_locked_metric_failure(test_db: AsyncSession) -> None:
+    service = TuningService(test_db)
+    job = await service.create_job(
+        TuningJobCreate(
+            name="Unlock Job",
+            dataset_key="d",
+            base_model_id="m",
+            metric_name="score",  # Not locked
+            search_space={"x": {"type": "choice", "values": [1]}},
+        )
+    )
+
+    with patch("tunix_rt_backend.services.tuning_service.RAY_AVAILABLE", True):
+        with pytest.raises(ValueError, match="Only locked metrics allowed"):
+            await service.start_job(job.id)
+
+    # Refresh to ensure status not running
+    await test_db.refresh(job)
+    assert job.status == "created"
+
+
+@pytest.mark.asyncio
+async def test_start_job_success(test_db: AsyncSession) -> None:
+    service = TuningService(test_db)
+    job = await service.create_job(
+        TuningJobCreate(
+            name="Success Job",
+            dataset_key="d",
+            base_model_id="m",
+            metric_name="answer_correctness",
+            search_space={"x": {"type": "choice", "values": [1]}},
+        )
+    )
+
+    with patch("tunix_rt_backend.services.tuning_service.RAY_AVAILABLE", True):
+        # Mock Ray
+        with patch("tunix_rt_backend.services.tuning_service.ray", create=True) as mock_ray:
+            mock_ray.is_initialized.return_value = True
+
+            # Mock Tuner
+            with (
+                patch("tunix_rt_backend.services.tuning_service.tune") as mock_tune,
+                patch("tunix_rt_backend.services.tuning_service.train") as mock_train,
+            ):
+                mock_tuner_instance = MagicMock()
+                mock_result_grid = MagicMock()
+                mock_best_result = MagicMock()
+
+                # Setup best result
+                mock_best_result.config = {"x": 1}
+                mock_best_result.path = "/tmp/ray/result"
+                mock_best_result.metrics = {"run_id": str(uuid.uuid4())}
+
+                mock_result_grid.get_best_result.return_value = mock_best_result
+                mock_tuner_instance.fit.return_value = mock_result_grid
+                mock_tune.Tuner.return_value = mock_tuner_instance
+                mock_train.RunConfig.return_value = MagicMock()
+
+                # Mock context for _run_ray_tune
+                mock_ctx = MagicMock()
+                mock_ctx.__aenter__.return_value = test_db
+                mock_ctx.__aexit__.return_value = None
+
+                with patch(
+                    "tunix_rt_backend.services.tuning_service.async_session_maker",
+                    return_value=mock_ctx,
+                ):
+                    # We call _run_ray_tune directly to ensure we await it and cover the logic
+                    await service._run_ray_tune(job.id)
+
+    # Verify job completed
+    await test_db.refresh(job)
+    assert job.status == "completed"
+    assert job.best_params_json == {"x": 1}
