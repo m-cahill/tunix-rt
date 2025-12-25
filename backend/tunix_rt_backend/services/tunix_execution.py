@@ -844,8 +844,11 @@ def _run_inference_sync(
 ) -> None:
     """Synchronous inference logic (M24)."""
     try:
-        import torch  # type: ignore
-        from transformers import AutoModelForCausalLM, AutoTokenizer  # type: ignore
+        import torch  # type: ignore[import-not-found]
+        from transformers import (  # type: ignore[import-not-found]
+            AutoModelForCausalLM,
+            AutoTokenizer,
+        )
     except ImportError:
         logger.warning("Transformers/Torch not installed. Skipping real inference.")
         # Fallback to placeholder if dependencies are missing (e.g. in minimal env)
