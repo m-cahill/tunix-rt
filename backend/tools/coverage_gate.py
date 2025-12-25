@@ -108,9 +108,7 @@ def main() -> int:
     print("Coverage Gate Report")
     print("=" * 60)
     print(f"Global Line Coverage:      {line_coverage:.2f}% (gate: >= {LINE_GATE}%)")
-    print(
-        f"Core Module Branch Cov:    {core_branch_coverage:.2f}% (gate: >= {CORE_BRANCH_GATE}%)"
-    )
+    print(f"Core Module Branch Cov:    {core_branch_coverage:.2f}% (gate: >= {CORE_BRANCH_GATE}%)")
     print(f"  (Core branches: {core_branches_covered}/{core_branches_total})")
     print("=" * 60)
 
@@ -128,9 +126,7 @@ def main() -> int:
     if not line_pass:
         print(f"  - Global line coverage: {line_coverage:.2f}% < {LINE_GATE}%")
     if not branch_pass:
-        print(
-            f"  - Core branch coverage: {core_branch_coverage:.2f}% < {CORE_BRANCH_GATE}%"
-        )
+        print(f"  - Core branch coverage: {core_branch_coverage:.2f}% < {CORE_BRANCH_GATE}%")
     print("=" * 60)
 
     return 1
