@@ -2,7 +2,7 @@
 
 **Tunix Reasoning-Trace Framework for AI-Native Development**
 
-**Status:** M14 Complete ✅ | Coverage: 82% Line | Features: Tunix Run Registry (persistent storage + API), Runtime Execution (optional), Batch Import, Eval Harness | Database: PostgreSQL + Alembic
+**Status:** M25 Complete ✅ | Coverage: 72.5% Line, 95.5% Core Branch | Features: Real JAX/Flax Training, Model Registry, Hyperparameter Tuning, Evaluation Loop | Database: PostgreSQL + Alembic
 
 A full-stack application for managing reasoning traces and integrating with the RediAI framework for the Tunix Hackathon.
 
@@ -34,7 +34,24 @@ make docker-up  # Start Docker services
 .\scripts\dev.ps1 docker-up
 ```
 
-### Backend Setup (Manual)
+### Backend Setup (Recommended: uv)
+
+```bash
+cd backend
+uv sync --extra dev  # Install with uv (reproducible via uv.lock)
+
+# Run linting and tests
+uv run ruff check .
+uv run ruff format --check .
+uv run mypy tunix_rt_backend
+uv run pytest --cov=tunix_rt_backend --cov-branch --cov-report=term
+uv run python tools/coverage_gate.py  # Enforce line ≥70%, core branch ≥68%
+
+# Start development server
+uv run uvicorn tunix_rt_backend.app:app --reload --port 8000
+```
+
+### Backend Setup (Alternative: pip)
 
 ```bash
 cd backend
@@ -44,8 +61,8 @@ python -m pip install -e ".[dev]"
 ruff check .
 ruff format --check .
 mypy tunix_rt_backend
-pytest --cov=tunix_rt_backend --cov-branch
-python tools/coverage_gate.py  # Enforce line ≥80%, branch ≥68%
+pytest --cov=tunix_rt_backend --cov-branch --cov-report=term
+python tools/coverage_gate.py  # Enforce line ≥70%, core branch ≥68%
 
 # Start development server
 uvicorn tunix_rt_backend.app:app --reload --port 8000
@@ -410,7 +427,7 @@ cd backend
 ruff check .
 ruff format --check .
 mypy tunix_rt_backend
-pytest --cov=tunix_rt_backend --cov-report=term --cov-fail-under=70
+pytest --cov=tunix_rt_backend --cov-branch --cov-report=term
 ```
 
 **Frontend:**
@@ -443,7 +460,7 @@ Uses `dorny/paths-filter` to avoid merge-blocking issues with required checks.
 
 - **Unit tests**: `tests/test_health.py`, `tests/test_redi_health.py`
 - **Dependency injection**: Tests use `app.dependency_overrides` for deterministic RediAI responses
-- **Coverage gate**: 70% minimum (enforced in CI)
+- **Coverage gate**: 70% line minimum, 68% core branch (enforced in CI via `coverage_gate.py`)
 
 ### Frontend Tests
 
