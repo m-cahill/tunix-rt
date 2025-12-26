@@ -1,4 +1,20 @@
-"""Hyperparameter tuning endpoints."""
+"""Hyperparameter tuning endpoints.
+
+Domain: Hyperparameter optimization via Ray Tune
+
+Primary endpoints:
+- POST /api/tuning/jobs: Create tuning job with search space
+- GET /api/tuning/jobs: List all tuning jobs
+- GET /api/tuning/jobs/{id}: Job details with trials
+- POST /api/tuning/jobs/{id}/start: Launch optimization sweep
+- GET /api/tuning/jobs/{id}/trials: List trials with metrics
+- POST /api/tuning/jobs/{id}/promote-best: Promote best trial to registry
+
+Cross-cutting concerns:
+- Requires Ray Tune (optional dependency)
+- Search space validation (numeric ranges, choices)
+- Trials linked to TunixRun records for persistence
+"""
 
 import uuid
 from typing import Annotated

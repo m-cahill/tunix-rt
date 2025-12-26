@@ -873,21 +873,22 @@ def _run_inference_sync(  # pragma: no cover
 
     logger.info(f"Loading model {model_name} for inference...")
     try:
-        tokenizer = AutoTokenizer.from_pretrained(model_name)  # type: ignore
+        # transformers library is untyped
+        tokenizer = AutoTokenizer.from_pretrained(model_name)  # type: ignore[no-untyped-call]
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
 
         # Try loading (handling Flax weights if needed)
         try:
-            model = AutoModelForCausalLM.from_pretrained(model_name)  # type: ignore
+            model = AutoModelForCausalLM.from_pretrained(model_name)  # type: ignore[no-untyped-call]
         except OSError:
             logger.info("Standard load failed, trying from_flax=True...")
-            model = AutoModelForCausalLM.from_pretrained(model_name, from_flax=True)  # type: ignore
+            model = AutoModelForCausalLM.from_pretrained(model_name, from_flax=True)  # type: ignore[no-untyped-call]
 
         # Use CPU for deterministic CI smoke or if no GPU
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        model.to(device)  # type: ignore
-        model.eval()  # type: ignore
+        model.to(device)  # type: ignore[arg-type]
+        model.eval()  # type: ignore[no-untyped-call]
     except Exception as e:
         logger.error(f"Failed to load model {model_name}: {e}")
         # Fallback to base model if loading trained model fails?
@@ -895,10 +896,10 @@ def _run_inference_sync(  # pragma: no cover
         if Path(model_name).exists():
             logger.warning("Falling back to distilgpt2")
             try:
-                tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
-                model = AutoModelForCausalLM.from_pretrained("distilgpt2")
-                model.to(device)
-                model.eval()
+                tokenizer = AutoTokenizer.from_pretrained("distilgpt2")  # type: ignore[no-untyped-call]
+                model = AutoModelForCausalLM.from_pretrained("distilgpt2")  # type: ignore[no-untyped-call]
+                model.to(device)  # type: ignore[arg-type]
+                model.eval()  # type: ignore[no-untyped-call]
             except Exception:
                 raise e
         else:

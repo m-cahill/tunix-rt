@@ -1,4 +1,16 @@
-"""Regression testing endpoints."""
+"""Regression testing endpoints.
+
+Domain: Model quality regression detection
+
+Primary endpoints:
+- POST /api/regression/baselines: Create baseline from a run's metrics
+- POST /api/regression/check: Compare run against baseline
+
+Cross-cutting concerns:
+- Baselines store metric name and reference run_id
+- lower_is_better flag controls pass/fail direction (e.g., loss vs accuracy)
+- Returns pass/fail verdict with metric delta
+"""
 
 from typing import Annotated
 

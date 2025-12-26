@@ -1,4 +1,18 @@
-"""Tunix integration endpoints."""
+"""Tunix integration endpoints.
+
+Domain: Tunix training orchestration (status, export, run trigger)
+
+Primary endpoints:
+- GET /api/tunix/status: Check Tunix availability
+- POST /api/tunix/export: Export traces for Tunix training
+- POST /api/tunix/manifest: Generate training manifest
+- POST /api/tunix/run: Trigger training run (sync or async mode)
+
+Cross-cutting concerns:
+- Graceful degradation when Tunix not installed (501)
+- Dry-run validation for manifest/config before execution
+- Async mode queues runs for background worker
+"""
 
 from typing import Annotated
 

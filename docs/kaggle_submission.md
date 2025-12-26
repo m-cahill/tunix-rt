@@ -115,6 +115,35 @@ Verify dataset was built:
 ls -l backend/datasets/golden-v2/
 ```
 
+## Dry Run Verified (M30)
+
+The following minimal dry-run was verified on 2025-12-25:
+
+```bash
+# Minimal CPU dry-run with dev-reasoning-v1 dataset (200 traces)
+python training/train_jax.py \
+  --config training/configs/sft_tiny.yaml \
+  --output ./output/dry_run_m30 \
+  --dataset dev-reasoning-v1 \
+  --device cpu \
+  --smoke_steps 2
+```
+
+**Expected output:**
+```
+🚀 Starting SFT Training (JAX/Flax)...
+   Device request: CPU
+   Model: distilgpt2
+   ...
+   Tokenizing dataset...
+   Training...
+   🛑 Smoke steps limit reached (2). Stopping.
+```
+
+**Available datasets:**
+- `dev-reasoning-v1`: 200 traces (70% reasoning, 30% synthetic) - for smoke testing
+- `golden-v2`: 100 traces - for calibration
+
 ## References
 
 - Training guide: `docs/training_end_to_end.md`

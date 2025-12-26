@@ -1,4 +1,16 @@
-"""UNGAR integration endpoints."""
+"""UNGAR integration endpoints.
+
+Domain: Synthetic trace generation via UNGAR game engine
+
+Primary endpoints:
+- GET /api/ungar/status: Check UNGAR availability and version
+- POST /api/ungar/generate: Generate traces from game simulations
+
+Cross-cutting concerns:
+- UNGAR is optional; endpoints degrade gracefully (503) when not installed
+- Supports High Card Duel game for synthetic reasoning traces
+- Generated traces include game metadata in payload
+"""
 
 from typing import Annotated
 

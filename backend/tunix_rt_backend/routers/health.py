@@ -1,4 +1,16 @@
-"""Health check and metrics endpoints."""
+"""Health check and metrics endpoints.
+
+Domain: System health and observability
+
+Primary endpoints:
+- GET /api/health: Quick health check (returns healthy/unhealthy)
+- GET /api/redi/health: RediAI integration status with TTL cache
+- GET /metrics: Prometheus metrics (run counts, latency, errors)
+
+Cross-cutting concerns:
+- RediAI health cached with 30s TTL to reduce upstream load
+- Metrics exposed in Prometheus format for monitoring
+"""
 
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
