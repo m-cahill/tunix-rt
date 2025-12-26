@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M30 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline | **Architecture:** Router-based (10 modules) | **Submission:** Competition-ready
+**Milestone M31 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline | **Architecture:** Router-based (10 modules) | **Submission:** Final Package Ready
 
 ## Overview
 
@@ -66,6 +66,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M29 Enhancements:** Competition-Ready Data + App Router Modularization - Router refactor (10 modules, `app.py` reduced to 56 lines), TODO resolution (`lower_is_better` configuration for regression baselines), Dataset pipeline enhancements (provenance metadata, `POST /api/datasets/ingest` endpoint), `dev-reasoning-v1` seed script (200 traces: 70% reasoning + 30% synthetic), Kaggle submission path (`notebooks/kaggle_submission.ipynb` + docs), Nightly CI workflow, Frontend client exports test.
 
 **M30 Enhancements:** Polish & Submission Prep - Type ignore cleanup (narrowed with error codes, rationale comments), HTTP 422 deprecation fix (`HTTP_422_UNPROCESSABLE_CONTENT`), Router docstrings expanded (summary-level, 3-8 lines per module), Dataset ingest E2E test (`e2e/tests/datasets_ingest.spec.ts`), `dev-reasoning-v1` standardized to versioned folder format, Kaggle dry-run verified, Submission checklist (`docs/submission_checklist.md`) with video requirements (3 min, YouTube, Kaggle Media Gallery).
+
+**M31 Enhancements:** Final Submission Package - Submission freeze document (`docs/submission_freeze.md`) for reproducibility, Gemma submission configs (`submission_gemma3_1b.yaml`, `submission_gemma2_2b.yaml`), Kaggle notebook refactored with smoke/full run modes and subprocess-based execution, One-command packaging tool (`backend/tools/package_submission.py`), Submission artifacts documentation (`docs/submission_artifacts.md`), Video script and shot list (`docs/video_script_m31.md`, `docs/video_shotlist_m31.md`), Updated submission checklist with video URL placeholders.
 
 
 ## Database Schema

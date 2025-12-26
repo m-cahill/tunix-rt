@@ -1,0 +1,78 @@
+# Tunix RT - Submission Configuration (Gemma 3 1B)
+# Purpose: Final submission config for Google Tunix Hackathon
+# Model: google/gemma-3-1b-it (instruction-tuned)
+#
+# NOTE: Gemma models require accepting the license on Hugging Face.
+# Visit https://huggingface.co/google/gemma-3-1b-it to accept terms.
+
+# Model Configuration
+model:
+  # Gemma 3 1B instruction-tuned variant
+  # Alternative: google/gemma-3-1b (base model)
+  name: "google/gemma-3-1b-it"
+
+  # Tokenizer settings
+  max_length: 512
+  padding: "max_length"
+  truncation: true
+
+# Training Configuration
+training:
+  # Training steps - adjust based on available time
+  # Kaggle TPU sessions: ~9 hours per session
+  num_steps: 100
+
+  # Learning rate (conservative for fine-tuning)
+  learning_rate: 1.0e-5
+
+  # Batch configuration
+  # Adjust per_device_batch_size based on available VRAM/TPU memory
+  per_device_batch_size: 4
+  gradient_accumulation_steps: 1
+
+  # Optimizer
+  optimizer: "adamw"
+  weight_decay: 0.01
+
+  # Learning rate schedule
+  lr_scheduler: "linear"
+  warmup_steps: 10
+
+  # Logging and checkpointing
+  logging_steps: 10
+  save_steps: 50
+
+  # Random seed for reproducibility
+  seed: 42
+
+# System Instruction (for instruction-tuned models)
+system_instruction: "You are a helpful assistant. Show your reasoning step by step before giving your final answer."
+
+# Data Configuration
+data:
+  # Training data format
+  format: "tunix_sft"
+
+  # Shuffle settings
+  shuffle: true
+  shuffle_seed: 42
+
+# Output Configuration
+output:
+  # Checkpoint directory (relative to output_dir)
+  checkpoint_dir: "checkpoint-final"
+
+  # Metrics
+  save_metrics: true
+  metrics_file: "metrics.jsonl"
+
+  # Run manifest
+  save_manifest: true
+  manifest_file: "run_manifest.json"
+
+# Notes:
+# - This config targets the Google Tunix Hackathon competition
+# - Gemma 3 1B is optimized for reasoning tasks with chain-of-thought
+# - For GPU training, adjust per_device_batch_size based on available VRAM
+# - For TPU training in Kaggle, use default batch size
+# - Increase num_steps to 500-1000 for final production run

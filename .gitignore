@@ -106,6 +106,12 @@ eval_log.txt
 *.temp
 .cache/
 
+# Submission packaging output
+submission/
+
+# Training output (checkpoints, metrics)
+output/
+
 # Coverage reports
 backend/coverage.json
 frontend/npm-audit.json

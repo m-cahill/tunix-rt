@@ -131,6 +131,17 @@ Per competition rules ([Kaggle](https://www.kaggle.com/competitions/google-tunix
 4. Results and evaluation (45 sec)
 5. Key takeaways (15 sec)
 
+### Video Submission Status
+
+| Field | Value |
+|-------|-------|
+| **YouTube URL** | `<PENDING>` |
+| **Kaggle Media Gallery** | `<NOT_YET_ATTACHED>` |
+| **Upload Date** | `<PENDING>` |
+| **Confirmed Duration** | `<PENDING>` |
+
+See [Video Script](video_script_m31.md) and [Shot List](video_shotlist_m31.md) for recording guide.
+
 ## 8. Final Sanity Checks
 
 ### Code Quality
@@ -180,6 +191,8 @@ python training/train_jax.py \
 
 ## Related Documentation
 
+- [Submission Freeze](submission_freeze.md) — Frozen configuration for reproducibility
+- [Submission Artifacts](submission_artifacts.md) — What's in the submission bundle
 - [Kaggle Submission Guide](kaggle_submission.md)
 - [Training End-to-End](training_end_to_end.md)
 - [Evaluation Semantics](evaluation.md)
