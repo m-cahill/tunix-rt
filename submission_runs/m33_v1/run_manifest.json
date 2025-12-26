@@ -1,0 +1,15 @@
+{
+  "run_version": "m33_v1",
+  "model_id": "google/gemma-3-1b-it",
+  "dataset": "dev-reasoning-v2",
+  "config_path": "training/configs/sft_tiny.yaml",
+  "command": "python training/train_jax.py --config training/configs/sft_tiny.yaml --output ./output/m33_rehearsal --dataset dev-reasoning-v2 --device cpu --smoke_steps 2",
+  "commit_sha": "915254b",
+  "timestamp": "2025-12-26T12:00:00Z",
+  "environment": {
+    "platform": "local",
+    "accelerator": "cpu",
+    "python_version": "3.13"
+  },
+  "notes": "M33 local CPU smoke rehearsal (2 steps). For Kaggle: use GPU/TPU and remove --smoke_steps."
+}

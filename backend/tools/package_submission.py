@@ -13,8 +13,11 @@ Usage:
     # Include training output artifacts
     python backend/tools/package_submission.py --include-output ./output/final_run
 
+    # Include evidence files from a specific run directory
+    python backend/tools/package_submission.py --run-dir submission_runs/m33_v1
+
 Output:
-    Creates a zip file at: submission/tunix_rt_m32_<YYYY-MM-DD>_<shortsha>.zip
+    Creates a zip file at: submission/tunix_rt_m33_<YYYY-MM-DD>_<shortsha>.zip
 
 The archive contains:
     - notebooks/kaggle_submission.ipynb
@@ -27,6 +30,8 @@ The archive contains:
     - training/configs/submission_gemma2_2b.yaml
     - training/evalsets/eval_v1.jsonl
     - backend/datasets/<dataset>/manifest.json (for each dataset)
+    - submission_runs/<run>/run_manifest.json (if --run-dir specified)
+    - submission_runs/<run>/eval_summary.json (if --run-dir specified)
     - README_SUBMISSION.md (generated)
 """
 
@@ -52,6 +57,7 @@ BUNDLE_FILES = [
     "docs/submission_freeze.md",
     "docs/submission_artifacts.md",
     "docs/submission_execution_m32.md",
+    "docs/submission_execution_m33.md",
     "docs/evaluation.md",
     "docs/training_end_to_end.md",
     # Training configs
@@ -60,16 +66,13 @@ BUNDLE_FILES = [
     "training/configs/sft_tiny.yaml",
     # Eval sets
     "training/evalsets/eval_v1.jsonl",
-    # Evidence files (M32)
-    "submission_runs/m32_v1/run_manifest.json",
-    "submission_runs/m32_v1/eval_summary.json",
 ]
 
 # Dataset manifests to include
 DATASETS = ["golden-v2", "dev-reasoning-v1", "dev-reasoning-v2"]
 
 # Archive naming
-ARCHIVE_PREFIX = "tunix_rt_m32"
+ARCHIVE_PREFIX = "tunix_rt_m33"
 
 # ============================================================
 # Helper Functions
@@ -113,7 +116,7 @@ def generate_submission_readme(output_path: Path, sha: str, timestamp: str) -> N
     """
     readme_content = f"""# Tunix RT - Submission Package
 
-**Version:** m32_v1
+**Version:** m33_v1
 **Built:** {timestamp}
 **Commit:** {sha}
 
@@ -138,12 +141,13 @@ def generate_submission_readme(output_path: Path, sha: str, timestamp: str) -> N
 | `training/configs/` | Training configuration files |
 | `training/evalsets/` | Evaluation datasets |
 | `datasets/` | Dataset manifests (data not included) |
+| `submission_runs/` | Evidence files from rehearsal runs |
 
 ## Configuration
 
 The default configuration uses:
 - **Model:** google/gemma-3-1b-it
-- **Dataset:** golden-v2 (100 traces)
+- **Dataset:** dev-reasoning-v2 (550 traces)
 - **Steps:** 100
 
 Modify the configuration cell in the notebook to change these.
@@ -199,6 +203,7 @@ def copy_file_to_bundle(src: Path, bundle_dir: Path, relative_path: str | None =
 def package_submission(
     output_dir: Path,
     include_output: Path | None = None,
+    run_dir: Path | None = None,
     verbose: bool = True,
 ) -> Path:
     """Create the submission package.
@@ -206,6 +211,7 @@ def package_submission(
     Args:
         output_dir: Directory to create the submission in.
         include_output: Optional training output directory to include.
+        run_dir: Optional evidence run directory to include (e.g., submission_runs/m33_v1).
         verbose: Whether to print progress.
 
     Returns:
@@ -258,6 +264,25 @@ def package_submission(
         shutil.copytree(include_output, output_dest)
         print(f"   [+] {include_output} -> output/")
 
+    # Include evidence files from run directory if specified
+    if run_dir:
+        run_dir_path = Path(run_dir)
+        if run_dir_path.exists():
+            print(f"\nCopying evidence files from {run_dir}...")
+            # Copy only tracked evidence files (small JSON/text files)
+            evidence_files = [
+                "run_manifest.json",
+                "eval_summary.json",
+                "kaggle_output_log.txt",
+            ]
+            for evidence_file in evidence_files:
+                src = run_dir_path / evidence_file
+                if src.exists():
+                    dest_path = str(run_dir_path / evidence_file)
+                    copy_file_to_bundle(src, bundle_dir, dest_path)
+        else:
+            print(f"\n[!] Run directory not found: {run_dir}")
+
     # Generate README
     print("\nGenerating README...")
     generate_submission_readme(bundle_dir / "README_SUBMISSION.md", sha, timestamp)
@@ -308,6 +333,9 @@ Examples:
     # Include training output
     python backend/tools/package_submission.py --include-output ./output/final_run
 
+    # Include evidence from a specific run directory
+    python backend/tools/package_submission.py --run-dir submission_runs/m33_v1
+
     # Custom output directory
     python backend/tools/package_submission.py --output ./my_submission
         """,
@@ -325,6 +353,12 @@ Examples:
         help="Include training output directory in the bundle",
     )
     parser.add_argument(
+        "--run-dir",
+        type=Path,
+        default=None,
+        help="Include evidence files from a run directory (e.g., submission_runs/m33_v1)",
+    )
+    parser.add_argument(
         "--verbose",
         action="store_true",
         default=True,
@@ -340,6 +374,7 @@ Examples:
     package_submission(
         output_dir=args.output,
         include_output=args.include_output,
+        run_dir=args.run_dir,
         verbose=args.verbose,
     )
 

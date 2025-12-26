@@ -119,11 +119,12 @@ tunix_submission_{run_id}_{dataset}_{timestamp}/
 
 ## 7. Video Requirements
 
-Per competition rules ([Kaggle](https://www.kaggle.com/competitions/google-tunix-hackathon)):
+Per competition rules ([Kaggle Timeline](https://www.kaggle.com/competitions/google-tunix-hackathon/overview/timeline)):
 
-- [ ] **Length:** 3 minutes or less
+- [ ] **Length:** ⚠️ **MUST be 3 minutes or less** (strict requirement)
 - [ ] **Platform:** Published to YouTube (public or unlisted)
 - [ ] **Submission:** Attached to Kaggle Media Gallery
+- [ ] **Content:** Demonstrate training workflow + results
 
 **Suggested content outline:**
 1. Problem statement (15 sec)
