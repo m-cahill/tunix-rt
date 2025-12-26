@@ -1,0 +1,15 @@
+{
+  "run_version": "m32_v1",
+  "model_id": "google/gemma-3-1b-it",
+  "dataset": "dev-reasoning-v2",
+  "config_path": "training/configs/submission_gemma3_1b.yaml",
+  "max_steps": 100,
+  "commit_sha": "<PENDING>",
+  "timestamp": "<PENDING>",
+  "environment": {
+    "platform": "kaggle",
+    "accelerator": "T4 x2",
+    "python_version": "3.10"
+  },
+  "notes": "Template manifest - update with actual run values"
+}

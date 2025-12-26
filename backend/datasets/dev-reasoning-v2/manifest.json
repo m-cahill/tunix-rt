@@ -1,0 +1,40 @@
+{
+  "dataset_key": "dev-reasoning-v2",
+  "build_id": "dev-reasoning-v2-static",
+  "dataset_name": "dev-reasoning",
+  "dataset_version": "v2",
+  "dataset_schema_version": "1.0",
+  "created_at": "2025-12-26T17:15:32.462271+00:00",
+  "filters": {
+    "type": "mixed"
+  },
+  "selection_strategy": "static",
+  "seed": 42,
+  "trace_ids": [],
+  "trace_count": 550,
+  "stats": {
+    "trace_count": 550,
+    "composition": {
+      "reasoning": 385,
+      "synthetic": 110,
+      "golden_style": 35,
+      "edge_case": 20
+    },
+    "composition_pct": {
+      "reasoning": "70.0%",
+      "synthetic": "20.0%",
+      "golden_style": "6.4%",
+      "edge_case": "3.6%"
+    },
+    "note": "Generated via seed_dev_reasoning_v2.py with strict ReasoningTrace schema"
+  },
+  "session_id": null,
+  "parent_dataset_id": null,
+  "training_run_id": null,
+  "provenance": {
+    "source": "seed_dev_reasoning_v2.py",
+    "purpose": "Scaled development dataset (500+ traces) for training/validation",
+    "deterministic": true,
+    "schema": "ReasoningTrace with steps: [{i, type, content}, ...]"
+  }
+}

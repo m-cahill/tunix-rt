@@ -81,9 +81,13 @@ dist-ssr/
 *.sqlite
 *.sqlite3
 
-# Datasets (generated at runtime)
+# Datasets (generated at runtime, except key tracked datasets)
 backend/datasets/
 !backend/datasets/test-v1/
+!backend/datasets/dev-reasoning-v1/
+!backend/datasets/dev-reasoning-v2/
+!backend/datasets/golden-v1/
+!backend/datasets/golden-v2/
 
 # Backend artifacts (tuning runs, model registry)
 backend/artifacts/
@@ -111,6 +115,15 @@ submission/
 
 # Training output (checkpoints, metrics)
 output/
+
+# Submission runs - track evidence files, ignore large artifacts
+submission_runs/**/checkpoints/
+submission_runs/**/*.ckpt
+submission_runs/**/*.safetensors
+submission_runs/**/*.pt
+submission_runs/**/*.bin
+submission_runs/**/*.tar*
+submission_runs/**/*.zip
 
 # Coverage reports
 backend/coverage.json
