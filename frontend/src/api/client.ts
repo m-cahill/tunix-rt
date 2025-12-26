@@ -815,3 +815,106 @@ export interface TunixRunMetric {
 export async function getTunixRunMetrics(runId: string): Promise<TunixRunMetric[]> {
   return fetchJSON<TunixRunMetric[]>(`/api/tunix/runs/${runId}/metrics`)
 }
+
+/**
+ * M29: Dataset Building and Export
+ */
+
+/**
+ * Request to build a new dataset from traces
+ */
+export interface DatasetBuildRequest {
+  dataset_name: string
+  dataset_version: string
+  filters?: Record<string, any>
+  limit?: number
+  selection_strategy?: 'latest' | 'random'
+  seed?: number | null
+  session_id?: string | null
+  parent_dataset_id?: string | null
+  training_run_id?: string | null
+  provenance?: Record<string, any>
+}
+
+/**
+ * Response from dataset build request
+ */
+export interface DatasetBuildResponse {
+  dataset_key: string
+  build_id: string
+  trace_count: number
+  manifest_path: string
+}
+
+/**
+ * Request to ingest traces from a JSONL file
+ */
+export interface DatasetIngestRequest {
+  path: string
+  source_name: string
+}
+
+/**
+ * Response from dataset ingest request
+ */
+export interface DatasetIngestResponse {
+  ingested_count: number
+  trace_ids: string[]
+}
+
+/**
+ * Build a new dataset from traces
+ * @param request - Dataset build parameters
+ * @returns Promise resolving to build response with dataset key and trace count
+ * @throws {ApiError} on HTTP error
+ */
+export async function buildDataset(request: DatasetBuildRequest): Promise<DatasetBuildResponse> {
+  return fetchJSON<DatasetBuildResponse>('/api/datasets/build', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  })
+}
+
+/**
+ * Get the URL for exporting a dataset
+ * @param datasetName - Dataset name
+ * @param datasetVersion - Dataset version
+ * @returns URL string for dataset export endpoint
+ */
+export function getDatasetExportUrl(datasetName: string, datasetVersion: string): string {
+  return `/api/datasets/${datasetName}/${datasetVersion}/export`
+}
+
+/**
+ * Export a dataset as a blob
+ * @param datasetName - Dataset name
+ * @param datasetVersion - Dataset version
+ * @returns Promise resolving to dataset blob
+ * @throws {ApiError} on HTTP error
+ */
+export async function exportDataset(datasetName: string, datasetVersion: string): Promise<Blob> {
+  const response = await fetch(getDatasetExportUrl(datasetName, datasetVersion))
+  if (!response.ok) {
+    throw new ApiError(
+      `HTTP error: ${response.statusText}`,
+      response.status,
+      response.statusText
+    )
+  }
+  return response.blob()
+}
+
+/**
+ * Ingest traces from a server-side JSONL file
+ * @param request - Ingest parameters (path and source name)
+ * @returns Promise resolving to ingest response with count and trace IDs
+ * @throws {ApiError} on HTTP error
+ */
+export async function ingestDataset(request: DatasetIngestRequest): Promise<DatasetIngestResponse> {
+  return fetchJSON<DatasetIngestResponse>('/api/datasets/ingest', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  })
+}
