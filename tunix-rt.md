@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M27 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline
+**Milestone M29 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline | **Architecture:** Router-based (10 modules)
 
 ## Overview
 
@@ -62,6 +62,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M27 Enhancements:** End-to-End Training Validation & Evaluation Loop - Full training convergence on `golden-v2` (loss 2.26→0.08), Real inference using `FlaxAutoModelForCausalLM`, `--dataset` CLI argument for training scripts, `--eval_after_train` flag for offline evaluation, Auto-detect JAX/PyTorch backend in `eval_generate.py`, Dataset tooling (`seed_golden_v2.py`, `export_dataset.py`, `cleanup_dataset.py`), Training config `train_golden_v2.yaml`, End-to-end documentation (`docs/training_end_to_end.md`).
 
 **M28 Enhancements:** Hyperparameter Tuning & Leaderboard - Ray Tune integration for optimization sweeps (`scripts/run_m28_sweep.py`), Run Comparison UI (`RunComparison.tsx`) with loss curve overlay and deep-link support, `answer_correctness` metric wired to leaderboard, UNGAR Episode API fix (`high_card_duel.py`), CI fixes (`cyclonedx-py` flag update, `ruff format`).
+
+**M29 Enhancements:** Competition-Ready Data + App Router Modularization - Router refactor (10 modules, `app.py` reduced to 56 lines), TODO resolution (`lower_is_better` configuration for regression baselines), Dataset pipeline enhancements (provenance metadata, `POST /api/datasets/ingest` endpoint), `dev-reasoning-v1` seed script (200 traces: 70% reasoning + 30% synthetic), Kaggle submission path (`notebooks/kaggle_submission.ipynb` + docs), Nightly CI workflow, Frontend client exports test.
 
 
 ## Database Schema

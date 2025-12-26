@@ -13,6 +13,7 @@ class RegressionBaselineCreate(BaseModel):
     name: str = Field(..., description="Unique name for the baseline")
     run_id: UUID = Field(..., description="Run ID to use as baseline")
     metric: str = Field(..., description="Metric name (e.g., 'score', 'accuracy')")
+    lower_is_better: bool | None = Field(None, description="Whether lower values are better")
 
 
 class RegressionBaselineResponse(BaseModel):
@@ -22,6 +23,7 @@ class RegressionBaselineResponse(BaseModel):
     name: str
     run_id: UUID
     metric: str
+    lower_is_better: bool | None = None
     created_at: datetime
 
 

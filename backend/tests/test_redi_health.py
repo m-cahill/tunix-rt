@@ -5,7 +5,8 @@ from unittest.mock import AsyncMock, patch
 import pytest
 from fastapi.testclient import TestClient
 
-from tunix_rt_backend.app import app, get_redi_client
+from tunix_rt_backend.app import app
+from tunix_rt_backend.dependencies import get_redi_client
 from tunix_rt_backend.redi_client import MockRediClient, RediClient
 
 
@@ -18,16 +19,16 @@ def client() -> TestClient:
 @pytest.fixture(autouse=True)
 def cleanup_overrides() -> None:
     """Clean up dependency overrides and cache after each test to prevent leakage."""
-    from tunix_rt_backend import app as app_module
+    from tunix_rt_backend.routers import health as health_router
 
     # Clear cache before test
-    app_module._redi_health_cache.clear()
+    health_router._redi_health_cache.clear()
 
     yield
 
     # Clear after test
     app.dependency_overrides.clear()
-    app_module._redi_health_cache.clear()
+    health_router._redi_health_cache.clear()
 
 
 def test_redi_health_with_healthy_mock(client: TestClient) -> None:
@@ -174,7 +175,7 @@ def test_get_redi_client_returns_real_in_real_mode() -> None:
 
 def test_redi_health_cache_hit(client: TestClient) -> None:
     """Test that RediAI health responses are cached."""
-    from tunix_rt_backend import app as app_module
+    from tunix_rt_backend.routers import health as health_router
 
     call_count = 0
 
@@ -188,7 +189,7 @@ def test_redi_health_cache_hit(client: TestClient) -> None:
     app.dependency_overrides[get_redi_client] = lambda: CountingRediClient()
 
     # Clear cache
-    app_module._redi_health_cache.clear()
+    health_router._redi_health_cache.clear()
 
     # First call - should hit RediClient
     response1 = client.get("/api/redi/health")
@@ -207,7 +208,7 @@ async def test_redi_health_cache_expiry() -> None:
     """Test that cache expires after TTL."""
     from datetime import datetime, timedelta, timezone
 
-    from tunix_rt_backend import app as app_module
+    from tunix_rt_backend.routers import health as health_router
     from tunix_rt_backend.settings import settings
 
     # Save original TTL
@@ -218,11 +219,11 @@ async def test_redi_health_cache_expiry() -> None:
         settings.rediai_health_cache_ttl_seconds = 1
 
         # Clear cache
-        app_module._redi_health_cache.clear()
+        health_router._redi_health_cache.clear()
 
         # Manually add an expired cache entry
         old_time = datetime.now(timezone.utc) - timedelta(seconds=2)
-        app_module._redi_health_cache["redi_health"] = ({"status": "healthy"}, old_time)
+        health_router._redi_health_cache["redi_health"] = ({"status": "healthy"}, old_time)
 
         # Create a client
         call_count = 0
@@ -234,7 +235,7 @@ async def test_redi_health_cache_expiry() -> None:
                 return {"status": "healthy"}
 
         # Call the endpoint - should not use expired cache
-        from tunix_rt_backend.app import redi_health
+        from tunix_rt_backend.routers.health import redi_health
 
         result = await redi_health(CountingRediClient())
 

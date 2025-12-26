@@ -90,6 +90,17 @@ async def build_dataset_manifest(
     # Compute stats
     stats = compute_dataset_stats(trace_payloads)
 
+    # Build provenance metadata
+    provenance_metadata = {
+        "schema_version": "1.0",
+        "source": "tunix_rt_backend_api",
+        "build_timestamp": datetime.now(UTC).isoformat(),
+        "trace_count": len(trace_ids),
+        "selection_strategy": request.selection_strategy,
+        **({"seed": request.seed} if request.seed is not None else {}),
+        **request.provenance,  # User-provided provenance overrides defaults
+    }
+
     # Create manifest
     build_id = uuid.uuid4()
     manifest = DatasetManifest(
@@ -108,6 +119,7 @@ async def build_dataset_manifest(
         session_id=request.session_id,
         parent_dataset_id=request.parent_dataset_id,
         training_run_id=request.training_run_id,
+        provenance=provenance_metadata,
     )
 
     # Save manifest to disk

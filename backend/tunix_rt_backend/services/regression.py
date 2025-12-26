@@ -69,6 +69,7 @@ class RegressionService:
         if existing:
             existing.run_id = request.run_id
             existing.metric = request.metric
+            existing.lower_is_better = request.lower_is_better
             # existing.created_at = datetime.now(...) # Optional: update timestamp
             await self.db.commit()
             await self.db.refresh(existing)
@@ -78,6 +79,7 @@ class RegressionService:
                 name=request.name,
                 run_id=request.run_id,
                 metric=request.metric,
+                lower_is_better=request.lower_is_better,
             )
             self.db.add(db_baseline)
             await self.db.commit()
@@ -88,6 +90,7 @@ class RegressionService:
             name=db_baseline.name,
             run_id=db_baseline.run_id,
             metric=db_baseline.metric,
+            lower_is_better=db_baseline.lower_is_better,
             created_at=db_baseline.created_at,
         )
 
@@ -119,25 +122,46 @@ class RegressionService:
         baseline_val = self._get_metric_value(baseline_eval, baseline.metric)
 
         # 5. Compare
-        # Assume higher is better for "score" and most metrics
-        # TODO: Support "lower is better" configuration (e.g. latency)
-        # For M18, simplistic "fail if score drops > X%"
-        # Let's say tolerance is 5% relative drop
+        # Use configured direction, fallback to heuristic
+        if baseline.lower_is_better is not None:
+            lower_is_better = baseline.lower_is_better
+        else:
+            # Heuristic for direction (fallback if not configured)
+            lower_is_better = any(
+                x in baseline.metric.lower() for x in ["loss", "latency", "time", "error"]
+            )
+
         delta = current_val - baseline_val
+
+        # Calculate percent change
         if baseline_val != 0:
             delta_percent = (delta / baseline_val) * 100.0
         else:
             delta_percent = 0.0 if delta == 0 else (100.0 if delta > 0 else -100.0)
 
-        # Fail if dropped by more than 5%
-        # i.e. current < baseline * 0.95
-        # or delta_percent < -5.0
-
-        threshold = -5.0  # 5% drop allowed
+        # Threshold logic
+        # 5% degradation tolerance
+        tolerance = 5.0
 
         verdict: Literal["pass", "fail"] = "pass"
-        if delta_percent < threshold:
-            verdict = "fail"
+        threshold_desc = ""
+
+        if lower_is_better:
+            # If lower is better, current > baseline + 5% is bad
+            # delta_percent > 5.0 is bad
+            if delta_percent > tolerance:
+                verdict = "fail"
+                threshold_desc = f"increase > {tolerance}%"
+            else:
+                threshold_desc = f"increase <= {tolerance}%"
+        else:
+            # If higher is better, current < baseline - 5% is bad
+            # delta_percent < -5.0 is bad
+            if delta_percent < -tolerance:
+                verdict = "fail"
+                threshold_desc = f"drop > {tolerance}%"
+            else:
+                threshold_desc = f"drop <= {tolerance}%"
 
         return RegressionCheckResult(
             run_id=run_id,
@@ -149,7 +173,7 @@ class RegressionService:
             delta=delta,
             delta_percent=round(delta_percent, 2),
             verdict=verdict,
-            details=f"Threshold: {threshold}%. Actual change: {delta_percent:.2f}%",
+            details=f"Threshold: {threshold_desc}. Actual change: {delta_percent:.2f}%",
         )
 
     def _get_metric_value(self, evaluation: Any, metric_name: str) -> float:

@@ -16,6 +16,7 @@ from typing import Any
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from tunix_rt_backend.db.models.evaluation import TunixRunEvaluation
 from tunix_rt_backend.db.models.model_registry import ModelArtifact, ModelVersion
 from tunix_rt_backend.db.models.tunix_run import TunixRun
 from tunix_rt_backend.schemas.model_registry import (
@@ -53,8 +54,12 @@ class ModelRegistryService:
         return artifact
 
     async def list_artifacts(self) -> list[ModelArtifact]:
-        """List all model artifacts."""
-        # TODO: Add pagination if needed
+        """List all model artifacts.
+
+        Note: Pagination not implemented. If artifact count grows significantly (>100),
+        consider adding limit/offset parameters similar to other list endpoints.
+        Tracked as low-priority enhancement (defer to future milestone if needed).
+        """
         stmt = select(ModelArtifact).order_by(ModelArtifact.updated_at.desc())
         result = await self.db.execute(stmt)
         return list(result.scalars().all())
@@ -137,10 +142,20 @@ class ModelRegistryService:
         # 8. Create Version
         # Gather metadata
         metrics: dict[str, Any] = {}
-        # Try to find metrics from TunixRun (maybe in config if stored, or fetch from Evaluations)
-        # For M20, run.config might have some info, or we look for evaluation results
-        # Assuming we just store what we have.
-        # Run config is in run.config
+
+        # Populate from Evaluations if available
+        stmt_eval = select(TunixRunEvaluation).where(TunixRunEvaluation.run_id == run.run_id)
+        evaluation = (await self.db.execute(stmt_eval)).scalar_one_or_none()
+
+        if evaluation:
+            # Extract metrics from evaluation details
+            metrics["score"] = evaluation.score
+            metrics["verdict"] = evaluation.verdict
+            metrics["judge_name"] = evaluation.judge_name
+            # Include any metrics from details
+            if "metrics" in evaluation.details:
+                metrics.update(evaluation.details["metrics"])
+            metrics["evaluation_id"] = str(evaluation.id)
 
         # Provenance
         provenance = {
@@ -156,7 +171,7 @@ class ModelRegistryService:
             version=version_label,
             source_run_id=run.run_id,
             status="ready",
-            metrics_json=metrics,  # TODO: Populate from Evaluations if available
+            metrics_json=metrics,
             config_json=run.config,
             provenance_json=provenance,
             storage_uri=storage_uri,

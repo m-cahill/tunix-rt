@@ -3,6 +3,8 @@
 from tunix_rt_backend.schemas.dataset import (
     DatasetBuildRequest,
     DatasetBuildResponse,
+    DatasetIngestRequest,
+    DatasetIngestResponse,
     DatasetManifest,
     ExportFormat,
 )
@@ -67,6 +69,8 @@ __all__ = [
     "UngarGenerateResponse",
     "DatasetBuildRequest",
     "DatasetBuildResponse",
+    "DatasetIngestRequest",
+    "DatasetIngestResponse",
     "DatasetManifest",
     "ExportFormat",
     "TunixStatusResponse",

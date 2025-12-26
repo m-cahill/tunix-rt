@@ -44,6 +44,9 @@ class DatasetBuildRequest(BaseModel):
         default=None, max_length=256, description="Parent dataset key"
     )
     training_run_id: str | None = Field(default=None, max_length=128, description="Training run ID")
+    provenance: dict[str, Any] = Field(
+        default_factory=dict, description="Additional provenance metadata"
+    )
 
 
 class DatasetManifest(BaseModel):
@@ -65,6 +68,7 @@ class DatasetManifest(BaseModel):
         session_id: Optional session identifier
         parent_dataset_id: Optional parent dataset key
         training_run_id: Optional training run identifier
+        provenance: Provenance metadata
     """
 
     dataset_key: str = Field(..., description="Unique dataset key (name-version)")
@@ -82,6 +86,7 @@ class DatasetManifest(BaseModel):
     session_id: str | None = Field(default=None, description="Session ID")
     parent_dataset_id: str | None = Field(default=None, description="Parent dataset key")
     training_run_id: str | None = Field(default=None, description="Training run ID")
+    provenance: dict[str, Any] = Field(default_factory=dict, description="Provenance metadata")
 
 
 class DatasetBuildResponse(BaseModel):
@@ -98,3 +103,17 @@ class DatasetBuildResponse(BaseModel):
     build_id: uuid.UUID
     trace_count: int
     manifest_path: str
+
+
+class DatasetIngestRequest(BaseModel):
+    """Request to ingest traces from a JSONL file."""
+
+    path: str = Field(..., description="Path to JSONL file on server")
+    source_name: str = Field(..., description="Source name for traces")
+
+
+class DatasetIngestResponse(BaseModel):
+    """Response from dataset ingest request."""
+
+    ingested_count: int
+    trace_ids: list[uuid.UUID]

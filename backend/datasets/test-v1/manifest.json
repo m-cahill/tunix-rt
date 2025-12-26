@@ -1,19 +1,19 @@
 {
   "dataset_key": "test-v1",
-  "build_id": "edbd3c72-feed-4b63-bb8e-959d06cbfdaf",
+  "build_id": "c2c3ab6c-a53c-4437-9cc2-6737487e786a",
   "dataset_name": "test",
   "dataset_version": "v1",
   "dataset_schema_version": "1.0",
-  "created_at": "2025-12-26T02:14:13.455007Z",
+  "created_at": "2025-12-26T03:24:29.722843Z",
   "filters": {
     "source": "test"
   },
   "selection_strategy": "latest",
   "seed": null,
   "trace_ids": [
-    "c71c4464-6d7e-4270-ae79-54150e2e3dbb",
-    "56a52ed5-40dc-463c-b86f-68c15461ac74",
-    "133515fc-b959-4989-af7a-12911c86f668"
+    "dbf8ff43-ef8e-4d62-a899-aefeef4556e2",
+    "30b08f9a-b5ee-4c90-870b-1ae8ce774f71",
+    "430f2bcb-cee7-44d3-969e-ea02a9cff773"
   ],
   "trace_count": 3,
   "stats": {
@@ -25,5 +25,12 @@
   },
   "session_id": null,
   "parent_dataset_id": null,
-  "training_run_id": null
+  "training_run_id": null,
+  "provenance": {
+    "schema_version": "1.0",
+    "source": "tunix_rt_backend_api",
+    "build_timestamp": "2025-12-26T03:24:29.722821+00:00",
+    "trace_count": 3,
+    "selection_strategy": "latest"
+  }
 }
