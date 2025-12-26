@@ -3,7 +3,7 @@
 import uuid
 from datetime import datetime, timezone
 
-from sqlalchemy import DateTime, ForeignKey, Index, String
+from sqlalchemy import Boolean, DateTime, ForeignKey, Index, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from tunix_rt_backend.db.base import Base
@@ -23,6 +23,7 @@ class RegressionBaseline(Base):
     name: Mapped[str] = mapped_column(String(256), unique=True, nullable=False)
     run_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("tunix_runs.run_id"), nullable=False)
     metric: Mapped[str] = mapped_column(String(64), nullable=False)
+    lower_is_better: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )

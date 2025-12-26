@@ -76,3 +76,74 @@ describe('API Client - Model Registry', () => {
     expect(url).toBe('/api/models/versions/v1/download')
   })
 })
+
+describe('API Client - Guardrails', () => {
+  it('exports core trace functions', () => {
+    expect(client.getApiHealth).toBeDefined()
+    expect(client.createTrace).toBeDefined()
+    expect(client.listTraces).toBeDefined()
+    expect(client.getTrace).toBeDefined()
+    expect(client.scoreTrace).toBeDefined()
+    expect(client.compareTraces).toBeDefined()
+  })
+
+  it('exports dataset functions', () => {
+    expect(client.buildDataset).toBeDefined()
+    expect(client.getDatasetExportUrl).toBeDefined()
+  })
+
+  it('exports Tunix functions', () => {
+    expect(client.getTunixStatus).toBeDefined()
+    expect(client.executeTunixRun).toBeDefined()
+    expect(client.listTunixRuns).toBeDefined()
+    expect(client.getTunixRun).toBeDefined()
+  })
+
+  it('exports evaluation functions', () => {
+    expect(client.evaluateRun).toBeDefined()
+    expect(client.getLeaderboard).toBeDefined()
+  })
+
+  it('exports tuning functions', () => {
+    expect(client.createTuningJob).toBeDefined()
+    expect(client.startTuningJob).toBeDefined()
+    expect(client.getTuningJob).toBeDefined()
+    expect(client.listTuningJobs).toBeDefined()
+  })
+
+  it('exports model registry functions', () => {
+    expect(client.createModelArtifact).toBeDefined()
+    expect(client.listModelArtifacts).toBeDefined()
+    expect(client.getModelArtifact).toBeDefined()
+    expect(client.promoteRunToVersion).toBeDefined()
+    expect(client.getModelVersion).toBeDefined()
+    expect(client.getModelDownloadUrl).toBeDefined()
+  })
+
+  it('prevents accidental file deletion - all core exports must exist', () => {
+    // This test ensures that client.ts is never accidentally overwritten/deleted
+    // If this test fails, it means core API exports are missing
+    const coreExports = [
+      'getApiHealth',
+      'createTrace',
+      'listTraces',
+      'getTrace',
+      'scoreTrace',
+      'compareTraces',
+      'buildDataset',
+      'getTunixStatus',
+      'executeTunixRun',
+      'listTunixRuns',
+      'evaluateRun',
+      'getLeaderboard',
+      'createTuningJob',
+      'getTuningJob',
+      'createModelArtifact',
+      'listModelArtifacts',
+    ]
+
+    const missingExports = coreExports.filter(name => !(name in client))
+
+    expect(missingExports).toEqual([])
+  })
+})
