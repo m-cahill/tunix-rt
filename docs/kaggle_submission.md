@@ -43,13 +43,13 @@ python training/train_jax.py \
 # 4. Generate predictions
 python training/eval_generate.py \
   --checkpoint ./output/kaggle_run \
-  --eval_set training/evalsets/golden_eval.jsonl \
+  --eval_set training/evalsets/eval_v1.jsonl \
   --output ./output/predictions.jsonl
 
 # 5. Score predictions
 python training/eval_report.py \
   --predictions ./output/predictions.jsonl \
-  --eval_set training/evalsets/golden_eval.jsonl
+  --eval_set training/evalsets/eval_v1.jsonl
 ```
 
 ## Single-Session Constraints

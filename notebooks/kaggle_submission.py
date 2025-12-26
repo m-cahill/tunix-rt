@@ -91,7 +91,7 @@ Configuration:
     run_command(train_cmd, "Train model with JAX/Flax")
 
     # Step 3: Generate predictions
-    eval_set = "training/evalsets/golden_eval.jsonl"
+    eval_set = "training/evalsets/eval_v1.jsonl"
     predictions_file = f"{args.output_dir}/predictions.jsonl"
 
     run_command(

@@ -1,0 +1,77 @@
+# Tunix RT - Submission Configuration (Gemma 2 2B)
+# Purpose: Alternative submission config for Google Tunix Hackathon
+# Model: google/gemma-2-2b (base model, larger capacity)
+#
+# NOTE: Gemma models require accepting the license on Hugging Face.
+# Visit https://huggingface.co/google/gemma-2-2b to accept terms.
+
+# Model Configuration
+model:
+  # Gemma 2 2B base model
+  # Alternative: google/gemma-2-2b-it (instruction-tuned)
+  name: "google/gemma-2-2b"
+
+  # Tokenizer settings
+  max_length: 512
+  padding: "max_length"
+  truncation: true
+
+# Training Configuration
+training:
+  # Training steps - adjust based on available time
+  # Note: 2B model is larger, may require fewer steps or smaller batch
+  num_steps: 100
+
+  # Learning rate (conservative for fine-tuning)
+  learning_rate: 1.0e-5
+
+  # Batch configuration
+  # Gemma 2 2B requires more memory; reduce batch size if OOM
+  per_device_batch_size: 2
+  gradient_accumulation_steps: 2
+
+  # Optimizer
+  optimizer: "adamw"
+  weight_decay: 0.01
+
+  # Learning rate schedule
+  lr_scheduler: "linear"
+  warmup_steps: 10
+
+  # Logging and checkpointing
+  logging_steps: 10
+  save_steps: 50
+
+  # Random seed for reproducibility
+  seed: 42
+
+# System Instruction (embedded in user turn for base models)
+system_instruction: "You are a helpful assistant. Show your reasoning step by step before giving your final answer."
+
+# Data Configuration
+data:
+  # Training data format
+  format: "tunix_sft"
+
+  # Shuffle settings
+  shuffle: true
+  shuffle_seed: 42
+
+# Output Configuration
+output:
+  # Checkpoint directory (relative to output_dir)
+  checkpoint_dir: "checkpoint-final"
+
+  # Metrics
+  save_metrics: true
+  metrics_file: "metrics.jsonl"
+
+  # Run manifest
+  save_manifest: true
+  manifest_file: "run_manifest.json"
+
+# Notes:
+# - Gemma 2 2B has more parameters than Gemma 3 1B
+# - May require more memory; adjust batch size accordingly
+# - Effective batch size = per_device_batch_size * gradient_accumulation_steps
+# - For Kaggle TPU, this should fit with batch_size=2
