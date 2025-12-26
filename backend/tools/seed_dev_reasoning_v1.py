@@ -33,7 +33,7 @@ def generate_reasoning_traces(count: int, seed: int) -> list[dict]:
     reasoning_templates = [
         {
             "prompt": (
-                "If a train travels at {speed} km/h for {hours} hours, " "how far does it travel?"
+                "If a train travels at {speed} km/h for {hours} hours, how far does it travel?"
             ),
             "trace_steps": [
                 "I need to use the formula: distance = speed × time",
