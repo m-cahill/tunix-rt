@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M31 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline | **Architecture:** Router-based (10 modules) | **Submission:** Final Package Ready
+**Milestone M32 Complete** ✅  
+**Coverage:** >70% Backend Line (260 tests) | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces)
 
 ## Overview
 
@@ -68,6 +68,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M30 Enhancements:** Polish & Submission Prep - Type ignore cleanup (narrowed with error codes, rationale comments), HTTP 422 deprecation fix (`HTTP_422_UNPROCESSABLE_CONTENT`), Router docstrings expanded (summary-level, 3-8 lines per module), Dataset ingest E2E test (`e2e/tests/datasets_ingest.spec.ts`), `dev-reasoning-v1` standardized to versioned folder format, Kaggle dry-run verified, Submission checklist (`docs/submission_checklist.md`) with video requirements (3 min, YouTube, Kaggle Media Gallery).
 
 **M31 Enhancements:** Final Submission Package - Submission freeze document (`docs/submission_freeze.md`) for reproducibility, Gemma submission configs (`submission_gemma3_1b.yaml`, `submission_gemma2_2b.yaml`), Kaggle notebook refactored with smoke/full run modes and subprocess-based execution, One-command packaging tool (`backend/tools/package_submission.py`), Submission artifacts documentation (`docs/submission_artifacts.md`), Video script and shot list (`docs/video_script_m31.md`, `docs/video_shotlist_m31.md`), Updated submission checklist with video URL placeholders.
+
+**M32 Enhancements:** Data Scale-Up & Coverage Uplift - Submission execution runbook (`docs/submission_execution_m32.md`), Evidence capture folder (`submission_runs/m32_v1/`), Scaled dataset (`dev-reasoning-v2` with 550 traces in strict ReasoningTrace schema), Dataset seeder (`seed_dev_reasoning_v2.py` with 70/20/10 composition), 8 schema validation tests, 9 new datasets_ingest unit tests (0%→full coverage), 7 new worker edge case tests, Updated packaging tool with evidence files, 260 total backend tests.
 
 
 ## Database Schema

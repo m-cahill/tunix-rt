@@ -69,7 +69,6 @@
         - generic [ref=e61]: "Dataset Key (e.g., ungar_hcd-v1):"
         - textbox "Dataset Key (e.g., ungar_hcd-v1):" [ref=e62]:
           - /placeholder: my_dataset-v1
-          - text: e2e-test-1766769045512-v1
       - generic [ref=e63]:
         - generic [ref=e64]: "Model ID:"
         - textbox "Model ID:" [ref=e65]:
@@ -82,30 +81,12 @@
           - text: ./output/tunix_run
       - generic [ref=e69]:
         - generic [ref=e70]:
-          - checkbox "Run Async (Non-blocking)" [checked] [ref=e71]
+          - checkbox "Run Async (Non-blocking)" [ref=e71]
           - generic [ref=e72]: Run Async (Non-blocking)
-        - button "Export JSONL" [ref=e73]
-        - button "Generate Manifest" [ref=e74]
-        - button "Run (Dry-run)" [ref=e75]
-        - button "Run with Tunix (Local)" [ref=e76]
-    - generic [ref=e77]:
-      - heading "Run Failed" [level=3] [ref=e78]
-      - generic [ref=e79]:
-        - paragraph [ref=e80]:
-          - strong [ref=e81]: "Run ID:"
-          - text: 9ffe2626-3bbe-4463-be4a-6a65dac63a49
-        - paragraph [ref=e82]:
-          - strong [ref=e83]: "Status:"
-          - text: pending
-        - paragraph [ref=e84]:
-          - strong [ref=e85]: "Mode:"
-          - text: dry-run
-        - paragraph [ref=e86]:
-          - strong [ref=e87]: "Duration:"
-          - text: s
-        - paragraph [ref=e88]:
-          - strong [ref=e89]: "Message:"
-          - text: "Async execution: pending"
-    - heading "▶ Run History" [level=3] [ref=e91]:
-      - button "▶ Run History" [ref=e92] [cursor=pointer]
+        - button "Export JSONL" [disabled] [ref=e73]
+        - button "Generate Manifest" [disabled] [ref=e74]
+        - button "Run (Dry-run)" [disabled] [ref=e75]
+        - button "Run with Tunix (Local)" [disabled] [ref=e76]
+    - heading "▶ Run History" [level=3] [ref=e78]:
+      - button "▶ Run History" [ref=e79] [cursor=pointer]
 ```

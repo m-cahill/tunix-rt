@@ -14,7 +14,7 @@ Usage:
     python backend/tools/package_submission.py --include-output ./output/final_run
 
 Output:
-    Creates a zip file at: submission/tunix_rt_m31_<YYYY-MM-DD>_<shortsha>.zip
+    Creates a zip file at: submission/tunix_rt_m32_<YYYY-MM-DD>_<shortsha>.zip
 
 The archive contains:
     - notebooks/kaggle_submission.ipynb
@@ -51,6 +51,7 @@ BUNDLE_FILES = [
     "docs/submission_checklist.md",
     "docs/submission_freeze.md",
     "docs/submission_artifacts.md",
+    "docs/submission_execution_m32.md",
     "docs/evaluation.md",
     "docs/training_end_to_end.md",
     # Training configs
@@ -59,13 +60,16 @@ BUNDLE_FILES = [
     "training/configs/sft_tiny.yaml",
     # Eval sets
     "training/evalsets/eval_v1.jsonl",
+    # Evidence files (M32)
+    "submission_runs/m32_v1/run_manifest.json",
+    "submission_runs/m32_v1/eval_summary.json",
 ]
 
 # Dataset manifests to include
-DATASETS = ["golden-v2", "dev-reasoning-v1"]
+DATASETS = ["golden-v2", "dev-reasoning-v1", "dev-reasoning-v2"]
 
 # Archive naming
-ARCHIVE_PREFIX = "tunix_rt_m31"
+ARCHIVE_PREFIX = "tunix_rt_m32"
 
 # ============================================================
 # Helper Functions
@@ -109,7 +113,7 @@ def generate_submission_readme(output_path: Path, sha: str, timestamp: str) -> N
     """
     readme_content = f"""# Tunix RT - Submission Package
 
-**Version:** m31_v1
+**Version:** m32_v1
 **Built:** {timestamp}
 **Commit:** {sha}
 
