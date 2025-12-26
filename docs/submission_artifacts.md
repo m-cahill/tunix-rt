@@ -6,7 +6,7 @@ This document describes the contents of the submission bundle and how to reprodu
 
 ## Archive Contents
 
-The submission archive (`tunix_rt_m31_<date>_<sha>.zip`) contains:
+The submission archive (`tunix_rt_m33_<date>_<sha>.zip`) contains:
 
 ### Notebooks
 
@@ -44,8 +44,17 @@ The submission archive (`tunix_rt_m31_<date>_<sha>.zip`) contains:
 
 | File | Purpose |
 |------|---------|
+| `datasets/dev-reasoning-v2/manifest.json` | Dev dataset manifest (550 traces, recommended) |
 | `datasets/golden-v2/manifest.json` | Golden dataset manifest (100 traces) |
 | `datasets/dev-reasoning-v1/manifest.json` | Dev dataset manifest (200 traces) |
+
+### Evidence Files (M33+)
+
+| File | Purpose |
+|------|---------|
+| `submission_runs/m33_v1/run_manifest.json` | Run configuration and provenance |
+| `submission_runs/m33_v1/eval_summary.json` | Evaluation results and primary score |
+| `submission_runs/m33_v1/kaggle_output_log.txt` | Console output from rehearsal run |
 
 **Note:** Dataset JSONL files are not included in the archive. They are generated at runtime using the seed scripts.
 

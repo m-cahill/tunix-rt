@@ -19,6 +19,7 @@ This checklist ensures a complete, reproducible submission.
 | Dataset | Traces | Use Case |
 |---------|--------|----------|
 | `dev-reasoning-v1` | 200 | Smoke testing, local development |
+| `dev-reasoning-v2` | 550 | Scaled training, validation (M32) |
 | `golden-v2` | 100 | Calibration, final submission |
 
 **Provenance notes:**
@@ -118,11 +119,12 @@ tunix_submission_{run_id}_{dataset}_{timestamp}/
 
 ## 7. Video Requirements
 
-Per competition rules ([Kaggle](https://www.kaggle.com/competitions/google-tunix-hackathon)):
+Per competition rules ([Kaggle Timeline](https://www.kaggle.com/competitions/google-tunix-hackathon/overview/timeline)):
 
-- [ ] **Length:** 3 minutes or less
+- [ ] **Length:** ⚠️ **MUST be 3 minutes or less** (strict requirement)
 - [ ] **Platform:** Published to YouTube (public or unlisted)
 - [ ] **Submission:** Attached to Kaggle Media Gallery
+- [ ] **Content:** Demonstrate training workflow + results
 
 **Suggested content outline:**
 1. Problem statement (15 sec)
@@ -193,6 +195,7 @@ python training/train_jax.py \
 
 - [Submission Freeze](submission_freeze.md) — Frozen configuration for reproducibility
 - [Submission Artifacts](submission_artifacts.md) — What's in the submission bundle
+- [Submission Execution M32](submission_execution_m32.md) — Step-by-step Kaggle runbook
 - [Kaggle Submission Guide](kaggle_submission.md)
 - [Training End-to-End](training_end_to_end.md)
 - [Evaluation Semantics](evaluation.md)

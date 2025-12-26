@@ -1,8 +1,8 @@
 # Tunix RT - Submission Freeze
 
-**Milestone:** M31 - Final Submission Package  
-**Version:** `m31_v1`  
-**Freeze Date:** 2025-12-25
+**Milestone:** M33 - Kaggle Submission Rehearsal v1  
+**Version:** `m33_v1`  
+**Freeze Date:** 2025-12-26
 
 ---
 
@@ -14,9 +14,9 @@ This document records the exact configuration used for the final Kaggle submissi
 
 | Field | Value |
 |-------|-------|
-| **Commit SHA** | `<TO_BE_FILLED_ON_FINAL_RUN>` |
-| **Branch** | `milestone/M31-final-submission-package` |
-| **Tag** | `v1.0.0-m31` (optional) |
+| **Commit SHA** | `915254b` (M33 rehearsal) |
+| **Branch** | `milestone/M33-kaggle-rehearsal-v1` |
+| **Tag** | `v1.0.0-m33` (optional) |
 
 ---
 
@@ -24,14 +24,14 @@ This document records the exact configuration used for the final Kaggle submissi
 
 | Field | Value |
 |-------|-------|
-| **Canonical Dataset** | `golden-v2` |
-| **Dataset Location** | `backend/datasets/golden-v2/` |
-| **Manifest** | `backend/datasets/golden-v2/manifest.json` |
-| **Trace Count** | 100 |
+| **Canonical Dataset** | `dev-reasoning-v2` |
+| **Dataset Location** | `backend/datasets/dev-reasoning-v2/` |
+| **Manifest** | `backend/datasets/dev-reasoning-v2/manifest.json` |
+| **Trace Count** | 550 |
 | **Seed** | 42 (deterministic) |
 
-**Alternative Dataset (for smoke testing):**
-- `dev-reasoning-v1` (200 traces, 70% reasoning, 30% synthetic)
+**Alternative Dataset (for quick sanity):**
+- `golden-v2` (100 traces, calibration)
 
 ---
 
@@ -86,9 +86,10 @@ python training/eval_report.py \
 
 | Field | Value |
 |-------|-------|
-| **Archive Name** | `<TO_BE_FILLED_AFTER_PACKAGING>` |
+| **Archive Name** | `tunix_rt_m33_2025-12-26_915254b.zip` |
 | **Archive Location** | `./submission/` |
-| **Checksum (SHA256)** | `<TO_BE_FILLED>` |
+| **Archive Size** | 70.3 KB |
+| **Evidence Folder** | `submission_runs/m33_v1/` |
 
 ---
 

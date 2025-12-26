@@ -29,13 +29,13 @@ Open and run `notebooks/kaggle_submission.ipynb` sequentially. All cells are doc
 # 1. Install dependencies
 pip install -e ".[dev,tunix]"
 
-# 2. Build dataset
-python backend/tools/seed_golden_v2.py
+# 2. Build dataset (recommended: dev-reasoning-v2 with 550 traces)
+python backend/tools/seed_dev_reasoning_v2.py
 
 # 3. Train model (bounded time)
 python training/train_jax.py \
-  --dataset golden-v2 \
-  --model_name google/gemma-2-2b \
+  --dataset dev-reasoning-v2 \
+  --model_name google/gemma-3-1b-it \
   --max_steps 100 \
   --device auto \
   --output_dir ./output/kaggle_run
@@ -115,16 +115,16 @@ Verify dataset was built:
 ls -l backend/datasets/golden-v2/
 ```
 
-## Dry Run Verified (M30)
+## Rehearsal Run Verified (M33)
 
-The following minimal dry-run was verified on 2025-12-25:
+The following rehearsal run was verified on 2025-12-26:
 
 ```bash
-# Minimal CPU dry-run with dev-reasoning-v1 dataset (200 traces)
+# Local CPU smoke run with dev-reasoning-v2 dataset (550 traces)
 python training/train_jax.py \
   --config training/configs/sft_tiny.yaml \
-  --output ./output/dry_run_m30 \
-  --dataset dev-reasoning-v1 \
+  --output ./output/m33_rehearsal \
+  --dataset dev-reasoning-v2 \
   --device cpu \
   --smoke_steps 2
 ```
@@ -141,8 +141,9 @@ python training/train_jax.py \
 ```
 
 **Available datasets:**
-- `dev-reasoning-v1`: 200 traces (70% reasoning, 30% synthetic) - for smoke testing
-- `golden-v2`: 100 traces - for calibration
+- `dev-reasoning-v2`: 550 traces (70/20/10 composition) - **recommended for training**
+- `golden-v2`: 100 traces - for quick sanity/calibration
+- `dev-reasoning-v1`: 200 traces - legacy smoke testing
 
 ## References
 
