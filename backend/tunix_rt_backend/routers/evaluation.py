@@ -1,4 +1,17 @@
-"""Evaluation endpoints."""
+"""Evaluation endpoints.
+
+Domain: Model evaluation, scoring, and leaderboard
+
+Primary endpoints:
+- POST /api/evaluation/evaluate: Trigger evaluation for a run
+- GET /api/evaluation/leaderboard: Paginated leaderboard by score
+
+Cross-cutting concerns:
+- Pluggable judge interface (MockJudge, GemmaJudge, AnswerCorrectnessJudge)
+- Evaluations stored in tunix_run_evaluations table
+- Leaderboard excludes dry-run entries
+- Pagination with limit/offset
+"""
 
 import uuid
 from typing import Annotated

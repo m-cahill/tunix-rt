@@ -34,7 +34,7 @@ async_session_maker = async_sessionmaker(
 )
 
 
-async def get_db() -> AsyncSession:  # type: ignore[misc]
+async def get_db() -> AsyncSession:  # type: ignore[misc]  # FastAPI Depends yield pattern
     """Dependency for getting async database sessions.
 
     Yields an AsyncSession that is automatically closed after use.

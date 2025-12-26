@@ -1,4 +1,21 @@
-"""Tunix run management endpoints."""
+"""Tunix run management endpoints.
+
+Domain: Training run lifecycle, logs, artifacts, and metrics
+
+Primary endpoints:
+- GET /api/tunix/runs: List runs with pagination/filtering
+- GET /api/tunix/runs/{id}: Run details (status, config, metrics)
+- GET /api/tunix/runs/{id}/status: Polling endpoint for async runs
+- GET /api/tunix/runs/{id}/logs: SSE log streaming
+- POST /api/tunix/runs/{id}/cancel: Cancel running job
+- GET /api/tunix/runs/{id}/artifacts: List/download output artifacts
+
+Cross-cutting concerns:
+- Status transitions: pending → running → completed/failed/cancelled
+- Log streaming via Server-Sent Events (SSE)
+- Stdout/stderr truncation (10KB limit for storage)
+- Artifact file download with proper content types
+"""
 
 import asyncio
 import json

@@ -1,4 +1,20 @@
-"""Model registry endpoints."""
+"""Model registry endpoints.
+
+Domain: Model artifact storage and version management
+
+Primary endpoints:
+- POST /api/models/artifacts: Create logical model family
+- GET /api/models/artifacts: List all artifacts
+- GET /api/models/artifacts/{id}: Artifact details with versions
+- POST /api/models/artifacts/{id}/promote: Promote run to version
+- GET /api/models/versions/{id}/download: Download model archive
+
+Cross-cutting concerns:
+- Content-addressed storage (SHA256 for deduplication)
+- Provenance tracking (source run, dataset, config)
+- Version immutability (once created, cannot be modified)
+- Temporary file cleanup via background tasks
+"""
 
 import asyncio
 import shutil

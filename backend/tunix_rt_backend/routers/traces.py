@@ -1,4 +1,19 @@
-"""Traces CRUD endpoints."""
+"""Traces CRUD endpoints.
+
+Domain: Reasoning trace storage and retrieval
+
+Primary endpoints:
+- POST /api/traces: Create trace with validation
+- GET /api/traces/{id}: Retrieve single trace
+- GET /api/traces: List traces with pagination
+- POST /api/traces/compare: Compare two traces with scoring
+- POST /api/traces/batch: Bulk import traces
+
+Cross-cutting concerns:
+- Payload size validation (enforced via dependency)
+- Automatic scoring on creation
+- Pagination for list endpoint (limit/offset)
+"""
 
 import logging
 import time

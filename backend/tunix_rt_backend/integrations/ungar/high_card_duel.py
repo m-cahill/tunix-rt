@@ -54,8 +54,10 @@ def generate_high_card_duel_traces(count: int, seed: int | None = None) -> list[
     # Lazy import to avoid requiring UNGAR at module load time
     # UNGAR is an optional dependency, not available to mypy in default CI
     try:
-        from ungar.games.high_card_duel import make_high_card_duel_spec  # type: ignore
-        from ungar.runner import play_random_episode  # type: ignore
+        from ungar.games.high_card_duel import (  # type: ignore[import-not-found]
+            make_high_card_duel_spec,
+        )
+        from ungar.runner import play_random_episode  # type: ignore[import-not-found]
     except ImportError as e:
         raise ImportError("UNGAR is not installed. Install with: pip install -e '.[ungar]'") from e
 

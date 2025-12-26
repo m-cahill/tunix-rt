@@ -316,17 +316,17 @@ async def test_list_runs_filter_by_status(
         },
     )
     # Verify it actually failed
-    assert failed_response.json()["status"] == "failed", (
-        f"Expected failed, got: {failed_response.json()}"
-    )
+    assert (
+        failed_response.json()["status"] == "failed"
+    ), f"Expected failed, got: {failed_response.json()}"
 
     # Filter by completed status
     response = await client.get("/api/tunix/runs?status=completed")
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
-    assert len(data["data"]) == 1, (
-        f"Expected 1 completed run, got {len(data['data'])}: {data['data']}"
-    )
+    assert (
+        len(data["data"]) == 1
+    ), f"Expected 1 completed run, got {len(data['data'])}: {data['data']}"
     assert data["data"][0]["status"] == "completed"
 
     # Filter by failed status
@@ -450,15 +450,15 @@ async def test_list_runs_invalid_pagination(client: AsyncClient) -> None:
     """Test validation of pagination parameters."""
     # Invalid limit (> 100)
     response = await client.get("/api/tunix/runs?limit=101")
-    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+    assert response.status_code == 422  # Avoid deprecated constant
 
     # Invalid limit (< 1)
     response = await client.get("/api/tunix/runs?limit=0")
-    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+    assert response.status_code == 422  # Avoid deprecated constant
 
     # Invalid offset (< 0)
     response = await client.get("/api/tunix/runs?offset=-1")
-    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+    assert response.status_code == 422  # Avoid deprecated constant
 
 
 # ===========================
@@ -510,4 +510,4 @@ async def test_get_run_detail_not_found(client: AsyncClient) -> None:
 async def test_get_run_detail_invalid_uuid(client: AsyncClient) -> None:
     """Test getting run with invalid UUID returns 422."""
     response = await client.get("/api/tunix/runs/not-a-uuid")
-    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+    assert response.status_code == 422  # Avoid deprecated constant

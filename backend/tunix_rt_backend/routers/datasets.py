@@ -1,4 +1,16 @@
-"""Dataset management endpoints."""
+"""Dataset management endpoints.
+
+Domain: Dataset lifecycle (build, ingest, export)
+
+Primary endpoints:
+- POST /api/datasets/build: Create versioned dataset from filtered traces
+- POST /api/datasets/ingest: Import traces from JSONL files with provenance
+- GET /api/datasets/{key}/export.jsonl: Export dataset in various formats
+
+Cross-cutting concerns:
+- All datasets include provenance metadata for reproducibility
+- Supports trace, tunix_sft, and training_example export formats
+"""
 
 from typing import Annotated
 
@@ -55,7 +67,7 @@ async def build_dataset(
     except ValueError as e:
         # Convert service-level ValueError to HTTP 422
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail=str(e),
         )
 

@@ -18,9 +18,9 @@ from tunix_rt_backend.schemas.tuning import TuningJobCreate
 
 logger = logging.getLogger(__name__)
 
-# Check for Ray availability
+# Check for Ray availability (optional dependency)
 try:
-    import ray  # type: ignore
+    import ray  # type: ignore[import-not-found]
     from ray import train, tune
 
     RAY_AVAILABLE = True

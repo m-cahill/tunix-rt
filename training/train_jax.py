@@ -54,7 +54,6 @@ def run_jax_sft_training(
     model_id = config.get("model", {}).get("model_id", "distilgpt2")
     training_args = config.get("training", {})
     learning_rate = float(training_args.get("learning_rate", 2e-5))
-    weight_decay = float(training_args.get("weight_decay", 1e-4))
     num_epochs = int(training_args.get("num_epochs", 3))
     batch_size = int(training_args.get("batch_size", 4))
     max_length = int(training_args.get("max_seq_length", 128))
@@ -121,7 +120,8 @@ def run_jax_sft_training(
     print("   Tokenizing dataset...")
     encodings = []
     for s in dataset:
-        text = s.get("prompts", "")
+        # Support both 'prompts' (Tunix SFT format) and 'prompt' (raw trace format)
+        text = s.get("prompts") or s.get("prompt", "")
         if not text:
             continue
         try:
@@ -168,7 +168,7 @@ def run_jax_sft_training(
         return batch
 
     # 3. Training Setup
-    tx = optax.adamw(learning_rate=learning_rate, weight_decay=weight_decay)
+    tx = optax.adamw(learning_rate=learning_rate)
 
     class TrainState(train_state.TrainState):
         pass
