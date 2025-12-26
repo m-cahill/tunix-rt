@@ -129,3 +129,32 @@ Immutable versions of artifacts.
 - `storage_uri` (String)
 - `sha256` (String)
 - `created_at` (DateTime)
+
+### `regression_baselines` (M18, updated M29)
+Baseline configurations for regression testing.
+- `id` (UUID, PK)
+- `name` (String, Unique)
+- `run_id` (UUID, FK)
+- `metric` (String)
+- `lower_is_better` (Boolean, nullable) — Added M29
+- `created_at` (DateTime)
+
+### `tunix_run_evaluations` (M17)
+Evaluation results for training runs.
+- `id` (UUID, PK)
+- `run_id` (UUID, FK)
+- `score` (Float)
+- `verdict` (String)
+- `details` (JSON)
+- `judge_name` (String)
+- `judge_version` (String)
+- `evaluated_at` (DateTime)
+
+### `tunix_run_log_chunks` (M16)
+Streaming log storage for training runs.
+- `id` (UUID, PK)
+- `run_id` (UUID, FK)
+- `chunk_index` (Integer)
+- `content` (Text)
+- `stream` (String) — 'stdout' or 'stderr'
+- `created_at` (DateTime)
