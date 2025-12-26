@@ -316,17 +316,17 @@ async def test_list_runs_filter_by_status(
         },
     )
     # Verify it actually failed
-    assert (
-        failed_response.json()["status"] == "failed"
-    ), f"Expected failed, got: {failed_response.json()}"
+    assert failed_response.json()["status"] == "failed", (
+        f"Expected failed, got: {failed_response.json()}"
+    )
 
     # Filter by completed status
     response = await client.get("/api/tunix/runs?status=completed")
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
-    assert (
-        len(data["data"]) == 1
-    ), f"Expected 1 completed run, got {len(data['data'])}: {data['data']}"
+    assert len(data["data"]) == 1, (
+        f"Expected 1 completed run, got {len(data['data'])}: {data['data']}"
+    )
     assert data["data"][0]["status"] == "completed"
 
     # Filter by failed status
