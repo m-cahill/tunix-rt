@@ -124,6 +124,8 @@ submission_runs/**/*.pt
 submission_runs/**/*.bin
 submission_runs/**/*.tar*
 submission_runs/**/*.zip
+# Exception: track evidence log files
+!submission_runs/**/*_log.txt
 
 # Coverage reports
 backend/coverage.json

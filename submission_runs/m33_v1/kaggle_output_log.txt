@@ -1,0 +1,28 @@
+﻿python : TensorFlow and JAX classes are deprecated and will be removed in Transformers v5. We recommend migrating to
+PyTorch classes or pinning your version of Transformers.
+At C:\Users\micha\AppData\Local\Temp\ps-script-04ced63c-49c4-472f-997c-707d1f12a462.ps1:85 char:24
++ ... g\tunix-rt; python training/train_jax.py --config training/configs/sf ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (TensorFlow and ...f Transformers.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Some weights of the model checkpoint at distilgpt2 were not used when initializing FlaxGPT2LMHeadModel:
+{('transformer', 'h', '2', 'attn', 'bias'), ('transformer', 'h', '4', 'attn', 'bias'), ('transformer', 'h', '0',
+'attn', 'bias'), ('transformer', 'h', '1', 'attn', 'bias'), ('transformer', 'h', '3', 'attn', 'bias'), ('lm_head',
+'kernel'), ('transformer', 'h', '5', 'attn', 'bias')}
+- This IS expected if you are initializing FlaxGPT2LMHeadModel from the checkpoint of a model trained on another task
+or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing FlaxGPT2LMHeadModel from the checkpoint of a model that you expect to
+be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+WARNING:absl:Configured `CheckpointManager` using deprecated legacy API. Please follow the instructions at
+https://orbax.readthedocs.io/en/latest/guides/checkpoint/api_refactor.html to migrate.
+
+≡ƒÜÇ Starting SFT Training (JAX/Flax)...
+   Device request: CPU
+   Model: distilgpt2
+   Active Device: TFRT_CPU_0
+   Platform: cpu
+   Loading model...
+   Tokenizing dataset...
+   Training...
+   ≡ƒ¢æ Smoke steps limit reached (2). Stopping.
