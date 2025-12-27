@@ -236,7 +236,7 @@ export const RunComparison = ({ runAId, runBId, onClose }: RunComparisonProps) =
                             </tr>
                         </thead>
                         <tbody>
-                            {itemMetricsA.map((metricA, idx) => {
+                            {itemMetricsA.map((metricA) => {
                                 const metricB = itemMetricsB.find(m => m.name === metricA.name)
                                 const scoreA = metricA.score
                                 const scoreB = metricB?.score ?? null
