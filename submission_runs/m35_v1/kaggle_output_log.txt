@@ -1,0 +1,28 @@
+================================================================================
+M35 Quality Loop 1 - Kaggle Output Log Template
+================================================================================
+
+Run Version: m35_v1
+Eval Set: training/evalsets/eval_v2.jsonl (100 items)
+Date: 2025-12-26
+
+This is a placeholder log. Replace with actual Kaggle notebook output after execution.
+
+Expected output:
+- Training with dev-reasoning-v2 dataset
+- Evaluation using eval_v2.jsonl (100 items, 60/25/15 split)
+- Scorecard with section/category/difficulty breakdowns
+- Primary score (0-1 scale)
+
+M35 Deliverables:
+- [x] eval_v2.jsonl created (100 items)
+- [x] Eval set validator tool added
+- [x] Scorecard aggregator (compute_scorecard)
+- [x] Leaderboard filtering (dataset, model, config, date)
+- [x] Frontend filters + scorecard inline
+- [x] Per-item diff table in RunComparison
+- [x] Regression baseline enhancements (primary_score default)
+- [x] Determinism check script
+
+================================================================================
+

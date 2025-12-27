@@ -1,4 +1,7 @@
-"""Regression schemas (M18)."""
+"""Regression schemas (M18, M35).
+
+M35 additions: eval_set field, primary_score default, promote best run.
+"""
 
 from datetime import datetime
 from typing import Literal
@@ -12,8 +15,14 @@ class RegressionBaselineCreate(BaseModel):
 
     name: str = Field(..., description="Unique name for the baseline")
     run_id: UUID = Field(..., description="Run ID to use as baseline")
-    metric: str = Field(..., description="Metric name (e.g., 'score', 'accuracy')")
+    metric: str = Field(
+        default="primary_score",
+        description="Metric name (e.g., 'primary_score', 'score', 'answer_correctness')",
+    )
     lower_is_better: bool | None = Field(None, description="Whether lower values are better")
+    # M35: Additional keying fields for multiple baselines
+    eval_set: str | None = Field(None, description="Eval set used (e.g., 'eval_v2.jsonl')")
+    dataset_key: str | None = Field(None, description="Dataset key for scoping")
 
 
 class RegressionBaselineResponse(BaseModel):
@@ -24,7 +33,18 @@ class RegressionBaselineResponse(BaseModel):
     run_id: UUID
     metric: str
     lower_is_better: bool | None = None
+    eval_set: str | None = None
+    dataset_key: str | None = None
     created_at: datetime
+
+
+class PromoteBestRunRequest(BaseModel):
+    """Request to promote the best run from a tuning job as baseline (M35)."""
+
+    tuning_job_id: UUID | None = Field(None, description="Tuning job to select best from")
+    run_id: UUID | None = Field(None, description="Specific run to promote (alternative)")
+    baseline_name: str = Field(..., description="Name for the new baseline")
+    metric: str = Field(default="primary_score", description="Metric to use")
 
 
 class RegressionCheckRequest(BaseModel):

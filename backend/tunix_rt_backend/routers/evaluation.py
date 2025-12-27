@@ -1,10 +1,14 @@
-"""Evaluation endpoints.
+"""Evaluation endpoints (M17, M35).
 
 Domain: Model evaluation, scoring, and leaderboard
 
 Primary endpoints:
 - POST /api/evaluation/evaluate: Trigger evaluation for a run
-- GET /api/evaluation/leaderboard: Paginated leaderboard by score
+- GET /api/evaluation/leaderboard: Paginated + filtered leaderboard by score
+
+M35 additions:
+- Leaderboard filtering by dataset, model_id, config, date range
+- Scorecard summary inline with leaderboard items
 
 Cross-cutting concerns:
 - Pluggable judge interface (MockJudge, GemmaJudge, AnswerCorrectnessJudge)
@@ -14,9 +18,10 @@ Cross-cutting concerns:
 """
 
 import uuid
+from datetime import datetime
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from tunix_rt_backend.db.base import get_db
@@ -25,6 +30,7 @@ from tunix_rt_backend.redi_client import RediClientProtocol
 from tunix_rt_backend.schemas.evaluation import (
     EvaluationRequest,
     EvaluationResponse,
+    LeaderboardFilters,
     LeaderboardResponse,
 )
 
@@ -109,28 +115,33 @@ async def get_tunix_run_evaluation(
 @router.get("/api/tunix/evaluations", response_model=LeaderboardResponse)
 async def get_leaderboard(
     db: Annotated[AsyncSession, Depends(get_db)],
-    limit: int = 50,
-    offset: int = 0,
+    limit: int = Query(default=50, ge=1, le=100, description="Results per page"),
+    offset: int = Query(default=0, ge=0, description="Results offset"),
+    # M35: Filter parameters (all optional, AND logic)
+    dataset_key: str | None = Query(default=None, description="Filter by dataset (exact)"),
+    model_id: str | None = Query(default=None, description="Filter by model (contains)"),
+    config_path: str | None = Query(default=None, description="Filter by config (contains)"),
+    date_from: datetime | None = Query(default=None, description="Filter by date (>=)"),
+    date_to: datetime | None = Query(default=None, description="Filter by date (<=)"),
 ) -> LeaderboardResponse:
-    """Get leaderboard data (M17).
+    """Get leaderboard data with optional filtering (M17, M35).
+
+    Supports filtering by dataset, model, config, and date range.
+    All filters use AND logic. Empty values are ignored.
 
     Returns:
-        LeaderboardResponse with sorted evaluation results
+        LeaderboardResponse with sorted evaluation results and applied filters
     """
     from tunix_rt_backend.services.evaluation import EvaluationService
 
-    # Validate pagination parameters
-    if limit < 1 or limit > 100:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
-            detail="limit must be between 1 and 100",
-        )
-
-    if offset < 0:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
-            detail="offset must be non-negative",
-        )
+    # Build filters object
+    filters = LeaderboardFilters(
+        dataset_key=dataset_key,
+        model_id=model_id,
+        config_path=config_path,
+        date_from=date_from,
+        date_to=date_to,
+    )
 
     service = EvaluationService(db)
-    return await service.get_leaderboard(limit=limit, offset=offset)
+    return await service.get_leaderboard(limit=limit, offset=offset, filters=filters)

@@ -339,3 +339,139 @@ class TestM34EvidenceFilesComplete:
         for filename in expected_files:
             file_path = m34_run_dir / filename
             assert file_path.exists(), f"Missing M34 evidence file: {filename}"
+
+
+# ============================================================
+# M35 Evidence File Tests
+# ============================================================
+
+# M35 required fields for eval_summary.json
+M35_EVAL_SUMMARY_REQUIRED_FIELDS = [
+    "run_version",
+    "eval_set",
+    "metrics",
+    "primary_score",
+    "scorecard",  # M35: New scorecard field
+    "evaluated_at",
+]
+
+
+@pytest.fixture
+def m35_run_dir() -> Path:
+    """Return path to M35 evidence directory."""
+    return Path(__file__).parent.parent.parent / "submission_runs" / "m35_v1"
+
+
+class TestM35RunManifestSchema:
+    """Tests for M35 run_manifest.json schema validation."""
+
+    def test_run_manifest_exists(self, m35_run_dir: Path) -> None:
+        """Verify run_manifest.json exists in M35 evidence directory."""
+        manifest_path = m35_run_dir / "run_manifest.json"
+        assert manifest_path.exists(), f"Missing: {manifest_path}"
+
+    def test_run_manifest_has_required_fields(self, m35_run_dir: Path) -> None:
+        """Verify run_manifest.json has all required fields."""
+        manifest_path = m35_run_dir / "run_manifest.json"
+        with open(manifest_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        missing_fields = [field for field in RUN_MANIFEST_REQUIRED_FIELDS if field not in data]
+        assert not missing_fields, f"Missing required fields: {missing_fields}"
+
+    def test_run_manifest_has_eval_set(self, m35_run_dir: Path) -> None:
+        """M35: Verify run_manifest.json includes eval_set field."""
+        manifest_path = m35_run_dir / "run_manifest.json"
+        with open(manifest_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        assert "eval_set" in data, "M35 run_manifest must include eval_set field"
+
+    def test_run_manifest_eval_set_is_eval_v2(self, m35_run_dir: Path) -> None:
+        """M35: Verify eval_set references eval_v2.jsonl."""
+        manifest_path = m35_run_dir / "run_manifest.json"
+        with open(manifest_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        eval_set = data.get("eval_set", "")
+        assert "eval_v2" in eval_set, f"M35 must use eval_v2.jsonl, got: {eval_set}"
+
+
+class TestM35EvalSummarySchema:
+    """Tests for M35 eval_summary.json schema validation."""
+
+    def test_eval_summary_exists(self, m35_run_dir: Path) -> None:
+        """Verify eval_summary.json exists in M35 evidence directory."""
+        summary_path = m35_run_dir / "eval_summary.json"
+        assert summary_path.exists(), f"Missing: {summary_path}"
+
+    def test_eval_summary_has_required_fields(self, m35_run_dir: Path) -> None:
+        """Verify eval_summary.json has all M35 required fields."""
+        summary_path = m35_run_dir / "eval_summary.json"
+        with open(summary_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        missing_fields = [field for field in M35_EVAL_SUMMARY_REQUIRED_FIELDS if field not in data]
+        assert not missing_fields, f"Missing required fields: {missing_fields}"
+
+    def test_eval_summary_has_scorecard(self, m35_run_dir: Path) -> None:
+        """M35: Verify eval_summary.json includes scorecard object."""
+        summary_path = m35_run_dir / "eval_summary.json"
+        with open(summary_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        assert "scorecard" in data, "M35 eval_summary must include scorecard"
+        scorecard = data["scorecard"]
+        assert isinstance(scorecard, dict), "scorecard must be a dictionary"
+
+    def test_eval_summary_scorecard_has_n_items(self, m35_run_dir: Path) -> None:
+        """M35: Verify scorecard has n_items field."""
+        summary_path = m35_run_dir / "eval_summary.json"
+        with open(summary_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        scorecard = data.get("scorecard", {})
+        assert "n_items" in scorecard, "scorecard must include n_items"
+        # M35 uses eval_v2 with 100 items
+        assert scorecard["n_items"] == 100, (
+            f"Expected 100 items for eval_v2, got {scorecard['n_items']}"
+        )
+
+    def test_eval_summary_uses_eval_v2(self, m35_run_dir: Path) -> None:
+        """M35: Verify eval_set references eval_v2.jsonl."""
+        summary_path = m35_run_dir / "eval_summary.json"
+        with open(summary_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        eval_set = data.get("eval_set", "")
+        assert "eval_v2" in eval_set, f"M35 must use eval_v2.jsonl, got: {eval_set}"
+
+
+class TestM35KaggleOutputLog:
+    """Tests for M35 kaggle_output_log.txt."""
+
+    def test_kaggle_output_log_exists(self, m35_run_dir: Path) -> None:
+        """Verify kaggle_output_log.txt exists in M35 evidence directory."""
+        log_path = m35_run_dir / "kaggle_output_log.txt"
+        assert log_path.exists(), f"Missing: {log_path}"
+
+    def test_kaggle_output_log_is_not_empty(self, m35_run_dir: Path) -> None:
+        """Verify kaggle_output_log.txt is not empty."""
+        log_path = m35_run_dir / "kaggle_output_log.txt"
+        content = log_path.read_text(encoding="utf-8")
+        assert len(content) > 0, "kaggle_output_log.txt must not be empty"
+
+
+class TestM35EvidenceFilesComplete:
+    """Tests that all M35 evidence files are present."""
+
+    def test_all_m35_evidence_files_exist(self, m35_run_dir: Path) -> None:
+        """Verify all expected M35 evidence files exist."""
+        expected_files = [
+            "run_manifest.json",
+            "eval_summary.json",
+            "kaggle_output_log.txt",
+        ]
+        for filename in expected_files:
+            file_path = m35_run_dir / filename
+            assert file_path.exists(), f"Missing M35 evidence file: {filename}"

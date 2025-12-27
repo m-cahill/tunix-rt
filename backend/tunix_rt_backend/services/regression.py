@@ -1,6 +1,7 @@
-"""Regression testing service (M18).
+"""Regression testing service (M18, M35).
 
 Handles baselines and regression checks.
+M35 additions: primary_score default, eval_set/dataset_key scoping, promote best run.
 """
 
 import logging
@@ -19,6 +20,10 @@ from tunix_rt_backend.schemas.regression import (
 from tunix_rt_backend.services.evaluation import EvaluationService
 
 logger = logging.getLogger(__name__)
+
+
+# M35: Default metric for regression checks
+DEFAULT_REGRESSION_METRIC = "primary_score"
 
 
 class RegressionService:
@@ -177,7 +182,27 @@ class RegressionService:
         )
 
     def _get_metric_value(self, evaluation: Any, metric_name: str) -> float:
-        """Extract metric value from evaluation response."""
+        """Extract metric value from evaluation response.
+
+        M35: Added support for 'primary_score' as a first-class metric.
+
+        Args:
+            evaluation: EvaluationResponse object
+            metric_name: Name of metric to extract
+
+        Returns:
+            Metric value as float
+
+        Raises:
+            ValueError: If metric not found
+        """
+        # M35: Primary score is the canonical metric
+        if metric_name == "primary_score":
+            if evaluation.primary_score is not None:
+                return float(evaluation.primary_score)
+            # Fallback to normalized score if primary_score is None
+            return float(evaluation.score / 100.0)
+
         if metric_name == "score":
             return float(evaluation.score)
 

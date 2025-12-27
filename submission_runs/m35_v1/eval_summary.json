@@ -1,0 +1,23 @@
+{
+  "run_version": "m35_v1",
+  "eval_set": "training/evalsets/eval_v2.jsonl",
+  "metrics": {
+    "answer_correctness": null,
+    "final_loss": null
+  },
+  "primary_score": null,
+  "scorecard": {
+    "n_items": 100,
+    "n_scored": null,
+    "n_skipped": null,
+    "stddev": null,
+    "section_scores": {
+      "core": null,
+      "trace_sensitive": null,
+      "edge_case": null
+    }
+  },
+  "predictions_path": null,
+  "evaluated_at": "2025-12-26T18:50:00Z",
+  "notes": "M35 evidence - template with scorecard. Update after running eval with eval_v2.jsonl. Primary score must be non-null for M35 completion."
+}
