@@ -1,6 +1,15 @@
-"""Trace scoring logic for evaluation and comparison."""
+"""Trace scoring logic for evaluation and comparison.
+
+This module provides:
+- baseline_score(): Trace-level structural scoring (0-100 scale)
+- compute_primary_score(): Evaluation-level aggregation (0-1 scale)
+
+The primary_score is the canonical metric for optimization and reporting,
+computed as mean(answer_correctness) across an evaluation set.
+"""
 
 from datetime import datetime, timezone
+from typing import Any
 
 from tunix_rt_backend.schemas import ReasoningTrace, ScoreDetails
 
@@ -49,3 +58,79 @@ def baseline_score(trace: ReasoningTrace) -> tuple[float, ScoreDetails]:
     )
 
     return round(total_score, 2), details
+
+
+# ============================================================
+# Primary Score (M34) - Evaluation-level Aggregation
+# ============================================================
+
+
+def compute_primary_score(evaluation_rows: list[dict[str, Any]]) -> float | None:
+    """Compute the primary score from a list of evaluation results.
+
+    The primary score is the canonical metric for optimization and reporting.
+    It aggregates individual evaluation results into a single scalar value
+    in the range [0, 1].
+
+    Priority:
+    1. Use `metrics["answer_correctness"]` if present (already 0-1 scale)
+    2. Fallback to `score / 100.0` if score is 0-100 scale
+    3. Skip rows with no valid score
+
+    Args:
+        evaluation_rows: List of evaluation result dictionaries, each containing
+            at least one of:
+            - metrics["answer_correctness"]: float in [0, 1]
+            - score: float (typically 0-100 scale)
+
+    Returns:
+        Mean of valid scores as float in [0, 1], or None if no valid rows.
+
+    Example:
+        >>> rows = [
+        ...     {"metrics": {"answer_correctness": 0.8}},
+        ...     {"metrics": {"answer_correctness": 1.0}},
+        ...     {"score": 60},  # Fallback: 60/100 = 0.6
+        ... ]
+        >>> compute_primary_score(rows)
+        0.8
+    """
+    valid_scores: list[float] = []
+
+    for row in evaluation_rows:
+        score_value: float | None = None
+
+        # Priority 1: Check for answer_correctness in metrics
+        metrics = row.get("metrics")
+        if isinstance(metrics, dict):
+            answer_correctness = metrics.get("answer_correctness")
+            if answer_correctness is not None:
+                try:
+                    score_value = float(answer_correctness)
+                except (TypeError, ValueError):
+                    pass
+
+        # Priority 2: Fallback to normalized score field
+        if score_value is None:
+            raw_score = row.get("score")
+            if raw_score is not None:
+                try:
+                    raw_float = float(raw_score)
+                    # Normalize 0-100 scale to 0-1 scale
+                    # If score is already in 0-1 range, don't double-normalize
+                    if raw_float > 1.0:
+                        score_value = raw_float / 100.0
+                    else:
+                        score_value = raw_float
+                except (TypeError, ValueError):
+                    pass
+
+        # Validate score is in valid range
+        if score_value is not None and 0.0 <= score_value <= 1.0:
+            valid_scores.append(score_value)
+
+    # Return mean or None
+    if not valid_scores:
+        return None
+
+    return sum(valid_scores) / len(valid_scores)

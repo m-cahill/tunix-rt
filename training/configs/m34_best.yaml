@@ -1,0 +1,78 @@
+# Tunix RT - M34 Optimization Best Config
+# Purpose: Best hyperparameters from M34 Ray Tune sweep
+# Model: google/gemma-3-1b-it
+#
+# This config is generated/updated after running an M34 optimization sweep.
+# The hyperparameters below were selected based on maximizing answer_correctness.
+#
+# Source: M34 Ray Tune sweep on dev-reasoning-v2 (550 traces)
+# Run: python backend/tools/run_tune_m34.py --num-samples 10
+#
+# TEMPLATE NOTE: Replace placeholder values with actual best params after sweep.
+
+# Model Configuration
+model:
+  name: "google/gemma-3-1b-it"
+  max_length: 512
+  padding: "max_length"
+  truncation: true
+
+# Training Configuration (M34 optimized)
+training:
+  # Fixed training budget for M34 sweep
+  num_steps: 50  # Fixed for fair comparison across trials
+
+  # === M34 TUNED PARAMETERS ===
+  # These values should be updated from best_params.json after a sweep
+
+  # Learning rate (loguniform 1e-5 to 1e-4)
+  # PLACEHOLDER: Update from sweep results
+  learning_rate: 5.0e-5
+
+  # Batch size (choice [1, 2, 4])
+  # PLACEHOLDER: Update from sweep results
+  per_device_batch_size: 2
+
+  # Weight decay (uniform 0.0 to 0.1)
+  # PLACEHOLDER: Update from sweep results
+  weight_decay: 0.05
+
+  # Warmup steps (choice [0, 10, 20])
+  # PLACEHOLDER: Update from sweep results
+  warmup_steps: 10
+
+  # === END TUNED PARAMETERS ===
+
+  gradient_accumulation_steps: 1
+  optimizer: "adamw"
+  lr_scheduler: "linear"
+  logging_steps: 10
+  save_steps: 50
+  seed: 42
+
+# System Instruction
+system_instruction: "You are a helpful assistant. Show your reasoning step by step before giving your final answer."
+
+# Data Configuration
+data:
+  format: "tunix_sft"
+  shuffle: true
+  shuffle_seed: 42
+
+# Output Configuration
+output:
+  checkpoint_dir: "checkpoint-final"
+  save_metrics: true
+  metrics_file: "metrics.jsonl"
+  save_manifest: true
+  manifest_file: "run_manifest.json"
+
+# M34 Provenance
+# This section documents the source of the tuned parameters
+m34_provenance:
+  # Update these after running a sweep
+  tuning_job_id: null  # UUID of the Ray Tune job
+  trial_id: null       # ID of the best trial
+  best_run_id: null    # UUID of the best TunixRun
+  primary_score: null  # Best primary_score achieved
+  sweep_date: null     # ISO timestamp of when sweep was run

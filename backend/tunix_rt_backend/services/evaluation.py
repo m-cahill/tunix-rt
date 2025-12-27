@@ -20,6 +20,7 @@ from tunix_rt_backend.schemas.evaluation import (
     LeaderboardItem,
     LeaderboardResponse,
 )
+from tunix_rt_backend.scoring import compute_primary_score
 from tunix_rt_backend.services.judges import JudgeFactory
 
 logger = logging.getLogger(__name__)
@@ -53,17 +54,24 @@ class EvaluationService:
         # We assume database integrity for 'verdict'
         verdict: Literal["pass", "fail", "uncertain"] = evaluation.verdict  # type: ignore[assignment]
 
+        # M34: Compute primary_score from metrics
+        metrics = evaluation.details.get("metrics", {})
+        primary_score_value = compute_primary_score(
+            [{"metrics": metrics, "score": evaluation.score}]
+        )
+
         return EvaluationResponse(
             evaluation_id=evaluation.id,
             run_id=evaluation.run_id,
             score=evaluation.score,
             verdict=verdict,
             judge=EvaluationJudgeInfo(name=evaluation.judge_name, version=evaluation.judge_version),
-            metrics=evaluation.details.get("metrics", {}),
+            metrics=metrics,
             detailed_metrics=[
                 EvaluationMetric(**m) for m in evaluation.details.get("detailed_metrics", [])
             ],
             evaluated_at=evaluation.created_at.isoformat(),
+            primary_score=primary_score_value,
         )
 
     async def get_leaderboard(self, limit: int = 50, offset: int = 0) -> LeaderboardResponse:
@@ -88,6 +96,10 @@ class EvaluationService:
         items = []
         for evaluation, run in rows_to_return:
             metrics = evaluation.details.get("metrics", {})
+            # M34: Compute primary_score for each leaderboard entry
+            primary_score_value = compute_primary_score(
+                [{"metrics": metrics, "score": evaluation.score}]
+            )
             items.append(
                 LeaderboardItem(
                     run_id=str(run.run_id),
@@ -97,6 +109,7 @@ class EvaluationService:
                     verdict=evaluation.verdict,
                     metrics=metrics,
                     evaluated_at=evaluation.created_at.isoformat(),
+                    primary_score=primary_score_value,
                 )
             )
 
@@ -154,6 +167,11 @@ class EvaluationService:
         await self.db.commit()
         await self.db.refresh(evaluation)
 
+        # M34: Compute primary_score from metrics
+        primary_score_value = compute_primary_score(
+            [{"metrics": result.metrics, "score": evaluation.score}]
+        )
+
         return EvaluationResponse(
             evaluation_id=evaluation.id,
             run_id=evaluation.run_id,
@@ -163,4 +181,5 @@ class EvaluationService:
             metrics=result.metrics,
             detailed_metrics=result.detailed_metrics,
             evaluated_at=evaluation.created_at.isoformat(),
+            primary_score=primary_score_value,
         )
