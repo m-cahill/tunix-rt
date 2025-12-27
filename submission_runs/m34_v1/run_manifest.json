@@ -1,0 +1,17 @@
+{
+  "run_version": "m34_v1",
+  "model_id": "google/gemma-3-1b-it",
+  "dataset": "dev-reasoning-v2",
+  "config_path": "training/configs/m34_best.yaml",
+  "command": "python training/train_jax.py --config training/configs/m34_best.yaml --output ./output/m34_v1 --dataset dev-reasoning-v2",
+  "commit_sha": "40a90d6",
+  "timestamp": "2025-12-26T12:00:00Z",
+  "environment": {
+    "platform": "local",
+    "accelerator": "cpu",
+    "python_version": "3.13"
+  },
+  "tuning_job_id": null,
+  "trial_id": null,
+  "notes": "M34 optimization loop - template manifest. Update after running sweep and full training."
+}

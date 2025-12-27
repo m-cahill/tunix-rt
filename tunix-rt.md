@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M33 Complete** ✅  
-**Coverage:** >70% Backend Line (273 tests) | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces)
+**Milestone M34 Complete** ✅  
+**Coverage:** >70% Backend Line (310+ tests) | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces) | **Tuning:** Ray Tune Sweep Runner
 
 ## Overview
 
@@ -72,6 +72,17 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 **M32 Enhancements:** Data Scale-Up & Coverage Uplift - Submission execution runbook (`docs/submission_execution_m32.md`), Evidence capture folder (`submission_runs/m32_v1/`), Scaled dataset (`dev-reasoning-v2` with 550 traces in strict ReasoningTrace schema), Dataset seeder (`seed_dev_reasoning_v2.py` with 70/20/10 composition), 8 schema validation tests, 9 new datasets_ingest unit tests (0%→full coverage), 7 new worker edge case tests, Updated packaging tool with evidence files, 260 total backend tests.
 
 **M33 Enhancements:** Kaggle Submission Rehearsal v1 + Evidence Lock - Notebook updated to m33_v1 with `dev-reasoning-v2` default dataset, Evidence folder (`submission_runs/m33_v1/`) with `run_manifest.json`, `eval_summary.json`, `kaggle_output_log.txt`, Packaging tool enhanced with `--run-dir` argument for evidence bundling, 13 new evidence schema validation tests (`test_evidence_files.py`), Submission checklist strengthened with explicit ≤3 min YouTube requirement, Local CPU/smoke rehearsal captured, Archive prefix updated to m33, 273 total backend tests.
+
+**M34 Enhancements:** Optimization Loop 1 — Primary Score + Ray Tune Sweep Infrastructure:
+- **Primary Score Module** (`scoring.py`): `compute_primary_score()` function for canonical 0-1 metric aggregation (prefers `answer_correctness`, fallback to normalized `score/100`), 19 unit tests.
+- **Evaluation API Enhancement**: `primary_score` field added to `EvaluationResponse` and `LeaderboardItem` schemas, automatically computed from metrics.
+- **Sweep Runner Module** (`tunix_rt_backend/tuning/`): Reusable `SweepRunner` class with `SweepConfig` dataclass for Ray Tune sweeps via API, context manager support, timeout handling, 14 unit tests.
+- **M34 Sweep Script** (`backend/tools/run_tune_m34.py`): One-command sweep with M34 defaults (dev-reasoning-v2, gemma-3-1b-it, 5-20 trials, learning_rate/batch_size/weight_decay/warmup_steps search space).
+- **Best Config Template** (`training/configs/m34_best.yaml`): Template for promoted hyperparameters with provenance section.
+- **Evidence Folder** (`submission_runs/m34_v1/`): `run_manifest.json` (with tuning_job_id/trial_id fields), `eval_summary.json`, `best_params.json`, `kaggle_output_log.txt`.
+- **M34 Evidence Tests**: 15 new tests validating M34 schema including `best_params.json`.
+- Updated M28 sweep script to use shared `SweepRunner`, backward compatible.
+- Archive prefix updated to m34, 310+ total backend tests.
 
 
 ## Database Schema

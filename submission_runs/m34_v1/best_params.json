@@ -1,0 +1,27 @@
+{
+  "source": "M34 Ray Tune Sweep",
+  "tuning_job_id": null,
+  "trial_id": null,
+  "best_run_id": null,
+  "params": {
+    "learning_rate": null,
+    "per_device_batch_size": null,
+    "weight_decay": null,
+    "warmup_steps": null
+  },
+  "primary_score": null,
+  "sweep_config": {
+    "dataset_key": "dev-reasoning-v2",
+    "base_model_id": "google/gemma-3-1b-it",
+    "metric_name": "answer_correctness",
+    "metric_mode": "max",
+    "num_samples": null,
+    "search_space": {
+      "learning_rate": {"type": "loguniform", "min": 1e-5, "max": 1e-4},
+      "per_device_batch_size": {"type": "choice", "values": [1, 2, 4]},
+      "weight_decay": {"type": "uniform", "min": 0.0, "max": 0.1},
+      "warmup_steps": {"type": "choice", "values": [0, 10, 20]}
+    }
+  },
+  "notes": "Template file - update with actual sweep results from run_tune_m34.py"
+}

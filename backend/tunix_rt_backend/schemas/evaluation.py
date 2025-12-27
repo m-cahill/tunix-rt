@@ -37,6 +37,11 @@ class EvaluationResult(BaseModel):
     detailed_metrics: list[EvaluationMetric] = Field(..., description="Detailed metric breakdown")
     judge: EvaluationJudgeInfo = Field(..., description="Judge information")
     evaluated_at: str = Field(..., description="Evaluation timestamp (ISO-8601)")
+    # M34: Canonical 0-1 primary score for optimization/reporting
+    primary_score: float | None = Field(
+        None,
+        description="Canonical primary score in [0,1] range (mean of answer_correctness)",
+    )
 
 
 class EvaluationRequest(BaseModel):
@@ -57,10 +62,15 @@ class LeaderboardItem(BaseModel):
     run_id: str = Field(..., description="Run ID")
     model_id: str = Field(..., description="Model ID")
     dataset_key: str = Field(..., description="Dataset Key")
-    score: float = Field(..., description="Primary score")
+    score: float = Field(..., description="Primary score (0-100)")
     verdict: str = Field(..., description="Verdict")
     metrics: dict[str, float] = Field(..., description="Key metrics (e.g. accuracy)")
     evaluated_at: str = Field(..., description="Evaluation timestamp")
+    # M34: Canonical 0-1 primary score
+    primary_score: float | None = Field(
+        None,
+        description="Canonical primary score in [0,1] range",
+    )
 
 
 class LeaderboardResponse(BaseModel):

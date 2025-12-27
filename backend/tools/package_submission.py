@@ -63,6 +63,7 @@ BUNDLE_FILES = [
     # Training configs
     "training/configs/submission_gemma3_1b.yaml",
     "training/configs/submission_gemma2_2b.yaml",
+    "training/configs/m34_best.yaml",
     "training/configs/sft_tiny.yaml",
     # Eval sets
     "training/evalsets/eval_v1.jsonl",
@@ -72,7 +73,7 @@ BUNDLE_FILES = [
 DATASETS = ["golden-v2", "dev-reasoning-v1", "dev-reasoning-v2"]
 
 # Archive naming
-ARCHIVE_PREFIX = "tunix_rt_m33"
+ARCHIVE_PREFIX = "tunix_rt_m34"
 
 # ============================================================
 # Helper Functions

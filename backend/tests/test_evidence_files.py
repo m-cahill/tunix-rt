@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""Tests for M33 evidence file schema validation.
+"""Tests for evidence file schema validation (M33/M34).
 
 These tests ensure that evidence files in submission_runs/ have the required
 fields and correct schema, preventing "works once, evidence not captured"
 failures.
 
-Required fields (per M33 answers):
+Required fields (per M33/M34 answers):
 - run_manifest.json: run_version, model_id, dataset, commit_sha, timestamp,
                      config_path, command
 - eval_summary.json: run_version, eval_set, metrics, evaluated_at, primary_score
+- best_params.json (M34+): params dict, source, sweep_config
 """
 
 import json
@@ -175,3 +176,166 @@ class TestPackagingToolIncludesEvidence:
         # This is a sanity check that our test knows about all evidence files
         for f in expected_files:
             assert isinstance(f, str), f"Expected file name string, got {type(f)}"
+
+
+# ============================================================
+# M34 Evidence Tests
+# ============================================================
+
+
+@pytest.fixture
+def m34_run_dir() -> Path:
+    """Return path to M34 evidence directory."""
+    return Path(__file__).parent.parent.parent / "submission_runs" / "m34_v1"
+
+
+# M34-specific required fields (extends M33)
+M34_RUN_MANIFEST_ADDITIONAL_FIELDS = [
+    "tuning_job_id",  # Can be null for template
+    "trial_id",  # Can be null for template
+]
+
+M34_BEST_PARAMS_REQUIRED_FIELDS = [
+    "source",
+    "params",
+    "sweep_config",
+]
+
+
+class TestM34RunManifestSchema:
+    """Tests for M34 run_manifest.json schema validation."""
+
+    def test_run_manifest_exists(self, m34_run_dir: Path) -> None:
+        """Verify run_manifest.json exists in M34 evidence directory."""
+        manifest_path = m34_run_dir / "run_manifest.json"
+        assert manifest_path.exists(), f"Missing: {manifest_path}"
+
+    def test_run_manifest_has_required_fields(self, m34_run_dir: Path) -> None:
+        """Verify run_manifest.json has all M33 required fields."""
+        manifest_path = m34_run_dir / "run_manifest.json"
+        with open(manifest_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        missing_fields = [field for field in RUN_MANIFEST_REQUIRED_FIELDS if field not in data]
+        assert not missing_fields, f"Missing required fields: {missing_fields}"
+
+    def test_run_manifest_has_m34_fields(self, m34_run_dir: Path) -> None:
+        """Verify run_manifest.json has M34 tuning provenance fields."""
+        manifest_path = m34_run_dir / "run_manifest.json"
+        with open(manifest_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        missing_fields = [
+            field for field in M34_RUN_MANIFEST_ADDITIONAL_FIELDS if field not in data
+        ]
+        assert not missing_fields, f"Missing M34 fields: {missing_fields}"
+
+    def test_run_manifest_model_id_is_valid(self, m34_run_dir: Path) -> None:
+        """Verify model_id is a valid competition model."""
+        manifest_path = m34_run_dir / "run_manifest.json"
+        with open(manifest_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        model_id = data.get("model_id", "")
+        valid_models = ["google/gemma-3-1b-it", "google/gemma-2-2b"]
+        assert model_id in valid_models, f"model_id must be one of {valid_models}"
+
+
+class TestM34EvalSummarySchema:
+    """Tests for M34 eval_summary.json schema validation."""
+
+    def test_eval_summary_exists(self, m34_run_dir: Path) -> None:
+        """Verify eval_summary.json exists in M34 evidence directory."""
+        summary_path = m34_run_dir / "eval_summary.json"
+        assert summary_path.exists(), f"Missing: {summary_path}"
+
+    def test_eval_summary_has_required_fields(self, m34_run_dir: Path) -> None:
+        """Verify eval_summary.json has all required fields."""
+        summary_path = m34_run_dir / "eval_summary.json"
+        with open(summary_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        missing_fields = [field for field in EVAL_SUMMARY_REQUIRED_FIELDS if field not in data]
+        assert not missing_fields, f"Missing required fields: {missing_fields}"
+
+    def test_eval_summary_primary_score_field_exists(self, m34_run_dir: Path) -> None:
+        """Verify primary_score field exists (can be null for template)."""
+        summary_path = m34_run_dir / "eval_summary.json"
+        with open(summary_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        assert "primary_score" in data, "primary_score field must exist"
+
+
+class TestM34BestParamsSchema:
+    """Tests for M34 best_params.json schema validation."""
+
+    def test_best_params_exists(self, m34_run_dir: Path) -> None:
+        """Verify best_params.json exists in M34 evidence directory."""
+        params_path = m34_run_dir / "best_params.json"
+        assert params_path.exists(), f"Missing: {params_path}"
+
+    def test_best_params_is_valid_json(self, m34_run_dir: Path) -> None:
+        """Verify best_params.json is valid JSON."""
+        params_path = m34_run_dir / "best_params.json"
+        with open(params_path, encoding="utf-8") as f:
+            data = json.load(f)
+        assert isinstance(data, dict), "best_params.json must be a JSON object"
+
+    def test_best_params_has_required_fields(self, m34_run_dir: Path) -> None:
+        """Verify best_params.json has required fields."""
+        params_path = m34_run_dir / "best_params.json"
+        with open(params_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        missing_fields = [field for field in M34_BEST_PARAMS_REQUIRED_FIELDS if field not in data]
+        assert not missing_fields, f"Missing required fields: {missing_fields}"
+
+    def test_best_params_params_is_dict(self, m34_run_dir: Path) -> None:
+        """Verify params is a dictionary."""
+        params_path = m34_run_dir / "best_params.json"
+        with open(params_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        params = data.get("params")
+        assert isinstance(params, dict), "params must be a dictionary"
+
+    def test_best_params_sweep_config_is_dict(self, m34_run_dir: Path) -> None:
+        """Verify sweep_config is a dictionary."""
+        params_path = m34_run_dir / "best_params.json"
+        with open(params_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        sweep_config = data.get("sweep_config")
+        assert isinstance(sweep_config, dict), "sweep_config must be a dictionary"
+
+
+class TestM34KaggleOutputLog:
+    """Tests for M34 kaggle_output_log.txt."""
+
+    def test_kaggle_output_log_exists(self, m34_run_dir: Path) -> None:
+        """Verify kaggle_output_log.txt exists in M34 evidence directory."""
+        log_path = m34_run_dir / "kaggle_output_log.txt"
+        assert log_path.exists(), f"Missing: {log_path}"
+
+    def test_kaggle_output_log_is_not_empty(self, m34_run_dir: Path) -> None:
+        """Verify kaggle_output_log.txt is not empty."""
+        log_path = m34_run_dir / "kaggle_output_log.txt"
+        content = log_path.read_text(encoding="utf-8")
+        assert len(content) > 0, "kaggle_output_log.txt must not be empty"
+
+
+class TestM34EvidenceFilesComplete:
+    """Tests that all M34 evidence files are present."""
+
+    def test_all_m34_evidence_files_exist(self, m34_run_dir: Path) -> None:
+        """Verify all expected M34 evidence files exist."""
+        expected_files = [
+            "run_manifest.json",
+            "eval_summary.json",
+            "best_params.json",
+            "kaggle_output_log.txt",
+        ]
+        for filename in expected_files:
+            file_path = m34_run_dir / filename
+            assert file_path.exists(), f"Missing M34 evidence file: {filename}"
