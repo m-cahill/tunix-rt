@@ -599,19 +599,45 @@ export interface EvaluationResponse {
   evaluated_at: string
 }
 
+/**
+ * M35: Scorecard summary for quick display
+ */
+export interface ScorecardSummary {
+  n_items: number
+  n_scored: number
+  n_skipped: number
+  primary_score: number | null
+  stddev: number | null
+}
+
+/**
+ * M35: Leaderboard filter options
+ */
+export interface LeaderboardFilters {
+  dataset_key?: string | null
+  model_id?: string | null
+  config_path?: string | null
+  date_from?: string | null
+  date_to?: string | null
+}
+
 export interface LeaderboardItem {
   run_id: string
   model_id: string
   dataset_key: string
+  config_path?: string | null
   score: number
   verdict: string
   metrics: Record<string, number>
   evaluated_at: string
+  primary_score?: number | null
+  scorecard?: ScorecardSummary | null
 }
 
 export interface LeaderboardResponse {
   data: LeaderboardItem[]
   pagination?: PaginationInfo
+  filters?: LeaderboardFilters | null
 }
 
 /**
@@ -636,14 +662,27 @@ export async function getEvaluation(runId: string): Promise<EvaluationResponse> 
 }
 
 /**
- * Get leaderboard data
+ * Get leaderboard data with optional filtering (M35)
  * @param limit - Max items per page (default 50)
  * @param offset - Pagination offset (default 0)
+ * @param filters - Optional filter criteria (dataset, model, config, date range)
  */
-export async function getLeaderboard(limit: number = 50, offset: number = 0): Promise<LeaderboardResponse> {
+export async function getLeaderboard(
+  limit: number = 50,
+  offset: number = 0,
+  filters?: LeaderboardFilters
+): Promise<LeaderboardResponse> {
   const params = new URLSearchParams()
   params.set('limit', limit.toString())
   params.set('offset', offset.toString())
+
+  // M35: Add filter parameters if provided
+  if (filters?.dataset_key) params.set('dataset_key', filters.dataset_key)
+  if (filters?.model_id) params.set('model_id', filters.model_id)
+  if (filters?.config_path) params.set('config_path', filters.config_path)
+  if (filters?.date_from) params.set('date_from', filters.date_from)
+  if (filters?.date_to) params.set('date_to', filters.date_to)
+
   return fetchJSON<LeaderboardResponse>(`/api/tunix/evaluations?${params.toString()}`)
 }
 

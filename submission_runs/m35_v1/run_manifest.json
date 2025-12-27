@@ -1,0 +1,13 @@
+{
+  "run_version": "m35_v1",
+  "model_id": "google/gemma-3-1b-it",
+  "dataset": "dev-reasoning-v2",
+  "eval_set": "training/evalsets/eval_v2.jsonl",
+  "config_path": "training/configs/m34_best.yaml",
+  "command": "python training/train_sft_tunix.py --config training/configs/m34_best.yaml --dataset dev-reasoning-v2",
+  "commit_sha": "4f8506b",
+  "timestamp": "2025-12-26T18:50:00Z",
+  "tuning_job_id": null,
+  "trial_id": null,
+  "notes": "M35 Quality Loop 1 - eval signal hardening with eval_v2.jsonl (100 items)"
+}

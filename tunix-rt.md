@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M34 Complete** ✅  
-**Coverage:** >70% Backend Line (310+ tests) | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces) | **Tuning:** Ray Tune Sweep Runner
+**Milestone M35 Complete** ✅  
+**Coverage:** >70% Backend Line (370+ tests) | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces) | **Eval:** eval_v2.jsonl (100 items) | **Tuning:** Ray Tune Sweep Runner
 
 ## Overview
 
@@ -83,6 +83,19 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **M34 Evidence Tests**: 15 new tests validating M34 schema including `best_params.json`.
 - Updated M28 sweep script to use shared `SweepRunner`, backward compatible.
 - Archive prefix updated to m34, 310+ total backend tests.
+
+**M35 Enhancements:** Quality Loop 1 — Eval Signal Hardening + Leaderboard Fidelity + Regression Guardrails:
+- **Eval Set v2** (`training/evalsets/eval_v2.jsonl`): 100 items with 60/25/15 split (core/trace_sensitive/edge_case), purpose-built for scoring with section/category/difficulty labels.
+- **Eval Set Validator** (`backend/tools/validate_evalset.py`): CLI tool to validate eval set schema, print summary stats, exits non-zero on errors.
+- **Scorecard Aggregator** (`scoring.py`): New `Scorecard` dataclass and `compute_scorecard()` function providing n_items, n_scored, n_skipped, stddev, per-section/category/difficulty breakdowns.
+- **Leaderboard Filtering** (API): `GET /api/tunix/evaluations` now supports `dataset_key`, `model_id`, `config_path`, `date_from`, `date_to` query params with AND logic.
+- **Leaderboard UI** (`Leaderboard.tsx`): Inline filter inputs, scorecard summary (items/scored), primary_score display, dataset column.
+- **Run Comparison** (`RunComparison.tsx`): New collapsible per-item diff table showing expected vs predicted correctness.
+- **Regression Baseline Enhancements** (`regression.py`): `primary_score` as default metric, `eval_set`/`dataset_key` fields for multi-baseline scoping.
+- **Determinism Check** (`backend/tools/check_determinism.py`): Standalone script verifying evaluation pipeline produces identical results on repeated runs.
+- **Evidence Folder** (`submission_runs/m35_v1/`): `run_manifest.json` (with eval_set field), `eval_summary.json` (with scorecard), `kaggle_output_log.txt`.
+- **Schema Tests**: 12 new M35 evidence tests, 23 eval set validator tests, 15 scorecard tests, 14 regression tests.
+- Archive prefix updated to m35, 370+ total backend tests.
 
 
 ## Database Schema

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getLeaderboard, type LeaderboardResponse, ApiError } from '../api/client'
+import { getLeaderboard, type LeaderboardResponse, type LeaderboardFilters, ApiError } from '../api/client'
 
 export const Leaderboard = () => {
   const [data, setData] = useState<LeaderboardResponse | null>(null)
@@ -8,11 +8,16 @@ export const Leaderboard = () => {
   const [limit] = useState(50)
   const [offset, setOffset] = useState(0)
 
-  const fetchLeaderboard = async (currentLimit: number, currentOffset: number) => {
+  // M35: Filter state
+  const [filters, setFilters] = useState<LeaderboardFilters>({})
+  const [filterDataset, setFilterDataset] = useState('')
+  const [filterModel, setFilterModel] = useState('')
+
+  const fetchLeaderboard = async (currentLimit: number, currentOffset: number, currentFilters: LeaderboardFilters) => {
     setLoading(true)
     setError(null)
     try {
-      const result = await getLeaderboard(currentLimit, currentOffset)
+      const result = await getLeaderboard(currentLimit, currentOffset, currentFilters)
       setData(result)
     } catch (err) {
       if (err instanceof ApiError) {
@@ -26,8 +31,24 @@ export const Leaderboard = () => {
   }
 
   useEffect(() => {
-    fetchLeaderboard(limit, offset)
-  }, [limit, offset])
+    fetchLeaderboard(limit, offset, filters)
+  }, [limit, offset, filters])
+
+  // M35: Apply filters
+  const handleApplyFilters = () => {
+    setOffset(0) // Reset to first page
+    setFilters({
+      dataset_key: filterDataset || undefined,
+      model_id: filterModel || undefined,
+    })
+  }
+
+  const handleClearFilters = () => {
+    setFilterDataset('')
+    setFilterModel('')
+    setFilters({})
+    setOffset(0)
+  }
 
   const handleNextPage = () => {
     if (data?.pagination?.next_offset) {
@@ -44,7 +65,36 @@ export const Leaderboard = () => {
 
   return (
     <div className="leaderboard">
-      <h2>🏆 Leaderboard</h2>
+      <h2>Leaderboard</h2>
+
+      {/* M35: Inline Filters */}
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
+        <input
+          type="text"
+          placeholder="Dataset (exact)"
+          value={filterDataset}
+          onChange={(e) => setFilterDataset(e.target.value)}
+          style={{ padding: '6px 10px', border: '1px solid #ccc', borderRadius: '4px', width: '150px' }}
+        />
+        <input
+          type="text"
+          placeholder="Model (contains)"
+          value={filterModel}
+          onChange={(e) => setFilterModel(e.target.value)}
+          style={{ padding: '6px 10px', border: '1px solid #ccc', borderRadius: '4px', width: '150px' }}
+        />
+        <button onClick={handleApplyFilters} style={{ padding: '6px 12px' }}>
+          Filter
+        </button>
+        <button onClick={handleClearFilters} style={{ padding: '6px 12px' }}>
+          Clear
+        </button>
+        {(filters.dataset_key || filters.model_id) && (
+          <span style={{ fontSize: '0.85em', color: '#666' }}>
+            Filtering: {filters.dataset_key && `dataset=${filters.dataset_key}`} {filters.model_id && `model~${filters.model_id}`}
+          </span>
+        )}
+      </div>
 
       {loading ? (
         <div>Loading leaderboard...</div>
@@ -52,15 +102,17 @@ export const Leaderboard = () => {
         <div>No evaluated runs found.</div>
       ) : (
         <>
-          <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
             <thead>
               <tr style={{ backgroundColor: '#f5f5f5' }}>
                 <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Rank</th>
                 <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Run ID</th>
                 <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Model</th>
-                <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Score</th>
+                <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Dataset</th>
+                <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Primary Score</th>
+                <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Items</th>
                 <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Verdict</th>
-                <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Evaluated At</th>
+                <th style={{ padding: '10px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Evaluated</th>
               </tr>
             </thead>
             <tbody>
@@ -70,15 +122,21 @@ export const Leaderboard = () => {
                     {offset + index + 1}
                   </td>
                   <td style={{ padding: '10px', fontFamily: 'monospace' }}>{item.run_id.substring(0, 8)}...</td>
-                  <td style={{ padding: '10px' }}>{item.model_id}</td>
-                  <td style={{ padding: '10px', fontWeight: 'bold' }}>{item.score.toFixed(1)}</td>
+                  <td style={{ padding: '10px', fontSize: '0.9em' }}>{item.model_id}</td>
+                  <td style={{ padding: '10px', fontSize: '0.9em' }}>{item.dataset_key}</td>
+                  <td style={{ padding: '10px', fontWeight: 'bold' }}>
+                    {item.primary_score != null ? (item.primary_score * 100).toFixed(1) + '%' : item.score.toFixed(1)}
+                  </td>
+                  <td style={{ padding: '10px', fontSize: '0.85em', color: '#666' }}>
+                    {item.scorecard ? `${item.scorecard.n_scored}/${item.scorecard.n_items}` : '-'}
+                  </td>
                   <td style={{ padding: '10px' }}>
                     <span className={`status-badge ${item.verdict === 'pass' ? 'status-completed' : 'status-failed'}`}>
                       {item.verdict.toUpperCase()}
                     </span>
                   </td>
-                  <td style={{ padding: '10px', fontSize: '0.9em', color: '#666' }}>
-                    {new Date(item.evaluated_at).toLocaleString()}
+                  <td style={{ padding: '10px', fontSize: '0.85em', color: '#666' }}>
+                    {new Date(item.evaluated_at).toLocaleDateString()}
                   </td>
                 </tr>
               ))}

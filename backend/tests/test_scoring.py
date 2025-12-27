@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Tests for scoring module (M34).
+"""Tests for scoring module (M34/M35).
 
-These tests verify the compute_primary_score() function which aggregates
-evaluation results into a single primary score for optimization and reporting.
+These tests verify:
+- compute_primary_score(): Aggregates evaluation results into a single primary score
+- compute_scorecard(): Generates detailed evaluation statistics (M35)
 
 Test scenarios:
 - All rows have answer_correctness (ideal case)
@@ -11,11 +12,12 @@ Test scenarios:
 - Null/missing values handling
 - Score normalization (0-100 to 0-1)
 - Edge cases (already 0-1 scores, invalid values)
+- Scorecard statistics (stddev, per-section breakdowns)
 """
 
 import pytest
 
-from tunix_rt_backend.scoring import compute_primary_score
+from tunix_rt_backend.scoring import Scorecard, compute_primary_score, compute_scorecard
 
 
 class TestComputePrimaryScore:
@@ -222,3 +224,209 @@ class TestComputePrimaryScoreTypeSafety:
         result = compute_primary_score(rows)
         # Mean of [0.8, 0.4] = 0.6
         assert result == pytest.approx(0.6)
+
+
+# ============================================================
+# Scorecard Tests (M35)
+# ============================================================
+
+
+class TestScorecard:
+    """Tests for Scorecard dataclass."""
+
+    def test_default_values(self) -> None:
+        """Scorecard has sensible defaults."""
+        card = Scorecard()
+        assert card.n_items == 0
+        assert card.n_scored == 0
+        assert card.n_skipped == 0
+        assert card.primary_score is None
+        assert card.stddev is None
+        assert card.section_scores == {}
+
+    def test_to_dict(self) -> None:
+        """to_dict() returns all fields."""
+        card = Scorecard(
+            n_items=10,
+            n_scored=8,
+            n_skipped=2,
+            primary_score=0.75,
+            stddev=0.15,
+            min_score=0.5,
+            max_score=1.0,
+            section_scores={"core": 0.8},
+        )
+        d = card.to_dict()
+        assert d["n_items"] == 10
+        assert d["n_scored"] == 8
+        assert d["primary_score"] == 0.75
+        assert d["section_scores"] == {"core": 0.8}
+
+
+class TestComputeScorecard:
+    """Tests for compute_scorecard() function."""
+
+    # ================================================================
+    # Basic Aggregation Tests
+    # ================================================================
+
+    def test_empty_list(self) -> None:
+        """Empty evaluation list returns zero-count scorecard."""
+        card = compute_scorecard([])
+        assert card.n_items == 0
+        assert card.n_scored == 0
+        assert card.primary_score is None
+
+    def test_single_row(self) -> None:
+        """Single row scorecard."""
+        rows = [{"item_id": "001", "metrics": {"answer_correctness": 0.8}}]
+        card = compute_scorecard(rows)
+        assert card.n_items == 1
+        assert card.n_scored == 1
+        assert card.n_skipped == 0
+        assert card.primary_score == 0.8
+        assert card.stddev is None  # Need 2+ items for stddev
+
+    def test_multiple_rows(self) -> None:
+        """Multiple rows with mean and stddev."""
+        rows = [
+            {"item_id": "001", "metrics": {"answer_correctness": 1.0}},
+            {"item_id": "002", "metrics": {"answer_correctness": 0.5}},
+            {"item_id": "003", "metrics": {"answer_correctness": 0.5}},
+        ]
+        card = compute_scorecard(rows)
+        assert card.n_items == 3
+        assert card.n_scored == 3
+        assert card.primary_score == pytest.approx(2.0 / 3)
+        assert card.stddev is not None
+        assert card.min_score == 0.5
+        assert card.max_score == 1.0
+
+    def test_skipped_items(self) -> None:
+        """Items without valid scores are skipped."""
+        rows = [
+            {"item_id": "001", "metrics": {"answer_correctness": 1.0}},
+            {"item_id": "002", "metrics": {}},  # No score
+            {"item_id": "003"},  # No metrics or score
+        ]
+        card = compute_scorecard(rows)
+        assert card.n_items == 3
+        assert card.n_scored == 1
+        assert card.n_skipped == 2
+
+    # ================================================================
+    # Section Breakdown Tests
+    # ================================================================
+
+    def test_section_scores(self) -> None:
+        """Computes per-section mean scores."""
+        rows = [
+            {"item_id": "001", "section": "core", "metrics": {"answer_correctness": 1.0}},
+            {"item_id": "002", "section": "core", "metrics": {"answer_correctness": 0.8}},
+            {"item_id": "003", "section": "edge_case", "metrics": {"answer_correctness": 0.5}},
+        ]
+        card = compute_scorecard(rows)
+        assert card.section_scores["core"] == pytest.approx(0.9)
+        assert card.section_scores["edge_case"] == pytest.approx(0.5)
+
+    def test_category_scores(self) -> None:
+        """Computes per-category mean scores."""
+        rows = [
+            {"item_id": "001", "category": "arithmetic", "metrics": {"answer_correctness": 1.0}},
+            {"item_id": "002", "category": "arithmetic", "metrics": {"answer_correctness": 0.6}},
+            {"item_id": "003", "category": "geometry", "metrics": {"answer_correctness": 0.8}},
+        ]
+        card = compute_scorecard(rows)
+        assert card.category_scores["arithmetic"] == pytest.approx(0.8)
+        assert card.category_scores["geometry"] == pytest.approx(0.8)
+
+    def test_difficulty_scores(self) -> None:
+        """Computes per-difficulty mean scores."""
+        rows = [
+            {"item_id": "001", "difficulty": "easy", "metrics": {"answer_correctness": 1.0}},
+            {"item_id": "002", "difficulty": "easy", "metrics": {"answer_correctness": 1.0}},
+            {"item_id": "003", "difficulty": "hard", "metrics": {"answer_correctness": 0.5}},
+        ]
+        card = compute_scorecard(rows)
+        assert card.difficulty_scores["easy"] == pytest.approx(1.0)
+        assert card.difficulty_scores["hard"] == pytest.approx(0.5)
+
+    # ================================================================
+    # Metadata Lookup Tests
+    # ================================================================
+
+    def test_metadata_from_eval_items(self) -> None:
+        """Looks up section/category from eval_items when missing in rows."""
+        eval_items = [
+            {"id": "001", "section": "core", "category": "math"},
+            {"id": "002", "section": "edge_case", "category": "format"},
+        ]
+        rows = [
+            {"item_id": "001", "metrics": {"answer_correctness": 1.0}},
+            {"item_id": "002", "metrics": {"answer_correctness": 0.5}},
+        ]
+        card = compute_scorecard(rows, eval_items=eval_items)
+        assert "core" in card.section_scores
+        assert "edge_case" in card.section_scores
+        assert card.category_scores.get("math") == pytest.approx(1.0)
+
+    def test_row_metadata_takes_priority(self) -> None:
+        """Row-level metadata takes priority over eval_items."""
+        eval_items = [{"id": "001", "section": "core"}]
+        rows = [{"item_id": "001", "section": "edge_case", "metrics": {"answer_correctness": 1.0}}]
+        card = compute_scorecard(rows, eval_items=eval_items)
+        # Row says edge_case, eval_items says core - row wins
+        assert "edge_case" in card.section_scores
+        assert "core" not in card.section_scores
+
+    # ================================================================
+    # Determinism Tests
+    # ================================================================
+
+    def test_deterministic_ordering(self) -> None:
+        """Same inputs in different order produce same output."""
+        rows_a = [
+            {"item_id": "001", "metrics": {"answer_correctness": 1.0}},
+            {"item_id": "002", "metrics": {"answer_correctness": 0.5}},
+        ]
+        rows_b = [
+            {"item_id": "002", "metrics": {"answer_correctness": 0.5}},
+            {"item_id": "001", "metrics": {"answer_correctness": 1.0}},
+        ]
+        card_a = compute_scorecard(rows_a)
+        card_b = compute_scorecard(rows_b)
+        assert card_a.primary_score == card_b.primary_score
+        assert card_a.stddev == card_b.stddev
+
+    def test_reproducible_stddev(self) -> None:
+        """Standard deviation calculation is deterministic."""
+        rows = [
+            {"item_id": f"{i:03d}", "metrics": {"answer_correctness": i / 10}}
+            for i in range(11)  # 0.0 to 1.0
+        ]
+        card1 = compute_scorecard(rows)
+        card2 = compute_scorecard(rows)
+        assert card1.stddev == card2.stddev
+
+    # ================================================================
+    # Score Extraction Tests
+    # ================================================================
+
+    def test_uses_correctness_field(self) -> None:
+        """Supports 'correctness' field directly on row."""
+        rows = [
+            {"item_id": "001", "correctness": 1.0},
+            {"item_id": "002", "correctness": 0.0},
+        ]
+        card = compute_scorecard(rows)
+        assert card.n_scored == 2
+        assert card.primary_score == pytest.approx(0.5)
+
+    def test_score_fallback(self) -> None:
+        """Falls back to score field with normalization."""
+        rows = [
+            {"item_id": "001", "score": 80},  # 0.8
+            {"item_id": "002", "score": 60},  # 0.6
+        ]
+        card = compute_scorecard(rows)
+        assert card.primary_score == pytest.approx(0.7)

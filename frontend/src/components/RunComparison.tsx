@@ -119,6 +119,9 @@ export const RunComparison = ({ runAId, runBId, onClose }: RunComparisonProps) =
     fetchRunData(runBId, setDataB)
   }, [runAId, runBId])
 
+  // M35: State for per-item diff table expansion
+  const [showItemDiff, setShowItemDiff] = useState(false)
+
   const renderMetricDiff = (valA: number | undefined, valB: number | undefined, higherIsBetter = true) => {
       if (valA === undefined || valB === undefined) return '-'
       const diff = valA - valB
@@ -135,6 +138,16 @@ export const RunComparison = ({ runAId, runBId, onClose }: RunComparisonProps) =
           </span>
       )
   }
+
+  // M35: Extract per-item metrics from detailed_metrics
+  const getItemMetrics = (evaluation: EvaluationResponse | null) => {
+      if (!evaluation?.detailed_metrics) return []
+      return evaluation.detailed_metrics.filter(m => m.name.startsWith('item_'))
+  }
+
+  const itemMetricsA = getItemMetrics(dataA.evaluation)
+  const itemMetricsB = getItemMetrics(dataB.evaluation)
+  const hasItemMetrics = itemMetricsA.length > 0 || itemMetricsB.length > 0
 
   return (
     <div className="comparison-view" style={{ padding: '20px' }}>
@@ -191,6 +204,66 @@ export const RunComparison = ({ runAId, runBId, onClose }: RunComparisonProps) =
                 labelA={`Run A (${runAId.substring(0, 6)})`}
                 labelB={`Run B (${runBId.substring(0, 6)})`}
             />
+        </div>
+
+        {/* M35: Per-Item Diff Table */}
+        <div style={{ gridColumn: '1 / -1', marginTop: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h4>Per-Item Comparison</h4>
+                {hasItemMetrics && (
+                    <button
+                        onClick={() => setShowItemDiff(!showItemDiff)}
+                        style={{ padding: '5px 10px', fontSize: '0.9em' }}
+                    >
+                        {showItemDiff ? 'Hide Details' : 'Show Details'}
+                    </button>
+                )}
+            </div>
+
+            {!hasItemMetrics ? (
+                <div style={{ padding: '15px', backgroundColor: '#f9f9f9', borderRadius: '4px', color: '#666' }}>
+                    Per-item diff unavailable. This may be a MockJudge evaluation or predictions were not stored.
+                </div>
+            ) : showItemDiff && (
+                <div style={{ maxHeight: '400px', overflowY: 'auto', border: '1px solid #ddd', borderRadius: '4px' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85em' }}>
+                        <thead>
+                            <tr style={{ backgroundColor: '#f5f5f5', position: 'sticky', top: 0 }}>
+                                <th style={{ padding: '8px', textAlign: 'left', borderBottom: '1px solid #ddd' }}>Item</th>
+                                <th style={{ padding: '8px', textAlign: 'center', borderBottom: '1px solid #ddd' }}>Run A</th>
+                                <th style={{ padding: '8px', textAlign: 'center', borderBottom: '1px solid #ddd' }}>Run B</th>
+                                <th style={{ padding: '8px', textAlign: 'center', borderBottom: '1px solid #ddd' }}>Diff</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {itemMetricsA.map((metricA, idx) => {
+                                const metricB = itemMetricsB.find(m => m.name === metricA.name)
+                                const scoreA = metricA.score
+                                const scoreB = metricB?.score ?? null
+                                const diff = scoreB !== null ? scoreA - scoreB : null
+                                const diffColor = diff === null ? '#999' : (diff > 0 ? 'green' : (diff < 0 ? 'red' : 'black'))
+
+                                return (
+                                    <tr key={metricA.name} style={{ borderBottom: '1px solid #eee' }}>
+                                        <td style={{ padding: '6px 8px', fontFamily: 'monospace' }}>
+                                            {metricA.name.replace('item_', '')}
+                                        </td>
+                                        <td style={{ padding: '6px 8px', textAlign: 'center', color: scoreA === 1 ? 'green' : (scoreA === 0 ? 'red' : 'black') }}>
+                                            {scoreA === 1 ? 'Correct' : scoreA === 0 ? 'Wrong' : scoreA.toFixed(2)}
+                                        </td>
+                                        <td style={{ padding: '6px 8px', textAlign: 'center', color: scoreB === 1 ? 'green' : (scoreB === 0 ? 'red' : 'black') }}>
+                                            {scoreB === null ? '-' : (scoreB === 1 ? 'Correct' : scoreB === 0 ? 'Wrong' : scoreB.toFixed(2))}
+                                        </td>
+                                        <td style={{ padding: '6px 8px', textAlign: 'center', color: diffColor, fontWeight: diff !== 0 ? 'bold' : 'normal' }}>
+                                            {diff === null ? '-' : diff === 0 ? '=' : (diff > 0 ? '+1' : '-1')}
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
       </div>
     </div>

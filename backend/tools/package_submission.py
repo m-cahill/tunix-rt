@@ -67,13 +67,14 @@ BUNDLE_FILES = [
     "training/configs/sft_tiny.yaml",
     # Eval sets
     "training/evalsets/eval_v1.jsonl",
+    "training/evalsets/eval_v2.jsonl",  # M35: New purpose-built eval set
 ]
 
 # Dataset manifests to include
 DATASETS = ["golden-v2", "dev-reasoning-v1", "dev-reasoning-v2"]
 
 # Archive naming
-ARCHIVE_PREFIX = "tunix_rt_m34"
+ARCHIVE_PREFIX = "tunix_rt_m35"
 
 # ============================================================
 # Helper Functions
