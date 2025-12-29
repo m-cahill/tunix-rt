@@ -95,6 +95,7 @@ class TestRunManifestSchema:
             "google/gemma-3-1b-it",
             "google/gemma-2-2b",
             "google/gemma-2b-it-flax",
+            "google/gemma-2b",  # Base model with actual Flax weights
         ]
         assert model_id in valid_models, f"model_id must be one of {valid_models}"
 
@@ -247,6 +248,7 @@ class TestM34RunManifestSchema:
             "google/gemma-3-1b-it",
             "google/gemma-2-2b",
             "google/gemma-2b-it-flax",
+            "google/gemma-2b",  # Base model with actual Flax weights
         ]
         assert model_id in valid_models, f"model_id must be one of {valid_models}"
 
@@ -562,6 +564,7 @@ class TestM36RunManifestSchema:
             "google/gemma-3-1b-it",
             "google/gemma-2-2b",
             "google/gemma-2b-it-flax",
+            "google/gemma-2b",  # Base model with actual Flax weights
         ]
         assert model_id in valid_models, f"model_id must be one of {valid_models}"
 

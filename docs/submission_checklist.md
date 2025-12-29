@@ -41,9 +41,10 @@ head -3 backend/datasets/golden-v2/dataset.jsonl
 ```yaml
 # training/configs/submission_gemma_flax.yaml
 model:
-  # Use google/gemma-2b-it-flax for JAX/Flax training
+  # Use google/gemma-2b for JAX/Flax training (has actual Flax weights)
+  # Note: google/gemma-2b-it-flax does NOT have Flax weights despite its name
   # Gemma 2 2B and Gemma 3 1B are NOT supported by FlaxAutoModelForCausalLM
-  name: google/gemma-2b-it-flax
+  name: google/gemma-2b
   max_length: 512
 
 training:
