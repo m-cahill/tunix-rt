@@ -98,8 +98,10 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - Archive prefix updated to m35, 370+ total backend tests.
 
 **M36 Enhancements:** Real Kaggle Execution + Evidence Lock v2 + Quick-Win Audit Uplift:
+- **Model Selection**: Gemma 2 2B (Flax-compatible). Note: Gemma 3 1B is NOT supported by Flax; use Gemma 2 2B for JAX/Flax training.
 - **Kaggle Evidence Schema**: `run_manifest.json` now includes `kaggle_notebook_url`, `kaggle_notebook_version`, `kaggle_run_id` fields for evidence capture.
-- **Notebook Updates**: Default `EVAL_SET = eval_v2.jsonl` (100 items), added RESULT SUMMARY block for evidence capture, version updated to m36_v1.
+- **Notebook Updates**: Version m36_v5, uses absolute paths for clone (prevents nesting), config-based model selection (`submission_gemma2_2b.yaml`), RESULT SUMMARY block for evidence capture.
+- **Training Script Fix**: `train_jax.py` now supports both `model.model_id` and `model.name` config keys.
 - **Kaggle Execution Runbook** (`docs/M36_KAGGLE_RUN.md`): Step-by-step instructions for Kaggle execution, evidence field mapping, troubleshooting guide.
 - **Frontend Test Coverage**: 10 new `Leaderboard.test.tsx` tests (loading/empty/error states, filters, pagination, scorecard), 5 new `LiveLogs.test.tsx` tests (SSE events, connection status).
 - **Per-Item Predictions Documentation** (`docs/evaluation.md`): Current state, Run Comparison limitations, planned M37 artifact storage.

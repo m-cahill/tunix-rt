@@ -88,9 +88,10 @@ The submission archive (`tunix_rt_m33_<date>_<sha>.zip`) contains:
 ### Prerequisites
 
 1. **Accept Gemma License**
-   - Visit https://huggingface.co/google/gemma-3-1b-it
+   - Visit https://huggingface.co/google/gemma-2-2b
    - Accept the license agreement
    - Set HF_TOKEN environment variable if needed
+   - Note: Gemma 3 1B is NOT supported by Flax; use Gemma 2 2B for JAX training
 
 2. **Install Dependencies**
    ```bash
@@ -112,32 +113,34 @@ The submission archive (`tunix_rt_m33_<date>_<sha>.zip`) contains:
 # Build dataset
 python backend/tools/seed_golden_v2.py
 
-# Train model
+# Train model (Gemma 2 2B - Flax compatible)
 python training/train_jax.py \
-  --config training/configs/submission_gemma3_1b.yaml \
+  --config training/configs/submission_gemma2_2b.yaml \
   --output ./output/submission_run \
-  --dataset golden-v2 \
+  --dataset dev-reasoning-v2 \
   --device auto
 
 # Generate predictions
 python training/eval_generate.py \
   --checkpoint ./output/submission_run \
-  --eval_set training/evalsets/eval_v1.jsonl \
+  --eval_set training/evalsets/eval_v2.jsonl \
   --output ./output/submission_run/predictions.jsonl
 
 # Score predictions
 python training/eval_report.py \
   --predictions ./output/submission_run/predictions.jsonl \
-  --eval_set training/evalsets/eval_v1.jsonl
+  --eval_set training/evalsets/eval_v2.jsonl
 ```
 
 ### Option 3: Python Script
 
 ```bash
-python notebooks/kaggle_submission.py \
-  --model_name google/gemma-3-1b-it \
-  --dataset golden-v2 \
-  --max_steps 100 \
+# Note: Use the notebook (Option 1) or command line (Option 2) for best results.
+# The notebook handles config loading and model selection automatically.
+python training/train_jax.py \
+  --config training/configs/submission_gemma2_2b.yaml \
+  --output ./output/submission_run \
+  --dataset dev-reasoning-v2 \
   --device auto
 ```
 
