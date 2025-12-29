@@ -40,7 +40,7 @@ This document records the exact configuration used for the final Kaggle submissi
 | Field | Value |
 |-------|-------|
 | **Config File** | `training/configs/submission_gemma3_1b.yaml` |
-| **Base Model** | `google/gemma-3-1b-it` |
+| **Base Model** | `google/gemma-2-2b` (Flax-compatible) |
 | **Alternative** | `google/gemma-2-2b` (via `submission_gemma2_2b.yaml`) |
 | **Max Sequence Length** | 512 |
 | **Seed** | 42 |

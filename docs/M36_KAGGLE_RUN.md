@@ -3,8 +3,9 @@
 This document provides step-by-step instructions for executing the Tunix RT training pipeline on Kaggle and capturing evidence files.
 
 **Milestone:** M36 — Real Kaggle Execution + Evidence Lock v2  
-**Version:** m36_v4  
-**Eval Set:** eval_v2.jsonl (100 items)
+**Version:** m36_v5  
+**Eval Set:** eval_v2.jsonl (100 items)  
+**Model:** Gemma 2 2B (Flax-compatible)
 
 ---
 
@@ -58,11 +59,13 @@ The notebook defaults are configured for M36:
 
 | Parameter | Default Value | Notes |
 |-----------|---------------|-------|
-| `MODEL_NAME` | `google/gemma-3-1b-it` | Competition-allowed model |
+| `CONFIG_PATH` | `submission_gemma2_2b.yaml` | Gemma 2 2B (Flax-compatible) |
 | `DATASET` | `dev-reasoning-v2` | 550 traces |
 | `EVAL_SET` | `training/evalsets/eval_v2.jsonl` | 100 items (M36) |
-| `MAX_STEPS` | `100` | Increase for full training |
-| `SEED` | `42` | Deterministic |
+| `MAX_STEPS` | `100` | From config file |
+| `BATCH_SIZE` | `2` | Reduced for 2B model memory |
+
+**Note:** Gemma 3 1B is NOT supported by Flax. Use Gemma 2 2B for JAX/Flax training.
 
 Modify these in Cell 6 (Configuration) if needed.
 
@@ -115,7 +118,7 @@ Edit `submission_runs/m36_v1/run_manifest.json`:
 ```json
 {
   "run_version": "m36_v1",
-  "model_id": "google/gemma-3-1b-it",
+  "model_id": "google/gemma-2-2b",
   "dataset": "dev-reasoning-v2",
   "eval_set": "training/evalsets/eval_v2.jsonl",
   "config_path": "training/configs/m34_best.yaml",

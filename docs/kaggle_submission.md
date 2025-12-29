@@ -33,23 +33,23 @@ pip install -e ".[dev,tunix]"
 python backend/tools/seed_dev_reasoning_v2.py
 
 # 3. Train model (bounded time)
+# Note: Use Gemma 2 2B (Flax-compatible). Gemma 3 1B is NOT supported by Flax.
 python training/train_jax.py \
+  --config training/configs/submission_gemma2_2b.yaml \
+  --output ./output/kaggle_run \
   --dataset dev-reasoning-v2 \
-  --model_name google/gemma-3-1b-it \
-  --max_steps 100 \
-  --device auto \
-  --output_dir ./output/kaggle_run
+  --device auto
 
 # 4. Generate predictions
 python training/eval_generate.py \
   --checkpoint ./output/kaggle_run \
-  --eval_set training/evalsets/eval_v1.jsonl \
+  --eval_set training/evalsets/eval_v2.jsonl \
   --output ./output/predictions.jsonl
 
 # 5. Score predictions
 python training/eval_report.py \
   --predictions ./output/predictions.jsonl \
-  --eval_set training/evalsets/eval_v1.jsonl
+  --eval_set training/evalsets/eval_v2.jsonl
 ```
 
 ## Single-Session Constraints
