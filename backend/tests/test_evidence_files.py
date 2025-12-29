@@ -84,13 +84,18 @@ class TestRunManifestSchema:
         assert not missing_fields, f"Missing required fields: {missing_fields}"
 
     def test_run_manifest_model_id_is_valid_gemma(self, m33_run_dir: Path) -> None:
-        """Verify model_id is a valid competition model."""
+        """Verify model_id is a valid competition model or Flax-compatible alternative."""
         manifest_path = m33_run_dir / "run_manifest.json"
         with open(manifest_path, encoding="utf-8") as f:
             data = json.load(f)
 
         model_id = data.get("model_id", "")
-        valid_models = ["google/gemma-3-1b-it", "google/gemma-2-2b"]
+        # Valid models: Gemma 2/3 (competition) + Gemma 1 Flax (for pipeline validation)
+        valid_models = [
+            "google/gemma-3-1b-it",
+            "google/gemma-2-2b",
+            "google/gemma-2b-it-flax",
+        ]
         assert model_id in valid_models, f"model_id must be one of {valid_models}"
 
     def test_run_manifest_dataset_is_string(self, m33_run_dir: Path) -> None:
@@ -231,13 +236,18 @@ class TestM34RunManifestSchema:
         assert not missing_fields, f"Missing M34 fields: {missing_fields}"
 
     def test_run_manifest_model_id_is_valid(self, m34_run_dir: Path) -> None:
-        """Verify model_id is a valid competition model."""
+        """Verify model_id is a valid competition model or Flax-compatible alternative."""
         manifest_path = m34_run_dir / "run_manifest.json"
         with open(manifest_path, encoding="utf-8") as f:
             data = json.load(f)
 
         model_id = data.get("model_id", "")
-        valid_models = ["google/gemma-3-1b-it", "google/gemma-2-2b"]
+        # Valid models: Gemma 2/3 (competition) + Gemma 1 Flax (for pipeline validation)
+        valid_models = [
+            "google/gemma-3-1b-it",
+            "google/gemma-2-2b",
+            "google/gemma-2b-it-flax",
+        ]
         assert model_id in valid_models, f"model_id must be one of {valid_models}"
 
 
@@ -541,13 +551,18 @@ class TestM36RunManifestSchema:
         assert "eval_v2" in eval_set, f"M36 must use eval_v2.jsonl, got: {eval_set}"
 
     def test_run_manifest_model_id_is_valid(self, m36_run_dir: Path) -> None:
-        """Verify model_id is a valid competition model."""
+        """Verify model_id is a valid competition model or Flax-compatible alternative."""
         manifest_path = m36_run_dir / "run_manifest.json"
         with open(manifest_path, encoding="utf-8") as f:
             data = json.load(f)
 
         model_id = data.get("model_id", "")
-        valid_models = ["google/gemma-3-1b-it", "google/gemma-2-2b"]
+        # Valid models: Gemma 2/3 (competition) + Gemma 1 Flax (for pipeline validation)
+        valid_models = [
+            "google/gemma-3-1b-it",
+            "google/gemma-2-2b",
+            "google/gemma-2b-it-flax",
+        ]
         assert model_id in valid_models, f"model_id must be one of {valid_models}"
 
 

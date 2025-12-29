@@ -10,6 +10,10 @@ This guide provides a reproducible, single-session workflow for:
 3. Running evaluation
 4. Generating leaderboard scores
 
+## Model Selection Note
+
+We currently use `google/gemma-2b-it-flax` to validate the end-to-end JAX/Flax training pipeline because Flax AutoModel support for Gemma 2 2B / Gemma 3 1B may not be available in the installed Transformers version. The system is model-agnostic and can be switched to the required competition checkpoint when Flax support is available (or via the PyTorch path).
+
 ## Prerequisites
 
 - TPU/GPU runtime (Kaggle provides both)
@@ -33,9 +37,10 @@ pip install -e ".[dev,tunix]"
 python backend/tools/seed_dev_reasoning_v2.py
 
 # 3. Train model (bounded time)
-# Note: Use Gemma 2 2B (Flax-compatible). Gemma 3 1B is NOT supported by Flax.
+# We use google/gemma-2b-it-flax which has native Flax support.
+# Gemma 2 2B and Gemma 3 1B are NOT supported by FlaxAutoModelForCausalLM.
 python training/train_jax.py \
-  --config training/configs/submission_gemma2_2b.yaml \
+  --config training/configs/submission_gemma_flax.yaml \
   --output ./output/kaggle_run \
   --dataset dev-reasoning-v2 \
   --device auto
@@ -96,9 +101,10 @@ See `docs/evaluation.md` for full scoring semantics.
 
 ### Out of Memory
 
-Reduce batch size or model size:
-```bash
-python training/train_jax.py --batch_size 2 --model_name google/gemma-2-2b
+Reduce batch size in your config file:
+```yaml
+training:
+  per_device_batch_size: 2
 ```
 
 ### Timeout

@@ -4,9 +4,9 @@
 
 # Model Configuration
 model:
-  # Base model to fine-tune
-  # For actual training, use a small Gemma variant
-  name: "google/gemma-2b-it"
+  # For smoke testing, use distilgpt2 (public, no auth required)
+  # For actual training, use submission_gemma_flax.yaml with google/gemma-2b-it-flax
+  name: "distilgpt2"
 
   # Tokenizer settings
   max_length: 512  # Maximum sequence length
@@ -67,6 +67,6 @@ output:
 
 # Notes:
 # - This config is intentionally minimal for smoke testing
-# - For real training, increase num_steps to 1000-10000
-# - For real training, increase batch_size and use gradient accumulation
+# - Uses distilgpt2 (public, no HF auth required) for CI/testing
+# - For real training, use submission_gemma_flax.yaml with google/gemma-2b-it-flax
 # - For GPU training, adjust per_device_batch_size based on available VRAM

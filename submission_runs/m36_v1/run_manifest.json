@@ -1,10 +1,10 @@
 {
   "run_version": "m36_v1",
-  "model_id": "google/gemma-2-2b",
+  "model_id": "google/gemma-2b-it-flax",
   "dataset": "dev-reasoning-v2",
   "eval_set": "training/evalsets/eval_v2.jsonl",
-  "config_path": "training/configs/m34_best.yaml",
-  "command": "python training/train_sft_tunix.py --config training/configs/m34_best.yaml --dataset dev-reasoning-v2",
+  "config_path": "training/configs/submission_gemma_flax.yaml",
+  "command": "python training/train_jax.py --config training/configs/submission_gemma_flax.yaml --output ./output/kaggle_run --dataset dev-reasoning-v2 --device auto",
   "commit_sha": null,
   "timestamp": null,
   "tuning_job_id": null,

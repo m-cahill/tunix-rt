@@ -5,7 +5,7 @@ This document provides step-by-step instructions for executing the Tunix RT trai
 **Milestone:** M36 — Real Kaggle Execution + Evidence Lock v2  
 **Version:** m36_v5  
 **Eval Set:** eval_v2.jsonl (100 items)  
-**Model:** Gemma 2 2B (Flax-compatible)
+**Model:** Gemma 2B Flax (`google/gemma-2b-it-flax`)
 
 ---
 
@@ -59,13 +59,13 @@ The notebook defaults are configured for M36:
 
 | Parameter | Default Value | Notes |
 |-----------|---------------|-------|
-| `CONFIG_PATH` | `submission_gemma2_2b.yaml` | Gemma 2 2B (Flax-compatible) |
+| `CONFIG_PATH` | `submission_gemma_flax.yaml` | Gemma 2B Flax (native JAX/Flax) |
 | `DATASET` | `dev-reasoning-v2` | 550 traces |
 | `EVAL_SET` | `training/evalsets/eval_v2.jsonl` | 100 items (M36) |
 | `MAX_STEPS` | `100` | From config file |
 | `BATCH_SIZE` | `2` | Reduced for 2B model memory |
 
-**Note:** Gemma 3 1B is NOT supported by Flax. Use Gemma 2 2B for JAX/Flax training.
+**Note:** Gemma 2 2B and Gemma 3 1B are NOT supported by `FlaxAutoModelForCausalLM`. We use `google/gemma-2b-it-flax` which has native Flax weights. The system is model-agnostic and can be switched when Flax support for newer models is available.
 
 Modify these in Cell 6 (Configuration) if needed.
 
@@ -101,7 +101,7 @@ After cell 18 (Submission Summary) completes, copy the **RESULT SUMMARY** block 
 ============================================================
          RESULT SUMMARY (copy to evidence files)
 ============================================================
-model_id: google/gemma-3-1b-it
+model_id: google/gemma-2b-it-flax
 dataset: dev-reasoning-v2
 eval_set: training/evalsets/eval_v2.jsonl
 primary_score: 0.XXXX
@@ -118,7 +118,7 @@ Edit `submission_runs/m36_v1/run_manifest.json`:
 ```json
 {
   "run_version": "m36_v1",
-  "model_id": "google/gemma-2-2b",
+  "model_id": "google/gemma-2b-it-flax",
   "dataset": "dev-reasoning-v2",
   "eval_set": "training/evalsets/eval_v2.jsonl",
   "config_path": "training/configs/m34_best.yaml",
@@ -222,7 +222,7 @@ This creates: `submission/tunix_rt_m36_<date>_<sha>.zip`
 ### "Out of memory" on Kaggle
 
 - Reduce `MAX_STEPS` to 50
-- Use Gemma 3 1B instead of Gemma 2 2B
+- Use a smaller model or reduce batch size
 - Reduce batch size in training config
 
 ### "Model not found" error
