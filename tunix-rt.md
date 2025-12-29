@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M35 Complete** ✅  
-**Coverage:** >70% Backend Line (370+ tests) | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces) | **Eval:** eval_v2.jsonl (100 items) | **Tuning:** Ray Tune Sweep Runner
+**Milestone M36 Complete** ✅  
+**Coverage:** >70% Backend Line (380+ tests) | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces) | **Eval:** eval_v2.jsonl (100 items) | **Tuning:** Ray Tune Sweep Runner | **Kaggle:** Evidence Lock v2
 
 ## Overview
 
@@ -96,6 +96,16 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Evidence Folder** (`submission_runs/m35_v1/`): `run_manifest.json` (with eval_set field), `eval_summary.json` (with scorecard), `kaggle_output_log.txt`.
 - **Schema Tests**: 12 new M35 evidence tests, 23 eval set validator tests, 15 scorecard tests, 14 regression tests.
 - Archive prefix updated to m35, 370+ total backend tests.
+
+**M36 Enhancements:** Real Kaggle Execution + Evidence Lock v2 + Quick-Win Audit Uplift:
+- **Kaggle Evidence Schema**: `run_manifest.json` now includes `kaggle_notebook_url`, `kaggle_notebook_version`, `kaggle_run_id` fields for evidence capture.
+- **Notebook Updates**: Default `EVAL_SET = eval_v2.jsonl` (100 items), added RESULT SUMMARY block for evidence capture, version updated to m36_v1.
+- **Kaggle Execution Runbook** (`docs/M36_KAGGLE_RUN.md`): Step-by-step instructions for Kaggle execution, evidence field mapping, troubleshooting guide.
+- **Frontend Test Coverage**: 10 new `Leaderboard.test.tsx` tests (loading/empty/error states, filters, pagination, scorecard), 5 new `LiveLogs.test.tsx` tests (SSE events, connection status).
+- **Per-Item Predictions Documentation** (`docs/evaluation.md`): Current state, Run Comparison limitations, planned M37 artifact storage.
+- **Evidence Folder** (`submission_runs/m36_v1/`): Templates for real Kaggle run evidence with scorecard structure.
+- **M36 Evidence Tests**: 12 new tests validating M36 schema including Kaggle-specific fields.
+- Archive prefix updated to m36, 380+ total backend tests, 75 frontend tests.
 
 
 ## Database Schema

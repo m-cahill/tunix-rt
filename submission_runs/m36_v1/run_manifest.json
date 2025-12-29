@@ -1,0 +1,16 @@
+{
+  "run_version": "m36_v1",
+  "model_id": "google/gemma-3-1b-it",
+  "dataset": "dev-reasoning-v2",
+  "eval_set": "training/evalsets/eval_v2.jsonl",
+  "config_path": "training/configs/m34_best.yaml",
+  "command": "python training/train_sft_tunix.py --config training/configs/m34_best.yaml --dataset dev-reasoning-v2",
+  "commit_sha": null,
+  "timestamp": null,
+  "tuning_job_id": null,
+  "trial_id": null,
+  "kaggle_notebook_url": null,
+  "kaggle_notebook_version": null,
+  "kaggle_run_id": null,
+  "notes": "M36 Evidence Lock v2 - Real Kaggle run with eval_v2.jsonl (100 items). Fill kaggle_* fields after execution."
+}

@@ -1,0 +1,25 @@
+{
+  "run_version": "m36_v1",
+  "eval_set": "training/evalsets/eval_v2.jsonl",
+  "metrics": {
+    "answer_correctness": null,
+    "final_loss": null
+  },
+  "primary_score": null,
+  "scorecard": {
+    "n_items": 100,
+    "n_scored": null,
+    "n_skipped": null,
+    "stddev": null,
+    "section_scores": {
+      "core": null,
+      "trace_sensitive": null,
+      "edge_case": null
+    },
+    "category_scores": {},
+    "difficulty_scores": {}
+  },
+  "predictions_path": null,
+  "evaluated_at": null,
+  "notes": "M36 evidence - Real Kaggle run required. primary_score MUST be non-null for M36 completion."
+}
