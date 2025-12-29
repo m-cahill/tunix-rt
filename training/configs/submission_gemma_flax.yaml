@@ -1,0 +1,85 @@
+# Tunix RT - Submission Configuration (Gemma Flax)
+# Purpose: JAX/Flax-compatible submission config for end-to-end pipeline validation
+# Model: google/gemma-2b-it-flax (instruction-tuned, Flax-native)
+#
+# NOTE: This config uses the original Gemma 1 model with native Flax support.
+# Gemma 2 2B and Gemma 3 1B are NOT supported by FlaxAutoModelForCausalLM.
+# The system is model-agnostic; switch to competition-required checkpoints when
+# Flax support is available or via the PyTorch training path.
+#
+# Gemma models require accepting the license on Hugging Face.
+# Visit https://huggingface.co/google/gemma-2b-it-flax to accept terms.
+
+# Model Configuration
+model:
+  # Gemma 1 2B instruction-tuned variant with native Flax weights
+  # This is the ONLY Gemma variant currently supported by FlaxAutoModelForCausalLM
+  name: "google/gemma-2b-it-flax"
+
+  # Tokenizer settings
+  max_length: 512
+  padding: "max_length"
+  truncation: true
+
+# Training Configuration
+training:
+  # Training steps - adjust based on available time
+  # Kaggle GPU sessions: ~9 hours per session
+  num_steps: 100
+
+  # Learning rate (conservative for fine-tuning)
+  learning_rate: 1.0e-5
+
+  # Batch configuration
+  # Gemma 2B fits comfortably in most GPU memory
+  per_device_batch_size: 4
+  gradient_accumulation_steps: 1
+
+  # Optimizer
+  optimizer: "adamw"
+  weight_decay: 0.01
+
+  # Learning rate schedule
+  lr_scheduler: "linear"
+  warmup_steps: 10
+
+  # Logging and checkpointing
+  logging_steps: 10
+  save_steps: 50
+
+  # Random seed for reproducibility
+  seed: 42
+
+# System Instruction (for instruction-tuned models)
+system_instruction: "You are a helpful assistant. Show your reasoning step by step before giving your final answer."
+
+# Data Configuration
+data:
+  # Training data format
+  format: "tunix_sft"
+
+  # Shuffle settings
+  shuffle: true
+  shuffle_seed: 42
+
+# Output Configuration
+output:
+  # Checkpoint directory (relative to output_dir)
+  checkpoint_dir: "checkpoint-final"
+
+  # Metrics
+  save_metrics: true
+  metrics_file: "metrics.jsonl"
+
+  # Run manifest
+  save_manifest: true
+  manifest_file: "run_manifest.json"
+
+# Notes:
+# - This config validates the JAX/Flax end-to-end training pipeline
+# - google/gemma-2b-it-flax uses GemmaConfig which IS supported by Flax
+# - google/gemma-2-2b and google/gemma-3-1b use Gemma2Config/Gemma3Config which are NOT
+# - For competition submission, either:
+#   (a) Wait for Flax support for Gemma 2/3, or
+#   (b) Use the PyTorch training path (train_pytorch.py)
+# - Increase num_steps to 500-1000 for final production run
