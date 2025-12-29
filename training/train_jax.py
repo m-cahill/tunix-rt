@@ -51,7 +51,9 @@ def run_jax_sft_training(
         sys.exit(1)
 
     # Config
-    model_id = config.get("model", {}).get("model_id", "distilgpt2")
+    # Support both 'model_id' and 'name' keys for model specification
+    model_config = config.get("model", {})
+    model_id = model_config.get("model_id") or model_config.get("name", "distilgpt2")
     training_args = config.get("training", {})
     learning_rate = float(training_args.get("learning_rate", 2e-5))
     num_epochs = int(training_args.get("num_epochs", 3))
