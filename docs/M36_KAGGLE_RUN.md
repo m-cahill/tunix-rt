@@ -3,7 +3,7 @@
 This document provides step-by-step instructions for executing the Tunix RT training pipeline on Kaggle and capturing evidence files.
 
 **Milestone:** M36 — Real Kaggle Execution + Evidence Lock v2  
-**Version:** m36_v1  
+**Version:** m36_v4  
 **Eval Set:** eval_v2.jsonl (100 items)
 
 ---
@@ -12,7 +12,7 @@ This document provides step-by-step instructions for executing the Tunix RT trai
 
 1. **Kaggle Account** with verified phone number (required for GPU/TPU)
 2. **Hugging Face Token** with access to Gemma models
-3. **GitHub Access** to clone the repository (or upload files directly)
+3. **Internet Access** enabled in Kaggle notebook (the notebook clones the repository automatically)
 
 ---
 
@@ -23,7 +23,7 @@ This document provides step-by-step instructions for executing the Tunix RT trai
 1. Go to [Kaggle Notebooks](https://www.kaggle.com/code)
 2. Click **"New Notebook"**
 3. Select **GPU** or **TPU** as the accelerator (Settings → Accelerator)
-4. Enable **Internet** access (Settings → Internet → On)
+4. Enable **Internet** access (Settings → Internet → On) — **Required for cloning!**
 
 ### 1.2 Upload Notebook
 
@@ -31,6 +31,8 @@ Upload `notebooks/kaggle_submission.ipynb` to the notebook:
 
 - Click **"File" → "Import Notebook"**
 - Upload from your local copy or link to GitHub
+
+**Note:** The notebook will clone the tunix-rt repository automatically in Cell 2. You don't need to upload other files.
 
 ### 1.3 Add Secrets
 
@@ -62,7 +64,7 @@ The notebook defaults are configured for M36:
 | `MAX_STEPS` | `100` | Increase for full training |
 | `SEED` | `42` | Deterministic |
 
-Modify these in Cell 4 if needed.
+Modify these in Cell 6 (Configuration) if needed.
 
 ---
 
@@ -70,24 +72,27 @@ Modify these in Cell 4 if needed.
 
 Run cells in order:
 
-| Cell | Purpose | Expected Time |
-|------|---------|---------------|
-| 2 | Install dependencies | ~1 min |
-| 4 | Configuration | instant |
-| 6 | Build dataset | ~30 sec |
-| 8 | **Smoke run (optional)** | ~5 min |
-| 10 | **Full training** | 1-2 hours |
-| 12 | Generate predictions | ~10 min |
-| 14 | Evaluate & score | ~2 min |
-| 16 | Submission summary | instant |
+| Cell | Section | Purpose | Expected Time |
+|------|---------|---------|---------------|
+| 2 | 0. Clone Repository | Clone tunix-rt repo | ~30 sec |
+| 4 | 1. Setup | Install dependencies | ~1 min |
+| 6 | 2. Configuration | Set parameters | instant |
+| 8 | 3. Build Dataset | Seed dataset | ~30 sec |
+| 10 | 4a. Smoke Run | **Validate pipeline** | ~5 min |
+| 12 | 4b. Full Training | **Full training** | 1-2 hours |
+| 14 | 5. Generate Predictions | Create predictions | ~10 min |
+| 16 | 6. Evaluate & Score | Score predictions | ~2 min |
+| 18 | 7. Submission Summary | Display results | instant |
 
-**Important:** Run cell 8 (smoke run) first to validate the pipeline works before full training.
+**Important:** 
+- **Cell 2 must run first** to clone the repository (all paths depend on this!)
+- Run cell 10 (smoke run) before cell 12 to validate the pipeline works
 
 ---
 
 ## Step 4: Capture Evidence
 
-After cell 16 completes, copy the **RESULT SUMMARY** block from the output:
+After cell 18 (Submission Summary) completes, copy the **RESULT SUMMARY** block from the output:
 
 ```
 ============================================================
@@ -166,7 +171,7 @@ Edit `submission_runs/m36_v1/eval_summary.json`:
 
 ### 4.3 Update kaggle_output_log.txt
 
-Copy the full cell output from Kaggle (cells 8-16) to `submission_runs/m36_v1/kaggle_output_log.txt`.
+Copy the full cell output from Kaggle (cells 10-18) to `submission_runs/m36_v1/kaggle_output_log.txt`.
 
 Include at minimum:
 - Setup output (JAX version, devices)
