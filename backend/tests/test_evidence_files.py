@@ -475,3 +475,156 @@ class TestM35EvidenceFilesComplete:
         for filename in expected_files:
             file_path = m35_run_dir / filename
             assert file_path.exists(), f"Missing M35 evidence file: {filename}"
+
+
+# ============================================================
+# M36 Evidence File Tests
+# ============================================================
+
+# M36 adds Kaggle-specific fields to run_manifest.json
+M36_RUN_MANIFEST_ADDITIONAL_FIELDS = [
+    "kaggle_notebook_url",  # Required for Kaggle runs (can be null for local)
+    "kaggle_notebook_version",  # Kaggle notebook version identifier
+    "kaggle_run_id",  # Optional Kaggle run identifier
+]
+
+
+@pytest.fixture
+def m36_run_dir() -> Path:
+    """Return path to M36 evidence directory."""
+    return Path(__file__).parent.parent.parent / "submission_runs" / "m36_v1"
+
+
+class TestM36RunManifestSchema:
+    """Tests for M36 run_manifest.json schema validation."""
+
+    def test_run_manifest_exists(self, m36_run_dir: Path) -> None:
+        """Verify run_manifest.json exists in M36 evidence directory."""
+        manifest_path = m36_run_dir / "run_manifest.json"
+        assert manifest_path.exists(), f"Missing: {manifest_path}"
+
+    def test_run_manifest_has_required_fields(self, m36_run_dir: Path) -> None:
+        """Verify run_manifest.json has all required fields."""
+        manifest_path = m36_run_dir / "run_manifest.json"
+        with open(manifest_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        missing_fields = [field for field in RUN_MANIFEST_REQUIRED_FIELDS if field not in data]
+        assert not missing_fields, f"Missing required fields: {missing_fields}"
+
+    def test_run_manifest_has_kaggle_fields(self, m36_run_dir: Path) -> None:
+        """M36: Verify run_manifest.json includes Kaggle evidence fields."""
+        manifest_path = m36_run_dir / "run_manifest.json"
+        with open(manifest_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        missing_fields = [
+            field for field in M36_RUN_MANIFEST_ADDITIONAL_FIELDS if field not in data
+        ]
+        assert not missing_fields, f"Missing M36 Kaggle fields: {missing_fields}"
+
+    def test_run_manifest_has_eval_set(self, m36_run_dir: Path) -> None:
+        """M36: Verify run_manifest.json includes eval_set field."""
+        manifest_path = m36_run_dir / "run_manifest.json"
+        with open(manifest_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        assert "eval_set" in data, "M36 run_manifest must include eval_set field"
+
+    def test_run_manifest_eval_set_is_eval_v2(self, m36_run_dir: Path) -> None:
+        """M36: Verify eval_set references eval_v2.jsonl."""
+        manifest_path = m36_run_dir / "run_manifest.json"
+        with open(manifest_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        eval_set = data.get("eval_set", "")
+        assert "eval_v2" in eval_set, f"M36 must use eval_v2.jsonl, got: {eval_set}"
+
+    def test_run_manifest_model_id_is_valid(self, m36_run_dir: Path) -> None:
+        """Verify model_id is a valid competition model."""
+        manifest_path = m36_run_dir / "run_manifest.json"
+        with open(manifest_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        model_id = data.get("model_id", "")
+        valid_models = ["google/gemma-3-1b-it", "google/gemma-2-2b"]
+        assert model_id in valid_models, f"model_id must be one of {valid_models}"
+
+
+class TestM36EvalSummarySchema:
+    """Tests for M36 eval_summary.json schema validation."""
+
+    def test_eval_summary_exists(self, m36_run_dir: Path) -> None:
+        """Verify eval_summary.json exists in M36 evidence directory."""
+        summary_path = m36_run_dir / "eval_summary.json"
+        assert summary_path.exists(), f"Missing: {summary_path}"
+
+    def test_eval_summary_has_required_fields(self, m36_run_dir: Path) -> None:
+        """Verify eval_summary.json has all M35 required fields."""
+        summary_path = m36_run_dir / "eval_summary.json"
+        with open(summary_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        missing_fields = [field for field in M35_EVAL_SUMMARY_REQUIRED_FIELDS if field not in data]
+        assert not missing_fields, f"Missing required fields: {missing_fields}"
+
+    def test_eval_summary_has_scorecard(self, m36_run_dir: Path) -> None:
+        """M36: Verify eval_summary.json includes scorecard object."""
+        summary_path = m36_run_dir / "eval_summary.json"
+        with open(summary_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        assert "scorecard" in data, "M36 eval_summary must include scorecard"
+        scorecard = data["scorecard"]
+        assert isinstance(scorecard, dict), "scorecard must be a dictionary"
+
+    def test_eval_summary_scorecard_has_n_items(self, m36_run_dir: Path) -> None:
+        """M36: Verify scorecard has n_items field with 100 items for eval_v2."""
+        summary_path = m36_run_dir / "eval_summary.json"
+        with open(summary_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        scorecard = data.get("scorecard", {})
+        assert "n_items" in scorecard, "scorecard must include n_items"
+        assert scorecard["n_items"] == 100, (
+            f"Expected 100 items for eval_v2, got {scorecard['n_items']}"
+        )
+
+    def test_eval_summary_uses_eval_v2(self, m36_run_dir: Path) -> None:
+        """M36: Verify eval_set references eval_v2.jsonl."""
+        summary_path = m36_run_dir / "eval_summary.json"
+        with open(summary_path, encoding="utf-8") as f:
+            data = json.load(f)
+
+        eval_set = data.get("eval_set", "")
+        assert "eval_v2" in eval_set, f"M36 must use eval_v2.jsonl, got: {eval_set}"
+
+
+class TestM36KaggleOutputLog:
+    """Tests for M36 kaggle_output_log.txt."""
+
+    def test_kaggle_output_log_exists(self, m36_run_dir: Path) -> None:
+        """Verify kaggle_output_log.txt exists in M36 evidence directory."""
+        log_path = m36_run_dir / "kaggle_output_log.txt"
+        assert log_path.exists(), f"Missing: {log_path}"
+
+    def test_kaggle_output_log_is_not_empty(self, m36_run_dir: Path) -> None:
+        """Verify kaggle_output_log.txt is not empty."""
+        log_path = m36_run_dir / "kaggle_output_log.txt"
+        content = log_path.read_text(encoding="utf-8")
+        assert len(content) > 0, "kaggle_output_log.txt must not be empty"
+
+
+class TestM36EvidenceFilesComplete:
+    """Tests that all M36 evidence files are present."""
+
+    def test_all_m36_evidence_files_exist(self, m36_run_dir: Path) -> None:
+        """Verify all expected M36 evidence files exist."""
+        expected_files = [
+            "run_manifest.json",
+            "eval_summary.json",
+            "kaggle_output_log.txt",
+        ]
+        for filename in expected_files:
+            file_path = m36_run_dir / filename
+            assert file_path.exists(), f"Missing M36 evidence file: {filename}"

@@ -69,6 +69,17 @@ const waitForInitialLoad = async () => {
   })
 }
 
+// M36: Helper to flush pending state updates and avoid act() warnings
+// This ensures all microtasks and state updates complete before test ends
+const flushPendingUpdates = async () => {
+  await waitFor(() => {}, { timeout: 50 })
+}
+
+// TODO(M37): Address remaining act() warnings in tests with complex async operations
+// The App component has multiple concurrent fetch operations that cause React state updates
+// during render. A full fix would require restructuring the component's async flow or using
+// React's startTransition for non-urgent updates. Current warnings don't affect test correctness.
+
 describe('App', () => {
   beforeEach(() => {
     vi.clearAllMocks()
@@ -374,6 +385,9 @@ describe('App', () => {
     await waitFor(() => {
       expect(screen.getByText(/Compare failed/i)).toBeInTheDocument()
     })
+
+    // M36: Flush any pending state updates
+    await flushPendingUpdates()
   })
 
   it('disables compare button when trace IDs are missing', async () => {
@@ -1080,5 +1094,8 @@ describe('App', () => {
       expect(screen.getByTestId('tunix:history-error')).toBeInTheDocument()
       expect(screen.getByTestId('tunix:history-error')).toHaveTextContent('Error:')
     })
+
+    // M36: Flush any pending state updates
+    await flushPendingUpdates()
   })
 })
