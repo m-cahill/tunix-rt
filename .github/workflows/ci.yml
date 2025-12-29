@@ -105,7 +105,7 @@ jobs:
         run: uv run python tools/coverage_gate.py
 
       - name: Upload coverage
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: backend-coverage-py${{ matrix.python-version }}
           path: backend/coverage.xml
@@ -141,7 +141,7 @@ jobs:
         run: npm run test -- --coverage
 
       - name: Upload coverage
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: frontend-coverage
           path: frontend/coverage/
@@ -181,7 +181,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload pip-audit report
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         if: always()
         with:
           name: pip-audit-report
@@ -198,7 +198,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload SBOM
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         if: always()
         with:
           name: backend-sbom
@@ -232,7 +232,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload npm audit report
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         if: always()
         with:
           name: npm-audit-report
@@ -340,7 +340,7 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
 
-      - uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         if: always()
         with:
           name: playwright-report
