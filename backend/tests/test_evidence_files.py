@@ -90,13 +90,14 @@ class TestRunManifestSchema:
             data = json.load(f)
 
         model_id = data.get("model_id", "")
-        # Valid models: Gemma 2/3 (competition) + Gemma 1 Flax (for pipeline validation)
+        # Valid models: Gemma 2/3 (competition) + RecurrentGemma Flax (for pipeline validation)
         valid_models = [
             "google/gemma-3-1b-it",
             "google/gemma-2-2b",
             "google/gemma-2b-it-flax",
             "google/gemma-2b",
-            "google/gemma-2b-flax",  # Flax-specific repo for JAX loading
+            "google/gemma-2b-flax",
+            "google/recurrentgemma-2b-flax",  # Has actual Flax weights for pipeline validation
         ]
         assert model_id in valid_models, f"model_id must be one of {valid_models}"
 
@@ -244,13 +245,14 @@ class TestM34RunManifestSchema:
             data = json.load(f)
 
         model_id = data.get("model_id", "")
-        # Valid models: Gemma 2/3 (competition) + Gemma 1 Flax (for pipeline validation)
+        # Valid models: Gemma 2/3 (competition) + RecurrentGemma Flax (for pipeline validation)
         valid_models = [
             "google/gemma-3-1b-it",
             "google/gemma-2-2b",
             "google/gemma-2b-it-flax",
             "google/gemma-2b",
-            "google/gemma-2b-flax",  # Flax-specific repo for JAX loading
+            "google/gemma-2b-flax",
+            "google/recurrentgemma-2b-flax",  # Has actual Flax weights for pipeline validation
         ]
         assert model_id in valid_models, f"model_id must be one of {valid_models}"
 
@@ -561,13 +563,14 @@ class TestM36RunManifestSchema:
             data = json.load(f)
 
         model_id = data.get("model_id", "")
-        # Valid models: Gemma 2/3 (competition) + Gemma 1 Flax (for pipeline validation)
+        # Valid models: Gemma 2/3 (competition) + RecurrentGemma Flax (for pipeline validation)
         valid_models = [
             "google/gemma-3-1b-it",
             "google/gemma-2-2b",
             "google/gemma-2b-it-flax",
             "google/gemma-2b",
-            "google/gemma-2b-flax",  # Flax-specific repo for JAX loading
+            "google/gemma-2b-flax",
+            "google/recurrentgemma-2b-flax",  # Has actual Flax weights for pipeline validation
         ]
         assert model_id in valid_models, f"model_id must be one of {valid_models}"
 
