@@ -102,7 +102,10 @@ def run_jax_sft_training(
         print(f"      Optimizer: Adafactor (memory-efficient)")
         print(f"      Allocator: platform (flexible VRAM)")
 
-    # Device Selection
+    # ========================================================================
+    # Device Selection (M37: Added explicit TPU support)
+    # Supports: auto, cpu, gpu, tpu
+    # ========================================================================
     requested_device = device or training_args.get("device", "auto")
 
     if requested_device == "cpu":
@@ -116,8 +119,8 @@ def run_jax_sft_training(
                 raise RuntimeError("No GPU found")
             # Select specific GPU if index provided
             if device_index >= len(gpus):
-                 print(f"❌ Requested GPU index {device_index} but only found {len(gpus)} GPUs")
-                 sys.exit(1)
+                print(f"❌ Requested GPU index {device_index} but only found {len(gpus)} GPUs")
+                sys.exit(1)
 
             # Set default device (JAX 0.4.x+)
             try:
@@ -130,14 +133,36 @@ def run_jax_sft_training(
         except RuntimeError:
             print("❌ Device 'gpu' requested but no GPU devices found.")
             sys.exit(1)
+    elif requested_device == "tpu":
+        # M37: Explicit TPU selection with validation
+        try:
+            tpus = jax.devices("tpu")
+            if not tpus:
+                raise RuntimeError("No TPU found")
+            print(f"   Device request: TPU ({len(tpus)} cores available)")
+        except RuntimeError:
+            print("❌ Device 'tpu' requested but no TPU devices found.")
+            print("   On Kaggle: Settings → Accelerator → TPU v3-8")
+            print("   Locally: Ensure you have TPU access configured")
+            sys.exit(1)
     else:
-        # auto
+        # auto - JAX will pick the best available device
         print("   Device request: Auto")
 
+    # ========================================================================
+    # Device Info Logging (M37: Enhanced for auditability)
+    # ========================================================================
     print(f"   Model: {model_id}")
     try:
-        print(f"   Active Device: {jax.devices()[0]}")
-        print(f"   Platform: {jax.default_backend()}")
+        detected_backend = jax.default_backend()
+        all_devices = jax.devices()
+        print(f"   Platform: {detected_backend.upper()}")
+        print(f"   Device Count: {len(all_devices)}")
+        print(f"   Active Device: {all_devices[0]}")
+        # Print all devices if more than one (useful for TPU)
+        if len(all_devices) > 1:
+            for i, dev in enumerate(all_devices):
+                print(f"      [{i}] {dev}")
     except Exception:
         print("   Device: Unknown (JAX init issue?)")
 
@@ -429,7 +454,7 @@ def main():
     group.add_argument("--data", type=Path, help="Path to JSONL dataset file (legacy)")
     group.add_argument("--dataset", type=str, help="Dataset key (e.g., golden-v2)")
 
-    parser.add_argument("--device", type=str, choices=["auto", "cpu", "gpu"], default=None)
+    parser.add_argument("--device", type=str, choices=["auto", "cpu", "gpu", "tpu"], default=None)
     parser.add_argument("--device_index", type=int, default=0)
     parser.add_argument("--smoke_steps", type=int, default=None)
     parser.add_argument(
@@ -468,8 +493,9 @@ def main():
         sys.exit(1)
 
     # ========================================================================
-    # Preflight Check: Warn about large models on GPU
-    # Models >1B params often don't fit on consumer GPUs (T4, etc.)
+    # Preflight Check: BLOCK large models on GPU (M37: Upgraded from warning)
+    # Models >1B params don't fit on consumer GPUs (T4, etc.)
+    # Empirically verified in M36: Gemma 2B OOMs on T4 even with optimizations
     # ========================================================================
     model_name = config.get("model", {}).get("name", "")
     large_models = [
@@ -479,18 +505,35 @@ def main():
     is_large_model = any(m in model_name.lower() for m in large_models)
     device_req = args.device or "auto"
 
-    if is_large_model and device_req in ("gpu", "auto") and not is_smoke:
+    # M37: Hard block for large models on GPU (unless smoke mode)
+    # This prevents accidental OOM failures during submission runs
+    if is_large_model and device_req == "gpu" and not is_smoke:
         print("\n" + "=" * 60)
-        print("⚠️  WARNING: Large Model + GPU Detected")
+        print("❌ ERROR: Large Model + GPU Training Blocked")
         print("=" * 60)
         print(f"   Model: {model_name}")
         print(f"   Device: {device_req}")
         print("")
-        print("   Models >1B params often cause OOM on consumer GPUs.")
-        print("   Recommendations:")
-        print("   • Use TPU for training (Kaggle TPU v3-8 has 64GB)")
+        print("   Models >1B params cause OOM on consumer GPUs (e.g., T4).")
+        print("   This was empirically verified in M36.")
+        print("")
+        print("   Solutions:")
+        print("   • Use --device tpu (Kaggle TPU v3-8 has 64GB)")
         print("   • Use --smoke_config with a tiny model for smoke tests")
-        print("   • Use larger GPU (A100, RTX 5090, etc.)")
+        print("   • Use --device auto on a TPU-enabled machine")
+        print("=" * 60 + "\n")
+        sys.exit(1)
+
+    # M37: Warning for auto mode with large models (may work on TPU, may OOM on GPU)
+    if is_large_model and device_req == "auto" and not is_smoke:
+        print("\n" + "=" * 60)
+        print("⚠️  WARNING: Large Model with Auto Device Detection")
+        print("=" * 60)
+        print(f"   Model: {model_name}")
+        print(f"   Device: {device_req}")
+        print("")
+        print("   If JAX detects a GPU (not TPU), training may OOM.")
+        print("   For guaranteed success, use --device tpu explicitly.")
         print("=" * 60 + "\n")
 
     # Resolve dataset path

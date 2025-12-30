@@ -1,0 +1,106 @@
+# Tunix RT - TPU Submission Configuration (M37)
+# Purpose: Production training config for Kaggle TPU v3-8
+# Model: google/gemma-2b with Flax weights
+#
+# ============================================================================
+# ⚠️  TPU-ONLY CONFIG: Do NOT run this on GPU — it will OOM.
+#     For GPU smoke tests, use smoke_tiny.yaml with --smoke_config flag.
+# ============================================================================
+#
+# This config is optimized for Kaggle TPU v3-8 (64GB HBM per chip, 8 chips).
+# It uses larger batch sizes than the GPU config to take advantage of TPU memory.
+#
+# Prerequisites:
+# - HuggingFace token with Gemma access (HF_TOKEN in Kaggle Secrets)
+# - Kaggle notebook with TPU v3-8 accelerator enabled
+# - Accept Gemma license at https://huggingface.co/google/gemma-2b
+
+# Model Configuration
+model:
+  # Gemma 2B with Flax weights on the "flax" branch
+  # The default branch doesn't have Flax weights, but revision="flax" does
+  # See: https://huggingface.co/google/gemma-2b/discussions/16
+  name: "google/gemma-2b"
+  revision: "flax"
+
+  # Tokenizer settings (TPU can handle longer sequences)
+  max_length: 512
+  padding: "max_length"
+  truncation: true
+
+# Training Configuration (TPU-optimized)
+training:
+  # Training steps for M37 evidence run
+  # 200 steps: ~30-60 min on TPU, enough to prove stability
+  num_steps: 200
+  num_epochs: 3
+
+  # Learning rate (conservative for fine-tuning)
+  learning_rate: 1.0e-5
+
+  # Batch configuration (TPU-optimized)
+  # TPU v3-8 has 64GB HBM — can handle larger batches than GPU
+  batch_size: 8
+  per_device_batch_size: 8
+  gradient_accumulation_steps: 1
+  max_seq_length: 512
+
+  # Optimizer
+  optimizer: "adamw"
+  weight_decay: 0.01
+
+  # Learning rate schedule
+  lr_scheduler: "linear"
+  warmup_steps: 20
+
+  # Logging and checkpointing
+  logging_steps: 10
+  save_steps: 50
+
+  # Random seed for reproducibility
+  seed: 42
+
+  # Device hint (used by train_jax.py for validation)
+  device: "tpu"
+
+# System Instruction (for instruction-tuned models)
+system_instruction: "You are a helpful assistant. Show your reasoning step by step before giving your final answer."
+
+# Data Configuration
+data:
+  # Training data format
+  format: "tunix_sft"
+
+  # Shuffle settings
+  shuffle: true
+  shuffle_seed: 42
+
+# Output Configuration
+output:
+  # Checkpoint directory (relative to output_dir)
+  checkpoint_dir: "checkpoint-final"
+
+  # Metrics
+  save_metrics: true
+  metrics_file: "metrics.jsonl"
+
+  # Run manifest
+  save_manifest: true
+  manifest_file: "run_manifest.json"
+
+# ============================================================================
+# M37 Notes:
+# - This config is for the TPU evidence run (submission-critical)
+# - 200 steps proves training stability without exhausting TPU quota
+# - batch_size: 8 uses ~40% of TPU memory, leaving headroom for gradients
+# - For longer production runs, increase num_steps to 500-1000
+#
+# Running on Kaggle:
+#   1. Set Accelerator to "TPU v3-8" in notebook settings
+#   2. Add HF_TOKEN to Kaggle Secrets
+#   3. Run: python training/run_train_jax.py \
+#        --config training/configs/submission_tpu.yaml \
+#        --output ./output/tpu_run \
+#        --dataset dev-reasoning-v2 \
+#        --device tpu
+# ============================================================================
