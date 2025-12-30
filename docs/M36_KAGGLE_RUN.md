@@ -221,14 +221,26 @@ This creates: `submission/tunix_rt_m36_<date>_<sha>.zip`
 
 ### "Out of memory" on Kaggle
 
-- Reduce `MAX_STEPS` to 50
-- Use a smaller model or reduce batch size
-- Reduce batch size in training config
+The training script includes automatic memory optimizations for smoke runs:
+
+**Smoke mode optimizations (when `--smoke_steps` is set):**
+- XLA preallocation disabled (`XLA_PYTHON_CLIENT_PREALLOCATE=false`)
+- Model loaded in **bfloat16** (reduces memory ~2x)
+- Batch size forced to **1**
+- Sequence length capped at **128**
+- Uses **Adafactor** optimizer instead of AdamW (factored second moments save memory)
+
+**If you still hit OOM:**
+1. Reduce `MAX_STEPS` to 50
+2. Edit the training config to reduce `per_device_batch_size`
+3. For extreme cases, uncomment `XLA_PYTHON_CLIENT_ALLOCATOR="platform"` in `train_jax.py` (slow but minimal VRAM)
+4. As a last resort, run the smoke test on CPU (`--device cpu`) to validate the pipeline end-to-end
 
 ### "Model not found" error
 
 - Ensure you've accepted the Gemma license on Hugging Face
 - Verify `HF_TOKEN` secret is correctly set
+- Make sure the HF authentication cell ran successfully before training
 
 ### Session timeout
 
