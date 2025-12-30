@@ -1,0 +1,45 @@
+# M37 TPU Training Log
+# ====================
+#
+# This file should contain the full output from the Kaggle TPU training run.
+# Copy/paste the output from cells 4-18 of the kaggle_submission.ipynb notebook.
+#
+# Required sections:
+# 1. JAX device detection (should show TPU)
+# 2. Model loading logs
+# 3. Training loss progression (every 10 steps)
+# 4. Final RESULT SUMMARY block
+#
+# Example expected output:
+#
+# JAX version: 0.4.x
+# Available devices: [TpuDevice(id=0, ...), ...]
+# Default backend: tpu
+# ✅ Running on TPU. Full Gemma training is supported.
+#
+# 🚀 Starting Full Training Run...
+# ============================================================
+# Config:    training/configs/submission_tpu.yaml
+# Model:     google/gemma-2b
+# Dataset:   dev-reasoning-v2
+# Steps:     200 (from config)
+# Output:    ./output/tpu_run
+# ============================================================
+#
+# [Training logs with loss values...]
+#
+# ============================================================
+#          RESULT SUMMARY (copy to evidence files)
+# ============================================================
+# model_id: google/gemma-2b
+# dataset: dev-reasoning-v2
+# eval_set: training/evalsets/eval_v2.jsonl
+# primary_score: X.XXXX
+# final_loss: X.XXXX
+# n_items: 100
+# n_scored: XX
+# ============================================================
+#
+# --- PASTE ACTUAL OUTPUT BELOW THIS LINE ---
+
+

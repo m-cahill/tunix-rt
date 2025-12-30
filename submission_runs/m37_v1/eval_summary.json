@@ -1,0 +1,27 @@
+{
+  "run_version": "m37_v1",
+  "eval_set": "training/evalsets/eval_v2.jsonl",
+  "metrics": {
+    "answer_correctness": null,
+    "final_loss": null
+  },
+  "primary_score": null,
+  "scorecard": {
+    "n_items": 100,
+    "n_scored": null,
+    "n_skipped": null,
+    "stddev": null,
+    "section_scores": {
+      "core": null,
+      "trace_sensitive": null,
+      "edge_case": null
+    },
+    "category_scores": {},
+    "difficulty_scores": {}
+  },
+  "predictions_path": "./output/tpu_run/predictions.jsonl",
+  "evaluated_at": null,
+  "hardware": "TPU v3-8",
+  "training_steps": 200,
+  "notes": "M37 TPU evidence - Production training run. primary_score MUST be non-null for M37 completion."
+}

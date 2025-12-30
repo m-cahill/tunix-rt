@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M36 Complete** ✅  
-**Coverage:** >70% Backend Line (380+ tests) | **Training:** End-to-End Loop + Evaluation | **Ops:** JAX/Flax Pipeline | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces) | **Eval:** eval_v2.jsonl (100 items) | **Tuning:** Ray Tune Sweep Runner | **Kaggle:** Evidence Lock v2
+**Milestone M37 Complete** ✅  
+**Coverage:** >70% Backend Line (380+ tests) | **Training:** TPU-Ready Pipeline | **Ops:** JAX/Flax + Explicit TPU | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces) | **Eval:** eval_v2.jsonl (100 items) | **Tuning:** Ray Tune Sweep Runner | **Kaggle:** TPU Training for Submission
 
 ## Overview
 
@@ -114,6 +114,16 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **M36 Evidence Tests**: 12 new tests validating M36 schema including Kaggle-specific fields.
 - **CI Fix**: `uv.lock` regenerated to exclude private `ungar` git dependency (prevents auth failures).
 - Archive prefix updated to m36, 380+ total backend tests, 75 frontend tests.
+
+**M37 Enhancements:** TPU Training for Submission — Production-ready TPU execution path:
+- **TPU Device Support**: Added `--device tpu` option to `train_jax.py` with explicit device validation and clear error messages if TPU unavailable.
+- **Enhanced Device Logging**: Platform, device count, and all devices printed at startup for auditability.
+- **GPU Hard Block**: Upgraded GPU guardrail from warning to hard block — training exits with error if Gemma model attempted on GPU (prevents OOM waste).
+- **TPU Config**: New `training/configs/submission_tpu.yaml` with TPU-optimized settings (batch_size=8, 200 steps, max_seq_length=512).
+- **Notebook Update**: Version m37_v1 with explicit `--device tpu` flag, pre-flight TPU detection, and clear instructions for Kaggle TPU v3-8 setup.
+- **Evidence Folder**: `submission_runs/m37_v1/` with `run_manifest.json` (TPU hardware fields), `eval_summary.json`, `kaggle_output_log.txt` templates.
+- **Model Lock**: Gemma 1 2B (`google/gemma-2b` with `revision="flax"`) confirmed as submission model — Gemma 2/3 NOT supported by FlaxAutoModelForCausalLM.
+- Archive prefix updated to m37, ready for TPU production training.
 
 
 ## Database Schema

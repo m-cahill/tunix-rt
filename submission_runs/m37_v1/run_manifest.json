@@ -1,0 +1,27 @@
+{
+  "run_version": "m37_v1",
+  "model_id": "google/gemma-2b",
+  "dataset": "dev-reasoning-v2",
+  "eval_set": "training/evalsets/eval_v2.jsonl",
+  "config_path": "training/configs/submission_tpu.yaml",
+  "command": "python training/run_train_jax.py --config training/configs/submission_tpu.yaml --output ./output/tpu_run --dataset dev-reasoning-v2 --device tpu",
+  "commit_sha": null,
+  "timestamp": null,
+  "tuning_job_id": null,
+  "trial_id": null,
+  "kaggle_notebook_url": null,
+  "kaggle_notebook_version": null,
+  "kaggle_run_id": null,
+  "hardware": {
+    "accelerator": "TPU v3-8",
+    "memory_gb": 64,
+    "device_count": 8
+  },
+  "training_params": {
+    "num_steps": 200,
+    "batch_size": 8,
+    "learning_rate": 1e-5,
+    "max_seq_length": 512
+  },
+  "notes": "M37 TPU Training - Production evidence run. 200 steps on Kaggle TPU v3-8. Fill kaggle_* fields after execution."
+}
