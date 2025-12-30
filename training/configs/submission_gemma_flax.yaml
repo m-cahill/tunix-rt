@@ -12,10 +12,10 @@
 
 # Model Configuration
 model:
-  # Gemma 2B base model with native Flax weights
-  # The HF repo google/gemma-2b contains flax_model-*.msgpack shards
-  # Note: google/gemma-2b-it-flax does NOT have Flax weights despite its name
-  name: "google/gemma-2b"
+  # Gemma 2B Flax-specific repository
+  # This repo (google/gemma-2b-flax) is designed for JAX/Flax loading
+  # Note: Requires HuggingFace authentication (gated model)
+  name: "google/gemma-2b-flax"
 
   # Tokenizer settings
   max_length: 512
@@ -78,8 +78,8 @@ output:
 
 # Notes:
 # - This config validates the JAX/Flax end-to-end training pipeline
-# - google/gemma-2b contains flax_model-*.msgpack shards (verified on HF)
-# - google/gemma-2b-it-flax does NOT have Flax weights despite its name
+# - google/gemma-2b-flax is the Flax-specific repository for JAX loading
+# - Requires HuggingFace authentication (gated model) - add HF_TOKEN secret in Kaggle
 # - google/gemma-2-2b and google/gemma-3-1b use Gemma2Config/Gemma3Config which are NOT supported
 # - For competition submission, either:
 #   (a) Wait for Flax support for Gemma 2/3, or
