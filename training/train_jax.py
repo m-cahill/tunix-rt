@@ -54,6 +54,7 @@ def run_jax_sft_training(
     # Support both 'model_id' and 'name' keys for model specification
     model_config = config.get("model", {})
     model_id = model_config.get("model_id") or model_config.get("name", "distilgpt2")
+    model_revision = model_config.get("revision")  # Optional: e.g., "flax" branch
     training_args = config.get("training", {})
     learning_rate = float(training_args.get("learning_rate", 2e-5))
     num_epochs = int(training_args.get("num_epochs", 3))
@@ -102,17 +103,25 @@ def run_jax_sft_training(
 
     # 1. Load Tokenizer & Model
     print("   Loading model...")
+    if model_revision:
+        print(f"   Revision: {model_revision}")
+
     try:
-        tokenizer = AutoTokenizer.from_pretrained(model_id)
+        # Pass revision if specified (e.g., "flax" branch for google/gemma-2b)
+        tokenizer = AutoTokenizer.from_pretrained(model_id, revision=model_revision)
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
 
-        # Try loading from PT weights if Flax weights don't exist
+        # Try loading with revision first, fallback to from_pt=True
         try:
-            model = FlaxAutoModelForCausalLM.from_pretrained(model_id, from_pt=True)
+            model = FlaxAutoModelForCausalLM.from_pretrained(
+                model_id, revision=model_revision, from_pt=False
+            )
         except OSError:
-             # Maybe it has Flax weights?
-            model = FlaxAutoModelForCausalLM.from_pretrained(model_id, from_pt=False)
+            # Maybe it needs PyTorch weight conversion?
+            model = FlaxAutoModelForCausalLM.from_pretrained(
+                model_id, revision=model_revision, from_pt=True
+            )
 
     except Exception as e:
         print(f"❌ Failed to load model: {e}")

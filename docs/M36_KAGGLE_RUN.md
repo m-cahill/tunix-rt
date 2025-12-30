@@ -5,7 +5,7 @@ This document provides step-by-step instructions for executing the Tunix RT trai
 **Milestone:** M36 — Real Kaggle Execution + Evidence Lock v2  
 **Version:** m36_v5  
 **Eval Set:** eval_v2.jsonl (100 items)  
-**Model:** RecurrentGemma 2B Flax (`google/recurrentgemma-2b-flax`)
+**Model:** Gemma 2B Flax (`google/gemma-2b` with `revision: flax`)
 
 ---
 
@@ -65,7 +65,7 @@ The notebook defaults are configured for M36:
 | `MAX_STEPS` | `100` | From config file |
 | `BATCH_SIZE` | `2` | Reduced for 2B model memory |
 
-**Note:** We use `google/recurrentgemma-2b-flax` for pipeline validation because it has actual Flax weights. `google/gemma-2b-flax` and `google/gemma-2b` do NOT have Flax weights despite their names. Requires HuggingFace authentication (add `HF_TOKEN` secret). This is for pipeline validation; final competition model TBD.
+**Note:** We use `google/gemma-2b` with `revision: "flax"` because the Flax weights are on a separate branch. The default branch doesn't have Flax weights. See [HF discussion](https://huggingface.co/google/gemma-2b/discussions/16). Requires HuggingFace authentication (add `HF_TOKEN` secret).
 
 Modify these in Cell 6 (Configuration) if needed.
 
@@ -101,7 +101,7 @@ After cell 18 (Submission Summary) completes, copy the **RESULT SUMMARY** block 
 ============================================================
          RESULT SUMMARY (copy to evidence files)
 ============================================================
-model_id: google/recurrentgemma-2b-flax
+model_id: google/gemma-2b
 dataset: dev-reasoning-v2
 eval_set: training/evalsets/eval_v2.jsonl
 primary_score: 0.XXXX
@@ -118,7 +118,7 @@ Edit `submission_runs/m36_v1/run_manifest.json`:
 ```json
 {
   "run_version": "m36_v1",
-  "model_id": "google/recurrentgemma-2b-flax",
+  "model_id": "google/gemma-2b",
   "dataset": "dev-reasoning-v2",
   "eval_set": "training/evalsets/eval_v2.jsonl",
   "config_path": "training/configs/m34_best.yaml",
