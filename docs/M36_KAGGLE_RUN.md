@@ -65,7 +65,10 @@ The notebook defaults are configured for M36:
 | `MAX_STEPS` | `100` | From config file |
 | `BATCH_SIZE` | `2` | Reduced for 2B model memory |
 
-**Note:** We use `google/gemma-2b` with `revision: "flax"` because the Flax weights are on a separate branch. The default branch doesn't have Flax weights. See [HF discussion](https://huggingface.co/google/gemma-2b/discussions/16). Requires HuggingFace authentication (add `HF_TOKEN` secret).
+**Notes:**
+- We use `google/gemma-2b` with `revision: "flax"` because the Flax weights are on a separate branch. The default branch doesn't have Flax weights. See [HF discussion](https://huggingface.co/google/gemma-2b/discussions/16).
+- Requires HuggingFace authentication (add `HF_TOKEN` secret).
+- The notebook uses `run_train_jax.py` (launcher) instead of `train_jax.py` directly to ensure XLA memory environment variables are set before JAX imports.
 
 Modify these in Cell 6 (Configuration) if needed.
 
@@ -255,6 +258,8 @@ The training script includes automatic memory optimizations for smoke runs:
 | File | Location | Purpose |
 |------|----------|---------|
 | Notebook | `notebooks/kaggle_submission.ipynb` | Main execution |
+| Training launcher | `training/run_train_jax.py` | Sets XLA env vars before JAX import |
+| Training script | `training/train_jax.py` | Core JAX/Flax training |
 | Evidence manifest | `submission_runs/m36_v1/run_manifest.json` | Run metadata |
 | Evidence summary | `submission_runs/m36_v1/eval_summary.json` | Eval results |
 | Evidence log | `submission_runs/m36_v1/kaggle_output_log.txt` | Cell outputs |
