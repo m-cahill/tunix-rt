@@ -432,6 +432,12 @@ def main():
     parser.add_argument("--device", type=str, choices=["auto", "cpu", "gpu"], default=None)
     parser.add_argument("--device_index", type=int, default=0)
     parser.add_argument("--smoke_steps", type=int, default=None)
+    parser.add_argument(
+        "--smoke_config",
+        type=Path,
+        default=None,
+        help="Optional: separate config for smoke runs (e.g., tiny model). Used when --smoke_steps > 0."
+    )
     parser.add_argument("--checkpoint_dir", type=Path, default=None)
     parser.add_argument("--resume_from", type=str, default=None)
     parser.add_argument("--save_every_steps", type=int, default=None)
@@ -440,14 +446,52 @@ def main():
 
     args = parser.parse_args()
 
+    # Determine which config to use
+    # If smoke_steps > 0 AND smoke_config is provided, use smoke_config instead
+    is_smoke = args.smoke_steps is not None and args.smoke_steps > 0
+    config_path = args.config
+
+    if is_smoke and args.smoke_config:
+        if args.smoke_config.exists():
+            config_path = args.smoke_config
+            print(f"🔧 Smoke mode: Using smoke config: {config_path}")
+        else:
+            print(f"⚠️  Smoke config not found: {args.smoke_config}, falling back to main config")
+
     # Load config
     try:
         import yaml
-        with open(args.config, "r") as f:
+        with open(config_path, "r") as f:
             config = yaml.safe_load(f)
     except ImportError:
         print("❌ PyYAML not found. Install backend[training] or pyyaml.")
         sys.exit(1)
+
+    # ========================================================================
+    # Preflight Check: Warn about large models on GPU
+    # Models >1B params often don't fit on consumer GPUs (T4, etc.)
+    # ========================================================================
+    model_name = config.get("model", {}).get("name", "")
+    large_models = [
+        "gemma-2b", "gemma-2-2b", "gemma-3", "gemma2", "gemma3",
+        "llama", "mistral", "phi-2", "phi-3",
+    ]
+    is_large_model = any(m in model_name.lower() for m in large_models)
+    device_req = args.device or "auto"
+
+    if is_large_model and device_req in ("gpu", "auto") and not is_smoke:
+        print("\n" + "=" * 60)
+        print("⚠️  WARNING: Large Model + GPU Detected")
+        print("=" * 60)
+        print(f"   Model: {model_name}")
+        print(f"   Device: {device_req}")
+        print("")
+        print("   Models >1B params often cause OOM on consumer GPUs.")
+        print("   Recommendations:")
+        print("   • Use TPU for training (Kaggle TPU v3-8 has 64GB)")
+        print("   • Use --smoke_config with a tiny model for smoke tests")
+        print("   • Use larger GPU (A100, RTX 5090, etc.)")
+        print("=" * 60 + "\n")
 
     # Resolve dataset path
     dataset_path = None
