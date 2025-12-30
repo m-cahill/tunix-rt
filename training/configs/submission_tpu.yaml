@@ -1,5 +1,5 @@
-# Tunix RT - TPU Submission Configuration (M37)
-# Purpose: Production training config for Kaggle TPU v3-8
+# Tunix RT - TPU Submission Configuration (M38 v2)
+# Purpose: Production training config for Kaggle TPU v3-8 / v5e-8
 # Model: google/gemma-2b with Flax weights
 #
 # ============================================================================
@@ -7,47 +7,55 @@
 #     For GPU smoke tests, use smoke_tiny.yaml with --smoke_config flag.
 # ============================================================================
 #
-# This config is optimized for Kaggle TPU v3-8 (64GB HBM per chip, 8 chips).
-# It uses larger batch sizes than the GPU config to take advantage of TPU memory.
+# M38 v2 FIX: Further reduced memory footprint after v1 still OOMed.
+# Root cause: TPU v5e-8 has only 16GB HBM per chip (not 64GB like v3-8).
+# The compile-time memory for logits [batch, seq, 256K_vocab] exploded.
+#
+# Solution: seq_len=64, batch=1, train_jax.py forces these values for TPU.
 #
 # Prerequisites:
 # - HuggingFace token with Gemma access (HF_TOKEN in Kaggle Secrets)
-# - Kaggle notebook with TPU v3-8 accelerator enabled
+# - Kaggle notebook with TPU v3-8 or TPU v5e-8 accelerator enabled
 # - Accept Gemma license at https://huggingface.co/google/gemma-2b
 
 # Model Configuration
 model:
   # Gemma 2B with Flax weights on the "flax" branch
-  # The default branch doesn't have Flax weights, but revision="flax" does
-  # See: https://huggingface.co/google/gemma-2b/discussions/16
   name: "google/gemma-2b"
   revision: "flax"
 
-  # Tokenizer settings (TPU can handle longer sequences)
-  max_length: 512
+  # M38 v2: Reduced from 128 to 64 for TPU v5e-8 (16GB HBM)
+  max_length: 64
   padding: "max_length"
   truncation: true
 
-# Training Configuration (TPU-optimized)
+# Training Configuration (TPU memory-optimized)
 training:
-  # Training steps for M37 evidence run
-  # 200 steps: ~30-60 min on TPU, enough to prove stability
+  # Training steps for M38 evidence run
   num_steps: 200
   num_epochs: 3
 
   # Learning rate (conservative for fine-tuning)
   learning_rate: 1.0e-5
 
-  # Batch configuration (TPU-optimized)
-  # TPU v3-8 has 64GB HBM — can handle larger batches than GPU
-  batch_size: 8
-  per_device_batch_size: 8
-  gradient_accumulation_steps: 1
-  max_seq_length: 512
+  # M38 v2: Ultra memory-safe batch configuration
+  # ============================================================
+  # TPU v5e-8 has only 16GB HBM per chip (vs 64GB on v3-8)
+  # Gemma 256K vocab × seq_len × batch = compile-time HBM explosion
+  #
+  # Settings forced in code (train_jax.py) for safety:
+  #   batch_size = 1
+  #   max_length = 64
+  #   dtype = bfloat16
+  # ============================================================
+  batch_size: 1
+  per_device_batch_size: 1
+  gradient_accumulation_steps: 8  # Effective batch = 1 * 8 = 8
+  max_seq_length: 64  # M38 v2: Reduced from 128 to 64
 
-  # Optimizer
-  optimizer: "adamw"
-  weight_decay: 0.01
+  # Optimizer (Adafactor is more memory-efficient than AdamW)
+  optimizer: "adafactor"
+  weight_decay: 0.0
 
   # Learning rate schedule
   lr_scheduler: "linear"
@@ -60,47 +68,33 @@ training:
   # Random seed for reproducibility
   seed: 42
 
-  # Device hint (used by train_jax.py for validation)
+  # Device hint
   device: "tpu"
 
-# System Instruction (for instruction-tuned models)
+# System Instruction
 system_instruction: "You are a helpful assistant. Show your reasoning step by step before giving your final answer."
 
 # Data Configuration
 data:
-  # Training data format
   format: "tunix_sft"
-
-  # Shuffle settings
   shuffle: true
   shuffle_seed: 42
 
 # Output Configuration
 output:
-  # Checkpoint directory (relative to output_dir)
   checkpoint_dir: "checkpoint-final"
-
-  # Metrics
   save_metrics: true
   metrics_file: "metrics.jsonl"
-
-  # Run manifest
   save_manifest: true
   manifest_file: "run_manifest.json"
 
 # ============================================================================
-# M37 Notes:
-# - This config is for the TPU evidence run (submission-critical)
-# - 200 steps proves training stability without exhausting TPU quota
-# - batch_size: 8 uses ~40% of TPU memory, leaving headroom for gradients
-# - For longer production runs, increase num_steps to 500-1000
+# M38 v2 Notes:
+# - TPU v5e-8 has 16GB HBM, NOT 64GB like v3-8
+# - seq_len=64 keeps logits tensor under HBM budget
+# - batch=1 minimizes per-step memory
+# - bfloat16 is forced in train_jax.py for TPU runs
+# - Code in train_jax.py OVERRIDES these values for safety
 #
-# Running on Kaggle:
-#   1. Set Accelerator to "TPU v3-8" in notebook settings
-#   2. Add HF_TOKEN to Kaggle Secrets
-#   3. Run: python training/run_train_jax.py \
-#        --config training/configs/submission_tpu.yaml \
-#        --output ./output/tpu_run \
-#        --dataset dev-reasoning-v2 \
-#        --device tpu
+# If still OOM, the code will need further changes (gradient checkpointing)
 # ============================================================================

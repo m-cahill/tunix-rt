@@ -1,14 +1,21 @@
-# M37 TPU Training Log
+# M38 TPU Training Log
 # ====================
 #
 # This file should contain the full output from the Kaggle TPU training run.
 # Copy/paste the output from cells 4-18 of the kaggle_submission.ipynb notebook.
 #
+# M38 Changes:
+# - Uses %run instead of subprocess (avoids TPU VFIO conflicts)
+# - seq_len=128 (not 512) to avoid HBM OOM from Gemma's 256K vocab
+# - batch=1 with grad_accum=8 (effective batch=8)
+# - bfloat16 (native TPU support, saves ~50% HBM)
+#
 # Required sections:
-# 1. JAX device detection (should show TPU)
-# 2. Model loading logs
+# 1. JAX device detection (should show TPU, 8 cores)
+# 2. Model loading logs (bfloat16 should be shown)
 # 3. Training loss progression (every 10 steps)
-# 4. Final RESULT SUMMARY block
+# 4. Checkpoint saves (steps 50, 100, 150, 200)
+# 5. Final RESULT SUMMARY block
 #
 # Example expected output:
 #
@@ -17,7 +24,7 @@
 # Default backend: tpu
 # ✅ Running on TPU. Full Gemma training is supported.
 #
-# 🚀 Starting Full Training Run...
+# 🚀 Starting Full TPU Training Run (M38)...
 # ============================================================
 # Config:    training/configs/submission_tpu.yaml
 # Model:     google/gemma-2b
@@ -26,7 +33,12 @@
 # Output:    ./output/tpu_run
 # ============================================================
 #
-# [Training logs with loss values...]
+# 🔧 TPU mode: Using bfloat16 (native TPU support, saves ~50% HBM)
+#    Device request: TPU (8 cores available)
+#    Platform: TPU
+#    Device Count: 8
+#
+# [Training logs with loss values at steps 10, 20, ..., 200]
 #
 # ============================================================
 #          RESULT SUMMARY (copy to evidence files)
