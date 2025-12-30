@@ -1,4 +1,22 @@
 """JAX/Flax SFT Training Implementation (Real Tunix Path)."""
+
+# ============================================================================
+# CRITICAL: XLA Memory Configuration
+# Must be set BEFORE importing JAX to prevent GPU memory preallocation.
+# This reduces VRAM pressure for smoke runs and constrained GPUs.
+# See: https://docs.jax.dev/en/latest/gpu_memory_allocation.html
+# ============================================================================
+import os
+
+# Prevent JAX from pre-allocating all GPU memory at startup
+os.environ.setdefault("XLA_PYTHON_CLIENT_PREALLOCATE", "false")
+
+# Cap GPU memory fraction when preallocation is enabled elsewhere
+os.environ.setdefault("XLA_PYTHON_CLIENT_MEM_FRACTION", "0.80")
+
+# Note: For extreme memory constraints, uncomment the following (slow but minimal VRAM):
+# os.environ.setdefault("XLA_PYTHON_CLIENT_ALLOCATOR", "platform")
+
 import argparse
 import json
 import logging
@@ -50,6 +68,9 @@ def run_jax_sft_training(
         print("   Install with: pip install -e '.[training]'")
         sys.exit(1)
 
+    # Determine if this is a smoke run (enables memory-saving optimizations)
+    is_smoke = smoke_steps is not None and smoke_steps > 0
+
     # Config
     # Support both 'model_id' and 'name' keys for model specification
     model_config = config.get("model", {})
@@ -61,6 +82,22 @@ def run_jax_sft_training(
     batch_size = int(training_args.get("batch_size", 4))
     max_length = int(training_args.get("max_seq_length", 128))
     seed = int(training_args.get("seed", 42))
+
+    # ========================================================================
+    # Smoke Mode Memory Optimizations
+    # Force smaller batch/seq and use bfloat16 to reduce VRAM usage
+    # This allows smoke tests to pass on GPUs with limited memory (e.g., 12GB)
+    # ========================================================================
+    use_bfloat16 = is_smoke  # Enable bfloat16 for smoke runs
+    if is_smoke:
+        print("   🔧 Smoke mode: Enabling memory optimizations...")
+        # Force minimal batch size and sequence length
+        batch_size = 1
+        max_length = min(max_length, 128)  # Cap at 128 for smoke
+        print(f"      Batch size: {batch_size}")
+        print(f"      Max length: {max_length}")
+        print(f"      Using bfloat16: {use_bfloat16}")
+        print(f"      Optimizer: Adafactor (memory-efficient)")
 
     # Device Selection
     requested_device = device or training_args.get("device", "auto")
@@ -112,15 +149,37 @@ def run_jax_sft_training(
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
 
+        # Determine dtype for model loading
+        # bfloat16 reduces memory usage by ~2x (important for smoke runs)
+        model_dtype = jnp.bfloat16 if use_bfloat16 else jnp.float32
+        if use_bfloat16:
+            print(f"   Loading with dtype: bfloat16 (memory-efficient)")
+
         # Try loading with revision first, fallback to from_pt=True
         try:
             model = FlaxAutoModelForCausalLM.from_pretrained(
-                model_id, revision=model_revision, from_pt=False
+                model_id,
+                revision=model_revision,
+                from_pt=False,
+                dtype=model_dtype,
             )
         except OSError:
             # Maybe it needs PyTorch weight conversion?
             model = FlaxAutoModelForCausalLM.from_pretrained(
-                model_id, revision=model_revision, from_pt=True
+                model_id,
+                revision=model_revision,
+                from_pt=True,
+                dtype=model_dtype,
+            )
+
+        # Ensure params are in the correct dtype (some loaders may ignore dtype arg)
+        if use_bfloat16 and hasattr(model, "params"):
+            print("   Casting model params to bfloat16...")
+            model.params = jax.tree_util.tree_map(
+                lambda x: x.astype(jnp.bfloat16)
+                if hasattr(x, "dtype") and x.dtype == jnp.float32
+                else x,
+                model.params,
             )
 
     except Exception as e:
@@ -179,7 +238,23 @@ def run_jax_sft_training(
         return batch
 
     # 3. Training Setup
-    tx = optax.adamw(learning_rate=learning_rate)
+    # ========================================================================
+    # Optimizer Selection
+    # Smoke mode uses Adafactor (memory-efficient via factored second moments)
+    # Full training uses AdamW (better convergence for production runs)
+    # See: https://optax.readthedocs.io/en/latest/api/optimizers.html
+    # ========================================================================
+    if is_smoke:
+        # Adafactor with factored=True saves memory by factoring second moments
+        # momentum=None disables momentum accumulator (saves more memory)
+        print("   Using Adafactor optimizer (memory-efficient for smoke run)")
+        tx = optax.adafactor(
+            learning_rate=learning_rate,
+            factored=True,
+            momentum=None,  # No momentum saves memory
+        )
+    else:
+        tx = optax.adamw(learning_rate=learning_rate)
 
     class TrainState(train_state.TrainState):
         pass
