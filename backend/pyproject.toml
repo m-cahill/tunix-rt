@@ -34,9 +34,17 @@ dev = [
     # prometheus-client ships inline types (PEP 561).
     "aiosqlite>=0.19.0",
 ]
-ungar = [
-    "ungar @ git+https://github.com/m-cahill/ungar.git@0e29e104aa1b13542b193515e3895ee87122c1cb",
-]
+# NOTE: UNGAR is a private optional dependency.
+# It is EXCLUDED from pyproject.toml to keep CI green (uv sync --locked fails
+# if pyproject.toml references deps not in uv.lock).
+#
+# To install ungar locally:
+#   pip install git+https://github.com/m-cahill/ungar.git@0e29e104aa1b13542b193515e3895ee87122c1cb
+#
+# DO NOT uncomment and run `uv lock` or CI will break.
+# ungar = [
+#     "ungar @ git+https://github.com/m-cahill/ungar.git@0e29e104aa1b13542b193515e3895ee87122c1cb",
+# ]
 training = [
     # Note: Tunix is Google's JAX-native post-training library
     # As of Dec 2025, may need to be installed from source
