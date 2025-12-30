@@ -15,6 +15,16 @@ For smoke tests (memory-constrained):
 """
 import os
 import sys
+from pathlib import Path
+
+# ============================================================================
+# CRITICAL: Ensure training directory is in Python path
+# This allows `from train_jax import main` to work when called via runpy
+# from any directory (e.g., notebook calling from repo root)
+# ============================================================================
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
 
 # ============================================================================
 # CRITICAL: GPU Memory Configuration
