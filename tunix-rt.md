@@ -98,15 +98,21 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - Archive prefix updated to m35, 370+ total backend tests.
 
 **M36 Enhancements:** Real Kaggle Execution + Evidence Lock v2 + Quick-Win Audit Uplift:
-- **Model Selection**: Gemma 2 2B (Flax-compatible). Note: Gemma 3 1B is NOT supported by Flax; use Gemma 2 2B for JAX/Flax training.
+- **Model Selection**: Gemma 2B (Flax, via `revision="flax"`). Gemma 2 2B / Gemma 3 are NOT natively supported by `FlaxAutoModelForCausalLM`.
+- **Training Modes** (`docs/TRAINING_MODES.md`): GPU Smoke (tiny model) vs TPU Full (Gemma) separation. Gemma 2B OOMs on T4 GPUs even with aggressive optimizations.
+- **Smoke Testing**: `training/configs/smoke_tiny.yaml` using `sshleifer/tiny-gpt2`, `--smoke_config` CLI flag, validated on Kaggle GPU.
+- **HuggingFace Auth**: Notebook uses Kaggle Secrets for gated model access.
 - **Kaggle Evidence Schema**: `run_manifest.json` now includes `kaggle_notebook_url`, `kaggle_notebook_version`, `kaggle_run_id` fields for evidence capture.
-- **Notebook Updates**: Version m36_v5, uses absolute paths for clone (prevents nesting), config-based model selection (`submission_gemma2_2b.yaml`), RESULT SUMMARY block for evidence capture.
-- **Training Script Fix**: `train_jax.py` now supports both `model.model_id` and `model.name` config keys.
-- **Kaggle Execution Runbook** (`docs/M36_KAGGLE_RUN.md`): Step-by-step instructions for Kaggle execution, evidence field mapping, troubleshooting guide.
-- **Frontend Test Coverage**: 10 new `Leaderboard.test.tsx` tests (loading/empty/error states, filters, pagination, scorecard), 5 new `LiveLogs.test.tsx` tests (SSE events, connection status).
+- **Notebook Updates**: Version m36_v8, config-based model selection (`submission_gemma_flax.yaml`), smoke/full separation, TPU recommendation.
+- **Training Script Fix**: `train_jax.py` supports `revision` param, bfloat16 loading, Adafactor optimizer, GPU preflight warning.
+- **Launcher Script**: `training/run_train_jax.py` sets XLA env vars before JAX import to prevent preallocation OOM.
+- **Transformers Pin**: `transformers>=4.40,<5` in `pyproject.toml` and notebook (v5 removes Flax support).
+- **Kaggle Execution Runbook** (`docs/M36_KAGGLE_RUN.md`): Hardware requirements table, TPU recommendation, evidence field mapping.
+- **Frontend Test Coverage**: 10 new `Leaderboard.test.tsx` tests, 5 new `LiveLogs.test.tsx` tests.
 - **Per-Item Predictions Documentation** (`docs/evaluation.md`): Current state, Run Comparison limitations, planned M37 artifact storage.
 - **Evidence Folder** (`submission_runs/m36_v1/`): Templates for real Kaggle run evidence with scorecard structure.
 - **M36 Evidence Tests**: 12 new tests validating M36 schema including Kaggle-specific fields.
+- **CI Fix**: `uv.lock` regenerated to exclude private `ungar` git dependency (prevents auth failures).
 - Archive prefix updated to m36, 380+ total backend tests, 75 frontend tests.
 
 
