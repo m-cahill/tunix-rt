@@ -5,7 +5,7 @@ This document provides step-by-step instructions for executing the Tunix RT trai
 **Milestone:** M36 — Real Kaggle Execution + Evidence Lock v2  
 **Version:** m36_v5  
 **Eval Set:** eval_v2.jsonl (100 items)  
-**Model:** Gemma 2B Flax (`google/gemma-2b`)
+**Model:** Gemma 2B Flax (`google/gemma-2b-flax`)
 
 ---
 
@@ -65,7 +65,7 @@ The notebook defaults are configured for M36:
 | `MAX_STEPS` | `100` | From config file |
 | `BATCH_SIZE` | `2` | Reduced for 2B model memory |
 
-**Note:** Gemma 2 2B and Gemma 3 1B are NOT supported by `FlaxAutoModelForCausalLM`. We use `google/gemma-2b` which has actual Flax weights (`flax_model-*.msgpack` shards). Note: `google/gemma-2b-it-flax` does NOT have Flax weights despite its name. The system is model-agnostic and can be switched when Flax support is available.
+**Note:** Gemma 2 2B and Gemma 3 1B are NOT supported by `FlaxAutoModelForCausalLM`. We use `google/gemma-2b-flax` which is the Flax-specific repository. Requires HuggingFace authentication (add `HF_TOKEN` secret). The system is model-agnostic and can be switched when Flax support for newer models is available.
 
 Modify these in Cell 6 (Configuration) if needed.
 
@@ -101,7 +101,7 @@ After cell 18 (Submission Summary) completes, copy the **RESULT SUMMARY** block 
 ============================================================
          RESULT SUMMARY (copy to evidence files)
 ============================================================
-model_id: google/gemma-2b
+model_id: google/gemma-2b-flax
 dataset: dev-reasoning-v2
 eval_set: training/evalsets/eval_v2.jsonl
 primary_score: 0.XXXX
@@ -118,7 +118,7 @@ Edit `submission_runs/m36_v1/run_manifest.json`:
 ```json
 {
   "run_version": "m36_v1",
-  "model_id": "google/gemma-2b",
+  "model_id": "google/gemma-2b-flax",
   "dataset": "dev-reasoning-v2",
   "eval_set": "training/evalsets/eval_v2.jsonl",
   "config_path": "training/configs/m34_best.yaml",
