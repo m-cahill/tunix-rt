@@ -12,7 +12,7 @@ This guide provides a reproducible, single-session workflow for:
 
 ## Model Selection Note
 
-We currently use `google/recurrentgemma-2b-flax` to validate the end-to-end JAX/Flax training pipeline. This is a Gemma-derived model that actually has Flax weights (`flax_model.msgpack`). Note: `google/gemma-2b-flax` and `google/gemma-2b` do NOT have Flax weights despite their names. **Requires HuggingFace authentication** — add your `HF_TOKEN` as a Kaggle Secret. This is for pipeline validation; final competition model strategy TBD (PyTorch path likely needed for actual Gemma 2/3).
+We currently use `google/gemma-2b` with `revision: "flax"` to validate the JAX/Flax training pipeline. The Flax weights are on a separate branch (`flax`), not the default branch. See [HF discussion](https://huggingface.co/google/gemma-2b/discussions/16). **Requires HuggingFace authentication** — add your `HF_TOKEN` as a Kaggle Secret. For Gemma 2/3, a PyTorch training path may be needed.
 
 ## Prerequisites
 
