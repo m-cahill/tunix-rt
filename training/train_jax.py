@@ -12,10 +12,12 @@ import os
 os.environ.setdefault("XLA_PYTHON_CLIENT_PREALLOCATE", "false")
 
 # Cap GPU memory fraction when preallocation is enabled elsewhere
-os.environ.setdefault("XLA_PYTHON_CLIENT_MEM_FRACTION", "0.80")
+# Lower values leave more headroom for model loading
+os.environ.setdefault("XLA_PYTHON_CLIENT_MEM_FRACTION", "0.55")
 
-# Note: For extreme memory constraints, uncomment the following (slow but minimal VRAM):
-# os.environ.setdefault("XLA_PYTHON_CLIENT_ALLOCATOR", "platform")
+# Use platform allocator for better handling of tight VRAM / fragmentation
+# This is slower but more reliable for memory-constrained environments
+os.environ.setdefault("XLA_PYTHON_CLIENT_ALLOCATOR", "platform")
 
 import argparse
 import json
@@ -86,18 +88,19 @@ def run_jax_sft_training(
     # ========================================================================
     # Smoke Mode Memory Optimizations
     # Force smaller batch/seq and use bfloat16 to reduce VRAM usage
-    # This allows smoke tests to pass on GPUs with limited memory (e.g., 12GB)
+    # This allows smoke tests to pass on GPUs with limited memory (e.g., 12-16GB)
     # ========================================================================
     use_bfloat16 = is_smoke  # Enable bfloat16 for smoke runs
     if is_smoke:
         print("   🔧 Smoke mode: Enabling memory optimizations...")
-        # Force minimal batch size and sequence length
+        # Force minimal batch size and very short sequence length
         batch_size = 1
-        max_length = min(max_length, 128)  # Cap at 128 for smoke
+        max_length = min(max_length, 64)  # Cap at 64 for smoke (very aggressive)
         print(f"      Batch size: {batch_size}")
         print(f"      Max length: {max_length}")
         print(f"      Using bfloat16: {use_bfloat16}")
         print(f"      Optimizer: Adafactor (memory-efficient)")
+        print(f"      Allocator: platform (flexible VRAM)")
 
     # Device Selection
     requested_device = device or training_args.get("device", "auto")
@@ -504,19 +507,25 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     output_dir_abs = args.output.resolve()
 
-    run_jax_sft_training(
-        config=config,
-        dataset=dataset,
-        output_dir=output_dir_abs,
-        device=args.device,
-        device_index=args.device_index,
-        smoke_steps=args.smoke_steps,
-        checkpoint_dir=args.checkpoint_dir.resolve() if args.checkpoint_dir else None,
-        resume_from=args.resume_from,
-        save_every_steps=args.save_every_steps,
-        eval_after_train=args.eval_after_train,
-        eval_set=args.eval_set,
-    )
+    try:
+        run_jax_sft_training(
+            config=config,
+            dataset=dataset,
+            output_dir=output_dir_abs,
+            device=args.device,
+            device_index=args.device_index,
+            smoke_steps=args.smoke_steps,
+            checkpoint_dir=args.checkpoint_dir.resolve() if args.checkpoint_dir else None,
+            resume_from=args.resume_from,
+            save_every_steps=args.save_every_steps,
+            eval_after_train=args.eval_after_train,
+            eval_set=args.eval_set,
+        )
+        return 0  # Success
+    except Exception as e:
+        print(f"❌ Training failed: {e}")
+        return 1  # Failure
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
