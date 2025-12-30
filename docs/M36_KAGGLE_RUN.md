@@ -3,9 +3,10 @@
 This document provides step-by-step instructions for executing the Tunix RT training pipeline on Kaggle and capturing evidence files.
 
 **Milestone:** M36 — Real Kaggle Execution + Evidence Lock v2  
-**Version:** m36_v5  
+**Version:** m36_v8  
 **Eval Set:** eval_v2.jsonl (100 items)  
-**Model:** Gemma 2B Flax (`google/gemma-2b` with `revision: flax`)
+**Smoke Model:** sshleifer/tiny-gpt2 (for pipeline validation on GPU)  
+**Full Model:** Gemma 2B Flax (`google/gemma-2b` with `revision: flax`) - **requires TPU**
 
 ---
 
@@ -14,6 +15,17 @@ This document provides step-by-step instructions for executing the Tunix RT trai
 1. **Kaggle Account** with verified phone number (required for GPU/TPU)
 2. **Hugging Face Token** with access to Gemma models
 3. **Internet Access** enabled in Kaggle notebook (the notebook clones the repository automatically)
+
+---
+
+## Hardware Requirements
+
+| Run Type | Accelerator | Memory | Time |
+|----------|-------------|--------|------|
+| Smoke test | Any GPU (T4) | ~4GB | ~1 min |
+| Full training | **TPU v3-8** | 64GB | ~1-2 hours |
+
+**⚠️ Important:** Gemma 2B doesn't fit on Kaggle T4 GPU (16GB). Use TPU for full training.
 
 ---
 

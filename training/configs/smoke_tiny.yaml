@@ -1,0 +1,78 @@
+# Tunix RT - Smoke Test Configuration (Tiny Model)
+# Purpose: Ultra-fast smoke test to validate JAX/Flax training pipeline
+# Model: sshleifer/tiny-gpt2 (~2MB, fits on any GPU)
+#
+# This config is used ONLY for smoke tests to validate the pipeline works.
+# For actual training, use submission_gemma_flax.yaml or similar.
+#
+# Usage:
+#   python training/run_train_jax.py \
+#     --config training/configs/submission_gemma_flax.yaml \
+#     --smoke_config training/configs/smoke_tiny.yaml \
+#     --smoke_steps 2 \
+#     --dataset dev-reasoning-v2 \
+#     --output ./output/smoke_run
+
+# Model Configuration
+model:
+  # Tiny GPT-2 variant (~2MB) - fits on any GPU/CPU
+  # Alternative: hf-internal-testing/tiny-random-gpt2
+  name: "sshleifer/tiny-gpt2"
+
+  # No revision needed (default branch has weights)
+  # revision: null
+
+  # Tokenizer settings (tiny models still need proper tokenization)
+  max_length: 64
+  padding: "max_length"
+  truncation: true
+
+# Training Configuration (minimal for smoke)
+training:
+  # Very few steps - just enough to validate the loop
+  num_steps: 2
+  num_epochs: 1
+
+  # Learning rate (doesn't matter for smoke)
+  learning_rate: 1.0e-4
+
+  # Minimal batch to conserve memory
+  batch_size: 1
+  per_device_batch_size: 1
+  gradient_accumulation_steps: 1
+
+  # Optimizer (Adafactor for memory efficiency)
+  optimizer: "adafactor"
+
+  # Sequence length (very short for speed)
+  max_seq_length: 64
+
+  # Logging
+  logging_steps: 1
+  save_steps: 1
+
+  # Seed
+  seed: 42
+
+# System Instruction (for completeness, though tiny-gpt2 won't use it meaningfully)
+system_instruction: "You are a helpful assistant."
+
+# Data Configuration
+data:
+  format: "tunix_sft"
+  shuffle: true
+  shuffle_seed: 42
+
+# Output Configuration
+output:
+  checkpoint_dir: "checkpoint-smoke"
+  save_metrics: true
+  metrics_file: "metrics.jsonl"
+  save_manifest: true
+  manifest_file: "run_manifest.json"
+
+# Notes:
+# - This config validates the training PIPELINE, not model quality
+# - sshleifer/tiny-gpt2 is ~2MB and fits on any hardware
+# - Use this for CI/CD gates and quick environment validation
+# - For actual training, use submission_gemma_flax.yaml with TPU

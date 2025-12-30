@@ -46,7 +46,9 @@ training = [
     "optax>=0.1.7",
     "orbax-checkpoint>=0.5.0",
     # M24: Inference dependencies
-    "transformers>=4.30.0",
+    # IMPORTANT: Pin transformers<5 because v5 removes TF/JAX/Flax support
+    # See: https://github.com/huggingface/transformers/issues/40822
+    "transformers>=4.40.0,<5",
     "torch>=2.0.0",
     # Tunix library (if/when available on PyPI)
     # "tunix>=0.1.0",
