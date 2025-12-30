@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M37 Complete** ✅  
-**Coverage:** >70% Backend Line (380+ tests) | **Training:** TPU-Ready Pipeline | **Ops:** JAX/Flax + Explicit TPU | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces) | **Eval:** eval_v2.jsonl (100 items) | **Tuning:** Ray Tune Sweep Runner | **Kaggle:** TPU Training for Submission
+**Milestone M38 In Progress** 🔧  
+**Coverage:** >70% Backend Line (380+ tests) | **Training:** TPU-Ready with HBM OOM Fix | **Ops:** JAX/Flax + Explicit TPU + bfloat16 | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces) | **Eval:** eval_v2.jsonl (100 items) | **Tuning:** Ray Tune Sweep Runner | **Kaggle:** TPU Training with Memory Fixes
 
 ## Overview
 
@@ -124,6 +124,16 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Evidence Folder**: `submission_runs/m37_v1/` with `run_manifest.json` (TPU hardware fields), `eval_summary.json`, `kaggle_output_log.txt` templates.
 - **Model Lock**: Gemma 1 2B (`google/gemma-2b` with `revision="flax"`) confirmed as submission model — Gemma 2/3 NOT supported by FlaxAutoModelForCausalLM.
 - Archive prefix updated to m37, ready for TPU production training.
+
+**M38 Enhancements:** TPU HBM OOM Fix + Evidence Population — Real TPU execution with memory optimizations:
+- **HBM OOM Root Cause**: Gemma's 256K vocabulary creates massive logits tensor at compile time: `[batch, seq_len, 256000]` exceeds TPU HBM during XLA compilation.
+- **Memory-Safe Config** (`submission_tpu.yaml`): Reduced `max_seq_length` from 512 to 128, `per_device_batch_size` from 8 to 1, added `gradient_accumulation_steps: 8` (effective batch still 8).
+- **bfloat16 for TPU**: Training automatically uses bfloat16 when `--device tpu` is specified — native TPU support, saves ~50% HBM.
+- **Adafactor Optimizer**: Switched from AdamW to Adafactor for additional memory savings (no optimizer state accumulation).
+- **Notebook Update**: Version m38_v1 with `%run` instead of subprocess (avoids TPU VFIO device conflicts after JAX initialization).
+- **Windows Compatibility**: Added `encoding="utf-8"` to YAML file reader for cross-platform support.
+- **Evidence Folder Update**: `submission_runs/m37_v1/` updated with M38 config snapshot, ready for real TPU run data.
+- Archive prefix updated to m38, awaiting real TPU execution evidence.
 
 
 ## Database Schema

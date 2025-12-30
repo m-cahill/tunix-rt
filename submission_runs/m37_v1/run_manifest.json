@@ -1,10 +1,10 @@
 {
-  "run_version": "m37_v1",
+  "run_version": "m38_v2",
   "model_id": "google/gemma-2b",
   "dataset": "dev-reasoning-v2",
   "eval_set": "training/evalsets/eval_v2.jsonl",
   "config_path": "training/configs/submission_tpu.yaml",
-  "command": "python training/run_train_jax.py --config training/configs/submission_tpu.yaml --output ./output/tpu_run --dataset dev-reasoning-v2 --device tpu",
+  "command": "python training/run_train_jax.py --config training/configs/submission_tpu.yaml --output ./output/tpu_run --dataset dev-reasoning-v2 --device tpu --save_every_steps 50",
   "commit_sha": null,
   "timestamp": null,
   "tuning_job_id": null,
@@ -13,15 +13,27 @@
   "kaggle_notebook_version": null,
   "kaggle_run_id": null,
   "hardware": {
-    "accelerator": "TPU v3-8",
-    "memory_gb": 64,
-    "device_count": 8
+    "accelerator": "TPU v5e-8",
+    "memory_gb": 16,
+    "device_count": 8,
+    "note": "TPU v5e-8 has 16GB HBM per chip (not 64GB like v3-8)"
   },
   "training_params": {
     "num_steps": 200,
-    "batch_size": 8,
+    "batch_size": 1,
+    "per_device_batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "effective_batch_size": 8,
     "learning_rate": 1e-5,
-    "max_seq_length": 512
+    "max_seq_length": 64,
+    "optimizer": "adafactor",
+    "dtype": "bfloat16"
   },
-  "notes": "M37 TPU Training - Production evidence run. 200 steps on Kaggle TPU v3-8. Fill kaggle_* fields after execution."
+  "m38_fixes": {
+    "hbm_oom_fix_v2": "Reduced seq_len from 128 to 64 after v1 still OOMed on TPU v5e-8",
+    "forced_values": "train_jax.py forces batch=1, seq_len=64, bfloat16 for TPU regardless of config",
+    "sanity_print": "Added pre-compile sanity check showing actual batch shape and expected logits",
+    "false_success_fix": "Notebook now correctly reports failure on SystemExit != 0"
+  },
+  "notes": "M38 v2 TPU Training - Further reduced memory settings for TPU v5e-8 (16GB HBM). Values forced in code for safety."
 }

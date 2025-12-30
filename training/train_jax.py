@@ -86,11 +86,14 @@ def run_jax_sft_training(
     seed = int(training_args.get("seed", 42))
 
     # ========================================================================
-    # Smoke Mode Memory Optimizations
-    # Force smaller batch/seq and use bfloat16 to reduce VRAM usage
-    # This allows smoke tests to pass on GPUs with limited memory (e.g., 12-16GB)
+    # Memory Optimizations
+    # M38: Use bfloat16 for TPU (native support) and smoke runs (memory saving)
+    # Force smaller batch/seq for smoke to reduce VRAM usage
     # ========================================================================
-    use_bfloat16 = is_smoke  # Enable bfloat16 for smoke runs
+    requested_device = device or training_args.get("device", "auto")
+    # Enable bfloat16 for smoke runs OR TPU (TPU natively supports bf16)
+    use_bfloat16 = is_smoke or requested_device == "tpu" or training_args.get("use_bfloat16", False)
+
     if is_smoke:
         print("   🔧 Smoke mode: Enabling memory optimizations...")
         # Force minimal batch size and very short sequence length
@@ -101,13 +104,26 @@ def run_jax_sft_training(
         print(f"      Using bfloat16: {use_bfloat16}")
         print(f"      Optimizer: Adafactor (memory-efficient)")
         print(f"      Allocator: platform (flexible VRAM)")
+    elif requested_device == "tpu":
+        # ================================================================
+        # M38: TPU MEMORY SAFETY - Force reduced memory settings
+        # Gemma 256K vocab causes XLA compile OOM at high seq_len/batch
+        # ================================================================
+        print("   🔧 TPU mode: Enabling memory-safe settings...")
+        # Force safe values regardless of config (prevents OOM)
+        max_length = min(max_length, 64)  # M38: Force max 64 (was 128, still OOM)
+        batch_size = 1  # M38: Force batch=1 (was 8, caused OOM)
+        use_bfloat16 = True
+        print(f"      Batch size: {batch_size} (forced for TPU)")
+        print(f"      Max length: {max_length} (forced for TPU)")
+        print(f"      Using bfloat16: {use_bfloat16} (native TPU)")
+        print("      ⚠️  Reduced settings to avoid Gemma 256K vocab OOM")
 
     # ========================================================================
     # Device Selection (M37: Added explicit TPU support)
     # Supports: auto, cpu, gpu, tpu
+    # Note: requested_device already set above for bfloat16 decision
     # ========================================================================
-    requested_device = device or training_args.get("device", "auto")
-
     if requested_device == "cpu":
         jax.config.update("jax_platform_name", "cpu")
         print("   Device request: CPU")
@@ -354,6 +370,23 @@ def run_jax_sft_training(
 
     train_step_jit = jax.jit(train_step)
 
+    # ========================================================================
+    # M38: Sanity print - show actual shapes BEFORE XLA compile
+    # This helps debug OOM issues by confirming the actual memory footprint
+    # ========================================================================
+    sample_batch = get_batch(encodings, 0)
+    if sample_batch is not None:
+        print("\n   📊 M38 Sanity Check (BEFORE XLA compile):")
+        print(f"      input_ids shape:      {sample_batch['input_ids'].shape}")
+        print(f"      attention_mask shape: {sample_batch['attention_mask'].shape}")
+        print(f"      batch_size:           {batch_size}")
+        print(f"      max_length:           {max_length}")
+        print(f"      vocab_size:           {model.config.vocab_size}")
+        expected_logits = f"[{sample_batch['input_ids'].shape[0]}, {sample_batch['input_ids'].shape[1]-1}, {model.config.vocab_size}]"
+        print(f"      expected logits:      {expected_logits}")
+        print(f"      dtype:                {'bfloat16' if use_bfloat16 else 'float32'}")
+        print("")
+
     # 4. Training Loop
     print("   Training...")
     metrics_path = output_dir / "metrics.jsonl"
@@ -486,7 +519,7 @@ def main():
     # Load config
     try:
         import yaml
-        with open(config_path, "r") as f:
+        with open(config_path, "r", encoding="utf-8") as f:
             config = yaml.safe_load(f)
     except ImportError:
         print("❌ PyYAML not found. Install backend[training] or pyyaml.")
