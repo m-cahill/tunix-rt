@@ -12,7 +12,7 @@ This guide provides a reproducible, single-session workflow for:
 
 ## Model Selection Note
 
-We currently use `google/gemma-2b-flax` to validate the end-to-end JAX/Flax training pipeline. This is the Flax-specific repository designed for JAX loading. **Requires HuggingFace authentication** — add your `HF_TOKEN` as a Kaggle Secret. Gemma 2 2B and Gemma 3 1B use different config classes not supported by `FlaxAutoModelForCausalLM`. The system is model-agnostic and can be switched to competition checkpoints when Flax support is available (or via the PyTorch path).
+We currently use `google/recurrentgemma-2b-flax` to validate the end-to-end JAX/Flax training pipeline. This is a Gemma-derived model that actually has Flax weights (`flax_model.msgpack`). Note: `google/gemma-2b-flax` and `google/gemma-2b` do NOT have Flax weights despite their names. **Requires HuggingFace authentication** — add your `HF_TOKEN` as a Kaggle Secret. This is for pipeline validation; final competition model strategy TBD (PyTorch path likely needed for actual Gemma 2/3).
 
 ## Prerequisites
 

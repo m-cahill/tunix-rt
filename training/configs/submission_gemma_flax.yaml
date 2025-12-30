@@ -12,10 +12,11 @@
 
 # Model Configuration
 model:
-  # Gemma 2B Flax-specific repository
-  # This repo (google/gemma-2b-flax) is designed for JAX/Flax loading
+  # RecurrentGemma 2B Flax - a Gemma-derived model with actual Flax weights
+  # google/gemma-2b-flax and google/gemma-2b do NOT have Flax weights despite docs
+  # RecurrentGemma validates our JAX/Flax pipeline while we await proper Gemma Flax support
   # Note: Requires HuggingFace authentication (gated model)
-  name: "google/gemma-2b-flax"
+  name: "google/recurrentgemma-2b-flax"
 
   # Tokenizer settings
   max_length: 512
@@ -78,9 +79,10 @@ output:
 
 # Notes:
 # - This config validates the JAX/Flax end-to-end training pipeline
-# - google/gemma-2b-flax is the Flax-specific repository for JAX loading
+# - RecurrentGemma 2B Flax has actual Flax weights (flax_model.msgpack)
+# - google/gemma-2b-flax and google/gemma-2b do NOT have Flax weights despite their names
 # - Requires HuggingFace authentication (gated model) - add HF_TOKEN secret in Kaggle
-# - google/gemma-2-2b and google/gemma-3-1b use Gemma2Config/Gemma3Config which are NOT supported
+# - This is for pipeline validation only; not the final competition model
 # - For competition submission, either:
 #   (a) Wait for Flax support for Gemma 2/3, or
 #   (b) Use the PyTorch training path (train_pytorch.py)

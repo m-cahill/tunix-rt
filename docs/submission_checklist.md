@@ -41,10 +41,10 @@ head -3 backend/datasets/golden-v2/dataset.jsonl
 ```yaml
 # training/configs/submission_gemma_flax.yaml
 model:
-  # Use google/gemma-2b-flax for JAX/Flax training (Flax-specific repo)
+  # Use RecurrentGemma 2B Flax for JAX/Flax training (has actual Flax weights)
+  # Note: google/gemma-2b-flax and google/gemma-2b do NOT have Flax weights
   # Requires HuggingFace authentication (add HF_TOKEN secret in Kaggle)
-  # Gemma 2 2B and Gemma 3 1B are NOT supported by FlaxAutoModelForCausalLM
-  name: google/gemma-2b-flax
+  name: google/recurrentgemma-2b-flax
   max_length: 512
 
 training:
