@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M38 In Progress** 🔧  
-**Coverage:** >70% Backend Line (380+ tests) | **Training:** TPU-Ready with HBM OOM Fix | **Ops:** JAX/Flax + Explicit TPU + bfloat16 | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces) | **Eval:** eval_v2.jsonl (100 items) | **Tuning:** Ray Tune Sweep Runner | **Kaggle:** TPU Training with Memory Fixes
+**Milestone M38 Complete** ✅  
+**Coverage:** >70% Backend Line (384 tests) | **Training:** TPU Memory Optimized (GPU execution path for M39) | **Ops:** JAX/Flax + bfloat16 + Adafactor | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces) | **Eval:** eval_v2.jsonl (100 items) | **Tuning:** Ray Tune Sweep Runner | **Status:** TPU HBM constraints documented, pivoting to local GPU in M39
 
 ## Overview
 
@@ -125,15 +125,17 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Model Lock**: Gemma 1 2B (`google/gemma-2b` with `revision="flax"`) confirmed as submission model — Gemma 2/3 NOT supported by FlaxAutoModelForCausalLM.
 - Archive prefix updated to m37, ready for TPU production training.
 
-**M38 Enhancements:** TPU HBM OOM Fix + Evidence Population — Real TPU execution with memory optimizations:
-- **HBM OOM Root Cause**: Gemma's 256K vocabulary creates massive logits tensor at compile time: `[batch, seq_len, 256000]` exceeds TPU HBM during XLA compilation.
-- **Memory-Safe Config** (`submission_tpu.yaml`): Reduced `max_seq_length` from 512 to 128, `per_device_batch_size` from 8 to 1, added `gradient_accumulation_steps: 8` (effective batch still 8).
-- **bfloat16 for TPU**: Training automatically uses bfloat16 when `--device tpu` is specified — native TPU support, saves ~50% HBM.
-- **Adafactor Optimizer**: Switched from AdamW to Adafactor for additional memory savings (no optimizer state accumulation).
-- **Notebook Update**: Version m38_v1 with `%run` instead of subprocess (avoids TPU VFIO device conflicts after JAX initialization).
-- **Windows Compatibility**: Added `encoding="utf-8"` to YAML file reader for cross-platform support.
-- **Evidence Folder Update**: `submission_runs/m37_v1/` updated with M38 config snapshot, ready for real TPU run data.
-- Archive prefix updated to m38, awaiting real TPU execution evidence.
+**M38 Enhancements:** TPU HBM OOM Fix + Evidence Population — Comprehensive TPU memory optimization:
+- **HBM OOM Root Cause**: Gemma's 256K vocabulary creates massive logits tensor: `[batch, seq_len, 256000]` exceeds Kaggle TPU v5e-8's 16GB HBM during XLA compilation.
+- **Memory-Safe Config** (`submission_tpu.yaml`): Reduced `max_seq_length` from 512 to 64, `batch_size` from 8 to 1, added `gradient_accumulation_steps: 8` (effective batch still 8).
+- **Code-Level Overrides**: `train_jax.py` forces seq_len=64, batch=1, bfloat16 for all TPU runs regardless of config — defense in depth.
+- **bfloat16 for TPU**: Training automatically uses bfloat16 when `--device tpu` is specified — native TPU support.
+- **Adafactor Optimizer**: Switched from AdamW to Adafactor for memory savings.
+- **Notebook Execution Fix**: Version m38_v1 uses `runpy.run_path()` with proper `SystemExit` handling — no more false "Training completed!" banners.
+- **Cross-Platform Fixes**: UTF-8 encoding for YAML, Python path fix for runpy compatibility.
+- **Sanity Check**: Added pre-compile diagnostic output showing actual batch/seq shapes and expected logits size.
+- **TPU Constraint Documented**: Full fine-tuning Gemma 2B on free Kaggle TPU (16GB HBM) is not feasible — pivoting to local GPU (RTX 5090) in M39.
+- Archive prefix updated to m38, 384 backend tests, 75 frontend tests.
 
 
 ## Database Schema
