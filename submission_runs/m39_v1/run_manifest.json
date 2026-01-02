@@ -1,0 +1,21 @@
+{
+  "run_id": "m39-local-cpu-proof",
+  "status": "completed",
+  "hardware": {
+    "device": "cpu",
+    "gpu_model": "RTX 5090 (Detected but PyTorch incompatible)",
+    "reason": "RTX 5090 (sm_120) requires CUDA 12.8+, current PyTorch Nightly only supports up to 12.6/sm_90."
+  },
+  "config": {
+    "model_id": "gpt2",
+    "framework": "pytorch",
+    "batch_size": 1,
+    "max_seq_length": 64
+  },
+  "artifacts": {
+    "logs": "training_log.txt",
+    "metrics": "eval_summary.json"
+  }
+}
+
+

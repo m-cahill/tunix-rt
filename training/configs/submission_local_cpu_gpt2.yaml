@@ -1,0 +1,18 @@
+model:
+  model_id: "gpt2"
+  revision: "main"
+
+training:
+  device: "cpu"
+  batch_size: 1
+  max_seq_length: 64
+  gradient_accumulation_steps: 1
+  num_epochs: 1
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  dtype: "float32"
+  optimizer: "adamw"
+  save_every_steps: 10
+  logging_steps: 5
+
+
