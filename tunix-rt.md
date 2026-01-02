@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M38 Complete** ✅  
-**Coverage:** >70% Backend Line (384 tests) | **Training:** TPU Memory Optimized (GPU execution path for M39) | **Ops:** JAX/Flax + bfloat16 + Adafactor | **Architecture:** Router-based (10 modules) | **Data:** dev-reasoning-v2 (550 traces) | **Eval:** eval_v2.jsonl (100 items) | **Tuning:** Ray Tune Sweep Runner | **Status:** TPU HBM constraints documented, pivoting to local GPU in M39
+**Milestone M39 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** PyTorch Local Path (CPU Validated) | **Hardware:** RTX 5090 (PyTorch Blocked) | **Status:** Pipeline validated on CPU, GPU execution blocked by PyTorch/CUDA version lag for Blackwell (sm_120).
 
 ## Overview
 
@@ -136,6 +136,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Sanity Check**: Added pre-compile diagnostic output showing actual batch/seq shapes and expected logits size.
 - **TPU Constraint Documented**: Full fine-tuning Gemma 2B on free Kaggle TPU (16GB HBM) is not feasible — pivoting to local GPU (RTX 5090) in M39.
 - Archive prefix updated to m38, 384 backend tests, 75 frontend tests.
+
+**M39 Enhancements:** Local Execution (RTX 5090) Pivot + PyTorch Migration — Established parallel PyTorch training path (`training_pt/`), validated local CPU execution pipeline (with mock GPT-2), documented RTX 5090 compatibility blocker (sm_120 requires CUDA 12.8+, current public PyTorch wheels max out at 12.6/sm_90), evidence captured (`submission_runs/m39_v1`).
 
 
 ## Database Schema
