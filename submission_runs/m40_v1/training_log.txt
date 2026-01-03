@@ -1,0 +1,51 @@
+M40 GPU Smoke Test Training Log
+================================
+Date: 2026-01-02
+Config: training/configs/m40_gpu_smoke.yaml
+Dataset: dev-reasoning-v2 (550 samples)
+Output: output/m40_gpu_run
+
+Command:
+--------
+.venv-gpu\Scripts\python.exe training_pt/train.py \
+  --config training/configs/m40_gpu_smoke.yaml \
+  --output output/m40_gpu_run \
+  --dataset dev-reasoning-v2 \
+  --device cuda
+
+Output:
+-------
+`torch_dtype` is deprecated! Use `dtype` instead!
+INFO:accelerate.utils.modeling:We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+The model is already on multiple devices. Skipping the move to device specified in `args`.
+   Loading dataset from: backend\datasets\dev-reasoning-v2\dataset.jsonl
+
+🚀 Starting SFT Training (PyTorch/Transformers)...
+   Model: gpt2 (revision: main)
+   Device: cuda
+   Batch Size: 4
+   Grad Accum: 1
+   Dtype: float32
+   Loading model...
+   Tokenizing dataset...
+   Training...
+  0%|          | 0/14 [00:00<?, ?it/s]
+`loss_type=None` was set in the config but it is unrecognized. Using the default loss: `ForCausalLMLoss`.
+100%|##########| 14/14 [00:01<00:00,  8.09it/s]
+{'loss': 4.543, 'grad_norm': 37.34568786621094, 'learning_rate': 1.4285714285714287e-05, 'epoch': 0.04}
+{'loss': 3.7922, 'grad_norm': 31.95086669921875, 'learning_rate': 7.1428571428571436e-06, 'epoch': 0.07}
+{'train_runtime': 1.7357, 'train_samples_per_second': 31.688, 'train_steps_per_second': 8.066, 'train_loss': 4.1463695253644675, 'epoch': 0.1}
+   Saving final model...
+✅ Saved model to: C:\coding\tunix-rt\output\m40_gpu_run\final_model
+✅ Saved metrics: C:\coding\tunix-rt\output\m40_gpu_run\metrics.jsonl
+
+Result: SUCCESS
+---------------
+- Device used: cuda (RTX 5090)
+- Training completed without errors
+- Model checkpoint saved
+- Metrics recorded
+- GPU memory was allocated and released correctly
+
+
+

@@ -1,0 +1,32 @@
+M40 GPU Enablement - Environment Information
+=============================================
+Date: 2026-01-02
+Status: SUCCESS
+
+Python Environment:
+-------------------
+Virtual Environment: .venv-gpu (fresh, GPU-dedicated)
+Python: 3.12.10
+
+PyTorch Installation:
+--------------------
+torch==2.11.0.dev20260102+cu128 (nightly)
+torchvision==0.25.0.dev20260102+cu128
+torchaudio==2.10.0.dev20260102+cu128
+transformers==4.57.3
+accelerate==1.12.0
+
+CUDA Configuration:
+------------------
+CUDA Version (PyTorch): 12.8
+Driver Version: 576.88
+Driver CUDA: 12.9
+
+GPU Hardware:
+-------------
+Device: NVIDIA GeForce RTX 5090
+Compute Capability: 12.0 (sm_120 Blackwell)
+VRAM: 32607 MiB
+
+
+

@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M39 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** PyTorch Local Path (CPU Validated) | **Hardware:** RTX 5090 (PyTorch Blocked) | **Status:** Pipeline validated on CPU, GPU execution blocked by PyTorch/CUDA version lag for Blackwell (sm_120).
+**Milestone M40 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** PyTorch Local Path (GPU Validated) | **Hardware:** RTX 5090 (sm_120 Active) | **Status:** Native GPU acceleration enabled via PyTorch nightly cu128.
 
 ## Overview
 
@@ -138,6 +138,8 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - Archive prefix updated to m38, 384 backend tests, 75 frontend tests.
 
 **M39 Enhancements:** Local Execution (RTX 5090) Pivot + PyTorch Migration — Established parallel PyTorch training path (`training_pt/`), validated local CPU execution pipeline (with mock GPT-2), documented RTX 5090 compatibility blocker (sm_120 requires CUDA 12.8+, current public PyTorch wheels max out at 12.6/sm_90), evidence captured (`submission_runs/m39_v1`).
+
+**M40 Enhancements:** Native RTX 5090 GPU Acceleration — Resolved M39 blocker by installing PyTorch nightly `cu128` wheels (torch 2.11.0.dev+cu128), confirmed CUDA 12.8 support for Blackwell sm_120 compute capability, dedicated GPU virtual environment (`.venv-gpu`), GPU smoke test validated (31.7 samples/sec throughput on GPT-2), evidence captured (`submission_runs/m40_v1`), training infrastructure ready for production runs.
 
 
 ## Database Schema
