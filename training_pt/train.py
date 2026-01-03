@@ -68,9 +68,9 @@ def run_torch_sft_training(
     model_config = config.get("model", {})
     model_id = model_config.get("model_id", "distilgpt2")
     revision = model_config.get("revision", "main")
-    
+
     training_args_config = config.get("training", {})
-    
+
     # M39: Explicitly log config
     print(f"   Model: {model_id} (revision: {revision})")
     print(f"   Device: {training_args_config.get('device', 'auto')}")
@@ -93,7 +93,7 @@ def run_torch_sft_training(
             torch_dtype = torch.float16
 
         model = AutoModelForCausalLM.from_pretrained(
-            model_id, 
+            model_id,
             revision=revision,
             torch_dtype=torch_dtype,
             device_map="auto" if training_args_config.get("device") != "cpu" else None
@@ -116,7 +116,7 @@ def run_torch_sft_training(
 
     # Training Arguments
     use_cpu = training_args_config.get("device") == "cpu" or not torch.cuda.is_available()
-    
+
     # Optimizer map
     optim = "adamw_torch"
     if training_args_config.get("optimizer") == "adafactor":
@@ -179,7 +179,7 @@ def main():
     parser.add_argument("--config", type=Path, required=True, help="Path to config YAML")
     parser.add_argument("--output", type=Path, required=True, help="Output directory")
     parser.add_argument("--dataset", type=str, required=True, help="Dataset key (e.g., dev-reasoning-v2)")
-    
+
     # Optional overrides
     parser.add_argument("--device", type=str, default=None)
 
@@ -204,13 +204,13 @@ def main():
         Path(f"datasets/{args.dataset}/{args.dataset}.jsonl"),
         Path(f"backend/datasets/{args.dataset}/dataset.jsonl"),
     ]
-    
+
     dataset_path = None
     for c in candidates:
         if c.exists():
             dataset_path = c
             break
-            
+
     if not dataset_path:
         print(f"❌ Dataset not found for key: {args.dataset}")
         print(f"   Checked: {[str(c) for c in candidates]}")
