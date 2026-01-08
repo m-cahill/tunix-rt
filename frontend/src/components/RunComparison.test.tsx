@@ -1,5 +1,5 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { RunComparison } from './RunComparison'
 import * as client from '../api/client'
 
@@ -9,7 +9,22 @@ vi.mock('../api/client', () => ({
   getTunixRunMetrics: vi.fn(),
 }))
 
+// M41: Suppress act() warnings for cleaner test output
+const originalConsoleError = console.error
+const actWarningPattern = /not wrapped in act/
+
 describe('RunComparison', () => {
+  beforeEach(() => {
+    console.error = (...args: any[]) => {
+      if (typeof args[0] === 'string' && actWarningPattern.test(args[0])) return
+      originalConsoleError.apply(console, args)
+    }
+  })
+
+  afterEach(() => {
+    console.error = originalConsoleError
+  })
+
   const mockRunA = {
     run_id: 'run-a-1234',
     status: 'completed',

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import {
   getApiHealth,
   getRediHealth,
@@ -1186,8 +1186,8 @@ function App() {
                     </thead>
                     <tbody>
                       {runHistory.data.map((run) => (
-                        <>
-                          <tr key={run.run_id} data-testid={`tunix:history-row-${run.run_id}`}>
+                        <React.Fragment key={run.run_id}>
+                          <tr data-testid={`tunix:history-row-${run.run_id}`}>
                             <td style={{ padding: '0.5em', borderBottom: '1px solid #eee' }}>
                                 <input
                                     type="checkbox"
@@ -1342,7 +1342,7 @@ function App() {
                               </td>
                             </tr>
                           )}
-                        </>
+                        </React.Fragment>
                       ))}
                     </tbody>
                   </table>
