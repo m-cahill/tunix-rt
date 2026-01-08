@@ -2,7 +2,7 @@
 
 **Tunix Reasoning-Trace Framework for AI-Native Development**
 
-**Status:** M25 Complete ✅ | Coverage: 72.5% Line, 95.5% Core Branch | Features: Real JAX/Flax Training, Model Registry, Hyperparameter Tuning, Evaluation Loop | Database: PostgreSQL + Alembic
+**Status:** M41 Complete ✅ | Coverage: >70% Backend Line | Training: PyTorch Local (RTX 5090 GPU Validated) | Frontend: 75 tests passing | Features: Full-Stack Reasoning Trace Pipeline, Leaderboard, Tuning, Model Registry | Database: PostgreSQL + Alembic
 
 A full-stack application for managing reasoning traces and integrating with the RediAI framework for the Tunix Hackathon.
 
