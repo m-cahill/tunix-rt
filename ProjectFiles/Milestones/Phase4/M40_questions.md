@@ -86,4 +86,3 @@ The plan specifies `submission_runs/m40_gpu_enablement/` for evidence.
 ---
 
 **Awaiting your responses before proceeding.**
-

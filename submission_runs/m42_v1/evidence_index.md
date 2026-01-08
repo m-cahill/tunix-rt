@@ -107,4 +107,3 @@ npm run test
 # Verify GPU (requires .venv-gpu)
 .\.venv-gpu\Scripts\python.exe -c "import torch; print(torch.cuda.is_available())"
 ```
-

@@ -86,6 +86,3 @@ M39 was blocked because:
 - **M41:** Frontend polish + demo UX
 - **M42:** Video production + narrative
 - **M43 (optional):** Multi-GPU or performance optimization
-
-
-

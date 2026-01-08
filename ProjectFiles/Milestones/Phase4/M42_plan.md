@@ -229,4 +229,3 @@ Upon M42 completion:
 2. **Record video** — Following VIDEO_CHECKLIST.md
 3. **Submit** — Upload to Kaggle
 4. **M43 (optional)** — Full production training run
-

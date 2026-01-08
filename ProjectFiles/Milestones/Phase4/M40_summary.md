@@ -129,6 +129,3 @@ python -c "import torch; print(f'CUDA: {torch.cuda.is_available()}, Device: {tor
 # Run GPU training
 python training_pt/train.py --config training/configs/m40_gpu_smoke.yaml --output output/m40_test --dataset dev-reasoning-v2 --device cuda
 ```
-
-
-

@@ -17,12 +17,12 @@ At line:1 char:1
 + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (stderr | src/Ap...et key provided:String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
- 
+
 Error: Not implemented: navigation (except hash changes)
     at module.exports (C:\coding\tunix-rt\frontend\node_modules\jsdom\lib\jsdom\browser\not-implemented.js:9:17)
     at navigateFetch (C:\coding\tunix-rt\frontend\node_modules\jsdom\lib\jsdom\living\window\navigation.js:77:3)
     at exports.navigate (C:\coding\tunix-rt\frontend\node_modules\jsdom\lib\jsdom\living\window\navigation.js:55:3)
-    at Timeout._onTimeout 
+    at Timeout._onTimeout
 (C:\coding\tunix-rt\frontend\node_modules\jsdom\lib\jsdom\living\nodes\HTMLHyperlinkElementUtils-impl.js:81:7)
     at listOnTimeout (node:internal/timers:605:17)
     at processTimers (node:internal/timers:541:7) undefined

@@ -191,4 +191,3 @@
 | Branch | `milestone/model-pivot-gemma2b-flax` |
 
 **All deliverables complete. Ready for video recording and submission.**
-

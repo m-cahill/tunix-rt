@@ -8,20 +8,20 @@ global.fetch = vi.fn()
 
 /**
  * M41: Note on React act() Warnings
- * 
+ *
  * The App component triggers 4 concurrent health check fetches on mount (API, Redi, UNGAR, Tunix)
  * plus a 30-second polling interval. This causes React state updates during the render phase,
  * which produces act() warnings.
- * 
+ *
  * These warnings do NOT affect test correctness:
  * - All 75 tests pass consistently
  * - Assertions correctly wait for async operations via waitFor()
  * - The warnings are a consequence of React's strict mode + concurrent async patterns
- * 
+ *
  * Eliminating these warnings would require restructuring the App component's useEffect logic
  * (e.g., using AbortController, React Query, or refactoring to sequential fetches), which is
  * out of scope for a polish milestone. The current approach is documented and acceptable.
- * 
+ *
  * Reference: https://reactjs.org/link/wrap-tests-with-act
  */
 
@@ -108,7 +108,7 @@ describe('App', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     intervalIds = []
-    
+
     // M41: Suppress act() warnings in test output for cleaner logs
     console.error = (...args: any[]) => {
       if (typeof args[0] === 'string' && actWarningPattern.test(args[0])) {
@@ -116,7 +116,7 @@ describe('App', () => {
       }
       originalConsoleError.apply(console, args)
     }
-    
+
     // M41: Intercept setInterval to disable 30-second polling during tests
     global.setInterval = ((callback: () => void, delay: number) => {
       if (delay >= 30000) {

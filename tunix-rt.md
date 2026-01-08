@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M42 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip`
+**Milestone M43 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M43:** Full GPU training run validated
 
 ## Overview
 
@@ -159,6 +159,14 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Evidence Index**: Created `submission_runs/m42_v1/evidence_index.md` documenting what each folder proves.
 - **Dependency Snapshot**: `pip_freeze_backend.txt` captured for reproducibility.
 - **Submission ZIP**: `tunix_rt_m42_2026-01-08_e54267b.zip` (104.8 KB) containing notebooks, configs, evalsets, manifests, and README.
+
+**M43 Enhancements:** Full GPU Training Run (Evidence-Only, Post-Freeze):
+- **Hardware Validation**: RTX 5090 (sm_120, 32GB VRAM) full production run confirmed.
+- **Training Execution**: Gemma 2B via PyTorch/Transformers, 138 steps, 73.2s runtime, loss 2.21→0.76.
+- **JAX CUDA Limitation**: Discovered JAX CUDA is Linux-only for modern versions; Windows requires WSL2.
+- **PyTorch Path**: Validated PyTorch nightly cu128 as production-ready on Blackwell architecture.
+- **Evidence Captured**: `submission_runs/m43_v1/` with checkpoints, metrics, predictions, and summary.
+- **Zero Code Changes**: M42 submission remains authoritative; M43 is evidence-only.
 
 ## Database Schema
 

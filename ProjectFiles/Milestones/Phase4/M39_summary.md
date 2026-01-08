@@ -72,5 +72,3 @@ The current PyTorch install supports CUDA capabilities ... sm_90.
 Given the hardware blocker, M40 should focus on **Software Quality & Frontend Completion** while waiting for driver updates, OR attempting a source build if critical.
 
 **Recommendation:** Proceed with frontend/eval tasks until ecosystem catches up to RTX 5090.
-
-

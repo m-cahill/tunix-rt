@@ -402,6 +402,3 @@ The RTX 5090 GPU enablement is fully operational. The codebase is in excellent h
 3. Address act() warnings when convenient
 
 **Risk Level:** Low — infrastructure is stable and production-ready for local GPU training.
-
-
-
