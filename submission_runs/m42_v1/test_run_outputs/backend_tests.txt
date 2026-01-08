@@ -1,0 +1,508 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.0.2, pluggy-1.6.0 -- C:\coding\tunix-rt\backend\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\coding\tunix-rt\backend
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.12.0, asyncio-1.3.0, cov-7.0.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 395 items
+
+tests/test_datasets.py::TestDatasetHelpers::test_create_dataset_key PASSED [  0%]
+tests/test_datasets.py::TestDatasetHelpers::test_get_datasets_dir_creates_directory PASSED [  0%]
+tests/test_datasets.py::TestDatasetHelpers::test_save_and_load_manifest PASSED [  0%]
+tests/test_datasets.py::TestDatasetHelpers::test_load_manifest_not_found PASSED [  1%]
+tests/test_datasets.py::TestDatasetHelpers::test_compute_dataset_stats_empty PASSED [  1%]
+tests/test_datasets.py::TestDatasetHelpers::test_compute_dataset_stats PASSED [  1%]
+tests/test_datasets.py::TestDatasetBuildEndpoint::test_build_dataset_latest_strategy PASSED [  1%]
+tests/test_datasets.py::TestDatasetBuildEndpoint::test_build_dataset_random_strategy PASSED [  2%]
+tests/test_datasets.py::TestDatasetBuildEndpoint::test_build_dataset_random_requires_seed PASSED [  2%]
+tests/test_datasets.py::TestDatasetBuildEndpoint::test_build_dataset_with_optional_fields PASSED [  2%]
+tests/test_datasets.py::TestDatasetExportEndpoint::test_export_dataset_success PASSED [  2%]
+tests/test_datasets.py::TestDatasetExportEndpoint::test_export_dataset_not_found PASSED [  3%]
+tests/test_datasets.py::TestDatasetExportEndpoint::test_export_dataset_maintains_order PASSED [  3%]
+tests/test_datasets.py::TestDatasetExportEndpoint::test_export_dataset_training_example_format PASSED [  3%]
+tests/test_datasets.py::TestDatasetExportEndpoint::test_export_dataset_invalid_format PASSED [  3%]
+tests/test_datasets_ingest.py::TestIngestJsonlDataset::test_ingest_valid_jsonl_happy_path PASSED [  4%]
+tests/test_datasets_ingest.py::TestIngestJsonlDataset::test_ingest_skips_invalid_json_lines PASSED [  4%]
+tests/test_datasets_ingest.py::TestIngestJsonlDataset::test_ingest_skips_invalid_trace_schema PASSED [  4%]
+tests/test_datasets_ingest.py::TestIngestJsonlDataset::test_ingest_file_not_found PASSED [  4%]
+tests/test_datasets_ingest.py::TestIngestJsonlDataset::test_ingest_path_is_directory PASSED [  5%]
+tests/test_datasets_ingest.py::TestIngestJsonlDataset::test_ingest_empty_file_raises_value_error PASSED [  5%]
+tests/test_datasets_ingest.py::TestIngestJsonlDataset::test_ingest_only_invalid_traces_raises_value_error PASSED [  5%]
+tests/test_datasets_ingest.py::TestIngestJsonlDataset::test_ingest_skips_empty_lines PASSED [  5%]
+tests/test_datasets_ingest.py::TestIngestJsonlDataset::test_ingest_adds_source_metadata PASSED [  6%]
+tests/test_dev_reasoning_v2_schema.py::TestDevReasoningV2SchemaValidation::test_dataset_files_exist PASSED [  6%]
+tests/test_dev_reasoning_v2_schema.py::TestDevReasoningV2SchemaValidation::test_manifest_has_required_fields PASSED [  6%]
+tests/test_dev_reasoning_v2_schema.py::TestDevReasoningV2SchemaValidation::test_all_traces_validate_against_reasoning_trace_schema PASSED [  6%]
+tests/test_dev_reasoning_v2_schema.py::TestDevReasoningV2SchemaValidation::test_sampled_traces_have_correct_metadata PASSED [  7%]
+tests/test_dev_reasoning_v2_schema.py::TestDevReasoningV2SchemaValidation::test_dataset_composition_matches_manifest PASSED [  7%]
+tests/test_dev_reasoning_v2_schema.py::TestDevReasoningV2SchemaValidation::test_step_indices_are_sequential PASSED [  7%]
+tests/test_dev_reasoning_v2_schema.py::TestDevReasoningV2SchemaValidation::test_no_duplicate_step_indices PASSED [  7%]
+tests/test_dev_reasoning_v2_schema.py::TestDevReasoningV2SchemaValidation::test_edge_cases_exist PASSED [  8%]
+tests/test_e2e_fixture_schema.py::TestE2EFixtureSchemaValidation::test_e2e_ingest_fixture_validates_against_reasoning_trace PASSED [  8%]
+tests/test_e2e_fixture_schema.py::TestE2EFixtureSchemaValidation::test_e2e_ingest_fixture_has_minimum_traces PASSED [  8%]
+tests/test_evalset_validator.py::TestValidationResult::test_default_state_is_valid PASSED [  8%]
+tests/test_evalset_validator.py::TestValidationResult::test_add_error_marks_invalid PASSED [  9%]
+tests/test_evalset_validator.py::TestValidationResult::test_add_warning_keeps_valid PASSED [  9%]
+tests/test_evalset_validator.py::TestValidateEvalset::test_valid_file_passes PASSED [  9%]
+tests/test_evalset_validator.py::TestValidateEvalset::test_file_not_found PASSED [  9%]
+tests/test_evalset_validator.py::TestValidateEvalset::test_empty_file_fails PASSED [ 10%]
+tests/test_evalset_validator.py::TestValidateEvalset::test_invalid_json_fails PASSED [ 10%]
+tests/test_evalset_validator.py::TestValidateEvalset::test_missing_required_field_fails PASSED [ 10%]
+tests/test_evalset_validator.py::TestValidateEvalset::test_duplicate_id_fails PASSED [ 10%]
+tests/test_evalset_validator.py::TestValidateEvalset::test_min_items_check PASSED [ 11%]
+tests/test_evalset_validator.py::TestValidateEvalset::test_unknown_section_warning PASSED [ 11%]
+tests/test_evalset_validator.py::TestValidateEvalset::test_unknown_difficulty_warning PASSED [ 11%]
+tests/test_evalset_validator.py::TestValidateEvalset::test_stats_include_counts PASSED [ 11%]
+tests/test_evalset_validator.py::TestEvalV2Schema::test_eval_v2_exists PASSED [ 12%]
+tests/test_evalset_validator.py::TestEvalV2Schema::test_eval_v2_is_valid PASSED [ 12%]
+tests/test_evalset_validator.py::TestEvalV2Schema::test_eval_v2_has_minimum_items PASSED [ 12%]
+tests/test_evalset_validator.py::TestEvalV2Schema::test_eval_v2_has_all_sections PASSED [ 12%]
+tests/test_evalset_validator.py::TestEvalV2Schema::test_eval_v2_section_proportions PASSED [ 13%]
+tests/test_evalset_validator.py::TestEvalV2Schema::test_eval_v2_has_difficulties PASSED [ 13%]
+tests/test_evalset_validator.py::TestEvalV2Schema::test_eval_v2_unique_ids PASSED [ 13%]
+tests/test_evalset_validator.py::TestSchemaConstants::test_required_fields_defined PASSED [ 13%]
+tests/test_evalset_validator.py::TestSchemaConstants::test_valid_sections_defined PASSED [ 14%]
+tests/test_evalset_validator.py::TestSchemaConstants::test_valid_difficulties_defined PASSED [ 14%]
+tests/test_evaluation.py::test_evaluate_run_completed_success PASSED     [ 14%]
+tests/test_evaluation.py::test_evaluate_run_pending_raises PASSED        [ 14%]
+tests/test_evaluation.py::test_evaluate_run_dry_run_raises PASSED        [ 15%]
+tests/test_evaluation.py::test_get_evaluation PASSED                     [ 15%]
+tests/test_evaluation.py::test_get_leaderboard PASSED                    [ 15%]
+tests/test_evidence_files.py::TestRunManifestSchema::test_run_manifest_exists PASSED [ 15%]
+tests/test_evidence_files.py::TestRunManifestSchema::test_run_manifest_is_valid_json PASSED [ 16%]
+tests/test_evidence_files.py::TestRunManifestSchema::test_run_manifest_has_required_fields PASSED [ 16%]
+tests/test_evidence_files.py::TestRunManifestSchema::test_run_manifest_model_id_is_valid_gemma PASSED [ 16%]
+tests/test_evidence_files.py::TestRunManifestSchema::test_run_manifest_dataset_is_string PASSED [ 16%]
+tests/test_evidence_files.py::TestEvalSummarySchema::test_eval_summary_exists PASSED [ 17%]
+tests/test_evidence_files.py::TestEvalSummarySchema::test_eval_summary_is_valid_json PASSED [ 17%]
+tests/test_evidence_files.py::TestEvalSummarySchema::test_eval_summary_has_required_fields PASSED [ 17%]
+tests/test_evidence_files.py::TestEvalSummarySchema::test_eval_summary_metrics_is_dict PASSED [ 17%]
+tests/test_evidence_files.py::TestEvalSummarySchema::test_eval_summary_eval_set_is_string PASSED [ 18%]
+tests/test_evidence_files.py::TestKaggleOutputLog::test_kaggle_output_log_exists PASSED [ 18%]
+tests/test_evidence_files.py::TestKaggleOutputLog::test_kaggle_output_log_is_not_empty PASSED [ 18%]
+tests/test_evidence_files.py::TestPackagingToolIncludesEvidence::test_evidence_files_list_is_correct PASSED [ 18%]
+tests/test_evidence_files.py::TestM34RunManifestSchema::test_run_manifest_exists PASSED [ 19%]
+tests/test_evidence_files.py::TestM34RunManifestSchema::test_run_manifest_has_required_fields PASSED [ 19%]
+tests/test_evidence_files.py::TestM34RunManifestSchema::test_run_manifest_has_m34_fields PASSED [ 19%]
+tests/test_evidence_files.py::TestM34RunManifestSchema::test_run_manifest_model_id_is_valid PASSED [ 20%]
+tests/test_evidence_files.py::TestM34EvalSummarySchema::test_eval_summary_exists PASSED [ 20%]
+tests/test_evidence_files.py::TestM34EvalSummarySchema::test_eval_summary_has_required_fields PASSED [ 20%]
+tests/test_evidence_files.py::TestM34EvalSummarySchema::test_eval_summary_primary_score_field_exists PASSED [ 20%]
+tests/test_evidence_files.py::TestM34BestParamsSchema::test_best_params_exists PASSED [ 21%]
+tests/test_evidence_files.py::TestM34BestParamsSchema::test_best_params_is_valid_json PASSED [ 21%]
+tests/test_evidence_files.py::TestM34BestParamsSchema::test_best_params_has_required_fields PASSED [ 21%]
+tests/test_evidence_files.py::TestM34BestParamsSchema::test_best_params_params_is_dict PASSED [ 21%]
+tests/test_evidence_files.py::TestM34BestParamsSchema::test_best_params_sweep_config_is_dict PASSED [ 22%]
+tests/test_evidence_files.py::TestM34KaggleOutputLog::test_kaggle_output_log_exists PASSED [ 22%]
+tests/test_evidence_files.py::TestM34KaggleOutputLog::test_kaggle_output_log_is_not_empty PASSED [ 22%]
+tests/test_evidence_files.py::TestM34EvidenceFilesComplete::test_all_m34_evidence_files_exist PASSED [ 22%]
+tests/test_evidence_files.py::TestM35RunManifestSchema::test_run_manifest_exists PASSED [ 23%]
+tests/test_evidence_files.py::TestM35RunManifestSchema::test_run_manifest_has_required_fields PASSED [ 23%]
+tests/test_evidence_files.py::TestM35RunManifestSchema::test_run_manifest_has_eval_set PASSED [ 23%]
+tests/test_evidence_files.py::TestM35RunManifestSchema::test_run_manifest_eval_set_is_eval_v2 PASSED [ 23%]
+tests/test_evidence_files.py::TestM35EvalSummarySchema::test_eval_summary_exists PASSED [ 24%]
+tests/test_evidence_files.py::TestM35EvalSummarySchema::test_eval_summary_has_required_fields PASSED [ 24%]
+tests/test_evidence_files.py::TestM35EvalSummarySchema::test_eval_summary_has_scorecard PASSED [ 24%]
+tests/test_evidence_files.py::TestM35EvalSummarySchema::test_eval_summary_scorecard_has_n_items PASSED [ 24%]
+tests/test_evidence_files.py::TestM35EvalSummarySchema::test_eval_summary_uses_eval_v2 PASSED [ 25%]
+tests/test_evidence_files.py::TestM35KaggleOutputLog::test_kaggle_output_log_exists PASSED [ 25%]
+tests/test_evidence_files.py::TestM35KaggleOutputLog::test_kaggle_output_log_is_not_empty PASSED [ 25%]
+tests/test_evidence_files.py::TestM35EvidenceFilesComplete::test_all_m35_evidence_files_exist PASSED [ 25%]
+tests/test_evidence_files.py::TestM36RunManifestSchema::test_run_manifest_exists PASSED [ 26%]
+tests/test_evidence_files.py::TestM36RunManifestSchema::test_run_manifest_has_required_fields PASSED [ 26%]
+tests/test_evidence_files.py::TestM36RunManifestSchema::test_run_manifest_has_kaggle_fields PASSED [ 26%]
+tests/test_evidence_files.py::TestM36RunManifestSchema::test_run_manifest_has_eval_set PASSED [ 26%]
+tests/test_evidence_files.py::TestM36RunManifestSchema::test_run_manifest_eval_set_is_eval_v2 PASSED [ 27%]
+tests/test_evidence_files.py::TestM36RunManifestSchema::test_run_manifest_model_id_is_valid PASSED [ 27%]
+tests/test_evidence_files.py::TestM36EvalSummarySchema::test_eval_summary_exists PASSED [ 27%]
+tests/test_evidence_files.py::TestM36EvalSummarySchema::test_eval_summary_has_required_fields PASSED [ 27%]
+tests/test_evidence_files.py::TestM36EvalSummarySchema::test_eval_summary_has_scorecard PASSED [ 28%]
+tests/test_evidence_files.py::TestM36EvalSummarySchema::test_eval_summary_scorecard_has_n_items PASSED [ 28%]
+tests/test_evidence_files.py::TestM36EvalSummarySchema::test_eval_summary_uses_eval_v2 PASSED [ 28%]
+tests/test_evidence_files.py::TestM36KaggleOutputLog::test_kaggle_output_log_exists PASSED [ 28%]
+tests/test_evidence_files.py::TestM36KaggleOutputLog::test_kaggle_output_log_is_not_empty PASSED [ 29%]
+tests/test_evidence_files.py::TestM36EvidenceFilesComplete::test_all_m36_evidence_files_exist PASSED [ 29%]
+tests/test_execution_guardrails.py::test_execute_dry_run_accepts_real_export_request PASSED [ 29%]
+tests/test_health.py::test_health_endpoint_returns_200 PASSED            [ 29%]
+tests/test_health.py::test_health_endpoint_returns_correct_json PASSED   [ 30%]
+tests/test_helpers.py::test_get_trace_or_404_success PASSED              [ 30%]
+tests/test_helpers.py::test_get_trace_or_404_not_found PASSED            [ 30%]
+tests/test_helpers.py::test_get_trace_or_404_with_label PASSED           [ 30%]
+tests/test_inference_errors.py::test_generate_predictions_missing_dataset PASSED [ 31%]
+tests/test_inference_errors.py::test_generate_predictions_no_valid_items PASSED [ 31%]
+tests/test_judges.py::test_compare_normalization PASSED                  [ 31%]
+tests/test_judges.py::test_evaluate_success PASSED                       [ 31%]
+tests/test_judges.py::test_evaluate_missing_manifest PASSED              [ 32%]
+tests/test_judges.py::test_evaluate_missing_predictions PASSED           [ 32%]
+tests/test_judges.py::test_evaluate_empty_predictions PASSED             [ 32%]
+tests/test_judges.py::test_judge_factory PASSED                          [ 32%]
+tests/test_judges.py::test_gemma_judge_success PASSED                    [ 33%]
+tests/test_logs.py::test_log_manager_buffering PASSED                    [ 33%]
+tests/test_m24_inference.py::test_generate_predictions_flow PASSED       [ 33%]
+tests/test_m24_inference.py::test_inference_sync_logic PASSED            [ 33%]
+tests/test_m28_tuning.py::test_m28_schema_support PASSED                 [ 34%]
+tests/test_m28_tuning.py::test_m28_ray_conversion PASSED                 [ 34%]
+tests/test_m28_tuning.py::test_tunix_trainable_propagates_params PASSED  [ 34%]
+tests/test_m28_tuning_integration.py::test_tunix_run_request_weight_decay PASSED [ 34%]
+tests/test_m28_tuning_integration.py::test_tunix_run_request_default_weight_decay PASSED [ 35%]
+tests/test_m28_tuning_integration.py::test_manifest_generation_weight_decay PASSED [ 35%]
+tests/test_model_registry.py::test_create_artifact PASSED                [ 35%]
+tests/test_model_registry.py::test_promote_run_success PASSED            [ 35%]
+tests/test_model_registry.py::test_promote_run_validation_fail PASSED    [ 36%]
+tests/test_model_registry.py::test_version_auto_increment PASSED         [ 36%]
+tests/test_model_registry.py::test_promote_from_failed_run PASSED        [ 36%]
+tests/test_model_registry.py::test_idempotency_same_sha PASSED           [ 36%]
+tests/test_model_registry.py::test_promote_missing_artifacts_specific PASSED [ 37%]
+tests/test_redi_health.py::test_redi_health_with_healthy_mock PASSED     [ 37%]
+tests/test_redi_health.py::test_redi_health_with_unhealthy_mock PASSED   [ 37%]
+tests/test_redi_health.py::test_redi_health_with_exception_raising_client PASSED [ 37%]
+tests/test_redi_health.py::test_real_redi_client_http_error PASSED       [ 38%]
+tests/test_redi_health.py::test_real_redi_client_constructs_url_correctly PASSED [ 38%]
+tests/test_redi_health.py::test_redi_client_non_2xx_response PASSED      [ 38%]
+tests/test_redi_health.py::test_redi_client_timeout PASSED               [ 38%]
+tests/test_redi_health.py::test_redi_client_connection_refused PASSED    [ 39%]
+tests/test_redi_health.py::test_get_redi_client_returns_mock_in_mock_mode PASSED [ 39%]
+tests/test_redi_health.py::test_get_redi_client_returns_real_in_real_mode PASSED [ 39%]
+tests/test_redi_health.py::test_redi_health_cache_hit PASSED             [ 40%]
+tests/test_redi_health.py::test_redi_health_cache_expiry PASSED          [ 40%]
+tests/test_regression.py::TestRegressionConstants::test_default_metric_is_primary_score PASSED [ 40%]
+tests/test_regression.py::TestGetMetricValue::test_extracts_primary_score PASSED [ 40%]
+tests/test_regression.py::TestGetMetricValue::test_primary_score_fallback_to_normalized_score PASSED [ 41%]
+tests/test_regression.py::TestGetMetricValue::test_extracts_raw_score PASSED [ 41%]
+tests/test_regression.py::TestGetMetricValue::test_extracts_from_metrics_dict PASSED [ 41%]
+tests/test_regression.py::TestGetMetricValue::test_raises_for_unknown_metric PASSED [ 41%]
+tests/test_regression.py::TestRegressionSchemas::test_baseline_create_defaults_to_primary_score PASSED [ 42%]
+tests/test_regression.py::TestRegressionSchemas::test_baseline_create_with_custom_metric PASSED [ 42%]
+tests/test_regression.py::TestRegressionSchemas::test_baseline_create_with_eval_set PASSED [ 42%]
+tests/test_regression.py::TestRegressionSchemas::test_baseline_response_includes_new_fields PASSED [ 42%]
+tests/test_regression.py::TestRegressionCheckLogic::test_higher_is_better_pass PASSED [ 43%]
+tests/test_regression.py::TestRegressionCheckLogic::test_higher_is_better_fail PASSED [ 43%]
+tests/test_regression.py::TestRegressionCheckLogic::test_lower_is_better_pass PASSED [ 43%]
+tests/test_regression.py::TestRegressionCheckLogic::test_tolerance_threshold PASSED [ 43%]
+tests/test_renderers.py::TestTunixSFTRenderer::test_render_tunix_sft_prompt_basic PASSED [ 44%]
+tests/test_renderers.py::TestTunixSFTRenderer::test_render_tunix_sft_prompt_multiple_steps PASSED [ 44%]
+tests/test_renderers.py::TestTunixSFTRenderer::test_render_tunix_sft_prompt_deterministic PASSED [ 44%]
+tests/test_renderers.py::TestTunixSFTRenderer::test_render_tunix_sft_prompt_empty_steps PASSED [ 44%]
+tests/test_renderers.py::TestTunixSFTRenderer::test_render_tunix_sft_prompt_preserves_special_chars PASSED [ 45%]
+tests/test_renderers.py::TestTunixSFTRenderer::test_render_tunix_sft_prompt_multiline_content PASSED [ 45%]
+tests/test_renderers.py::TestRenderTraceForTraining::test_render_trace_for_training_tunix_sft PASSED [ 45%]
+tests/test_renderers.py::TestRenderTraceForTraining::test_render_trace_for_training_default_format PASSED [ 45%]
+tests/test_renderers.py::TestRenderTraceForTraining::test_render_trace_for_training_invalid_format PASSED [ 46%]
+tests/test_renderers.py::TestGemmaITHelpers::test_render_gemma_turn_basic PASSED [ 46%]
+tests/test_renderers.py::TestGemmaITHelpers::test_render_gemma_user_turn PASSED [ 46%]
+tests/test_renderers.py::TestGemmaITHelpers::test_render_gemma_model_turn PASSED [ 46%]
+tests/test_renderers.py::TestGemmaITHelpers::test_apply_system_instruction_with_instruction PASSED [ 47%]
+tests/test_renderers.py::TestGemmaITHelpers::test_apply_system_instruction_without_instruction PASSED [ 47%]
+tests/test_renderers.py::TestGemmaITHelpers::test_render_reasoning_steps_multiple PASSED [ 47%]
+tests/test_renderers.py::TestGemmaITHelpers::test_render_reasoning_steps_empty PASSED [ 47%]
+tests/test_renderers.py::TestGemmaITHelpers::test_render_reasoning_steps_single PASSED [ 48%]
+tests/test_renderers.py::TestTunixSFTWithSystemInstruction::test_render_with_system_instruction PASSED [ 48%]
+tests/test_renderers.py::TestTunixSFTWithSystemInstruction::test_render_without_system_instruction PASSED [ 48%]
+tests/test_renderers.py::TestSnapshotStability::test_simple_trace_snapshot PASSED [ 48%]
+tests/test_renderers.py::TestSnapshotStability::test_trace_with_system_snapshot PASSED [ 49%]
+tests/test_scoring.py::TestComputePrimaryScore::test_all_correct_returns_one PASSED [ 49%]
+tests/test_scoring.py::TestComputePrimaryScore::test_all_incorrect_returns_zero PASSED [ 49%]
+tests/test_scoring.py::TestComputePrimaryScore::test_mixed_correctness_returns_mean PASSED [ 49%]
+tests/test_scoring.py::TestComputePrimaryScore::test_fractional_correctness PASSED [ 50%]
+tests/test_scoring.py::TestComputePrimaryScore::test_fallback_to_score_normalized PASSED [ 50%]
+tests/test_scoring.py::TestComputePrimaryScore::test_score_already_normalized PASSED [ 50%]
+tests/test_scoring.py::TestComputePrimaryScore::test_mixed_answer_correctness_and_score PASSED [ 50%]
+tests/test_scoring.py::TestComputePrimaryScore::test_empty_list_returns_none PASSED [ 51%]
+tests/test_scoring.py::TestComputePrimaryScore::test_all_null_correctness_returns_none PASSED [ 51%]
+tests/test_scoring.py::TestComputePrimaryScore::test_skips_null_values PASSED [ 51%]
+tests/test_scoring.py::TestComputePrimaryScore::test_skips_invalid_string_values PASSED [ 51%]
+tests/test_scoring.py::TestComputePrimaryScore::test_single_row PASSED   [ 52%]
+tests/test_scoring.py::TestComputePrimaryScore::test_score_at_boundaries PASSED [ 52%]
+tests/test_scoring.py::TestComputePrimaryScore::test_out_of_range_scores_excluded PASSED [ 52%]
+tests/test_scoring.py::TestComputePrimaryScore::test_metrics_not_dict_handled PASSED [ 52%]
+tests/test_scoring.py::TestComputePrimaryScore::test_stability_of_rounding PASSED [ 53%]
+tests/test_scoring.py::TestComputePrimaryScore::test_answer_correctness_takes_priority_over_score PASSED [ 53%]
+tests/test_scoring.py::TestComputePrimaryScoreTypeSafety::test_integer_answer_correctness PASSED [ 53%]
+tests/test_scoring.py::TestComputePrimaryScoreTypeSafety::test_integer_score PASSED [ 53%]
+tests/test_scoring.py::TestScorecard::test_default_values PASSED         [ 54%]
+tests/test_scoring.py::TestScorecard::test_to_dict PASSED                [ 54%]
+tests/test_scoring.py::TestComputeScorecard::test_empty_list PASSED      [ 54%]
+tests/test_scoring.py::TestComputeScorecard::test_single_row PASSED      [ 54%]
+tests/test_scoring.py::TestComputeScorecard::test_multiple_rows PASSED   [ 55%]
+tests/test_scoring.py::TestComputeScorecard::test_skipped_items PASSED   [ 55%]
+tests/test_scoring.py::TestComputeScorecard::test_section_scores PASSED  [ 55%]
+tests/test_scoring.py::TestComputeScorecard::test_category_scores PASSED [ 55%]
+tests/test_scoring.py::TestComputeScorecard::test_difficulty_scores PASSED [ 56%]
+tests/test_scoring.py::TestComputeScorecard::test_metadata_from_eval_items PASSED [ 56%]
+tests/test_scoring.py::TestComputeScorecard::test_row_metadata_takes_priority PASSED [ 56%]
+tests/test_scoring.py::TestComputeScorecard::test_deterministic_ordering PASSED [ 56%]
+tests/test_scoring.py::TestComputeScorecard::test_reproducible_stddev PASSED [ 57%]
+tests/test_scoring.py::TestComputeScorecard::test_uses_correctness_field PASSED [ 57%]
+tests/test_scoring.py::TestComputeScorecard::test_score_fallback PASSED  [ 57%]
+tests/test_services.py::TestTracesBatchService::test_create_traces_batch_validates_empty_list PASSED [ 57%]
+tests/test_services.py::TestTracesBatchService::test_create_traces_batch_validates_max_size PASSED [ 58%]
+tests/test_services.py::TestTracesBatchService::test_create_traces_batch_returns_correct_count PASSED [ 58%]
+tests/test_services.py::TestDatasetsExportService::test_export_dataset_skips_deleted_traces PASSED [ 58%]
+tests/test_services.py::TestDatasetsExportService::test_export_dataset_maintains_manifest_order PASSED [ 58%]
+tests/test_services_datasets.py::TestDatasetBuilderService::test_build_dataset_random_requires_seed PASSED [ 59%]
+tests/test_services_datasets.py::TestDatasetBuilderService::test_build_dataset_latest_strategy PASSED [ 59%]
+tests/test_services_datasets.py::TestDatasetBuilderService::test_build_dataset_random_strategy PASSED [ 59%]
+tests/test_services_datasets.py::TestDatasetBuilderService::test_build_dataset_with_filters PASSED [ 60%]
+tests/test_services_datasets.py::TestDatasetBuilderService::test_build_dataset_empty_result PASSED [ 60%]
+tests/test_services_regression.py::test_create_baseline PASSED           [ 60%]
+tests/test_services_regression.py::test_check_regression_pass PASSED     [ 60%]
+tests/test_services_regression.py::test_check_regression_fail PASSED     [ 61%]
+tests/test_services_ungar.py::TestUngarStatusService::test_check_status_without_ungar PASSED [ 61%]
+tests/test_services_ungar.py::TestUngarGeneratorService::test_generate_without_ungar_raises_error PASSED [ 61%]
+tests/test_services_ungar.py::TestUngarGeneratorService::test_generate_traces_no_persist SKIPPED [ 61%]
+tests/test_services_ungar.py::TestUngarGeneratorService::test_generate_traces_with_persist SKIPPED [ 62%]
+tests/test_services_ungar.py::TestUngarExportService::test_export_empty_database PASSED [ 62%]
+tests/test_services_ungar.py::TestUngarExportService::test_export_with_trace_ids_parameter PASSED [ 62%]
+tests/test_settings.py::test_settings_default_values PASSED              [ 62%]
+tests/test_settings.py::test_settings_invalid_rediai_mode PASSED         [ 63%]
+tests/test_settings.py::test_settings_invalid_rediai_base_url PASSED     [ 63%]
+tests/test_settings.py::test_settings_invalid_backend_port_too_low PASSED [ 63%]
+tests/test_settings.py::test_settings_invalid_backend_port_too_high PASSED [ 63%]
+tests/test_settings.py::test_settings_valid_custom_values PASSED         [ 64%]
+tests/test_settings.py::test_settings_rediai_health_url_property PASSED  [ 64%]
+tests/test_sweep_runner.py::TestSweepConfig::test_default_config_values PASSED [ 64%]
+tests/test_sweep_runner.py::TestSweepConfig::test_custom_config_values PASSED [ 64%]
+tests/test_sweep_runner.py::TestSweepConfig::test_default_search_space_has_m34_params PASSED [ 65%]
+tests/test_sweep_runner.py::TestSweepConfig::test_to_api_payload PASSED  [ 65%]
+tests/test_sweep_runner.py::TestSweepResult::test_success_result PASSED  [ 65%]
+tests/test_sweep_runner.py::TestSweepResult::test_failure_result PASSED  [ 65%]
+tests/test_sweep_runner.py::TestSweepRunner::test_run_success PASSED     [ 66%]
+tests/test_sweep_runner.py::TestSweepRunner::test_run_job_creation_fails PASSED [ 66%]
+tests/test_sweep_runner.py::TestSweepRunner::test_run_job_start_fails_501 PASSED [ 66%]
+tests/test_sweep_runner.py::TestSweepRunner::test_run_job_fails PASSED   [ 66%]
+tests/test_sweep_runner.py::TestSweepRunner::test_context_manager PASSED [ 67%]
+tests/test_sweep_runner.py::TestSweepRunner::test_poll_with_timeout PASSED [ 67%]
+tests/test_sweep_runner.py::TestSweepRunnerIntegration::test_imports_work PASSED [ 67%]
+tests/test_sweep_runner.py::TestSweepRunnerIntegration::test_config_isolation PASSED [ 67%]
+tests/test_traces.py::test_create_trace_success PASSED                   [ 68%]
+tests/test_traces.py::test_create_and_get_trace PASSED                   [ 68%]
+tests/test_traces.py::test_get_trace_not_found PASSED                    [ 68%]
+tests/test_traces.py::test_create_trace_invalid_schema PASSED            [ 68%]
+tests/test_traces.py::test_create_trace_empty_steps PASSED               [ 69%]
+tests/test_traces.py::test_create_trace_duplicate_step_indices PASSED    [ 69%]
+tests/test_traces.py::test_create_trace_oversized_payload PASSED         [ 69%]
+tests/test_traces.py::test_list_traces_empty PASSED                      [ 69%]
+tests/test_traces.py::test_list_traces_with_data PASSED                  [ 70%]
+tests/test_traces.py::test_list_traces_pagination PASSED                 [ 70%]
+tests/test_traces.py::test_list_traces_invalid_limit PASSED              [ 70%]
+tests/test_traces.py::test_list_traces_negative_offset PASSED            [ 70%]
+tests/test_traces.py::test_trace_list_excludes_payload PASSED            [ 71%]
+tests/test_traces.py::test_get_trace_with_invalid_uuid_format PASSED     [ 71%]
+tests/test_traces.py::test_list_traces_with_zero_limit PASSED            [ 71%]
+tests/test_traces.py::test_get_trace_success_path_explicit PASSED        [ 71%]
+tests/test_traces.py::test_list_traces_valid_pagination PASSED           [ 72%]
+tests/test_traces_batch.py::TestBatchTraceCreation::test_create_traces_batch_success PASSED [ 72%]
+tests/test_traces_batch.py::TestBatchTraceCreation::test_create_traces_batch_single PASSED [ 72%]
+tests/test_traces_batch.py::TestBatchTraceCreation::test_create_traces_batch_empty PASSED [ 72%]
+tests/test_traces_batch.py::TestBatchTraceCreation::test_create_traces_batch_exceeds_max_size PASSED [ 73%]
+tests/test_traces_batch.py::TestBatchTraceCreation::test_create_traces_batch_invalid_trace PASSED [ 73%]
+tests/test_traces_batch.py::TestBatchTraceCreation::test_create_traces_batch_with_metadata PASSED [ 73%]
+tests/test_traces_batch.py::TestBatchTraceCreation::test_create_traces_batch_transaction_isolation PASSED [ 73%]
+tests/test_training_schema.py::TestTrainingExample::test_training_example_valid PASSED [ 74%]
+tests/test_training_schema.py::TestTrainingExample::test_training_example_auto_id PASSED [ 74%]
+tests/test_training_schema.py::TestTrainingExample::test_training_example_empty_prompt PASSED [ 74%]
+tests/test_training_schema.py::TestTrainingExample::test_training_example_empty_response PASSED [ 74%]
+tests/test_training_schema.py::TestTrainingExample::test_training_example_metadata_optional PASSED [ 75%]
+tests/test_training_schema.py::TestTrainingExample::test_training_example_serialization PASSED [ 75%]
+tests/test_training_schema.py::TestTrainingExampleCreate::test_create_valid PASSED [ 75%]
+tests/test_training_schema.py::TestTrainingExampleCreate::test_create_no_auto_id PASSED [ 75%]
+tests/test_training_schema.py::TestTrainingManifest::test_manifest_valid PASSED [ 76%]
+tests/test_training_schema.py::TestTrainingManifest::test_manifest_auto_fields PASSED [ 76%]
+tests/test_training_schema.py::TestTrainingManifest::test_manifest_git_sha_optional PASSED [ 76%]
+tests/test_training_schema.py::TestTrainingManifest::test_manifest_metadata_optional PASSED [ 76%]
+tests/test_training_schema.py::TestEvaluationResult::test_result_valid PASSED [ 77%]
+tests/test_training_schema.py::TestEvaluationResult::test_result_optional_fields PASSED [ 77%]
+tests/test_training_schema.py::TestEvaluationManifest::test_eval_manifest_valid PASSED [ 77%]
+tests/test_training_schema.py::TestEvaluationManifest::test_eval_manifest_auto_fields PASSED [ 77%]
+tests/test_training_schema.py::TestEvaluationManifest::test_eval_manifest_optional_fields PASSED [ 78%]
+tests/test_training_schema.py::TestEvaluationManifest::test_eval_manifest_results_count_non_negative PASSED [ 78%]
+tests/test_training_scripts_smoke.py::TestTrainingScriptSmoke::test_train_script_exists PASSED [ 78%]
+tests/test_training_scripts_smoke.py::TestTrainingScriptSmoke::test_train_script_help PASSED [ 78%]
+tests/test_training_scripts_smoke.py::TestTrainingScriptSmoke::test_train_script_missing_args_fails PASSED [ 79%]
+tests/test_training_scripts_smoke.py::TestTrainingScriptSmoke::test_train_script_dry_run_exits_zero PASSED [ 79%]
+tests/test_training_scripts_smoke.py::TestTrainingScriptSmoke::test_train_script_dry_run_validates_config PASSED [ 79%]
+tests/test_training_scripts_smoke.py::TestTrainingScriptSmoke::test_train_script_dry_run_validates_data PASSED [ 80%]
+tests/test_training_scripts_smoke.py::TestTrainingScriptSmoke::test_train_script_dry_run_fast PASSED [ 80%]
+tests/test_training_scripts_smoke.py::TestTrainingScriptSmoke::test_train_script_jax_smoke PASSED [ 80%]
+tests/test_tuning_schemas.py::test_tuning_job_create_valid PASSED        [ 80%]
+tests/test_tuning_schemas.py::test_tuning_job_create_invalid_search_space PASSED [ 81%]
+tests/test_tuning_schemas.py::test_search_space_param_validation PASSED  [ 81%]
+tests/test_tuning_service.py::test_create_and_get_job PASSED             [ 81%]
+tests/test_tuning_service.py::test_convert_search_space PASSED           [ 81%]
+tests/test_tuning_service.py::test_convert_search_space_invalid_type PASSED [ 82%]
+tests/test_tuning_service.py::test_start_job_not_found PASSED            [ 82%]
+tests/test_tuning_service.py::test_start_job_ray_not_installed PASSED    [ 82%]
+tests/test_tuning_service.py::test_start_job_wrong_status PASSED         [ 82%]
+tests/test_tuning_service.py::test_run_ray_tune_failure_handling PASSED  [ 83%]
+tests/test_tuning_service.py::test_start_job_locked_metric_failure PASSED [ 83%]
+tests/test_tuning_service.py::test_start_job_success PASSED              [ 83%]
+tests/test_tunix.py::test_tunix_available_returns_false PASSED           [ 83%]
+tests/test_tunix.py::test_tunix_version_returns_none PASSED              [ 84%]
+tests/test_tunix.py::test_tunix_availability_m13 PASSED                  [ 84%]
+tests/test_tunix.py::test_tunix_status_endpoint PASSED                   [ 84%]
+tests/test_tunix.py::test_tunix_export_requires_dataset_or_traces PASSED [ 84%]
+tests/test_tunix.py::test_tunix_export_with_trace_ids PASSED             [ 85%]
+tests/test_tunix.py::test_tunix_export_with_nonexistent_dataset PASSED   [ 85%]
+tests/test_tunix.py::test_tunix_manifest_generation PASSED               [ 85%]
+tests/test_tunix.py::test_tunix_manifest_with_defaults PASSED            [ 85%]
+tests/test_tunix.py::test_tunix_manifest_with_nonexistent_dataset PASSED [ 86%]
+tests/test_tunix.py::test_export_service_with_trace_ids PASSED           [ 86%]
+tests/test_tunix.py::test_export_service_requires_dataset_or_traces PASSED [ 86%]
+tests/test_tunix.py::test_manifest_builder_generates_valid_yaml PASSED   [ 86%]
+tests/test_tunix.py::test_tunix_workflow_end_to_end PASSED               [ 87%]
+tests/test_tunix_execution.py::test_tunix_availability_checks_import_and_cli PASSED [ 87%]
+tests/test_tunix_execution.py::test_tunix_run_endpoint_exists PASSED     [ 87%]
+tests/test_tunix_execution.py::test_dry_run_with_invalid_dataset PASSED  [ 87%]
+tests/test_tunix_execution.py::test_dry_run_with_empty_dataset PASSED    [ 88%]
+tests/test_tunix_execution.py::test_dry_run_with_valid_dataset PASSED    [ 88%]
+tests/test_tunix_execution.py::test_local_execution_without_tunix_returns_501 PASSED [ 88%]
+tests/test_tunix_execution.py::test_dry_run_request_schema_validation PASSED [ 88%]
+tests/test_tunix_execution.py::test_run_response_schema_structure PASSED [ 89%]
+tests/test_tunix_execution.py::test_local_execution_with_tunix SKIPPED   [ 89%]
+tests/test_tunix_execution.py::test_tunix_cli_check SKIPPED (Tunix n...) [ 89%]
+tests/test_tunix_execution.py::test_async_enqueue_creates_pending_run PASSED [ 89%]
+tests/test_tunix_execution.py::test_generate_predictions_success PASSED  [ 90%]
+tests/test_tunix_execution.py::test_cancel_tunix_run_pending PASSED      [ 90%]
+tests/test_tunix_registry.py::test_run_persists_to_database PASSED       [ 90%]
+tests/test_tunix_registry.py::test_run_persists_with_failure PASSED      [ 90%]
+tests/test_tunix_registry.py::test_list_runs_empty PASSED                [ 91%]
+tests/test_tunix_registry.py::test_list_runs_with_runs PASSED            [ 91%]
+tests/test_tunix_registry.py::test_list_runs_pagination PASSED           [ 91%]
+tests/test_tunix_registry.py::test_list_runs_filter_by_status PASSED     [ 91%]
+tests/test_tunix_registry.py::test_list_runs_filter_by_dataset_key PASSED [ 92%]
+tests/test_tunix_registry.py::test_list_runs_filter_by_mode PASSED       [ 92%]
+tests/test_tunix_registry.py::test_list_runs_invalid_pagination PASSED   [ 92%]
+tests/test_tunix_registry.py::test_get_run_detail PASSED                 [ 92%]
+tests/test_tunix_registry.py::test_get_run_detail_not_found PASSED       [ 93%]
+tests/test_tunix_registry.py::test_get_run_detail_invalid_uuid PASSED    [ 93%]
+tests/test_ungar.py::test_ungar_status_without_ungar_installed PASSED    [ 93%]
+tests/test_ungar.py::test_ungar_generate_returns_501_without_ungar_installed PASSED [ 93%]
+tests/test_ungar.py::test_ungar_export_jsonl_returns_empty_when_no_ungar_traces PASSED [ 94%]
+tests/test_ungar.py::test_ungar_export_jsonl_with_limit_param PASSED     [ 94%]
+tests/test_ungar.py::test_ungar_export_jsonl_with_trace_ids PASSED       [ 94%]
+tests/test_ungar.py::test_ungar_status_with_ungar_installed SKIPPED      [ 94%]
+tests/test_ungar.py::test_ungar_generate_creates_traces SKIPPED (UNG...) [ 95%]
+tests/test_ungar.py::test_ungar_generate_without_persist SKIPPED (UN...) [ 95%]
+tests/test_ungar.py::test_ungar_generate_validates_count SKIPPED (UN...) [ 95%]
+tests/test_ungar.py::test_ungar_export_jsonl_basic SKIPPED (UNGAR no...) [ 95%]
+tests/test_ungar.py::test_ungar_integration_end_to_end SKIPPED (UNGA...) [ 96%]
+tests/test_ungar_availability.py::test_ungar_available_returns_false_when_not_installed PASSED [ 96%]
+tests/test_ungar_availability.py::test_ungar_version_returns_none_when_not_installed PASSED [ 96%]
+tests/test_ungar_availability.py::test_ungar_available_returns_true_when_mocked PASSED [ 96%]
+tests/test_ungar_availability.py::test_ungar_version_returns_version_when_mocked PASSED [ 97%]
+tests/test_ungar_availability.py::test_ungar_version_returns_unknown_when_no_version_attr PASSED [ 97%]
+tests/test_worker.py::test_process_run_safely_success PASSED             [ 97%]
+tests/test_worker.py::test_process_run_safely_error PASSED               [ 97%]
+tests/test_worker.py::test_claim_pending_run_skip_locked_shim SKIPPED    [ 98%]
+tests/test_worker.py::test_process_run_safely_missing_config PASSED      [ 98%]
+tests/test_worker.py::test_process_run_safely_empty_config PASSED        [ 98%]
+tests/test_worker.py::test_process_run_safely_with_duration_metrics PASSED [ 98%]
+tests/test_worker.py::test_process_run_safely_auto_eval_on_completion PASSED [ 99%]
+tests/test_worker.py::test_process_run_safely_skips_eval_on_dry_run PASSED [ 99%]
+tests/test_worker.py::test_process_run_safely_eval_error_does_not_crash PASSED [ 99%]
+tests/test_worker.py::test_process_run_safely_sets_completed_at_on_failure PASSED [100%]
+
+============================== warnings summary ===============================
+tests/test_logs.py::test_log_manager_buffering
+  C:\coding\tunix-rt\backend\tunix_rt_backend\services\tunix_execution.py:115: RuntimeWarning: coroutine 'AsyncMockMixin._execute_mock_call' was never awaited
+    self.db.add_all(buffer)
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+tests/test_m28_tuning.py::test_tunix_trainable_propagates_params
+  C:\coding\tunix-rt\backend\tunix_rt_backend\services\tuning_service.py:173: RuntimeWarning: coroutine 'AsyncMockMixin._execute_mock_call' was never awaited
+    db.add(trial)
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+______________ coverage: platform win32, python 3.12.10-final-0 _______________
+
+Name                                                  Stmts   Miss Branch BrPart  Cover
+---------------------------------------------------------------------------------------
+tunix_rt_backend\__init__.py                              1      0      0      0   100%
+tunix_rt_backend\app.py                                  17      0      0      0   100%
+tunix_rt_backend\db\__init__.py                           0      0      0      0   100%
+tunix_rt_backend\db\base.py                              10      2      0      0    80%
+tunix_rt_backend\db\models\__init__.py                    8      0      0      0   100%
+tunix_rt_backend\db\models\evaluation.py                 17      0      0      0   100%
+tunix_rt_backend\db\models\model_registry.py             33      0      0      0   100%
+tunix_rt_backend\db\models\regression.py                 16      0      0      0   100%
+tunix_rt_backend\db\models\score.py                      15      0      0      0   100%
+tunix_rt_backend\db\models\trace.py                      13      0      0      0   100%
+tunix_rt_backend\db\models\tuning.py                     40      0      0      0   100%
+tunix_rt_backend\db\models\tunix_run.py                  32      0      0      0   100%
+tunix_rt_backend\dependencies.py                         11      0      4      0   100%
+tunix_rt_backend\helpers\__init__.py                      2      0      0      0   100%
+tunix_rt_backend\helpers\datasets.py                     38      0      4      0   100%
+tunix_rt_backend\helpers\traces.py                       14      0      4      0   100%
+tunix_rt_backend\integrations\__init__.py                 0      0      0      0   100%
+tunix_rt_backend\integrations\tunix\__init__.py           0      0      0      0   100%
+tunix_rt_backend\integrations\tunix\availability.py      40     28     12      1    25%
+tunix_rt_backend\integrations\tunix\manifest.py           6      0      0      0   100%
+tunix_rt_backend\integrations\ungar\__init__.py           0      0      0      0   100%
+tunix_rt_backend\integrations\ungar\availability.py      14      2      2      0    88%
+tunix_rt_backend\metrics.py                               4      0      0      0   100%
+tunix_rt_backend\redi_client.py                          49     19      6      1    60%
+tunix_rt_backend\routers\__init__.py                      0      0      0      0   100%
+tunix_rt_backend\routers\datasets.py                     32      8      0      0    75%
+tunix_rt_backend\routers\evaluation.py                   35     19      4      0    41%
+tunix_rt_backend\routers\health.py                       26      1      4      0    97%
+tunix_rt_backend\routers\models.py                       66     40      6      0    36%
+tunix_rt_backend\routers\regression.py                   24     14      2      0    38%
+tunix_rt_backend\routers\traces.py                       71     27      4      0    64%
+tunix_rt_backend\routers\tuning.py                       45     28      4      0    35%
+tunix_rt_backend\routers\tunix.py                        45      3      6      1    92%
+tunix_rt_backend\routers\tunix_runs.py                  167    119     70      0    24%
+tunix_rt_backend\routers\ungar.py                        23      2      0      0    91%
+tunix_rt_backend\schemas\__init__.py                      7      0      0      0   100%
+tunix_rt_backend\schemas\dataset.py                      44      0      0      0   100%
+tunix_rt_backend\schemas\evaluation.py                   53      0      0      0   100%
+tunix_rt_backend\schemas\model_registry.py               33      0      0      0   100%
+tunix_rt_backend\schemas\regression.py                   39      0      0      0   100%
+tunix_rt_backend\schemas\score.py                        28      0      0      0   100%
+tunix_rt_backend\schemas\trace.py                        50      1      4      1    96%
+tunix_rt_backend\schemas\tuning.py                       65      0      2      0   100%
+tunix_rt_backend\schemas\tunix.py                        73      0      0      0   100%
+tunix_rt_backend\schemas\ungar.py                        13      0      0      0   100%
+tunix_rt_backend\scoring.py                             137     18     56      3    89%
+tunix_rt_backend\services\__init__.py                     7      0      0      0   100%
+tunix_rt_backend\services\artifact_storage.py            65     26     22      3    55%
+tunix_rt_backend\services\datasets_builder.py            43      1     16      1    97%
+tunix_rt_backend\services\datasets_export.py             45      1     12      2    95%
+tunix_rt_backend\services\datasets_ingest.py             40      0     12      0   100%
+tunix_rt_backend\services\evaluation.py                  78     14     28      6    72%
+tunix_rt_backend\services\judges.py                     178     38     48     16    76%
+tunix_rt_backend\services\model_registry.py             123     22     32      8    79%
+tunix_rt_backend\services\regression.py                  92     26     42     10    66%
+tunix_rt_backend\services\traces_batch.py                23      0      6      0   100%
+tunix_rt_backend\services\tuning_service.py             147     29     32      9    79%
+tunix_rt_backend\services\tunix_execution.py            209     67     54     14    62%
+tunix_rt_backend\services\tunix_export.py                18      0      4      0   100%
+tunix_rt_backend\services\ungar_generator.py             42     16     10      2    58%
+tunix_rt_backend\settings.py                             35      1      2      1    95%
+tunix_rt_backend\training\__init__.py                     0      0      0      0   100%
+tunix_rt_backend\training\renderers.py                   34      0      8      0   100%
+tunix_rt_backend\training\schema.py                      40      0      0      0   100%
+tunix_rt_backend\tuning\__init__.py                       2      0      0      0   100%
+tunix_rt_backend\tuning\sweep_runner.py                  95      1     12      1    98%
+tunix_rt_backend\worker.py                               56     17      8      0    70%
+---------------------------------------------------------------------------------------
+TOTAL                                                  2828    590    542     80    76%
+Required test coverage of 70.0% reached. Total coverage: 75.79%
+=========================== short test summary info ===========================
+SKIPPED [1] tests\test_services_ungar.py:93: UNGAR not installed; use: pip install -e '.[ungar]'
+SKIPPED [1] tests\test_services_ungar.py:116: UNGAR not installed; use: pip install -e '.[ungar]'
+SKIPPED [1] tests\test_tunix_execution.py:375: Tunix not installed; use: pip install -e '.[tunix]'
+SKIPPED [1] tests\test_tunix_execution.py:452: Tunix not installed; use: pip install -e '.[tunix]'
+SKIPPED [1] tests\test_ungar.py:137: UNGAR not installed; use: pip install -e '.[ungar]'
+SKIPPED [1] tests\test_ungar.py:153: UNGAR not installed; use: pip install -e '.[ungar]'
+SKIPPED [1] tests\test_ungar.py:186: UNGAR not installed; use: pip install -e '.[ungar]'
+SKIPPED [1] tests\test_ungar.py:204: UNGAR not installed; use: pip install -e '.[ungar]'
+SKIPPED [1] tests\test_ungar.py:226: UNGAR not installed; use: pip install -e '.[ungar]'
+SKIPPED [1] tests\test_ungar.py:264: UNGAR not installed; use: pip install -e '.[ungar]'
+SKIPPED [1] tests\test_worker.py:114: SKIP LOCKED requires PostgreSQL
+================ 384 passed, 11 skipped, 2 warnings in 49.42s =================

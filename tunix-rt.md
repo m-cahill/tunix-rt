@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M41 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** PyTorch Local Path (GPU Validated) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing (clean output) | **Status:** Submission-ready with demo docs and video checklist.
+**Milestone M42 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip`
 
 ## Overview
 
@@ -149,6 +149,16 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Evidence Capture**: `submission_runs/m41_v1/` with clean test output, README summary.
 - **No Backend/Training Changes**: Zero changes to backend logic, training scripts, or database schema.
 - 75 frontend tests passing, clean output.
+
+**M42 Enhancements:** Final Submission Package — Documentation and packaging only, no code changes:
+- **VIDEO_CHECKLIST.md**: Added source-of-truth statement, references `docs/DEMO.md` as authoritative guide.
+- **README Polish**: Added "Why Tunix RT?" section, Demo Flow, Training Paths, Evidence & Reproducibility, video URL placeholder.
+- **GPU Fragility Docs**: Added nightly PyTorch fragility warning to `CONTRIBUTING.md` with version pinning guidance.
+- **Packaging Script**: Updated `package_submission.py` prefix from m36 to m42.
+- **Final Test Run**: Backend 384 passed (75.79% coverage), Frontend 75 passed, outputs captured to `submission_runs/m42_v1/test_run_outputs/`.
+- **Evidence Index**: Created `submission_runs/m42_v1/evidence_index.md` documenting what each folder proves.
+- **Dependency Snapshot**: `pip_freeze_backend.txt` captured for reproducibility.
+- **Submission ZIP**: `tunix_rt_m42_2026-01-08_e54267b.zip` (104.8 KB) containing notebooks, configs, evalsets, manifests, and README.
 
 ## Database Schema
 

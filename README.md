@@ -2,9 +2,23 @@
 
 **Tunix Reasoning-Trace Framework for AI-Native Development**
 
-**Status:** M41 Complete ✅ | Coverage: >70% Backend Line | Training: PyTorch Local (RTX 5090 GPU Validated) | Frontend: 75 tests passing | Features: Full-Stack Reasoning Trace Pipeline, Leaderboard, Tuning, Model Registry | Database: PostgreSQL + Alembic
+🎥 **Demo Video:** *(link will be added upon submission)*
 
-A full-stack application for managing reasoning traces and integrating with the RediAI framework for the Tunix Hackathon.
+---
+
+## Why Tunix RT?
+
+Large language models can solve problems, but **how they reason** matters as much as the final answer. Tunix RT provides a complete pipeline to:
+
+1. **Capture** step-by-step reasoning traces (prompt → steps → answer)
+2. **Train** models to improve reasoning quality via SFT
+3. **Evaluate** and compare model performance on leaderboards
+
+**What makes this different:** Full-stack tooling from trace collection → dataset curation → training → reproducible evaluation, validated on consumer GPU hardware (RTX 5090).
+
+---
+
+**Status:** M42 Complete ✅ | Coverage: >70% Backend | Training: PyTorch Local (RTX 5090) + JAX (TPU) | Frontend: 75 tests | Database: PostgreSQL + Alembic
 
 ## Quick Start
 
@@ -124,6 +138,56 @@ docker compose up -d
 # Check health
 curl http://localhost:8000/api/health
 ```
+
+---
+
+## Demo Flow
+
+For a guided walkthrough of Tunix RT, see **[docs/DEMO.md](docs/DEMO.md)**.
+
+The demo covers:
+1. **Health Dashboard** — API, RediAI, UNGAR, Tunix status
+2. **Trace Management** — Upload, fetch, compare reasoning traces
+3. **Training Pipeline** — Export data, run training, view history
+4. **Leaderboard** — Evaluate and rank model performance
+5. **Model Registry** — Track trained artifacts with provenance
+
+---
+
+## Training Paths
+
+Tunix RT supports two training backends:
+
+| Path | Hardware | Use Case | Location |
+|------|----------|----------|----------|
+| **PyTorch (Local)** | GPU (RTX 5090 validated) | Local development, iteration | `training_pt/train.py` |
+| **JAX/Flax (TPU)** | TPU (Kaggle/Cloud) | Production runs, Kaggle submission | `training/train_jax.py` |
+
+**Local GPU Setup:** See [CONTRIBUTING.md](CONTRIBUTING.md#gpu-development-rtx-5090--blackwell)
+
+**Kaggle/TPU:** See [docs/kaggle_submission.md](docs/kaggle_submission.md)
+
+---
+
+## Evidence & Reproducibility
+
+All training runs produce evidence artifacts in `submission_runs/`:
+
+```
+submission_runs/m42_v1/
+├── run_manifest.json     # Dataset, model, config, commit SHA
+├── eval_summary.json     # Evaluation scores with scorecard
+├── evidence_index.md     # What each folder proves
+├── test_run_outputs/     # CI-equivalent test captures
+└── pip_freeze_*.txt      # Exact dependency versions
+```
+
+**Why this matters:**
+- Judges can verify claims
+- Results are reproducible
+- Provenance is tracked end-to-end
+
+---
 
 ## Configuration
 

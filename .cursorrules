@@ -16,3 +16,25 @@
 # All modules and functions should include verbose commenting.
 
 # Ensure that the modules and necessary files are not needlessly spread out in different directories. The main code and files should be in a portable, well-structured directory making it easier to copy and access those files without ancillary files getting in the way.
+
+
+# Tool Logging Rule
+Whenever you invoke a tool (run, fix, apply_patch, search, test, etc.), append a short entry to the appropriate toolcalls .md **BEFORE** running the tool for the milestone describing:
+- the tool name
+- the purpose of the call
+- the files involved
+- the timestamp
+
+# Recovery Rule
+**Before** performing any action, check appropriate toolcalls .md for the milestone for the most recent entry. 
+Restate:
+- what you were doing
+- what step was next
+- whether the previous tool call completed
+Wait for confirmation before continuing.
+
+# PowerShell / Terminal Log Discipline
+- Log expected terminal output in toolcalls.md BEFORE running commands
+- Summarize results AFTER completion
+- Add "CHECKPOINT:" markers after major steps (visible in toolcalls.md)
+- If session disrupts mid-task, check toolcalls.md for last CHECKPOINT to resume

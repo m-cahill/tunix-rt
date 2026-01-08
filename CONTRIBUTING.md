@@ -146,6 +146,10 @@ CUDA: True, Device: NVIDIA GeForce RTX 5090
 - **Why separate venv?** PyTorch nightly cu128 is required for sm_120 support; stable PyTorch wheels only support up to sm_90.
 - **Version:** torch 2.11.0.dev+cu128 (as of M40, January 2026)
 - **Driver Requirement:** NVIDIA driver 576.xx or later with CUDA 12.8+ support
+- **Fragility Warning:** Nightly wheels may break without notice. If issues arise:
+  1. Check [PyTorch nightly status](https://download.pytorch.org/whl/nightly/cu128)
+  2. Try a specific date: `pip install --pre torch==2.11.0.dev20260102+cu128 ...`
+  3. Evidence snapshot: `submission_runs/m42_v1/pip_freeze_training_pt_gpu.txt`
 
 ## Database Migrations
 
