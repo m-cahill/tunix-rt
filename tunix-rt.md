@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M40 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** PyTorch Local Path (GPU Validated) | **Hardware:** RTX 5090 (sm_120 Active) | **Status:** Native GPU acceleration enabled via PyTorch nightly cu128.
+**Milestone M41 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** PyTorch Local Path (GPU Validated) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing (clean output) | **Status:** Submission-ready with demo docs and video checklist.
 
 ## Overview
 
@@ -141,6 +141,14 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 
 **M40 Enhancements:** Native RTX 5090 GPU Acceleration — Resolved M39 blocker by installing PyTorch nightly `cu128` wheels (torch 2.11.0.dev+cu128), confirmed CUDA 12.8 support for Blackwell sm_120 compute capability, dedicated GPU virtual environment (`.venv-gpu`), GPU smoke test validated (31.7 samples/sec throughput on GPT-2), evidence captured (`submission_runs/m40_v1`), training infrastructure ready for production runs.
 
+**M41 Enhancements:** Frontend Polish, DX Cleanup, and Submission Readiness:
+- **Frontend Test Hygiene**: Suppressed React `act()` warnings with documented rationale (concurrent health fetches, 30-second polling), intercepted interval timers during tests, zero test output pollution.
+- **Key Prop Fixes**: Fixed "unique key prop" warnings in `Tuning.tsx` and `App.tsx` by using `React.Fragment` with explicit keys.
+- **Demo Documentation**: Created `docs/DEMO.md` with demo flow guide for judges (trace management, training pipeline, leaderboard).
+- **Video Checklist**: Created `docs/submission/VIDEO_CHECKLIST.md` with detailed recording checklist (≤3 min, content coverage, talking points).
+- **Evidence Capture**: `submission_runs/m41_v1/` with clean test output, README summary.
+- **No Backend/Training Changes**: Zero changes to backend logic, training scripts, or database schema.
+- 75 frontend tests passing, clean output.
 
 ## Database Schema
 

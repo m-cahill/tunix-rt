@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   TuningJob,
   TuningJobCreate,
@@ -174,8 +174,8 @@ export function Tuning() {
         </thead>
         <tbody>
           {jobs.map(job => (
-            <>
-              <tr key={job.id} style={{borderBottom: '1px solid #eee'}}>
+            <React.Fragment key={job.id}>
+              <tr style={{borderBottom: '1px solid #eee'}}>
                 <td style={{padding: '10px'}}>
                   <span className={`status-badge status-${job.status}`}>{job.status}</span>
                 </td>
@@ -225,7 +225,7 @@ export function Tuning() {
                   </td>
                 </tr>
               )}
-            </>
+            </React.Fragment>
           ))}
         </tbody>
       </table>
