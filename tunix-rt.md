@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M43 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M43:** Full GPU training run validated
+**Milestone M44 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M44:** Full 3-epoch production training validated
 
 ## Overview
 
@@ -167,6 +167,14 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **PyTorch Path**: Validated PyTorch nightly cu128 as production-ready on Blackwell architecture.
 - **Evidence Captured**: `submission_runs/m43_v1/` with checkpoints, metrics, predictions, and summary.
 - **Zero Code Changes**: M42 submission remains authoritative; M43 is evidence-only.
+
+**M44 Enhancements:** Full Production Training (3 Epochs, Evidence-Only):
+- **Extended Training**: 3 epochs (414 steps) vs M43's 1 epoch, 203.4s runtime.
+- **Improved Throughput**: 8.11 samples/sec on RTX 5090.
+- **Loss Convergence**: 2.21 → 0.72 over 3 epochs.
+- **Full Evaluation**: 100 examples from eval_v2.jsonl evaluated.
+- **Evidence Captured**: `submission_runs/m44_v1/` with complete training artifacts.
+- **Zero Code Changes**: M42 submission remains authoritative; M44 is evidence-only.
 
 ## Database Schema
 

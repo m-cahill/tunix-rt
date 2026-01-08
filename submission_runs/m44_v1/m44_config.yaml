@@ -1,0 +1,20 @@
+# M44 Training Configuration
+# Based on submission_local_gpu.yaml with 3 epochs for extended run
+# This is an evidence artifact, not a codebase change
+
+model:
+  model_id: "google/gemma-2b"
+  revision: "main"
+
+training:
+  device: "cuda"
+  batch_size: 1
+  max_seq_length: 128
+  gradient_accumulation_steps: 4
+  num_epochs: 3  # M44: Extended from 1 to 3 epochs (~414 steps)
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  dtype: "bfloat16"
+  optimizer: "adafactor"
+  save_every_steps: 100
+  logging_steps: 10
