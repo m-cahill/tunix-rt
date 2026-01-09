@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M49 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M49:** Observer Model for Error Detection — Observer achieves 50% detection vs generator's 0%, validation AUC 0.969, architectural separation validated
+**Milestone M50 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M50:** Recursive System Post-Mortem — Phase 5 complete (M45→M50), thesis: "Self-correction fails because generation lacks state-comparison; error detection succeeds when architecturally separated"
 
 ## Overview
 
@@ -225,6 +225,17 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Phase 5 Complete**: M45 → M46 → M47 → M48 → M49 forms complete research narrative.
 - **Artifacts**: `research/m49_observer_error_detection/` with scripts, model, metrics, and contrastive demo.
 - **Research-Only**: Demonstration milestone — capability separation proven.
+
+**M50 Enhancements:** Recursive System Post-Mortem (Research, Phase 5):
+- **Objective**: Synthesize Phase 5 research arc (M45-M49) into coherent system-level insight.
+- **Thesis**: "Self-correction fails because generation lacks state-comparison operator; error detection succeeds when architecturally separated."
+- **Deliverables**: Executive summary (1-2 pages), phase timeline, architecture diagrams, full analysis, provenance tracking.
+- **Key Numbers**: M45 25% loss improvement, M46 5%→97% verification, M47 0% detection, M48 97-100% ritual, M49 50% detection.
+- **Claims Made**: (1) Verification form trainable, (2) Verification function not trainable naively, (3) Error detection separable.
+- **Non-Claims**: Not production-ready, not claiming reasoning solved, not generalizing beyond arithmetic.
+- **Phase 5 Complete**: Closed, coherent, falsifiable, documented.
+- **Artifacts**: `research/m50_recursive_postmortem/` with executive_summary.md, phase5_timeline.md, architecture_diagram.md, analysis.md, provenance.json.
+- **Documentation-Only**: Synthesis milestone — no training, no code changes.
 
 ## Database Schema
 

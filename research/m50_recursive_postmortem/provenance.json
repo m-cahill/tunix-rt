@@ -1,0 +1,118 @@
+{
+  "milestone": "M50",
+  "title": "Recursive System Post-Mortem",
+  "type": "synthesis",
+  "created_at": "2026-01-09T22:30:00Z",
+  "status": "complete",
+  "description": "Recursive synthesis of Phase 5 research arc (M45-M49), producing a coherent system-level insight about reasoning, verification, and error detection.",
+
+  "phase": {
+    "number": 5,
+    "name": "Post-Submission Research",
+    "status": "complete",
+    "milestones": ["M45", "M46", "M47", "M48", "M49", "M50"]
+  },
+
+  "thesis": "Self-correction fails not because models 'cannot reason,' but because generation lacks a state-comparison operator. Verification behavior is trainable as form, but not as function. Error detection succeeds when architecturally separated from generation.",
+
+  "source_artifacts": {
+    "m45_curriculum_reasoning": {
+      "path": "research/m45_curriculum_reasoning/",
+      "key_files": [
+        "analysis.md",
+        "provenance.json",
+        "data/stage_a.jsonl",
+        "data/stage_b.jsonl",
+        "data/stage_c.jsonl"
+      ],
+      "key_finding": "Curriculum ordering changes reasoning structure (25% loss improvement)"
+    },
+    "m46_structured_self_correction": {
+      "path": "research/m46_structured_self_correction/",
+      "key_files": [
+        "analysis.md",
+        "provenance.json",
+        "data/stage_c_self_correct.jsonl",
+        "eval/m46_self_correct_predictions.jsonl"
+      ],
+      "key_finding": "Verification behavior is trainable (5% → 97% frequency)"
+    },
+    "m47_error_correction_fidelity": {
+      "path": "research/m47_error_correction_fidelity/",
+      "key_files": [
+        "analysis.md",
+        "provenance.json",
+        "error_manifest.json",
+        "metrics/fidelity_comparison.json"
+      ],
+      "key_finding": "Verification is structural, not causal (0% error detection)"
+    },
+    "m48_reasoning_failure_topology": {
+      "path": "research/m48_reasoning_failure_topology/",
+      "key_files": [
+        "analysis.md",
+        "provenance.json",
+        "taxonomy/failure_taxonomy.md",
+        "taxonomy/contrastive_examples.md",
+        "taxonomy/reasoning_graph.md",
+        "metrics/failure_labels.json"
+      ],
+      "key_finding": "Ritual verification at 97-100%; lack of state-difference operator"
+    },
+    "m49_observer_error_detection": {
+      "path": "research/m49_observer_error_detection/",
+      "key_files": [
+        "analysis.md",
+        "provenance.json",
+        "contrastive_demo.md",
+        "metrics/observer_metrics.json",
+        "models/observer_model.npz"
+      ],
+      "key_finding": "Observer achieves 50% detection (vs generator's 0%), AUC 0.969"
+    }
+  },
+
+  "key_metrics_summary": {
+    "m45_curriculum_loss_improvement": "25%",
+    "m46_verification_frequency_increase": "+92pp (5% → 97%)",
+    "m47_generator_error_detection": "0%",
+    "m48_ritual_verification_rate": "97-100%",
+    "m49_observer_detection_rate": "50%",
+    "m49_observer_validation_auc": 0.969
+  },
+
+  "claims_made": [
+    "Verification structure is trainable",
+    "Verification function is not trainable (naively)",
+    "Self-correction fails architecturally (no state comparison)",
+    "Error detection is separable from generation",
+    "A simple observer can detect what generators cannot"
+  ],
+
+  "non_claims": [
+    "We solved reasoning",
+    "Models can now self-correct",
+    "The observer is production-ready",
+    "This generalizes to all domains"
+  ],
+
+  "outputs": {
+    "phase5_timeline.md": "Milestone-by-milestone Q&A table with key metrics",
+    "architecture_diagram.md": "Mermaid diagrams showing failure and success points",
+    "analysis.md": "Full synthesis explaining why self-correction fails and what works instead",
+    "executive_summary.md": "1-2 page judge-friendly summary"
+  },
+
+  "audience": ["Technical judges", "Future developers"],
+
+  "framing": "We asked a sequence of precise questions, falsified some intuitive ideas, and arrived at a clearer architectural understanding of reasoning systems.",
+
+  "git_commits": {
+    "m45": "Phase 5 research/m45",
+    "m46": "M46: Structured Self-Correction",
+    "m47": "M47: Error Correction Fidelity",
+    "m48": "M48: Reasoning Failure Topology",
+    "m49": "M49: Observer Model for Error Detection (5549304)"
+  }
+}
+
