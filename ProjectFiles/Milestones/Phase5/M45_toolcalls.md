@@ -198,10 +198,33 @@ Throughput: ~8.3 samples/sec (Stage C)
 **Purpose:** Run milestone audit, finalize documentation, push to GitHub
 **Files:**
 - ProjectFiles/Milestones/Phase5/M45_audit.md
-- Git push to origin
+- .gitignore (updated with research checkpoints exclusion)
+- research/README.md (new)
+- Git commit: 60c9c33
 
-**Status:** IN PROGRESS
+**Status:** ✅ COMPLETE
+
+**Commit:** `60c9c33 M45: Curriculum Reasoning Training - research complete`
+**Push:** origin/milestone/model-pivot-gemma2b-flax
+
+**CHECKPOINT:** M45 complete and pushed to GitHub.
 
 ---
+
+# M45 MILESTONE CLOSED
+
+**Final Status:** ✅ Complete
+**Commit SHA:** 60c9c33
+**Date:** 2026-01-09
+
+All deliverables produced:
+- [x] Dataset split script and stage files
+- [x] Training configs (3)
+- [x] Sequential checkpoints (3)
+- [x] Provenance manifest
+- [x] Evaluation outputs (4 checkpoints)
+- [x] Qualitative analysis
+- [x] Milestone audit
+- [x] Pushed to GitHub
 
 
