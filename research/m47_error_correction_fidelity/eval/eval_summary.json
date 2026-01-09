@@ -1,0 +1,149 @@
+{
+  "created_at": "2026-01-09T02:06:20.599932+00:00",
+  "results": {
+    "m46_self_correct": {
+      "holdout_error": {
+        "checkpoint_name": "m46_self_correct on holdout_error",
+        "checkpoint_path": "C:\\coding\\tunix-rt\\research\\m46_structured_self_correction\\checkpoints\\self_correct\\final_model",
+        "start_time": "2026-01-09T02:00:52.741082+00:00",
+        "end_time": "2026-01-09T02:01:49.288156+00:00",
+        "runtime_seconds": 56.547074,
+        "fidelity_metrics": {
+          "total": 34,
+          "total_with_error": 34,
+          "total_clean": 0,
+          "error_detection_rate": 0.0,
+          "correction_attempt_rate": 0.0,
+          "correction_accuracy": 0.0,
+          "false_correction_rate": 0,
+          "net_improvement_rate": 0.29411764705882354,
+          "error_detected_count": 0,
+          "correction_attempted_count": 0,
+          "correction_fix_count": 0,
+          "false_correction_count": 0,
+          "net_improved_count": 10
+        },
+        "output_file": "C:\\coding\\tunix-rt\\research\\m47_error_correction_fidelity\\eval\\m46_self_correct_holdout_error_predictions.jsonl"
+      },
+      "holdout_clean": {
+        "checkpoint_name": "m46_self_correct on holdout_clean",
+        "checkpoint_path": "C:\\coding\\tunix-rt\\research\\m46_structured_self_correction\\checkpoints\\self_correct\\final_model",
+        "start_time": "2026-01-09T02:01:49.313162+00:00",
+        "end_time": "2026-01-09T02:02:41.166776+00:00",
+        "runtime_seconds": 51.853614,
+        "fidelity_metrics": {
+          "total": 34,
+          "total_with_error": 0,
+          "total_clean": 34,
+          "error_detection_rate": 0,
+          "correction_attempt_rate": 0.0,
+          "correction_accuracy": 0,
+          "false_correction_rate": 0.0,
+          "net_improvement_rate": 0,
+          "error_detected_count": 0,
+          "correction_attempted_count": 0,
+          "correction_fix_count": 0,
+          "false_correction_count": 0,
+          "net_improved_count": 0
+        },
+        "output_file": "C:\\coding\\tunix-rt\\research\\m47_error_correction_fidelity\\eval\\m46_self_correct_holdout_clean_predictions.jsonl"
+      }
+    },
+    "m47_clean": {
+      "holdout_error": {
+        "checkpoint_name": "m47_clean on holdout_error",
+        "checkpoint_path": "C:\\coding\\tunix-rt\\research\\m47_error_correction_fidelity\\checkpoints\\clean\\final_model",
+        "start_time": "2026-01-09T02:02:41.190798+00:00",
+        "end_time": "2026-01-09T02:03:44.304382+00:00",
+        "runtime_seconds": 63.113584,
+        "fidelity_metrics": {
+          "total": 34,
+          "total_with_error": 34,
+          "total_clean": 0,
+          "error_detection_rate": 0.0,
+          "correction_attempt_rate": 0.0,
+          "correction_accuracy": 0.0,
+          "false_correction_rate": 0,
+          "net_improvement_rate": 0.29411764705882354,
+          "error_detected_count": 0,
+          "correction_attempted_count": 0,
+          "correction_fix_count": 0,
+          "false_correction_count": 0,
+          "net_improved_count": 10
+        },
+        "output_file": "C:\\coding\\tunix-rt\\research\\m47_error_correction_fidelity\\eval\\m47_clean_holdout_error_predictions.jsonl"
+      },
+      "holdout_clean": {
+        "checkpoint_name": "m47_clean on holdout_clean",
+        "checkpoint_path": "C:\\coding\\tunix-rt\\research\\m47_error_correction_fidelity\\checkpoints\\clean\\final_model",
+        "start_time": "2026-01-09T02:03:44.331341+00:00",
+        "end_time": "2026-01-09T02:04:44.517923+00:00",
+        "runtime_seconds": 60.186582,
+        "fidelity_metrics": {
+          "total": 34,
+          "total_with_error": 0,
+          "total_clean": 34,
+          "error_detection_rate": 0,
+          "correction_attempt_rate": 0.0,
+          "correction_accuracy": 0,
+          "false_correction_rate": 0.0,
+          "net_improvement_rate": 0,
+          "error_detected_count": 0,
+          "correction_attempted_count": 0,
+          "correction_fix_count": 0,
+          "false_correction_count": 0,
+          "net_improved_count": 0
+        },
+        "output_file": "C:\\coding\\tunix-rt\\research\\m47_error_correction_fidelity\\eval\\m47_clean_holdout_clean_predictions.jsonl"
+      }
+    },
+    "m47_error_aware": {
+      "holdout_error": {
+        "checkpoint_name": "m47_error_aware on holdout_error",
+        "checkpoint_path": "C:\\coding\\tunix-rt\\research\\m47_error_correction_fidelity\\checkpoints\\error_aware\\final_model",
+        "start_time": "2026-01-09T02:04:44.549056+00:00",
+        "end_time": "2026-01-09T02:05:32.604117+00:00",
+        "runtime_seconds": 48.055061,
+        "fidelity_metrics": {
+          "total": 34,
+          "total_with_error": 34,
+          "total_clean": 0,
+          "error_detection_rate": 0.0,
+          "correction_attempt_rate": 0.0,
+          "correction_accuracy": 0.0,
+          "false_correction_rate": 0,
+          "net_improvement_rate": 0.29411764705882354,
+          "error_detected_count": 0,
+          "correction_attempted_count": 0,
+          "correction_fix_count": 0,
+          "false_correction_count": 0,
+          "net_improved_count": 10
+        },
+        "output_file": "C:\\coding\\tunix-rt\\research\\m47_error_correction_fidelity\\eval\\m47_error_aware_holdout_error_predictions.jsonl"
+      },
+      "holdout_clean": {
+        "checkpoint_name": "m47_error_aware on holdout_clean",
+        "checkpoint_path": "C:\\coding\\tunix-rt\\research\\m47_error_correction_fidelity\\checkpoints\\error_aware\\final_model",
+        "start_time": "2026-01-09T02:05:32.631094+00:00",
+        "end_time": "2026-01-09T02:06:20.574795+00:00",
+        "runtime_seconds": 47.943701,
+        "fidelity_metrics": {
+          "total": 34,
+          "total_with_error": 0,
+          "total_clean": 34,
+          "error_detection_rate": 0,
+          "correction_attempt_rate": 0.0,
+          "correction_accuracy": 0,
+          "false_correction_rate": 0.0,
+          "net_improvement_rate": 0,
+          "error_detected_count": 0,
+          "correction_attempted_count": 0,
+          "correction_fix_count": 0,
+          "false_correction_count": 0,
+          "net_improved_count": 0
+        },
+        "output_file": "C:\\coding\\tunix-rt\\research\\m47_error_correction_fidelity\\eval\\m47_error_aware_holdout_clean_predictions.jsonl"
+      }
+    }
+  }
+}

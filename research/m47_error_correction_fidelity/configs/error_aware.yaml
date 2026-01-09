@@ -1,0 +1,30 @@
+# M47 Error Correction Fidelity — Error-Aware Run Configuration
+# Dataset: stage_c_error_self_correct.jsonl (errors with explicit corrections)
+# Epochs: 1 (per M47 plan)
+# Init: M46 Self-Correct checkpoint
+
+model:
+  model_id: "google/gemma-2b"
+  revision: "main"
+
+training:
+  device: "cuda"
+  batch_size: 1
+  max_seq_length: 128
+  gradient_accumulation_steps: 4
+  num_epochs: 1
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  dtype: "bfloat16"
+  optimizer: "adafactor"
+  save_every_steps: 50
+  logging_steps: 10
+
+meta:
+  milestone: "M47"
+  run_type: "error_aware"
+  run_description: "Error-injected dataset with explicit CORRECT blocks showing real corrections"
+  dataset: "stage_c_error_self_correct.jsonl"
+  epochs: 1
+  init_checkpoint: "m46_self_correct_final"
+

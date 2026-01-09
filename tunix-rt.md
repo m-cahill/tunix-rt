@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M46 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M46:** Structured Self-Correction validated — verification behavior trainable (+92pp increase)
+**Milestone M47 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M47:** Error Correction Fidelity tested — verification is structural, not causal (0% error detection, but 100% VERIFY/CORRECT structure learned)
 
 ## Overview
 
@@ -193,6 +193,17 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Behavioral Metrics**: Correction language at 84%, false verification at 8% (Guardrail 2 tracked).
 - **Artifacts**: `research/m46_structured_self_correction/` with datasets, checkpoints, behavioral metrics, and analysis.
 - **Research-Only**: No changes to M42 submission; M46 is exploratory research demonstrating teachable verification.
+
+**M47 Enhancements:** Error Correction Fidelity (Research, Phase 5):
+- **Objective**: Test whether training on explicit error corrections develops error-detection capability.
+- **Error Injection**: 21 errors injected into Stage-C traces (6.8%), 80% intermediate-propagating, 20% final-only.
+- **Training**: Clean (M46-style) + Error-Aware (with explicit CORRECT blocks showing fixes), 1 epoch each from M46 checkpoint.
+- **Key Finding**: Verification is **structural** (template-following) not **causal** (error-detecting). 0% error detection across all models.
+- **Positive Signal**: All models produce VERIFY/CORRECT blocks reliably (100%), false correction rate is 0%.
+- **Threshold Assessment**: Detection ≥20% (actual: 0%) ❌, Correction ≥10% (actual: 0%) ❌, False corrections ≤25% (actual: 0%) ✅.
+- **Implications for M48**: Higher error injection rate (30-50%), contrastive training, explicit error markers, chain-of-thought verification.
+- **Artifacts**: `research/m47_error_correction_fidelity/` with datasets, checkpoints, fidelity metrics, and analysis.
+- **Research-Only**: Negative but scientifically valuable result — provides clear direction for M48.
 
 ## Database Schema
 
