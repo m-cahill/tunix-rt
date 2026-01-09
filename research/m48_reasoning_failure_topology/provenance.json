@@ -1,0 +1,104 @@
+{
+  "milestone": "M48",
+  "title": "Reasoning Failure Topology",
+  "type": "analysis",
+  "created_at": "2026-01-09T18:20:00Z",
+  "status": "complete",
+  "description": "Analysis of why verification becomes ritual instead of diagnostic. Maps failure modes of model self-correction.",
+
+  "inputs": {
+    "m46_self_correct_holdout_error": {
+      "path": "inputs/m46_self_correct_holdout_error_predictions.jsonl",
+      "samples": 34,
+      "description": "M46 self-correct predictions on error-injected holdout"
+    },
+    "m46_self_correct_holdout_clean": {
+      "path": "inputs/m46_self_correct_holdout_clean_predictions.jsonl",
+      "samples": 34,
+      "description": "M46 self-correct predictions on clean holdout"
+    },
+    "m47_error_aware_holdout_error": {
+      "path": "inputs/m47_error_aware_holdout_error_predictions.jsonl",
+      "samples": 34,
+      "description": "M47 error-aware predictions on error-injected holdout"
+    },
+    "m47_error_aware_holdout_clean": {
+      "path": "inputs/m47_error_aware_holdout_clean_predictions.jsonl",
+      "samples": 34,
+      "description": "M47 error-aware predictions on clean holdout"
+    },
+    "error_manifest": {
+      "path": "inputs/error_manifest.json",
+      "description": "Ground truth for injected errors from M47"
+    }
+  },
+
+  "scripts": {
+    "classify_failures.py": {
+      "path": "scripts/classify_failures.py",
+      "sha256_prefix": "5002252285d99688",
+      "description": "Automated failure classification using structural + regex heuristics"
+    },
+    "contrastive_analysis.py": {
+      "path": "scripts/contrastive_analysis.py",
+      "sha256_prefix": "28f97cca7671e932",
+      "description": "Generates contrastive pair examples"
+    }
+  },
+
+  "outputs": {
+    "failure_taxonomy.md": {
+      "path": "taxonomy/failure_taxonomy.md",
+      "sha256_prefix": "2ab40c976fd63a13",
+      "description": "6-class failure taxonomy with definitions and heuristics"
+    },
+    "failure_labels.json": {
+      "path": "metrics/failure_labels.json",
+      "sha256_prefix": "eb0898f231acde49",
+      "description": "Per-trace failure classifications"
+    },
+    "failure_counts.json": {
+      "path": "metrics/failure_counts.json",
+      "sha256_prefix": "2aae3bdf7937c197",
+      "description": "Aggregate counts by source and class"
+    },
+    "contrastive_examples.md": {
+      "path": "taxonomy/contrastive_examples.md",
+      "sha256_prefix": "0a4a42108e5ca80b",
+      "description": "5 representative contrastive failure examples"
+    },
+    "reasoning_graph.md": {
+      "path": "taxonomy/reasoning_graph.md",
+      "sha256_prefix": "48a7ca8450280725",
+      "description": "Mermaid diagrams showing structural disconnection"
+    },
+    "analysis.md": {
+      "path": "analysis.md",
+      "sha256_prefix": "5fa15411cdcdc3de",
+      "description": "Synthesis explaining why M47 failed"
+    }
+  },
+
+  "key_findings": {
+    "dominant_failure_class": "ritual_verification",
+    "ritual_verification_rate": "97-100%",
+    "successful_detections": 0,
+    "cross_model_delta": "No change between M46 and M47",
+    "primary_insight": "Verification is structural (template-following) not causal (error-detecting)"
+  },
+
+  "conclusions": [
+    "Verification structure ≠ Verification function",
+    "Prior calibration (93% no-error) → default to 'No correction needed'",
+    "Missing contrastive pairs prevents learning state comparison",
+    "Autoregressive generation lacks explicit diff operator"
+  ],
+
+  "implications_for_future_work": [
+    "Error density needs 30-50% (not 6.8%)",
+    "Contrastive pairs: (error, clean) for same problem",
+    "Value grounding: VERIFY must reference specific numbers",
+    "Comparison training: (before, after, diff) triplets"
+  ]
+}
+

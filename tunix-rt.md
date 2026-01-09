@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M47 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M47:** Error Correction Fidelity tested — verification is structural, not causal (0% error detection, but 100% VERIFY/CORRECT structure learned)
+**Milestone M48 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M48:** Reasoning Failure Topology mapped — Ritual Verification at 97-100%, verification is structural not causal, training design failure identified
 
 ## Overview
 
@@ -204,6 +204,16 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Implications for M48**: Higher error injection rate (30-50%), contrastive training, explicit error markers, chain-of-thought verification.
 - **Artifacts**: `research/m47_error_correction_fidelity/` with datasets, checkpoints, fidelity metrics, and analysis.
 - **Research-Only**: Negative but scientifically valuable result — provides clear direction for M48.
+
+**M48 Enhancements:** Reasoning Failure Topology (Research, Phase 5):
+- **Objective**: Map failure modes of self-correction to explain why verification becomes ritual.
+- **Key Finding**: Ritual Verification accounts for 97-100% of all verification behavior across M46 and M47.
+- **Failure Taxonomy**: 6-class taxonomy with structural + regex heuristics for automated classification.
+- **Root Causes**: (1) Template learning dominates, (2) Low error density (6.8%), (3) No contrastive pairs, (4) Missing diff operator.
+- **Mechanistic Insight**: Verification operates as sequence completion, not state comparison. No conditional branch based on computational content.
+- **Implications**: Future work needs 30-50% error density, contrastive pairs, value grounding, and (before, after, diff) triplets.
+- **Artifacts**: `research/m48_reasoning_failure_topology/` with taxonomy, labels, contrastive examples, Mermaid diagrams, and synthesis analysis.
+- **Research-Only**: Analysis milestone — understanding, not improvement.
 
 ## Database Schema
 

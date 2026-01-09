@@ -221,7 +221,7 @@
 
 ## FINAL CHECKPOINT
 **Status:** ✅ MILESTONE CLOSED  
-**Git Commit:** `445e00f`  
-**Ready for:** M48 planning (higher error injection, contrastive training)
+**Git Commit:** `c58db88`  
+**Ready for:** M48 (Reasoning Failure Topology — analysis milestone)
 
 
