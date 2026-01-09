@@ -206,6 +206,22 @@
 ## CHECKPOINT: M47 Complete
 **Status:** ✅ COMPLETE  
 **Result:** Negative but scientifically valuable finding — verification is structural, not causal  
-**Ready for:** Documentation update, git commit, M48 planning
+
+---
+
+### Entry 014 — 2026-01-09T18:30
+**Tool:** run_terminal_cmd (git commit + push)  
+**Purpose:** Commit and push M47 milestone  
+**Files:** 30 files changed, 4462 insertions
+
+**Git Commit:** `445e00f`  
+**Message:** "M47: Error Correction Fidelity - negative but valuable result"
+
+---
+
+## FINAL CHECKPOINT
+**Status:** ✅ MILESTONE CLOSED  
+**Git Commit:** `445e00f`  
+**Ready for:** M48 planning (higher error injection, contrastive training)
 
 
