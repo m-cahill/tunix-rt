@@ -1,0 +1,31 @@
+# M45 Curriculum Training — Stage C Configuration
+# Full complexity: reasoning traces with 4+ steps + edge cases
+# Epochs: 3 (long-trace + verification emphasis)
+# Init: Checkpoint from Stage B
+
+model:
+  model_id: "google/gemma-2b"
+  revision: "main"
+
+training:
+  device: "cuda"
+  batch_size: 1
+  max_seq_length: 128
+  gradient_accumulation_steps: 4
+  num_epochs: 3  # Stage C: 3 epochs (locked per M45_answers.md)
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  dtype: "bfloat16"
+  optimizer: "adafactor"
+  save_every_steps: 100
+  logging_steps: 10
+
+# Metadata for provenance
+meta:
+  milestone: "M45"
+  stage: "C"
+  stage_description: "Full complexity — reasoning 4+ steps + edge cases"
+  dataset: "stage_c.jsonl"
+  epochs: 3
+  init_checkpoint: "stage_b_final"
+

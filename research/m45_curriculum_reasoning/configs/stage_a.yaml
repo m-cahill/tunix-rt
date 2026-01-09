@@ -1,0 +1,31 @@
+# M45 Curriculum Training — Stage A Configuration
+# Low complexity: synthetic + golden_style traces (2 steps each)
+# Epochs: 2 (warm-up, pattern grounding)
+# Init: Base Gemma 2B
+
+model:
+  model_id: "google/gemma-2b"
+  revision: "main"
+
+training:
+  device: "cuda"
+  batch_size: 1
+  max_seq_length: 128
+  gradient_accumulation_steps: 4
+  num_epochs: 2  # Stage A: 2 epochs (locked per M45_answers.md)
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  dtype: "bfloat16"
+  optimizer: "adafactor"
+  save_every_steps: 50
+  logging_steps: 10
+
+# Metadata for provenance
+meta:
+  milestone: "M45"
+  stage: "A"
+  stage_description: "Low complexity — synthetic + golden_style"
+  dataset: "stage_a.jsonl"
+  epochs: 2
+  init_checkpoint: "base"
+

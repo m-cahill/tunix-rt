@@ -1,0 +1,31 @@
+# M45 Curriculum Training — Stage B Configuration
+# Medium complexity: reasoning traces with 3 steps
+# Epochs: 2 (structured reasoning stabilization)
+# Init: Checkpoint from Stage A
+
+model:
+  model_id: "google/gemma-2b"
+  revision: "main"
+
+training:
+  device: "cuda"
+  batch_size: 1
+  max_seq_length: 128
+  gradient_accumulation_steps: 4
+  num_epochs: 2  # Stage B: 2 epochs (locked per M45_answers.md)
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  dtype: "bfloat16"
+  optimizer: "adafactor"
+  save_every_steps: 50
+  logging_steps: 10
+
+# Metadata for provenance
+meta:
+  milestone: "M45"
+  stage: "B"
+  stage_description: "Medium complexity — reasoning with 3 steps"
+  dataset: "stage_b.jsonl"
+  epochs: 2
+  init_checkpoint: "stage_a_final"
+

@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M44 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M44:** Full 3-epoch production training validated
+**Milestone M45 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M45:** Curriculum Reasoning Training validated — trace structure improvements demonstrated
 
 ## Overview
 
@@ -175,6 +175,15 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Full Evaluation**: 100 examples from eval_v2.jsonl evaluated.
 - **Evidence Captured**: `submission_runs/m44_v1/` with complete training artifacts.
 - **Zero Code Changes**: M42 submission remains authoritative; M44 is evidence-only.
+
+**M45 Enhancements:** Curriculum Reasoning Training (Research, Phase 5):
+- **Hypothesis Validated**: Curriculum ordering reshapes reasoning trace structure without changing model/optimizer.
+- **Dataset Partitioning**: dev-reasoning-v2 split into Stage A (145 low), Stage B (64 medium), Stage C (341 full) based on category and trace length.
+- **Sequential Training**: A (2 epochs) → B (2 epochs) → C (3 epochs), total 364 steps, 220s runtime.
+- **Loss Progression**: A: 0.564 → B: 0.291 → C: 0.191 (lower than M44's 0.72).
+- **Trace Structure Changes**: Post-curriculum models exhibit formula-first reasoning, explicit decomposition, and verification language.
+- **Artifacts**: `research/m45_curriculum_reasoning/` with datasets, configs, checkpoints, provenance, and analysis.
+- **Research-Only**: No changes to M42 submission; M45 is exploratory research for differentiation.
 
 ## Database Schema
 

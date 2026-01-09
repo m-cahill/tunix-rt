@@ -1,0 +1,123 @@
+{
+  "created_at": "2026-01-09T00:46:34.967682+00:00",
+  "eval_set": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\..\\..\\training\\evalsets\\eval_v2.jsonl",
+  "total_examples": 100,
+  "results": {
+    "m44_baseline": {
+      "checkpoint_name": "m44_baseline",
+      "checkpoint_path": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\..\\..\\submission_runs\\m44_v1\\training_output\\final_model",
+      "eval_set": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\..\\..\\training\\evalsets\\eval_v2.jsonl",
+      "start_time": "2026-01-09T00:40:58.179343+00:00",
+      "end_time": "2026-01-09T00:42:24.478922+00:00",
+      "runtime_seconds": 86.299579,
+      "total_examples": 100,
+      "correct": 0,
+      "accuracy": 0.0,
+      "sections": {
+        "core": {
+          "total": 60,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "trace_sensitive": {
+          "total": 25,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "edge_case": {
+          "total": 15,
+          "correct": 0,
+          "accuracy": 0.0
+        }
+      },
+      "output_file": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\eval\\m44_baseline_predictions.jsonl"
+    },
+    "post_stage_a": {
+      "checkpoint_name": "post_stage_a",
+      "checkpoint_path": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\checkpoints\\stage_a\\final_model",
+      "eval_set": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\..\\..\\training\\evalsets\\eval_v2.jsonl",
+      "start_time": "2026-01-09T00:42:24.503702+00:00",
+      "end_time": "2026-01-09T00:43:48.197003+00:00",
+      "runtime_seconds": 83.693301,
+      "total_examples": 100,
+      "correct": 0,
+      "accuracy": 0.0,
+      "sections": {
+        "core": {
+          "total": 60,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "trace_sensitive": {
+          "total": 25,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "edge_case": {
+          "total": 15,
+          "correct": 0,
+          "accuracy": 0.0
+        }
+      },
+      "output_file": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\eval\\post_stage_a_predictions.jsonl"
+    },
+    "post_stage_b": {
+      "checkpoint_name": "post_stage_b",
+      "checkpoint_path": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\checkpoints\\stage_b\\final_model",
+      "eval_set": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\..\\..\\training\\evalsets\\eval_v2.jsonl",
+      "start_time": "2026-01-09T00:43:48.221337+00:00",
+      "end_time": "2026-01-09T00:45:17.174772+00:00",
+      "runtime_seconds": 88.953435,
+      "total_examples": 100,
+      "correct": 0,
+      "accuracy": 0.0,
+      "sections": {
+        "core": {
+          "total": 60,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "trace_sensitive": {
+          "total": 25,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "edge_case": {
+          "total": 15,
+          "correct": 0,
+          "accuracy": 0.0
+        }
+      },
+      "output_file": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\eval\\post_stage_b_predictions.jsonl"
+    },
+    "post_stage_c": {
+      "checkpoint_name": "post_stage_c",
+      "checkpoint_path": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\checkpoints\\stage_c\\final_model",
+      "eval_set": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\..\\..\\training\\evalsets\\eval_v2.jsonl",
+      "start_time": "2026-01-09T00:45:17.200401+00:00",
+      "end_time": "2026-01-09T00:46:34.941354+00:00",
+      "runtime_seconds": 77.740953,
+      "total_examples": 100,
+      "correct": 0,
+      "accuracy": 0.0,
+      "sections": {
+        "core": {
+          "total": 60,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "trace_sensitive": {
+          "total": 25,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "edge_case": {
+          "total": 15,
+          "correct": 0,
+          "accuracy": 0.0
+        }
+      },
+      "output_file": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\eval\\post_stage_c_predictions.jsonl"
+    }
+  }
+}

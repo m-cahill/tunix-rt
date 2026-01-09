@@ -1,0 +1,143 @@
+{
+  "milestone": "M45",
+  "title": "Curriculum Reasoning Training",
+  "created_at": "2026-01-09T00:45:00+00:00",
+  "status": "complete",
+  
+  "hypothesis": "Curriculum ordering of reasoning data produces qualitative improvements in reasoning trace structure compared to flat SFT — without changing the model or optimizer.",
+  
+  "baseline": {
+    "name": "M44 Flat SFT",
+    "checkpoint_path": "submission_runs/m44_v1/training_output/final_model",
+    "description": "Full 3-epoch flat SFT on dev-reasoning-v2 (550 samples shuffled)",
+    "training_loss": 0.72,
+    "total_epochs": 3,
+    "total_steps": 414
+  },
+  
+  "source_dataset": {
+    "name": "dev-reasoning-v2",
+    "path": "backend/datasets/dev-reasoning-v2/dataset.jsonl",
+    "sha256": "601441c0fd176437ff029348b4ae9323e551cf4349d4b3aac12b9e3fa76564ca",
+    "total_samples": 550,
+    "composition": {
+      "reasoning": 385,
+      "synthetic": 110,
+      "golden_style": 35,
+      "edge_case": 20
+    }
+  },
+  
+  "partitioning": {
+    "strategy": "category-first with trace-length refinement",
+    "rules": {
+      "stage_a": "synthetic + golden_style (low complexity)",
+      "stage_b": "reasoning where len(steps) == 3 (medium complexity)",
+      "stage_c": "reasoning where len(steps) >= 4 + all edge_case (full complexity)"
+    },
+    "split_script": "research/m45_curriculum_reasoning/split_dataset.py"
+  },
+  
+  "stages": [
+    {
+      "stage": "A",
+      "description": "Low complexity — pattern grounding",
+      "dataset": "data/stage_a.jsonl",
+      "dataset_sha256": "30ac00a0a8a75dbe3710ef0a98ba88be5dfed50d497c08e1ac63fba57bb79b76",
+      "sample_count": 145,
+      "avg_steps": 2.0,
+      "epochs": 2,
+      "init_from": "google/gemma-2b (base)",
+      "output_checkpoint": "checkpoints/stage_a/final_model",
+      "training_loss": 0.5640,
+      "steps": 74,
+      "runtime_seconds": 57.1
+    },
+    {
+      "stage": "B",
+      "description": "Medium complexity — structured reasoning stabilization",
+      "dataset": "data/stage_b.jsonl",
+      "dataset_sha256": "2162e2fed19ec4bf9891897f42ec56450418ed33d5fc9663e7f5664da755a8ee",
+      "sample_count": 64,
+      "avg_steps": 3.0,
+      "epochs": 2,
+      "init_from": "checkpoints/stage_a/final_model",
+      "output_checkpoint": "checkpoints/stage_b/final_model",
+      "training_loss": 0.2908,
+      "steps": 32,
+      "runtime_seconds": 28.4
+    },
+    {
+      "stage": "C",
+      "description": "Full complexity — long-trace + verification emphasis",
+      "dataset": "data/stage_c.jsonl",
+      "dataset_sha256": "d97bbfbb5cf6a058cfe523abe20a067eeb647c670726ca436884dc372744160f",
+      "sample_count": 341,
+      "avg_steps": 3.89,
+      "epochs": 3,
+      "init_from": "checkpoints/stage_b/final_model",
+      "output_checkpoint": "checkpoints/stage_c/final_model",
+      "training_loss": 0.1913,
+      "steps": 258,
+      "runtime_seconds": 134.4
+    }
+  ],
+  
+  "total_curriculum_training": {
+    "total_epochs": 7,
+    "total_steps": 364,
+    "total_runtime_seconds": 219.9
+  },
+  
+  "hyperparameters": {
+    "model_id": "google/gemma-2b",
+    "revision": "main",
+    "learning_rate": 2e-5,
+    "weight_decay": 0.01,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 4,
+    "effective_batch_size": 4,
+    "dtype": "bfloat16",
+    "optimizer": "adafactor",
+    "max_seq_length": 128,
+    "note": "Identical hyperparameters across all stages — only ordering changed"
+  },
+  
+  "evaluation": {
+    "eval_set": "training/evalsets/eval_v2.jsonl",
+    "eval_set_size": 100,
+    "checkpoints_evaluated": [
+      "m44_baseline",
+      "post_stage_a",
+      "post_stage_b", 
+      "post_stage_c"
+    ],
+    "predictions_dir": "eval/",
+    "note": "Exact-match accuracy is not the primary metric — trace structure is"
+  },
+  
+  "artifacts": {
+    "split_script": "split_dataset.py",
+    "training_orchestrator": "run_curriculum.py",
+    "evaluation_script": "eval_all_checkpoints.py",
+    "configs": ["configs/stage_a.yaml", "configs/stage_b.yaml", "configs/stage_c.yaml"],
+    "datasets": ["data/stage_a.jsonl", "data/stage_b.jsonl", "data/stage_c.jsonl"],
+    "checkpoints": ["checkpoints/stage_a", "checkpoints/stage_b", "checkpoints/stage_c"],
+    "evaluation": ["eval/m44_baseline_predictions.jsonl", "eval/post_stage_a_predictions.jsonl", "eval/post_stage_b_predictions.jsonl", "eval/post_stage_c_predictions.jsonl"],
+    "logs": ["training_log.txt", "eval_log.txt"]
+  },
+  
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "vram": "32 GB",
+    "cuda": "12.8",
+    "pytorch": "2.11.0.dev+cu128"
+  },
+  
+  "reproducibility": {
+    "random_seed": 42,
+    "deterministic": true,
+    "all_hashes_captured": true
+  }
+}
+
