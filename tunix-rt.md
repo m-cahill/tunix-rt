@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M48 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M48:** Reasoning Failure Topology mapped — Ritual Verification at 97-100%, verification is structural not causal, training design failure identified
+**Milestone M49 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M49:** Observer Model for Error Detection — Observer achieves 50% detection vs generator's 0%, validation AUC 0.969, architectural separation validated
 
 ## Overview
 
@@ -214,6 +214,17 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Implications**: Future work needs 30-50% error density, contrastive pairs, value grounding, and (before, after, diff) triplets.
 - **Artifacts**: `research/m48_reasoning_failure_topology/` with taxonomy, labels, contrastive examples, Mermaid diagrams, and synthesis analysis.
 - **Research-Only**: Analysis milestone — understanding, not improvement.
+
+**M49 Enhancements:** Observer Model for Error Detection (Research, Phase 5):
+- **Objective**: Demonstrate that error detection is separable from generation.
+- **Key Finding**: Observer achieves 50% error detection vs generator's 0% (validation AUC 0.969).
+- **Approach**: Logistic regression on answer-comparison features (match, numeric diff, length).
+- **Challenge**: Windows DLL security blocked Sentence-Transformers/scikit-learn; fallback to pure numpy.
+- **Core Contrast**: Generator always says "No correction needed"; Observer detects answer mismatches.
+- **Claims Validated**: (1) Error detection is separable, (2) Verification failure is architectural, (3) Simple features suffice.
+- **Phase 5 Complete**: M45 → M46 → M47 → M48 → M49 forms complete research narrative.
+- **Artifacts**: `research/m49_observer_error_detection/` with scripts, model, metrics, and contrastive demo.
+- **Research-Only**: Demonstration milestone — capability separation proven.
 
 ## Database Schema
 
