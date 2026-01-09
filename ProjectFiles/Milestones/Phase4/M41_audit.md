@@ -249,4 +249,3 @@ No patches required. M41 is complete and clean.
 4. ✅ CI green
 
 **Recommendation:** Proceed to M42 (final submission package).
-

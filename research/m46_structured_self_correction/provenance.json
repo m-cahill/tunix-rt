@@ -1,0 +1,100 @@
+{
+  "milestone": "M46",
+  "title": "Structured Self-Correction (Doubt Injection)",
+  "created_at": "2026-01-09T01:38:02.264151+00:00",
+  "status": "complete",
+  "hypothesis": "Explicit self-correction markers (VERIFY/CORRECT) train models to detect and repair their own mistakes.",
+  "baseline": {
+    "name": "M45 Stage-C Curriculum",
+    "checkpoint_path": "research/m45_curriculum_reasoning/checkpoints/stage_c/final_model",
+    "description": "Curriculum-trained checkpoint (A->B->C)"
+  },
+  "source_dataset": {
+    "name": "stage_c.jsonl (from M45)",
+    "path": "research/m45_curriculum_reasoning/data/stage_c.jsonl",
+    "sha256": "d97bbfbb5cf6a058cfe523abe20a067eeb647c670726ca436884dc372744160f",
+    "sample_count": 341
+  },
+  "datasets": {
+    "control": {
+      "path": "research\\m46_structured_self_correction\\data\\stage_c_control.jsonl",
+      "sha256": "d97bbfbb5cf6a058cfe523abe20a067eeb647c670726ca436884dc372744160f",
+      "sample_count": 341,
+      "modification": "None (unchanged copy)"
+    },
+    "self_correct": {
+      "path": "research\\m46_structured_self_correction\\data\\stage_c_self_correct.jsonl",
+      "sha256": "16dd112ad417574c06b6e3df01c478bba65aa34cad57d4828567464e231f1113",
+      "sample_count": 341,
+      "modification": "+2 steps (VERIFY + CORRECT)"
+    }
+  },
+  "training": {
+    "control": {
+      "epochs": 1,
+      "steps": 86,
+      "loss": 0.158,
+      "runtime_seconds": 61.0,
+      "checkpoint": "research\\m46_structured_self_correction\\checkpoints\\control\\final_model"
+    },
+    "self_correct": {
+      "epochs": 1,
+      "steps": 86,
+      "loss": 0.17,
+      "runtime_seconds": 67.6,
+      "checkpoint": "research\\m46_structured_self_correction\\checkpoints\\self_correct\\final_model"
+    }
+  },
+  "hyperparameters": {
+    "learning_rate": 2e-05,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 4,
+    "effective_batch_size": 4,
+    "max_seq_length": 128,
+    "optimizer": "adafactor",
+    "dtype": "bfloat16"
+  },
+  "evaluation": {
+    "eval_set": "training/evalsets/eval_v2.jsonl",
+    "eval_set_size": 100,
+    "checkpoints_evaluated": [
+      "m45_stage_c",
+      "m46_control",
+      "m46_self_correct"
+    ]
+  },
+  "results": {
+    "m45_stage_c": {
+      "verification_frequency": 0.15,
+      "correction_frequency": 0.01,
+      "false_verify": 0.0
+    },
+    "m46_control": {
+      "verification_frequency": 0.05,
+      "correction_frequency": 0.01,
+      "false_verify": 0.0
+    },
+    "m46_self_correct": {
+      "verification_frequency": 0.97,
+      "correction_frequency": 0.84,
+      "false_verify": 0.08
+    }
+  },
+  "key_finding": "Verification frequency increased from 5% to 97% (+92 percentage points) with a single epoch of structural training.",
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "vram": "32 GB",
+    "cuda": "12.8",
+    "pytorch": "2.11.0.dev+cu128"
+  },
+  "reproducibility": {
+    "random_seed": 42,
+    "deterministic": true
+  },
+  "artifacts": {
+    "transform_script": "scripts/transform_traces.py",
+    "training_script": "scripts/run_training.py",
+    "eval_script": "scripts/run_eval.py",
+    "analysis": "analysis.md"
+  }
+}

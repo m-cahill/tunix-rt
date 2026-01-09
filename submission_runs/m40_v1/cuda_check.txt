@@ -1,0 +1,28 @@
+CUDA Availability Check
+=======================
+
+torch.cuda.is_available(): True
+torch.cuda.device_count(): 1
+torch.cuda.get_device_name(0): NVIDIA GeForce RTX 5090
+torch.cuda.get_device_capability(0): (12, 0)
+torch.version.cuda: 12.8
+
+GPU Computation Test:
+--------------------
+Test: 4096x4096 matrix multiplication
+Result: PASSED
+Memory Allocated: 136.1 MB
+
+Training Smoke Test:
+-------------------
+Device: cuda
+Model: gpt2
+Batch Size: 4
+Steps: 14
+Runtime: 1.7357 seconds
+Throughput: 31.688 samples/second
+Final Loss: 4.146
+Result: PASSED
+
+
+

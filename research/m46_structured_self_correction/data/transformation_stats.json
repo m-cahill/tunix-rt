@@ -1,0 +1,45 @@
+{
+  "created_at": "2026-01-09T01:20:58.356537+00:00",
+  "source": {
+    "path": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\data\\stage_c.jsonl",
+    "sha256": "d97bbfbb5cf6a058cfe523abe20a067eeb647c670726ca436884dc372744160f",
+    "count": 341
+  },
+  "control": {
+    "path": "C:\\coding\\tunix-rt\\research\\m46_structured_self_correction\\data\\stage_c_control.jsonl",
+    "sha256": "d97bbfbb5cf6a058cfe523abe20a067eeb647c670726ca436884dc372744160f",
+    "count": 341,
+    "note": "Unchanged copy of stage_c.jsonl"
+  },
+  "self_correct": {
+    "path": "C:\\coding\\tunix-rt\\research\\m46_structured_self_correction\\data\\stage_c_self_correct.jsonl",
+    "sha256": "16dd112ad417574c06b6e3df01c478bba65aa34cad57d4828567464e231f1113",
+    "count": 341,
+    "added_steps_per_trace": 2,
+    "note": "VERIFY + CORRECT blocks appended"
+  },
+  "transformation": {
+    "injected_errors": 0,
+    "injected_error_rate": 0.0,
+    "verify_present": 341,
+    "correct_present": 341,
+    "correct_value": "No correction needed (all traces)"
+  },
+  "template_distribution": {
+    "reasoning:template_2": 64,
+    "reasoning:template_4": 64,
+    "reasoning:template_3": 64,
+    "reasoning:template_5": 64,
+    "reasoning:template_0": 65,
+    "edge_case:punctuation": 2,
+    "edge_case:newlines": 2,
+    "edge_case:long_prompt": 2,
+    "edge_case:minimal_prompt": 2,
+    "edge_case:numbers_only": 2,
+    "edge_case:special_chars": 2,
+    "edge_case:many_steps": 2,
+    "edge_case:whitespace_answer": 2,
+    "edge_case:minimal_steps": 2,
+    "edge_case:unicode": 2
+  }
+}

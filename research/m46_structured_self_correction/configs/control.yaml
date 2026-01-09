@@ -1,0 +1,31 @@
+# M46 Structured Self-Correction — Control Run Configuration
+# Dataset: stage_c_control.jsonl (unchanged Stage-C data)
+# Epochs: 1 (per M46 locked decisions)
+# Init: M45 Stage-C checkpoint
+
+model:
+  model_id: "google/gemma-2b"
+  revision: "main"
+
+training:
+  device: "cuda"
+  batch_size: 1
+  max_seq_length: 128
+  gradient_accumulation_steps: 4
+  num_epochs: 1  # M46: 1 epoch (locked per M46_answers.md)
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  dtype: "bfloat16"
+  optimizer: "adafactor"
+  save_every_steps: 50
+  logging_steps: 10
+
+# Metadata for provenance
+meta:
+  milestone: "M46"
+  run_type: "control"
+  run_description: "Unchanged Stage-C data (no VERIFY/CORRECT)"
+  dataset: "stage_c_control.jsonl"
+  epochs: 1
+  init_checkpoint: "m45_stage_c_final"
+

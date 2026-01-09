@@ -74,7 +74,7 @@ BUNDLE_FILES = [
 DATASETS = ["golden-v2", "dev-reasoning-v1", "dev-reasoning-v2"]
 
 # Archive naming
-ARCHIVE_PREFIX = "tunix_rt_m36"
+ARCHIVE_PREFIX = "tunix_rt_m42"
 
 # ============================================================
 # Helper Functions
@@ -118,7 +118,7 @@ def generate_submission_readme(output_path: Path, sha: str, timestamp: str) -> N
     """
     readme_content = f"""# Tunix RT - Submission Package
 
-**Version:** m36_v1
+**Version:** m42_v1
 **Built:** {timestamp}
 **Commit:** {sha}
 

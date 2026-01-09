@@ -1,0 +1,147 @@
+{
+  "milestone": "M47",
+  "title": "Error Correction Fidelity (Doubt Injection with Real Errors)",
+  "created_at": "2026-01-09T17:54:00Z",
+  "status": "complete",
+  "description": "Tests whether a model trained on explicit error corrections develops the ability to detect and correct novel errors during generation.",
+
+  "inputs": {
+    "m45_stage_c": {
+      "path": "research/m45_curriculum_reasoning/data/stage_c.jsonl",
+      "samples": 341,
+      "description": "Original Stage-C curriculum data (M45)"
+    },
+    "m46_self_correct": {
+      "path": "research/m46_structured_self_correction/data/stage_c_self_correct.jsonl",
+      "samples": 341,
+      "description": "M46 self-correct formatted data"
+    },
+    "m46_checkpoint": {
+      "path": "research/m46_structured_self_correction/checkpoints/self_correct/final_model",
+      "description": "M46 self-correct checkpoint (init for both M47 runs)"
+    }
+  },
+
+  "scripts": {
+    "inject_errors.py": {
+      "path": "research/m47_error_correction_fidelity/scripts/inject_errors.py",
+      "sha256_prefix": "97c06a48287ee850",
+      "description": "Error injection with manifest"
+    },
+    "run_training.py": {
+      "path": "research/m47_error_correction_fidelity/scripts/run_training.py",
+      "sha256_prefix": "3044a36957cb1ac1",
+      "description": "Training orchestrator for clean/error_aware runs"
+    },
+    "run_eval.py": {
+      "path": "research/m47_error_correction_fidelity/scripts/run_eval.py",
+      "sha256_prefix": "ad65f4c74b702d40",
+      "description": "Evaluation with fidelity metrics"
+    }
+  },
+
+  "configs": {
+    "clean.yaml": {
+      "path": "research/m47_error_correction_fidelity/configs/clean.yaml",
+      "sha256_prefix": "b691a329cf0ad5f9"
+    },
+    "error_aware.yaml": {
+      "path": "research/m47_error_correction_fidelity/configs/error_aware.yaml",
+      "sha256_prefix": "450ea8de332f68a5"
+    }
+  },
+
+  "datasets_generated": {
+    "stage_c_clean.jsonl": {
+      "path": "research/m47_error_correction_fidelity/data/stage_c_clean.jsonl",
+      "samples": 307,
+      "sha256_prefix": "407997dce0749168"
+    },
+    "stage_c_error_self_correct.jsonl": {
+      "path": "research/m47_error_correction_fidelity/data/stage_c_error_self_correct.jsonl",
+      "samples": 307,
+      "sha256_prefix": "a5c75c0d7dc33bcd"
+    },
+    "stage_c_holdout.jsonl": {
+      "path": "research/m47_error_correction_fidelity/data/stage_c_holdout.jsonl",
+      "samples": 34,
+      "sha256_prefix": "43b8bd906cde808f"
+    },
+    "stage_c_holdout_error.jsonl": {
+      "path": "research/m47_error_correction_fidelity/data/stage_c_holdout_error.jsonl",
+      "samples": 34,
+      "sha256_prefix": "8f8d6a5b152aecd0"
+    }
+  },
+
+  "error_injection_stats": {
+    "total_errors_injected": 21,
+    "arithmetic_errors": 21,
+    "unit_errors": 0,
+    "intermediate_propagating": 15,
+    "final_only": 6,
+    "injection_failures": 9,
+    "manifest": "research/m47_error_correction_fidelity/error_manifest.json"
+  },
+
+  "training_runs": {
+    "clean": {
+      "dataset": "stage_c_clean.jsonl",
+      "epochs": 1,
+      "loss": 0.121,
+      "steps": 77,
+      "runtime_seconds": 58.5,
+      "checkpoint": "research/m47_error_correction_fidelity/checkpoints/clean/final_model"
+    },
+    "error_aware": {
+      "dataset": "stage_c_error_self_correct.jsonl",
+      "epochs": 1,
+      "loss": 0.144,
+      "steps": 77,
+      "runtime_seconds": 62.0,
+      "checkpoint": "research/m47_error_correction_fidelity/checkpoints/error_aware/final_model"
+    }
+  },
+
+  "evaluation_results": {
+    "primary_finding": "Error detection rate is 0% across all models",
+    "interpretation": "Verification behavior is structural (template-following) rather than causal (error-detecting)",
+    "fidelity_metrics": {
+      "m46_self_correct": {
+        "error_detection_rate": 0.0,
+        "correction_attempt_rate": 0.0,
+        "false_correction_rate": 0.0
+      },
+      "m47_clean": {
+        "error_detection_rate": 0.0,
+        "correction_attempt_rate": 0.0,
+        "false_correction_rate": 0.0
+      },
+      "m47_error_aware": {
+        "error_detection_rate": 0.0,
+        "correction_attempt_rate": 0.0,
+        "false_correction_rate": 0.0
+      }
+    }
+  },
+
+  "artifacts": {
+    "analysis": "research/m47_error_correction_fidelity/analysis.md",
+    "error_manifest": "research/m47_error_correction_fidelity/error_manifest.json",
+    "training_summary": "research/m47_error_correction_fidelity/checkpoints/training_summary.json",
+    "eval_summary": "research/m47_error_correction_fidelity/eval/eval_summary.json",
+    "fidelity_comparison": "research/m47_error_correction_fidelity/metrics/fidelity_comparison.json"
+  },
+
+  "conclusions": {
+    "verification_structure_learned": true,
+    "error_detection_learned": false,
+    "implications_for_m48": [
+      "Higher error injection rate (30-50%)",
+      "Contrastive training with error/correct pairs",
+      "Explicit error markers in training",
+      "Chain-of-thought verification"
+    ]
+  }
+}
+

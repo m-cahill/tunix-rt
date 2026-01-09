@@ -1,0 +1,40 @@
+﻿
+> tunix-rt-frontend@0.1.0 test
+> vitest --run
+
+
+ RUN  v1.6.1 C:/coding/tunix-rt/frontend
+
+ Γ£ô src/api/client.test.ts  (13 tests) 6ms
+ Γ£ô src/components/LiveLogs.test.tsx  (6 tests) 40ms
+ Γ£ô src/components/RunComparison.test.tsx  (4 tests) 52ms
+ Γ£ô src/components/ModelRegistry.test.tsx  (6 tests) 131ms
+ Γ£ô src/components/Tuning.test.tsx  (2 tests) 190ms
+ Γ£ô src/components/Leaderboard.test.tsx  (13 tests) 1179ms
+node.exe : stderr | src/App.test.tsx > App > exports Tunix JSONL when dataset key provided
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (stderr | src/Ap...et key provided:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Error: Not implemented: navigation (except hash changes)
+    at module.exports (C:\coding\tunix-rt\frontend\node_modules\jsdom\lib\jsdom\browser\not-implemented.js:9:17)
+    at navigateFetch (C:\coding\tunix-rt\frontend\node_modules\jsdom\lib\jsdom\living\window\navigation.js:77:3)
+    at exports.navigate (C:\coding\tunix-rt\frontend\node_modules\jsdom\lib\jsdom\living\window\navigation.js:55:3)
+    at Timeout._onTimeout
+(C:\coding\tunix-rt\frontend\node_modules\jsdom\lib\jsdom\living\nodes\HTMLHyperlinkElementUtils-impl.js:81:7)
+    at listOnTimeout (node:internal/timers:605:17)
+    at processTimers (node:internal/timers:541:7) undefined
+
+stderr | src/App.test.tsx > App > displays run details when View button is clicked
+Failed to load metrics TypeError: Cannot read properties of undefined (reading 'ok')
+    at fetchJSON (C:\coding\tunix-rt\frontend\src\api\client.ts:110:17)
+
+ Γ£ô src/App.test.tsx  (31 tests) 5129ms
+
+ Test Files  7 passed (7)
+      Tests  75 passed (75)
+   Start at  11:30:53
+   Duration  6.83s (transform 476ms, setup 1.57s, collect 2.48s, tests 6.73s, environment 5.12s, prepare 817ms)
+

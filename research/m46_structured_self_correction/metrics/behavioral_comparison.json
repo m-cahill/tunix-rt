@@ -1,0 +1,35 @@
+{
+  "created_at": "2026-01-09T01:36:12.529953+00:00",
+  "comparison": {
+    "m45_stage_c": {
+      "accuracy": 0.0,
+      "verification_frequency": 0.15,
+      "correction_frequency": 0.01,
+      "false_verification_frequency": 0.0,
+      "samples_with_verify": 15,
+      "samples_with_correct": 1,
+      "samples_with_false_verify": 0,
+      "total_samples": 100
+    },
+    "m46_control": {
+      "accuracy": 0.0,
+      "verification_frequency": 0.05,
+      "correction_frequency": 0.01,
+      "false_verification_frequency": 0.0,
+      "samples_with_verify": 5,
+      "samples_with_correct": 1,
+      "samples_with_false_verify": 0,
+      "total_samples": 100
+    },
+    "m46_self_correct": {
+      "accuracy": 0.0,
+      "verification_frequency": 0.97,
+      "correction_frequency": 0.84,
+      "false_verification_frequency": 0.08,
+      "samples_with_verify": 97,
+      "samples_with_correct": 84,
+      "samples_with_false_verify": 8,
+      "total_samples": 100
+    }
+  }
+}

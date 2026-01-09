@@ -1,0 +1,70 @@
+{
+  "created_at": "2026-01-09T01:36:12.528954+00:00",
+  "eval_set": "C:\\coding\\tunix-rt\\training\\evalsets\\eval_v2.jsonl",
+  "total_examples": 100,
+  "results": {
+    "m45_stage_c": {
+      "checkpoint_name": "m45_stage_c",
+      "checkpoint_path": "C:\\coding\\tunix-rt\\research\\m45_curriculum_reasoning\\checkpoints\\stage_c\\final_model",
+      "eval_set": "C:\\coding\\tunix-rt\\training\\evalsets\\eval_v2.jsonl",
+      "start_time": "2026-01-09T01:29:00.809568+00:00",
+      "end_time": "2026-01-09T01:31:24.150395+00:00",
+      "runtime_seconds": 143.340827,
+      "total_examples": 100,
+      "correct": 0,
+      "accuracy": 0.0,
+      "behavioral_metrics": {
+        "verification_frequency": 0.15,
+        "correction_frequency": 0.01,
+        "false_verification_frequency": 0.0,
+        "samples_with_verify": 15,
+        "samples_with_correct": 1,
+        "samples_with_false_verify": 0,
+        "total_samples": 100
+      },
+      "output_file": "C:\\coding\\tunix-rt\\research\\m46_structured_self_correction\\eval\\m45_stage_c_predictions.jsonl"
+    },
+    "m46_control": {
+      "checkpoint_name": "m46_control",
+      "checkpoint_path": "C:\\coding\\tunix-rt\\research\\m46_structured_self_correction\\checkpoints\\control\\final_model",
+      "eval_set": "C:\\coding\\tunix-rt\\training\\evalsets\\eval_v2.jsonl",
+      "start_time": "2026-01-09T01:31:24.181137+00:00",
+      "end_time": "2026-01-09T01:33:44.941790+00:00",
+      "runtime_seconds": 140.760653,
+      "total_examples": 100,
+      "correct": 0,
+      "accuracy": 0.0,
+      "behavioral_metrics": {
+        "verification_frequency": 0.05,
+        "correction_frequency": 0.01,
+        "false_verification_frequency": 0.0,
+        "samples_with_verify": 5,
+        "samples_with_correct": 1,
+        "samples_with_false_verify": 0,
+        "total_samples": 100
+      },
+      "output_file": "C:\\coding\\tunix-rt\\research\\m46_structured_self_correction\\eval\\m46_control_predictions.jsonl"
+    },
+    "m46_self_correct": {
+      "checkpoint_name": "m46_self_correct",
+      "checkpoint_path": "C:\\coding\\tunix-rt\\research\\m46_structured_self_correction\\checkpoints\\self_correct\\final_model",
+      "eval_set": "C:\\coding\\tunix-rt\\training\\evalsets\\eval_v2.jsonl",
+      "start_time": "2026-01-09T01:33:44.969535+00:00",
+      "end_time": "2026-01-09T01:36:12.500942+00:00",
+      "runtime_seconds": 147.531407,
+      "total_examples": 100,
+      "correct": 0,
+      "accuracy": 0.0,
+      "behavioral_metrics": {
+        "verification_frequency": 0.97,
+        "correction_frequency": 0.84,
+        "false_verification_frequency": 0.08,
+        "samples_with_verify": 97,
+        "samples_with_correct": 84,
+        "samples_with_false_verify": 8,
+        "total_samples": 100
+      },
+      "output_file": "C:\\coding\\tunix-rt\\research\\m46_structured_self_correction\\eval\\m46_self_correct_predictions.jsonl"
+    }
+  }
+}

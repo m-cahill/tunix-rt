@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M41 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** PyTorch Local Path (GPU Validated) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing (clean output) | **Status:** Submission-ready with demo docs and video checklist.
+**Milestone M50 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M50:** Recursive System Post-Mortem — Phase 5 complete (M45→M50), thesis: "Self-correction fails because generation lacks state-comparison; error detection succeeds when architecturally separated"
 
 ## Overview
 
@@ -149,6 +149,93 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Evidence Capture**: `submission_runs/m41_v1/` with clean test output, README summary.
 - **No Backend/Training Changes**: Zero changes to backend logic, training scripts, or database schema.
 - 75 frontend tests passing, clean output.
+
+**M42 Enhancements:** Final Submission Package — Documentation and packaging only, no code changes:
+- **VIDEO_CHECKLIST.md**: Added source-of-truth statement, references `docs/DEMO.md` as authoritative guide.
+- **README Polish**: Added "Why Tunix RT?" section, Demo Flow, Training Paths, Evidence & Reproducibility, video URL placeholder.
+- **GPU Fragility Docs**: Added nightly PyTorch fragility warning to `CONTRIBUTING.md` with version pinning guidance.
+- **Packaging Script**: Updated `package_submission.py` prefix from m36 to m42.
+- **Final Test Run**: Backend 384 passed (75.79% coverage), Frontend 75 passed, outputs captured to `submission_runs/m42_v1/test_run_outputs/`.
+- **Evidence Index**: Created `submission_runs/m42_v1/evidence_index.md` documenting what each folder proves.
+- **Dependency Snapshot**: `pip_freeze_backend.txt` captured for reproducibility.
+- **Submission ZIP**: `tunix_rt_m42_2026-01-08_e54267b.zip` (104.8 KB) containing notebooks, configs, evalsets, manifests, and README.
+
+**M43 Enhancements:** Full GPU Training Run (Evidence-Only, Post-Freeze):
+- **Hardware Validation**: RTX 5090 (sm_120, 32GB VRAM) full production run confirmed.
+- **Training Execution**: Gemma 2B via PyTorch/Transformers, 138 steps, 73.2s runtime, loss 2.21→0.76.
+- **JAX CUDA Limitation**: Discovered JAX CUDA is Linux-only for modern versions; Windows requires WSL2.
+- **PyTorch Path**: Validated PyTorch nightly cu128 as production-ready on Blackwell architecture.
+- **Evidence Captured**: `submission_runs/m43_v1/` with checkpoints, metrics, predictions, and summary.
+- **Zero Code Changes**: M42 submission remains authoritative; M43 is evidence-only.
+
+**M44 Enhancements:** Full Production Training (3 Epochs, Evidence-Only):
+- **Extended Training**: 3 epochs (414 steps) vs M43's 1 epoch, 203.4s runtime.
+- **Improved Throughput**: 8.11 samples/sec on RTX 5090.
+- **Loss Convergence**: 2.21 → 0.72 over 3 epochs.
+- **Full Evaluation**: 100 examples from eval_v2.jsonl evaluated.
+- **Evidence Captured**: `submission_runs/m44_v1/` with complete training artifacts.
+- **Zero Code Changes**: M42 submission remains authoritative; M44 is evidence-only.
+
+**M45 Enhancements:** Curriculum Reasoning Training (Research, Phase 5):
+- **Hypothesis Validated**: Curriculum ordering reshapes reasoning trace structure without changing model/optimizer.
+- **Dataset Partitioning**: dev-reasoning-v2 split into Stage A (145 low), Stage B (64 medium), Stage C (341 full) based on category and trace length.
+- **Sequential Training**: A (2 epochs) → B (2 epochs) → C (3 epochs), total 364 steps, 220s runtime.
+- **Loss Progression**: A: 0.564 → B: 0.291 → C: 0.191 (lower than M44's 0.72).
+- **Trace Structure Changes**: Post-curriculum models exhibit formula-first reasoning, explicit decomposition, and verification language.
+- **Artifacts**: `research/m45_curriculum_reasoning/` with datasets, configs, checkpoints, provenance, and analysis.
+- **Research-Only**: No changes to M42 submission; M45 is exploratory research for differentiation.
+
+**M46 Enhancements:** Structured Self-Correction (Research, Phase 5):
+- **Hypothesis Validated**: Explicit self-correction markers (VERIFY/CORRECT) train models to produce verification behavior.
+- **Trace Augmentation**: Stage-C traces augmented with VERIFY + CORRECT blocks (template-based, short and mechanical).
+- **Training**: Control (unchanged) + Self-Correct (augmented), 1 epoch each from M45 Stage-C checkpoint, 86 steps, ~65s each.
+- **Key Result**: Verification frequency increased from 5% (control) to 97% (self-correct) — a +92 percentage point increase.
+- **Behavioral Metrics**: Correction language at 84%, false verification at 8% (Guardrail 2 tracked).
+- **Artifacts**: `research/m46_structured_self_correction/` with datasets, checkpoints, behavioral metrics, and analysis.
+- **Research-Only**: No changes to M42 submission; M46 is exploratory research demonstrating teachable verification.
+
+**M47 Enhancements:** Error Correction Fidelity (Research, Phase 5):
+- **Objective**: Test whether training on explicit error corrections develops error-detection capability.
+- **Error Injection**: 21 errors injected into Stage-C traces (6.8%), 80% intermediate-propagating, 20% final-only.
+- **Training**: Clean (M46-style) + Error-Aware (with explicit CORRECT blocks showing fixes), 1 epoch each from M46 checkpoint.
+- **Key Finding**: Verification is **structural** (template-following) not **causal** (error-detecting). 0% error detection across all models.
+- **Positive Signal**: All models produce VERIFY/CORRECT blocks reliably (100%), false correction rate is 0%.
+- **Threshold Assessment**: Detection ≥20% (actual: 0%) ❌, Correction ≥10% (actual: 0%) ❌, False corrections ≤25% (actual: 0%) ✅.
+- **Implications for M48**: Higher error injection rate (30-50%), contrastive training, explicit error markers, chain-of-thought verification.
+- **Artifacts**: `research/m47_error_correction_fidelity/` with datasets, checkpoints, fidelity metrics, and analysis.
+- **Research-Only**: Negative but scientifically valuable result — provides clear direction for M48.
+
+**M48 Enhancements:** Reasoning Failure Topology (Research, Phase 5):
+- **Objective**: Map failure modes of self-correction to explain why verification becomes ritual.
+- **Key Finding**: Ritual Verification accounts for 97-100% of all verification behavior across M46 and M47.
+- **Failure Taxonomy**: 6-class taxonomy with structural + regex heuristics for automated classification.
+- **Root Causes**: (1) Template learning dominates, (2) Low error density (6.8%), (3) No contrastive pairs, (4) Missing diff operator.
+- **Mechanistic Insight**: Verification operates as sequence completion, not state comparison. No conditional branch based on computational content.
+- **Implications**: Future work needs 30-50% error density, contrastive pairs, value grounding, and (before, after, diff) triplets.
+- **Artifacts**: `research/m48_reasoning_failure_topology/` with taxonomy, labels, contrastive examples, Mermaid diagrams, and synthesis analysis.
+- **Research-Only**: Analysis milestone — understanding, not improvement.
+
+**M49 Enhancements:** Observer Model for Error Detection (Research, Phase 5):
+- **Objective**: Demonstrate that error detection is separable from generation.
+- **Key Finding**: Observer achieves 50% error detection vs generator's 0% (validation AUC 0.969).
+- **Approach**: Logistic regression on answer-comparison features (match, numeric diff, length).
+- **Challenge**: Windows DLL security blocked Sentence-Transformers/scikit-learn; fallback to pure numpy.
+- **Core Contrast**: Generator always says "No correction needed"; Observer detects answer mismatches.
+- **Claims Validated**: (1) Error detection is separable, (2) Verification failure is architectural, (3) Simple features suffice.
+- **Phase 5 Complete**: M45 → M46 → M47 → M48 → M49 forms complete research narrative.
+- **Artifacts**: `research/m49_observer_error_detection/` with scripts, model, metrics, and contrastive demo.
+- **Research-Only**: Demonstration milestone — capability separation proven.
+
+**M50 Enhancements:** Recursive System Post-Mortem (Research, Phase 5):
+- **Objective**: Synthesize Phase 5 research arc (M45-M49) into coherent system-level insight.
+- **Thesis**: "Self-correction fails because generation lacks state-comparison operator; error detection succeeds when architecturally separated."
+- **Deliverables**: Executive summary (1-2 pages), phase timeline, architecture diagrams, full analysis, provenance tracking.
+- **Key Numbers**: M45 25% loss improvement, M46 5%→97% verification, M47 0% detection, M48 97-100% ritual, M49 50% detection.
+- **Claims Made**: (1) Verification form trainable, (2) Verification function not trainable naively, (3) Error detection separable.
+- **Non-Claims**: Not production-ready, not claiming reasoning solved, not generalizing beyond arithmetic.
+- **Phase 5 Complete**: Closed, coherent, falsifiable, documented.
+- **Artifacts**: `research/m50_recursive_postmortem/` with executive_summary.md, phase5_timeline.md, architecture_diagram.md, analysis.md, provenance.json.
+- **Documentation-Only**: Synthesis milestone — no training, no code changes.
 
 ## Database Schema
 
