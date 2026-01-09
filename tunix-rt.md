@@ -1,7 +1,7 @@
 # Tunix RT - Reasoning-Trace Framework
 
-**Milestone M45 Complete** ✅  
-**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M45:** Curriculum Reasoning Training validated — trace structure improvements demonstrated
+**Milestone M46 Complete** ✅  
+**Coverage:** >70% Backend Line | **Training:** PyTorch Local (GPU) + JAX (TPU) | **Hardware:** RTX 5090 (sm_120 Active) | **Frontend:** 75 tests passing | **Status:** SUBMISSION PACKAGE READY — `tunix_rt_m42_2026-01-08_e54267b.zip` | **M46:** Structured Self-Correction validated — verification behavior trainable (+92pp increase)
 
 ## Overview
 
@@ -184,6 +184,15 @@ Tunix RT is a full-stack application for managing reasoning traces and integrati
 - **Trace Structure Changes**: Post-curriculum models exhibit formula-first reasoning, explicit decomposition, and verification language.
 - **Artifacts**: `research/m45_curriculum_reasoning/` with datasets, configs, checkpoints, provenance, and analysis.
 - **Research-Only**: No changes to M42 submission; M45 is exploratory research for differentiation.
+
+**M46 Enhancements:** Structured Self-Correction (Research, Phase 5):
+- **Hypothesis Validated**: Explicit self-correction markers (VERIFY/CORRECT) train models to produce verification behavior.
+- **Trace Augmentation**: Stage-C traces augmented with VERIFY + CORRECT blocks (template-based, short and mechanical).
+- **Training**: Control (unchanged) + Self-Correct (augmented), 1 epoch each from M45 Stage-C checkpoint, 86 steps, ~65s each.
+- **Key Result**: Verification frequency increased from 5% (control) to 97% (self-correct) — a +92 percentage point increase.
+- **Behavioral Metrics**: Correction language at 84%, false verification at 8% (Guardrail 2 tracked).
+- **Artifacts**: `research/m46_structured_self_correction/` with datasets, checkpoints, behavioral metrics, and analysis.
+- **Research-Only**: No changes to M42 submission; M46 is exploratory research demonstrating teachable verification.
 
 ## Database Schema
 
